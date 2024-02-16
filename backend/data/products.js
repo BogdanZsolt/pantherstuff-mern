@@ -1,5 +1,6 @@
 const products = [
   {
+    _id: '1',
     name: 'elf "hoodie" jacket',
     thumbnail: '/images/manopulcsi-01-450x600.webp',
     thumbnailHover: '/images/manopulcsi-02-450x600.webp',
@@ -15,6 +16,7 @@ const products = [
     thumbnails: ['/images/manopulcsi-03-450x600.webp'],
   },
   {
+    _id: '2',
     name: 'Ocean Blue LLC2',
     thumbnail: '/images/product_02.jpg',
     thumbnailHover: '/images/product_02b.jpg',
@@ -28,6 +30,7 @@ const products = [
     colors: ['#9DC5D5'],
   },
   {
+    _id: '3',
     name: 'Inner Sweater at Office',
     thumbnail: '/images/product_03.jpg',
     thumbnailHover: '/images/product_03b.jpg',
@@ -41,6 +44,7 @@ const products = [
     colors: ['#D1DDE9'],
   },
   {
+    _id: '4',
     name: 'XYZ Hoodie 485',
     thumbnail: '/images/product_04.jpg',
     thumbnailHover: '/images/product_04b.jpg',
@@ -55,6 +59,7 @@ const products = [
     colors: ['#A6A9BC'],
   },
   {
+    _id: '5',
     name: 'Light Blue Hoodie',
     thumbnail: '/images/product_05.jpg',
     thumbnailHover: '/images/product_05b.jpg',
@@ -63,12 +68,13 @@ const products = [
     category: 'hoodie',
     beforePrice: 105.0,
     currentPrice: 79.0,
-    countInStock: 10,
+    countInStock: 0,
     rating: 4.5,
     numReviews: '12',
     colors: ['#CCDFEB'],
   },
   {
+    _id: '6',
     name: 'Brown Gold Mix',
     thumbnail: '/images/product_06.jpg',
     thumbnailHover: '/images/product_06b.jpg',
@@ -83,6 +89,7 @@ const products = [
     colors: ['#AF8060'],
   },
   {
+    _id: '7',
     name: 'Inner Sweater at Office',
     thumbnail: '/images/product_07.jpg',
     thumbnailHover: '/images/product_07b.jpg',
@@ -97,6 +104,7 @@ const products = [
     colors: ['#E98F8F'],
   },
   {
+    _id: '8',
     name: 'The Maroon Four',
     thumbnail: '/images/product_08.jpg',
     thumbnailHover: '/images/product_08b.jpg',

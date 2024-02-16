@@ -17,22 +17,22 @@ const protect = asyncHandler(async (req, res, next) => {
     } catch (error) {
       console.log(error);
       res.status(401);
-      throw new Error('Not authorized, token failed');
+      throw new Error('Not authorized, token failed.');
     }
   } else {
     res.status(401);
-    throw new Error('Not authorized, no token');
+    throw new Error('Not authorized, no token.');
   }
 });
 
 // Admin middleware
-const admin = (req, res, next) => {
+const admin = asyncHandler(async (req, res, next) => {
   if (req.user && req.user.isAdmin) {
     next();
   } else {
     res.status(401);
-    throw new Error('Not authorized as admin');
+    throw new Error('Not authorized as admin.');
   }
-};
+});
 
 export { protect, admin };

@@ -6,7 +6,7 @@ const connectDB = async () => {
       user: process.env.DATA_USER,
       pass: process.env.DATA_PASSWORD,
     });
-    console.log(`MongodDB Connected: ${conn.connection.host}`);
+    console.log(`MongoDB Connected ${conn.connection.host}`);
   } catch (error) {
     console.log(`Error: ${error.message}`);
     process.exit(1);
