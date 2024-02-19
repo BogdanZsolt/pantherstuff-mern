@@ -29,25 +29,25 @@
   --bs-gray-700: #7b8a8b;
   --bs-gray-800: #7b8a8b;
   --bs-gray-900: #7b8a8b;
-  --bs-primary: #3c4c5d;
-  --bs-secondary: #7b8a8b;
-  --bs-success: #18bc9c;
+  --bs-primary: #faf0d1;
+  --bs-secondary: #36241b;
+  --bs-success: #486629;
   --bs-info: #3498db;
   --bs-warning: #f39c12;
   --bs-danger: #e74c3c;
   --bs-light: #f4f4f4;
   --bs-dark: #7b8a8b;
-  --bs-primary-rgb: 60, 76, 93;
-  --bs-secondary-rgb: 123, 138, 139;
-  --bs-success-rgb: 24, 188, 156;
+  --bs-primary-rgb: 250, 240, 209;
+  --bs-secondary-rgb: 54, 36, 27;
+  --bs-success-rgb: 72, 102, 41;
   --bs-info-rgb: 52, 152, 219;
   --bs-warning-rgb: 243, 156, 18;
   --bs-danger-rgb: 231, 76, 60;
   --bs-light-rgb: 244, 244, 244;
   --bs-dark-rgb: 123, 138, 139;
-  --bs-primary-text: #303d4a;
-  --bs-secondary-text: #7b8a8b;
-  --bs-success-text: #13967d;
+  --bs-primary-text: var(--bs-secondary);
+  --bs-secondary-text: var(--bs-primary);
+  --bs-success-text: var(--bs-success);
   --bs-info-text: #1f5b83;
   --bs-warning-text: #925e0b;
   --bs-danger-text: #b93d30;
@@ -73,11 +73,10 @@
   --bs-black-rgb: 0, 0, 0;
   --bs-body-color-rgb: 123, 138, 139;
   --bs-body-bg-rgb: 255, 255, 255;
-  --bs-font-sans-serif: system-ui, -apple-system, 'Segoe UI', Roboto,
-    'Helvetica Neue', 'Noto Sans', 'Liberation Sans', Arial, sans-serif,
-    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --bs-font-sans-serif: 'Poppins', sans-serif;
   --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
     'Liberation Mono', 'Courier New', monospace;
+  --bs-font-cursive: 'Fondamento', cursive;
   --bs-gradient: linear-gradient(
     180deg,
     rgba(255, 255, 255, 0.15),
@@ -87,7 +86,7 @@
   --bs-body-font-size: 1rem;
   --bs-body-font-weight: 400;
   --bs-body-line-height: 1.5;
-  --bs-body-color: #7b8a8b;
+  --bs-body-color: var(--bs-secondary);
   --bs-emphasis-color: #000;
   --bs-emphasis-color-rgb: 0, 0, 0;
   --bs-secondary-color: rgba(123, 138, 139, 0.75);
@@ -98,9 +97,9 @@
   --bs-tertiary-color-rgb: 123, 138, 139;
   --bs-tertiary-bg: #f4f4f4;
   --bs-tertiary-bg-rgb: 244, 244, 244;
-  --bs-body-bg: #fff;
-  --bs-body-bg-rgb: 255, 255, 255;
-  --bs-link-color: #3c4c5d;
+  --bs-body-bg: #faf0d1;
+  --bs-body-bg-rgb: 250, 240, 209;
+  --bs-link-color: var(--bs-secondary);
   --bs-link-color-rgb: 60, 76, 93;
   --bs-link-decoration: underline;
   --bs-link-hover-color: #303d4a;
@@ -131,6 +130,16 @@
   --bs-breakpoint-lg: 992px;
   --bs-breakpoint-xl: 1200px;
   --bs-breakpoint-xxl: 1400px;
+  --shadow-xs: 1px 1px 3px 0 var(--bs-secondary);
+  --shadow-sm: 0 0.3125rem 0.5rem var(--bs-secondary);
+  --shadow-md: 0 0.5rem 1rem -0.5rem var(--bs-secondary);
+  --shadow-lg: 0 0.625rem 1.25rem -0.625rem var(--bs-secondary);
+  --transition-color: color 0.3s;
+  --transition-background: background-color 0.3s;
+  --transition-border: border 0.3s;
+  --transition-transform: transform 0.3s;
+  --transition-filter: filter 0.3s;
+  --transition-shadow: box-shadow 0.3s;
 }
 
 [data-bs-theme='dark'] {
@@ -233,6 +242,7 @@ h1,
   font-weight: 500;
   line-height: 1.2;
   color: var(--bs-heading-color, inherit);
+  font-family: var(--bs-font-cursive);
 }
 
 h1,
@@ -510,12 +520,12 @@ select:disabled {
   display: none !important;
 }
 
-button,
+/* button,
 [type='button'],
 [type='reset'],
 [type='submit'] {
   -webkit-appearance: button;
-}
+} */
 button:not(:disabled),
 [type='button']:not(:disabled),
 [type='reset']:not(:disabled),
@@ -570,10 +580,10 @@ legend + * {
   height: auto;
 }
 
-[type='search'] {
+/* [type='search'] {
   outline-offset: -2px;
   -webkit-appearance: textfield;
-}
+} */
 
 /* rtl:raw:
 [type="tel"],
@@ -591,10 +601,10 @@ legend + * {
   padding: 0;
 }
 
-::file-selector-button {
+/* ::file-selector-button {
   font: inherit;
   -webkit-appearance: button;
-}
+} */
 
 output {
   display: inline-block;
@@ -3142,16 +3152,16 @@ fieldset:disabled .btn {
 }
 
 .btn-success {
-  --bs-btn-color: #000;
-  --bs-btn-bg: #18bc9c;
-  --bs-btn-border-color: #18bc9c;
-  --bs-btn-hover-color: #000;
-  --bs-btn-hover-bg: #3bc6ab;
-  --bs-btn-hover-border-color: #2fc3a6;
+  --bs-btn-color: var(--bs-primary);
+  --bs-btn-bg: var(--bs-success);
+  --bs-btn-border-color: var(--bs-success);
+  --bs-btn-hover-color: var(--bs-primary);
+  --bs-btn-hover-bg: rgba(var(--bs-success-rgb), 0.8);
+  --bs-btn-hover-border-color: rgba(var(--bs-success-rgb), 0.8);
   --bs-btn-focus-shadow-rgb: 20, 160, 133;
-  --bs-btn-active-color: #000;
-  --bs-btn-active-bg: #46c9b0;
-  --bs-btn-active-border-color: #2fc3a6;
+  --bs-btn-active-color: var(--bs-primary);
+  --bs-btn-active-bg: var(--bs-success);
+  --bs-btn-active-border-color: var(--bs-success);
   --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
   --bs-btn-disabled-color: #000;
   --bs-btn-disabled-bg: #18bc9c;
@@ -3890,7 +3900,7 @@ fieldset:disabled .btn {
 .nav {
   --bs-nav-link-padding-x: 1rem;
   --bs-nav-link-padding-y: 0.5rem;
-  --bs-nav-link-font-weight: ;
+  --bs-nav-link-font-weight: 400;
   --bs-nav-link-color: var(--bs-link-color);
   --bs-nav-link-hover-color: var(--bs-link-hover-color);
   --bs-nav-link-disabled-color: var(--bs-secondary-color);
@@ -3902,10 +3912,14 @@ fieldset:disabled .btn {
 }
 
 .nav-link {
+  --bs-nav-link-font-size: 1.15rem;
+  --bs-nav-link-line-height: 1.25rem;
   display: block;
   padding: var(--bs-nav-link-padding-y) var(--bs-nav-link-padding-x);
+  font-family: var(--bs-font-cursive);
   font-size: var(--bs-nav-link-font-size);
   font-weight: var(--bs-nav-link-font-weight);
+  line-height: var(--bs-nav-link-line-height);
   color: var(--bs-nav-link-color);
   text-decoration: none;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
@@ -4018,7 +4032,7 @@ fieldset:disabled .btn {
 .navbar {
   --bs-navbar-padding-x: 0;
   --bs-navbar-padding-y: 0.84rem;
-  --bs-navbar-color: rgba(var(--bs-emphasis-color-rgb), 0.65);
+  --bs-navbar-color: var(--bs-secondary);
   --bs-navbar-hover-color: rgba(var(--bs-emphasis-color-rgb), 0.8);
   --bs-navbar-disabled-color: rgba(var(--bs-emphasis-color-rgb), 0.3);
   --bs-navbar-active-color: rgba(var(--bs-emphasis-color-rgb), 1);
@@ -4072,7 +4086,7 @@ fieldset:disabled .btn {
 .navbar-nav {
   --bs-nav-link-padding-x: 0;
   --bs-nav-link-padding-y: 0.5rem;
-  --bs-nav-link-font-weight: ;
+  --bs-nav-link-font-weight: 400;
   --bs-nav-link-color: var(--bs-navbar-color);
   --bs-nav-link-hover-color: var(--bs-navbar-hover-color);
   --bs-nav-link-disabled-color: var(--bs-navbar-disabled-color);
@@ -4084,7 +4098,8 @@ fieldset:disabled .btn {
 }
 .navbar-nav .show > .nav-link,
 .navbar-nav .nav-link.active {
-  color: var(--bs-navbar-active-color);
+  --bs-nav-link-font-weight: 600;
+  font-weight: var(--bs-nav-link-font-weight);
 }
 .navbar-nav .dropdown-menu {
   position: static;
@@ -6504,13 +6519,42 @@ fieldset:disabled .btn {
 .offcanvas-lg,
 .offcanvas-md,
 .offcanvas-sm {
+  position: relative;
+  backdrop-filter: blur(10px);
+}
+
+.offcanvas::before,
+.offcanvas-xxl::before,
+.offcanvas-xl::before,
+.offcanvas-lg::before,
+.offcanvas-md::before,
+.offcanvas-sm ::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background-image: url(/images/glass-bg-images.jpeg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: 0.3;
+  z-index: -1;
+}
+
+.offcanvas,
+.offcanvas-xxl,
+.offcanvas-xl,
+.offcanvas-lg,
+.offcanvas-md,
+.offcanvas-sm {
   --bs-offcanvas-zindex: 1045;
   --bs-offcanvas-width: 400px;
   --bs-offcanvas-height: 30vh;
   --bs-offcanvas-padding-x: 1.2rem;
   --bs-offcanvas-padding-y: 1.2rem;
   --bs-offcanvas-color: var(--bs-body-color);
-  --bs-offcanvas-bg: var(--bs-body-bg);
+  --bs-offcanvas-bg: rgba(var(--bs-body-bg-rgb), 0.3);
   --bs-offcanvas-border-width: var(--bs-border-width);
   --bs-offcanvas-border-color: var(--bs-border-color-translucent);
   --bs-offcanvas-box-shadow: 0 0.125rem 0.25rem
@@ -6708,6 +6752,22 @@ fieldset:disabled .btn {
     padding: 0;
     overflow-y: visible;
     background-color: transparent !important;
+  }
+  .offcanvas::before,
+  .offcanvas-xxl::before,
+  .offcanvas-xl::before,
+  .offcanvas-lg::before,
+  .offcanvas-md::before,
+  .offcanvas-sm ::before {
+    content: unset;
+  }
+  .offcanvas,
+  .offcanvas-xxl,
+  .offcanvas-xl,
+  .offcanvas-lg,
+  .offcanvas-md,
+  .offcanvas-sm {
+    backdrop-filter: unset;
   }
 }
 

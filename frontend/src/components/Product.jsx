@@ -1,12 +1,41 @@
 import { Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import {
+  RiStarLine,
+  RiArrowLeftRightLine,
+  RiShoppingBagLine,
+} from 'react-icons/ri';
 import Rating from './Rating';
 
 const Product = ({ product }) => {
   return (
-    <Card className="my-3 p-3 rounded">
+    <Card className="my-3 rounded" border="secondary">
       <Link to={`/product/${product._id}`}>
         <Card.Img src={product.thumbnail} variant="top" />
+        <Card.Img
+          src={product.thumbnailHover}
+          variant="top"
+          className="hover-img"
+        />
+        <div className="actions">
+          <ul>
+            <li>
+              <button>
+                <RiStarLine />
+              </button>
+            </li>
+            <li>
+              <button>
+                <RiArrowLeftRightLine />
+              </button>
+            </li>
+            <li>
+              <button>
+                <RiShoppingBagLine />
+              </button>
+            </li>
+          </ul>
+        </div>
       </Link>
       <Card.Body>
         <Link to={`/product/${product._id}`}>
