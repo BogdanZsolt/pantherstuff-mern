@@ -1,0 +1,46 @@
+{
+  "menus": [
+    {
+      "id": 1,
+      "text": "About",
+      "link": ""
+    },
+    {
+      "id": 2,
+      "text": "Shop",
+      "link": "/shop"
+    },
+    {
+      "id": 3,
+      "text": "Library",
+      "link": ""
+    },
+    {
+      "id": 4,
+      "text": "Blog",
+      "link": "",
+      "dropdown": [
+        {
+          "id": 4.1,
+          "text": "Test1",
+          "link": "/cart"
+        },
+        {
+          "id": 4.2,
+          "text": "Test2",
+          "link": ""
+        },
+        {
+          "id": 4.3,
+          "text": "Test3",
+          "link": ""
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "text": "Contact",
+      "link": ""
+    }
+  ]
+}

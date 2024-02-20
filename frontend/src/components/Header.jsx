@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import {
   Container,
   Navbar,
@@ -10,6 +11,7 @@ import { RiShoppingBagLine, RiUserLine } from 'react-icons/ri';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
+import Menu from './Menu';
 import logo from '../assets/logo-200x200.png';
 // import SearchBox from './SearchBox';
 import { useLogoutMutation } from '../slices/usersApiSlice';
@@ -18,6 +20,19 @@ import { logout } from '../slices/authSlice';
 const Header = () => {
   const { cartItems } = useSelector((state) => state.cart);
   const { userInfo } = useSelector((state) => state.auth);
+  const [scrollClass, setScrollClass] = useState('');
+
+  const scrollNavbar = () => {
+    if (window !== undefined) {
+      let windowHeight = window.scrollY;
+      windowHeight > 100 ? setScrollClass('scroll-nav') : setScrollClass('');
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', scrollNavbar);
+    return () => window.removeEventListener('scroll', scrollNavbar);
+  }, []);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -35,7 +50,11 @@ const Header = () => {
   };
   return (
     <>
-      <Navbar expand="md" className="mb-3 ps-navbar" fixed="top">
+      <Navbar
+        expand="md"
+        className={`mb-3 ps-navbar ${scrollClass}`}
+        fixed="top"
+      >
         <Container fluid>
           <LinkContainer to="/">
             <Navbar.Brand href="/">
@@ -54,17 +73,12 @@ const Header = () => {
               </Offcanvas.Title>
             </Offcanvas.Header>
             <Offcanvas.Body>
-              <Nav className="justify-content-start flex-grow-1 pe-3" as="ul">
-                <Nav.Link href="#action1">About</Nav.Link>
-                <LinkContainer to="/shop">
-                  <Nav.Link>Shop</Nav.Link>
-                </LinkContainer>
-                <Nav.Link href="#action3">Library</Nav.Link>
-                <Nav.Link href="#action4">Blog</Nav.Link>
-                <Nav.Link href="#action5">Contact</Nav.Link>
-              </Nav>
-              <Nav className="justify-content-end flex-grow-1 pe-3" as="ul">
-                {/* <SearchBox />  */}
+              <Menu />
+              <Nav
+                className="justify-content-end flex-grow-1 pe-3 right-menu"
+                as="ul"
+              >
+                {/* <SearchBox /> */}
                 <LinkContainer to="/cart">
                   <Nav.Link>
                     <RiShoppingBagLine />

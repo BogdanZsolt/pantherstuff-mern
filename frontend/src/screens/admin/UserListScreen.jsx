@@ -3,6 +3,7 @@ import { Table, Button, Container } from 'react-bootstrap';
 import { FaTimes, FaTrash, FaEdit, FaCheck } from 'react-icons/fa';
 import Message from '../../components/Message';
 import Loader from '../../components/Loader';
+import Banner from '../../components/Banner';
 import { toast } from 'react-toastify';
 import {
   useGetUsersQuery,
@@ -28,8 +29,8 @@ const UserListScreen = () => {
 
   return (
     <>
+      <Banner title="Users" />
       <Container>
-        <h1>Users</h1>
         {loadingDelete && <Loader />}
         {isLoading ? (
           <Loader />

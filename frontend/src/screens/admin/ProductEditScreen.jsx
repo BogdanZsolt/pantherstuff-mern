@@ -5,6 +5,7 @@ import Message from '../../components/Message';
 import Loader from '../../components/Loader';
 import FormContainer from '../../components/FormContainer';
 import { toast } from 'react-toastify';
+import Banner from '../../components/Banner';
 import {
   useGetProductDetailsQuery,
   useUpdateProductMutation,
@@ -94,12 +95,12 @@ const ProductEditScreen = () => {
 
   return (
     <>
+      <Banner title="Edit Product" />
       <Container>
         <Link to="/admin/productlist" className="btn btn-light my-3">
           Go Back
         </Link>
         <FormContainer>
-          <h1>Edit Product</h1>
           {loadingUpdate && <Loader />}
           {isLoading ? (
             <Loader />

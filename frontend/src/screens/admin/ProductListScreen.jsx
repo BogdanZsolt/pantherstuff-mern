@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import Message from '../../components/Message';
 import Loader from '../../components/Loader';
 import Paginate from '../../components/Paginate';
+import Banner from '../../components/Banner';
 import { toast } from 'react-toastify';
 import {
   useGetProductsQuery,
@@ -50,11 +51,9 @@ const ProductListScreen = () => {
 
   return (
     <>
+      <Banner title="Products" />
       <Container>
         <Row className="align-items-center">
-          <Col>
-            <h1>Products</h1>
-          </Col>
           <Col className="text-end">
             <Button className="btn-sm m-3" onClick={createProductHandler}>
               <FaEdit /> Create Product

@@ -3,6 +3,7 @@ import { Table, Button, Container } from 'react-bootstrap';
 import { FaTimes } from 'react-icons/fa';
 import Message from '../../components/Message';
 import Loader from '../../components/Loader';
+import Banner from '../../components/Banner';
 import { useGetOrdersQuery } from '../../slices/ordersApiSlice';
 
 const OrderListScreen = () => {
@@ -10,8 +11,8 @@ const OrderListScreen = () => {
 
   return (
     <>
+      <Banner title="Orders" />
       <Container>
-        <h1>Orders</h1>
         {isLoading ? (
           <Loader />
         ) : error ? (

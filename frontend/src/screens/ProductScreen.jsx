@@ -17,6 +17,7 @@ import Rating from '../components/Rating';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
 import Meta from '../components/Meta';
+import Banner from '../components/Banner';
 import {
   useGetProductDetailsQuery,
   useCreateReviewMutation,
@@ -69,10 +70,6 @@ const ProductScreen = () => {
 
   return (
     <>
-      <Link className="btn btn-light my-3" to="/">
-        Go Back
-      </Link>
-
       {isLoading ? (
         <Loader />
       ) : error ? (
@@ -81,8 +78,12 @@ const ProductScreen = () => {
         </Message>
       ) : (
         <>
+          <Banner src="/images/ecoprint-06.webp" title={product.name} />
           <Meta title={product.name} />
           <Container>
+            <Link className="btn btn-light my-3" to="/shop">
+              Go Back
+            </Link>
             <Row>
               <Col md={5}>
                 <Image src={product.thumbnail} alt={product.name} fluid />
