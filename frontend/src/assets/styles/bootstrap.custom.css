@@ -140,6 +140,7 @@
   --transition-transform: transform 0.3s;
   --transition-filter: filter 0.3s;
   --transition-shadow: box-shadow 0.3s;
+  --transition-opacity: opacity 0.3s;
 }
 
 [data-bs-theme='dark'] {
@@ -6515,34 +6516,6 @@ fieldset:disabled .btn {
     --bs-spinner-animation-speed: 1.5s;
   }
 }
-.offcanvas,
-.offcanvas-xxl,
-.offcanvas-xl,
-.offcanvas-lg,
-.offcanvas-md,
-.offcanvas-sm {
-  position: relative;
-  backdrop-filter: blur(10px);
-}
-
-.offcanvas::before,
-.offcanvas-xxl::before,
-.offcanvas-xl::before,
-.offcanvas-lg::before,
-.offcanvas-md::before,
-.offcanvas-sm ::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 100%;
-  background-image: url(/images/glass-bg-images.jpeg);
-  background-repeat: no-repeat;
-  background-size: cover;
-  opacity: 0.3;
-  z-index: -1;
-}
 
 .offcanvas,
 .offcanvas-xxl,
@@ -6556,7 +6529,7 @@ fieldset:disabled .btn {
   --bs-offcanvas-padding-x: 1.2rem;
   --bs-offcanvas-padding-y: 1.2rem;
   --bs-offcanvas-color: var(--bs-body-color);
-  --bs-offcanvas-bg: rgba(var(--bs-body-bg-rgb), 0.3);
+  --bs-offcanvas-bg: var(--bs-body);
   --bs-offcanvas-border-width: var(--bs-border-width);
   --bs-offcanvas-border-color: var(--bs-border-color-translucent);
   --bs-offcanvas-box-shadow: 0 0.125rem 0.25rem

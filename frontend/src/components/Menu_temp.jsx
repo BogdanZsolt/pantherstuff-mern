@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import NativeListener from 'react-native-listener';
 import { Nav, NavDropdown, Container, Image } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
@@ -6,33 +6,17 @@ import mainMenus from './menus.json';
 
 const Menu = () => {
   const { menus } = mainMenus;
-  const [show, setShow] = useState(false);
-
-  const mobileShowHandler = () => {
-    if (window.innerWidth <= 991) {
-      setShow(!show);
-    } else {
-      setShow(false);
-    }
-  };
 
   return (
     <Nav className="justify-content-start flex-grow-1 pe-3 left-menu" as="ul">
       {menus.map((item) =>
         item?.mega?.length > 0 ? (
-          <div key={item.id} className="mega-parent">
-            {item.link !== '' ? (
-              <LinkContainer to={item.link}>
-                <Nav.Link className="mega-dropdown" onClick={mobileShowHandler}>
-                  {item.text}
-                </Nav.Link>
-              </LinkContainer>
-            ) : (
-              <Nav.Link className="mega-dropdown" onClick={mobileShowHandler}>
-                {item.text}
-              </Nav.Link>
-            )}
-            <div className={`mega-menu ${show ? 'show' : ''}`}>
+          <NativeListener stopClick key={item.id}>
+            <NavDropdown
+              title={item.text}
+              renderMenuOnMount={true}
+              className="mega-parent"
+            >
               <Container>
                 <ul className="mega-menu-wrapper">
                   {item.mega.map((mitem) => (
@@ -43,7 +27,7 @@ const Menu = () => {
                             <div className="image">
                               <Image src={mitem.image} />
                             </div>
-                            <h5>{mitem.text}</h5>
+                            <h5>{mitem.text} link</h5>
                           </Link>
                         </LinkContainer>
                       ) : (
@@ -58,8 +42,8 @@ const Menu = () => {
                   ))}
                 </ul>
               </Container>
-            </div>
-          </div>
+            </NavDropdown>
+          </NativeListener>
         ) : item?.dropdown?.length > 0 ? (
           <NavDropdown key={item.id} title={item.text}>
             {item.dropdown.map((ditem) => (

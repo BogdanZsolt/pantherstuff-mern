@@ -1,9 +1,3 @@
-/* .header {
-  position: sticky;
-  top: 0;
-  left: 0;
-} */
-
 @keyframes scale-down {
   0% {
     transform: scale(1.5);
@@ -26,8 +20,7 @@
     rgba(var(--bs-secondary-rgb), 0.6),
     transparent
   );
-  /* background-color: rgba(var(--bs-body-bg-rgb), 0.35); */
-  /* backdrop-filter: blur(0.5rem); */
+  padding-bottom: 0;
   transition: var(--transition-background);
 }
 
@@ -62,7 +55,10 @@
 }
 
 .ps-navbar .nav-link {
+  font-size: clamp(1rem, 0.5rem + 1.0417vw, 1.75rem);
+  font-weight: 600;
   transition: var(--transition-color);
+  padding-bottom: 0;
 }
 
 .ps-navbar.scroll-nav .nav-link {
@@ -83,6 +79,152 @@ img.logo {
 
 .navbar-toggler {
   margin-left: auto;
+}
+
+.offcanvas {
+  background-color: rgba(var(--bs-primary-rgb), 0.35);
+  backdrop-filter: blur(8px);
+}
+
+.offcanvas.offcanvas-start {
+  border-right: 2px solid rgba(var(--bs-primary-rgb), 0.8);
+}
+
+.offcanvas::before {
+  position: absolute;
+  content: '';
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/images/glass-bg-images.jpeg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.3;
+  z-index: -1;
+}
+
+/* MOBILE MENU BUTTON */
+.navbar-toggler {
+  width: 2rem;
+  height: 2rem;
+  position: relative;
+  transition: 0.5s ease-in-out;
+}
+
+.navbar-toggler,
+.navbar-toggler:focus,
+.navbar-toggler:active,
+.navbar-toggler-icon:focus {
+  outline: none;
+  box-shadow: none;
+  border: 0;
+}
+
+.navbar-toggler span {
+  margin: 0;
+  padding: 0;
+}
+
+.toggler-icon {
+  display: block;
+  position: absolute;
+  height: 3px;
+  width: 1.25rem;
+  background: var(--bs-secondary);
+  border-radius: 1px;
+  opacity: 1;
+  left: 0;
+  transform: rotate(0deg);
+  transition: 0.25s ease-in-out;
+}
+
+.middle-bar {
+  margin-top: 0;
+}
+
+.navbar-toggler .top-bar {
+  margin-top: 0;
+  transform: rotate(135deg);
+}
+
+.navbar-toggler .middle-bar {
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+
+.navbar-toggler .bottom-bar {
+  margin-top: 0;
+  transform: rotate(-135deg);
+}
+
+.navbar-toggler.collapsed .top-bar {
+  margin-top: -1.25rem;
+  transform: rotate(0deg);
+}
+
+.navbar-toggler.collapsed .middle-bar {
+  opacity: 1;
+  filter: alpha(opacity=100);
+}
+
+.navbar-toggler.collapsed .bottom-bar {
+  margin-top: 1.25rem;
+  transform: rotate(0deg);
+}
+
+/* MEGA MENU */
+.mega-parent .nav-link:after {
+  display: inline-block;
+  margin-left: 0.255em;
+  vertical-align: 0.255em;
+  content: '';
+  border-top: 0.3em solid;
+  border-right: 0.3em solid transparent;
+  border-bottom: 0;
+  border-left: 0.3em solid transparent;
+}
+
+.mega-parent .mega-menu {
+  display: none;
+  transition: all 0.5s;
+}
+
+.mega-parent .mega-menu.show {
+  display: block;
+}
+
+.mega-parent .mega-menu ul {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  list-style: none;
+  padding-left: 0;
+  width: 100%;
+}
+
+.mega-menu-wrapper .mega-item .image {
+  display: none;
+  position: relative;
+  border-radius: var(--bs-border-radius);
+  width: 9.375rem;
+  height: 9.375rem;
+  overflow: hidden;
+}
+
+.mega-menu-wrapper .mega-item .image img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: var(--transition-transform);
+}
+
+.mega-menu-wrapper .mega-item:hover .image img {
+  transform: scale(1.1);
 }
 
 .btn-lasaphire {
@@ -272,6 +414,64 @@ table th {
   --swiper-pagination-color: #d86f6f;
 }
 
+/* BANNER */
+.banner {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 50vh;
+}
+
+.banner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, transparent, var(--bs-primary));
+  z-index: 1;
+}
+
+.banner .title {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.banner .title h3 {
+  text-transform: capitalize;
+  font-size: clamp(3rem, 2.85rem + 0.75vw, 3.75rem);
+}
+
+.banner-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.banner .banner-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 1;
+  z-index: -1;
+}
+
 /* Products Carousel */
 .card-img-top.hover-img {
   position: absolute;
@@ -355,23 +555,6 @@ table th {
   --swiper-navigation-sides-offset: -2.25rem;
 }
 
-/* Media Querys */
-@media (min-width: 768px) {
-  img.logo {
-    width: 6.25rem;
-  }
-
-  .carousel-nav > div {
-    width: 2.5rem;
-    height: 2.5rem;
-  }
-
-  .swiper-button-next,
-  .swiper-button-prev {
-    --swiper-navigation-sides-offset: -3rem;
-  }
-}
-
 /* PHOTO GALLERY */
 .photo-gallery .grid-container {
   display: grid;
@@ -406,70 +589,38 @@ table th {
   box-shadow: var(--shadow-sm);
 }
 
-/* BANNER */
-.banner {
-  display: block;
-  position: relative;
-  width: 100%;
-  height: 50vh;
-}
-
-.banner::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(to bottom, transparent, var(--bs-primary));
-  z-index: 1;
-}
-
-.banner .title {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 2;
-}
-
-.banner .title h3 {
-  text-transform: capitalize;
-  font-size: clamp(3rem, 2.85rem + 0.75vw, 3.75rem);
-}
-
-.banner-image {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-}
-
-.banner .banner-video {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  opacity: 1;
-  z-index: -1;
-}
-
+/* Media Querys */
 @media (min-width: 600px) {
   .wide {
     grid-column: span 2;
   }
   .tail {
     grid-row: span 2;
+  }
+}
+
+@media (min-width: 768px) {
+  img.logo {
+    width: 6.25rem;
+  }
+
+  .carousel-nav > div {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .swiper-button-next,
+  .swiper-button-prev {
+    --swiper-navigation-sides-offset: -3rem;
+  }
+
+  /* OFFCANVAS MOBILE OFFCANVAS */
+  .offcanvas::before {
+    content: unset;
+  }
+
+  .offcanvas {
+    backdrop-filter: unset;
   }
 }
 
@@ -523,6 +674,78 @@ table th {
 
   .swiper-slide-active .ls-cover img {
     animation: 5s scale-down;
+  }
+
+  /* MEGA MENU */
+  .mega-parent .nav-link:after {
+    display: inline-block;
+    margin-left: 0.255em;
+    vertical-align: 0.255em;
+    content: '';
+    border-top: 0.3em solid;
+    border-right: 0.3em solid transparent;
+    border-bottom: 0;
+    border-left: 0.3em solid transparent;
+  }
+
+  .mega-parent .mega-menu {
+    display: block;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    min-height: 8rem;
+    background-color: rgba(var(--bs-primary-rgb), 0.35);
+    opacity: 0;
+    visibility: hidden;
+    margin-top: 1.25rem;
+    box-shadow: var(--shadow-md);
+    transition: all 0.5s;
+    z-index: 7;
+  }
+
+  .mega-parent .mega-menu::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    z-index: -2;
+  }
+  .mega-parent .mega-menu::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    background-image: url(/images/glass-bg-images.jpeg);
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 0.3;
+    z-index: -1;
+  }
+
+  .mega-parent:hover .mega-menu {
+    opacity: 1;
+    visibility: visible;
+    margin-top: 0;
+  }
+
+  .mega-parent .mega-menu ul {
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    width: 100%;
+  }
+
+  .mega-menu-wrapper .mega-item .image {
+    display: block;
   }
 }
 

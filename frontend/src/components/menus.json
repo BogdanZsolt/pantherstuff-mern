@@ -3,7 +3,39 @@
     {
       "id": 1,
       "text": "About",
-      "link": ""
+      "link": "/cart",
+      "mega": [
+        {
+          "id": 1.1,
+          "text": "Our Herstory",
+          "link": "/herstory",
+          "image": "/images/ecoprint-01-200x200.webp"
+        },
+        {
+          "id": 1.2,
+          "text": "Me Petra",
+          "link": "",
+          "image": "/images/pepsz-yogaban-200x200.webp"
+        },
+        {
+          "id": 1.3,
+          "text": "Base Materials",
+          "link": "",
+          "image": "/images/ecoprint-04-200x200.webp"
+        },
+        {
+          "id": 1.4,
+          "text": "Values & Intentions",
+          "link": "",
+          "image": "/images/our_values-150x150.jpg"
+        },
+        {
+          "id": 1.5,
+          "text": "Frequently Asked Quetions",
+          "link": "",
+          "image": "/images/ecoprint-06-200x200.webp"
+        }
+      ]
     },
     {
       "id": 2,

@@ -31,6 +31,7 @@ import ProductEditScreen from './screens/admin/ProductEditScreen.jsx';
 import UserListScreen from './screens/admin/UserListScreen.jsx';
 import UserEditScreen from './screens/admin/UserEditScreen.jsx';
 import ShopScreen from './screens/ShopScreen.jsx';
+import HerStoryScreen from './screens/HerStoryScreen.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -38,6 +39,7 @@ const router = createBrowserRouter(
       <Route index={true} path="/" element={<HomeScreen />} />
       {/* <Route path="/search/:keyword" element={<HomeScreen />} /> */}
       {/* <Route path="/page/:pageNumber" element={<HomeScreen />} /> */}
+      <Route path="/herstory" element={<HerStoryScreen />} />
       <Route path="/shop" element={<ShopScreen />} />
       <Route path="/shop/search/:keyword" element={<ShopScreen />} />
       <Route path="/shop/page/:pageNumber" element={<ShopScreen />} />

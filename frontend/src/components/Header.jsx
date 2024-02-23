@@ -50,22 +50,26 @@ const Header = () => {
   };
   return (
     <>
-      <Navbar
-        expand="md"
-        className={`mb-3 ps-navbar ${scrollClass}`}
-        fixed="top"
-      >
+      <Navbar expand="md" className={`ps-navbar ${scrollClass}`} fixed="top">
         <Container fluid>
           <LinkContainer to="/">
             <Navbar.Brand href="/">
               <img src={logo} alt="PantherStuff" className="logo" />
             </Navbar.Brand>
           </LinkContainer>
-          <Navbar.Toggle aria-controls="offcanvas-navbar" />
+          <Navbar.Toggle
+            aria-controls="offcanvas-navbar-md"
+            className="d-flex d-md-none flex-column justify-content-around align-items-center"
+          >
+            <span className="toggler-icon top-bar"></span>
+            <span className="toggler-icon middle-bar"></span>
+            <span className="toggler-icon bottom-bar"></span>
+          </Navbar.Toggle>
           <Navbar.Offcanvas
             id="offcanvas-navbar"
             aria-labelledby="offcanvas-navbar-label"
             placement="start"
+            className="ps-navbar-offcanvas"
           >
             <Offcanvas.Header closeButton>
               <Offcanvas.Title id="offcanvas-navbar-label">
