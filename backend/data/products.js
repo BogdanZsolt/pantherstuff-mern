@@ -1,6 +1,5 @@
 const products = [
   {
-    _id: '1',
     name: 'elf "hoodie" jacket',
     thumbnail: '/images/manopulcsi-01-450x600.webp',
     thumbnailHover: '/images/manopulcsi-02-450x600.webp',
@@ -13,10 +12,13 @@ const products = [
     rating: 4.5,
     numReviews: '12',
     colors: ['#5a5240'],
-    thumbnails: ['/images/manopulcsi-03-450x600.webp'],
+    thumbnails: [
+      '/images/manopulcsi-01-450x600.webp',
+      '/images/manopulcsi-02-450x600.webp',
+      '/images/manopulcsi-03-450x600.webp',
+    ],
   },
   {
-    _id: '2',
     name: 'Ocean Blue LLC2',
     thumbnail: '/images/product_02.jpg',
     thumbnailHover: '/images/product_02b.jpg',
@@ -28,9 +30,9 @@ const products = [
     rating: 4.5,
     numReviews: '12',
     colors: ['#9DC5D5'],
+    thumbnails: ['/images/product_02.jpg', '/images/product_02b.jpg'],
   },
   {
-    _id: '3',
     name: 'Inner Sweater at Office',
     thumbnail: '/images/product_03.jpg',
     thumbnailHover: '/images/product_03b.jpg',
@@ -42,9 +44,9 @@ const products = [
     rating: 4.5,
     numReviews: '12',
     colors: ['#D1DDE9'],
+    thumbnails: ['/images/product_03.jpg', '/images/product_03b.jpg'],
   },
   {
-    _id: '4',
     name: 'XYZ Hoodie 485',
     thumbnail: '/images/product_04.jpg',
     thumbnailHover: '/images/product_04b.jpg',
@@ -57,9 +59,9 @@ const products = [
     rating: 4.5,
     numReviews: '12',
     colors: ['#A6A9BC'],
+    thumbnails: ['/images/product_04.jpg', '/images/product_04b.jpg'],
   },
   {
-    _id: '5',
     name: 'Light Blue Hoodie',
     thumbnail: '/images/product_05.jpg',
     thumbnailHover: '/images/product_05b.jpg',
@@ -72,9 +74,9 @@ const products = [
     rating: 4.5,
     numReviews: '12',
     colors: ['#CCDFEB'],
+    thumbnails: ['/images/product_05.jpg', '/images/product_05b.jpg'],
   },
   {
-    _id: '6',
     name: 'Brown Gold Mix',
     thumbnail: '/images/product_06.jpg',
     thumbnailHover: '/images/product_06b.jpg',
@@ -87,9 +89,9 @@ const products = [
     rating: 4.5,
     numReviews: '12',
     colors: ['#AF8060'],
+    thumbnails: ['/images/product_06.jpg', '/images/product_06b.jpg'],
   },
   {
-    _id: '7',
     name: 'Inner Sweater at Office',
     thumbnail: '/images/product_07.jpg',
     thumbnailHover: '/images/product_07b.jpg',
@@ -102,9 +104,9 @@ const products = [
     rating: 4.5,
     numReviews: '12',
     colors: ['#E98F8F'],
+    thumbnails: ['/images/product_07.jpg', '/images/product_07b.jpg'],
   },
   {
-    _id: '8',
     name: 'The Maroon Four',
     thumbnail: '/images/product_08.jpg',
     thumbnailHover: '/images/product_08b.jpg',
@@ -117,6 +119,7 @@ const products = [
     rating: 4.5,
     numReviews: '12',
     colors: ['#5D121A'],
+    thumbnails: ['/images/product_08.jpg', '/images/product_08b.jpg'],
   },
 ];
 
