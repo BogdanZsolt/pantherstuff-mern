@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
@@ -11,6 +12,7 @@ import {
   ListGroupItem,
   Tabs,
   Tab,
+  Badge,
 } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { FaStar } from 'react-icons/fa';
@@ -240,7 +242,8 @@ const ProductScreen = () => {
                 id="product-tab"
                 activeKey={activeTab}
                 onSelect={(k) => setActiveTab(k)}
-                className="mb-3 justify-content-center product-tab"
+                className="mb-3 product-tab scrollto"
+                justify
               >
                 <Tab eventKey="description" title="Product Details">
                   <p>{product.description}</p>
@@ -248,69 +251,94 @@ const ProductScreen = () => {
                 <Tab eventKey="custom" title="Custom">
                   Tab content for Profile
                 </Tab>
-                <Tab eventKey="reviews" title="Reviews">
+                <Tab
+                  eventKey="reviews"
+                  title={
+                    <React.Fragment>
+                      <span className="position-relative">
+                        Reviews
+                        <Badge
+                          className="position-absolute"
+                          bg="secondary"
+                          text="primary"
+                          pill
+                        >
+                          {product.numReviews}
+                        </Badge>
+                      </span>
+                    </React.Fragment>
+                  }
+                >
                   <Row className="review">
-                    <Col md={6}>
-                      <h2>Reviews</h2>
-                      {product.reviews.length === 0 && (
-                        <Message>No Reviews</Message>
+                    <h3>Rating & views</h3>
+                    <Row className="header">
+                      {product.reviews.length > 0 && (
+                        <div className="d-flex align-items-center">
+                          <span className="rating">{product.rating}</span>
+                          <div className="wrap">
+                            <span className="reviews">{`${product.numReviews} reviews`}</span>
+                          </div>
+                        </div>
                       )}
-                      <ListGroup variant="flush">
-                        {product.reviews.map((review) => (
-                          <ListGroup.Item key={review._id}>
-                            <strong>{review.name}</strong>
-                            <Rating value={review.rating} />
-                            <p>{review.createdAt.substring(0, 10)}</p>
-                            <p>{review.comment}</p>
-                          </ListGroup.Item>
-                        ))}
-                        <ListGroup.Item>
-                          <h2>Write a Customer Review</h2>
-                          {loadingProductReview && <Loader />}
-
-                          {userInfo ? (
-                            <Form onSubmit={submitHandler}>
-                              <Form.Group controlId="rating" className="my-2">
-                                <Form.Label>Rating</Form.Label>
-                                <Form.Control
-                                  as="select"
-                                  value={rating}
-                                  onChange={(e) => setRating(e.target.value)}
-                                >
-                                  <option value="">Select...</option>
-                                  <option value="1">1 - Poor</option>
-                                  <option value="2">2 - Fair</option>
-                                  <option value="3">3 - Good</option>
-                                  <option value="4">4 - Very Good</option>
-                                  <option value="5">5 - Excelent</option>
-                                </Form.Control>
-                              </Form.Group>
-                              <Form.Group controlId="comment" className="my-2">
-                                <Form.Label>Comment</Form.Label>
-                                <Form.Control
-                                  as="textarea"
-                                  row="3"
-                                  value={comment}
-                                  onChange={(e) => setComment(e.target.value)}
-                                ></Form.Control>
-                                <Button
-                                  disabled={loadingProductReview}
-                                  type="submit"
-                                  variant="primary"
-                                >
-                                  Submit
-                                </Button>
-                              </Form.Group>
-                            </Form>
-                          ) : (
-                            <Message>
-                              Please <Link to="/login">sign in</Link> to write a
-                              review
-                            </Message>
-                          )}
+                    </Row>
+                    {product.reviews.length === 0 && (
+                      <Message>No Reviews</Message>
+                    )}
+                    <ListGroup variant="flush">
+                      {product.reviews.map((review) => (
+                        <ListGroup.Item key={review._id}>
+                          <strong>{review.name}</strong>
+                          <Rating value={review.rating} />
+                          <p>{review.createdAt.substring(0, 10)}</p>
+                          <p>{review.comment}</p>
                         </ListGroup.Item>
-                      </ListGroup>
-                    </Col>
+                      ))}
+                      <ListGroup.Item>
+                        <h2>Write a Customer Review</h2>
+                        {loadingProductReview && <Loader />}
+
+                        {userInfo ? (
+                          <Form onSubmit={submitHandler}>
+                            <Form.Group controlId="rating" className="my-2">
+                              <Form.Label>Rating</Form.Label>
+                              <Form.Control
+                                as="select"
+                                value={rating}
+                                onChange={(e) => setRating(e.target.value)}
+                              >
+                                <option value="">Select...</option>
+                                <option value="1">1 - Poor</option>
+                                <option value="2">2 - Fair</option>
+                                <option value="3">3 - Good</option>
+                                <option value="4">4 - Very Good</option>
+                                <option value="5">5 - Excelent</option>
+                              </Form.Control>
+                            </Form.Group>
+                            <Form.Group controlId="comment" className="my-2">
+                              <Form.Label>Comment</Form.Label>
+                              <Form.Control
+                                as="textarea"
+                                row="3"
+                                value={comment}
+                                onChange={(e) => setComment(e.target.value)}
+                              ></Form.Control>
+                              <Button
+                                disabled={loadingProductReview}
+                                type="submit"
+                                variant="primary"
+                              >
+                                Submit
+                              </Button>
+                            </Form.Group>
+                          </Form>
+                        ) : (
+                          <Message>
+                            Please <Link to="/login">sign in</Link> to write a
+                            review
+                          </Message>
+                        )}
+                      </ListGroup.Item>
+                    </ListGroup>
                   </Row>
                 </Tab>
                 <Tab eventKey="shipping" title="Shipping">
