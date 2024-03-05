@@ -1,7 +1,21 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Container, Row, Col, Offcanvas, Button } from 'react-bootstrap';
-import { RiFilterLine } from 'react-icons/ri';
+import {
+  Container,
+  Row,
+  Col,
+  Offcanvas,
+  Button,
+  Form,
+  ButtonGroup,
+} from 'react-bootstrap';
+import {
+  RiFilterLine,
+  RiPauseMiniLine,
+  RiListCheck2,
+  RiLayoutGridLine,
+  RiLayoutMasonryLine,
+} from 'react-icons/ri';
 import Product from '../components/Product.jsx';
 import Loader from '../components/Loader.jsx';
 import Message from '../components/Message.jsx';
@@ -38,7 +52,6 @@ const ShopScreen = () => {
           />
           <Container className="my-4" fluid>
             <h2 className="text-center">Products</h2>
-            <Row>This is a header</Row>
             <Row>
               <Col lg={3} xxl={2} className="d-none d-lg-block">
                 <FilterSidebar />
@@ -46,7 +59,35 @@ const ShopScreen = () => {
               <Col xs={12} lg={9} xxl={10}>
                 <Row className="align-items-center justify-content-between">
                   <Col>Showing 9 of 34 results</Col>
-                  <Col className="text-end">Default sorting</Col>
+                  <Col
+                    sm={7}
+                    md={6}
+                    xxl={4}
+                    className="d-flex align-items-center justify-content-end"
+                  >
+                    <Form.Select aria-label="Default sorting">
+                      <option>Default sorting</option>
+                      <option value="1">Popular</option>
+                      <option value="2">Rating</option>
+                      <option value="3">Latest</option>
+                      <option value="4">Price low to high</option>
+                      <option value="4">Price high to low</option>
+                    </Form.Select>
+                    <ButtonGroup>
+                      <Button>
+                        <RiPauseMiniLine />
+                      </Button>
+                      <Button>
+                        <RiListCheck2 />
+                      </Button>
+                      <Button>
+                        <RiLayoutGridLine />
+                      </Button>
+                      <Button>
+                        <RiLayoutMasonryLine />
+                      </Button>
+                    </ButtonGroup>
+                  </Col>
                 </Row>
                 <Row>
                   {data.products.map((product) => (

@@ -83,18 +83,20 @@ const Header = () => {
                 as="ul"
               >
                 {/* <SearchBox /> */}
-                <LinkContainer to="/cart">
-                  <Nav.Link>
-                    <RiShoppingBagLine />
-                    {cartItems.length > 0 && (
-                      <Badge pill bg="success" style={{ marginLeft: '5px' }}>
-                        {cartItems.reduce((a, c) => a + c.qty, 0)}
-                      </Badge>
-                    )}
-                  </Nav.Link>
-                </LinkContainer>
+                <li className="d-flex justify-content-center align-items-center">
+                  <LinkContainer to="/cart">
+                    <Nav.Link>
+                      <RiShoppingBagLine />
+                      {cartItems.length > 0 && (
+                        <Badge pill bg="success" style={{ marginLeft: '5px' }}>
+                          {cartItems.reduce((a, c) => a + c.qty, 0)}
+                        </Badge>
+                      )}
+                    </Nav.Link>
+                  </LinkContainer>
+                </li>
                 {userInfo ? (
-                  <NavDropdown title={userInfo.name} id="username">
+                  <NavDropdown title={userInfo.name} id="username" as="li">
                     <LinkContainer to="/profile">
                       <NavDropdown.Item>Profile</NavDropdown.Item>
                     </LinkContainer>
@@ -111,7 +113,7 @@ const Header = () => {
                   </LinkContainer>
                 )}
                 {userInfo && userInfo.isAdmin && (
-                  <NavDropdown title="Admin" id="admin-menu">
+                  <NavDropdown title="Admin" id="admin-menu" as="li">
                     <LinkContainer to="/admin/productlist">
                       <NavDropdown.Item>Products</NavDropdown.Item>
                     </LinkContainer>

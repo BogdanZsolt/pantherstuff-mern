@@ -13,6 +13,7 @@ import {
   Tabs,
   Tab,
   Badge,
+  Modal,
 } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { FaStar } from 'react-icons/fa';
@@ -46,6 +47,7 @@ const ProductScreen = () => {
   const [qty, setQty] = useState(1);
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
+  const [showReview, setShowReview] = useState(false);
 
   const [activeTab, setActiveTab] = useState('description');
 
@@ -272,14 +274,21 @@ const ProductScreen = () => {
                   <Row className="review">
                     <h3>Rating & views</h3>
                     <Row className="header">
-                      {product.reviews.length > 0 && (
-                        <div className="d-flex align-items-center">
-                          <span className="rating">{product.rating}</span>
-                          <div className="wrap">
-                            <span className="reviews">{`${product.numReviews} reviews`}</span>
+                      <Col>
+                        {product.reviews.length > 0 && (
+                          <div className="d-flex align-items-center">
+                            <span className="rating">{product.rating}</span>
+                            <div className="wrap">
+                              <span className="reviews">{`${product.numReviews} reviews`}</span>
+                            </div>
                           </div>
-                        </div>
-                      )}
+                        )}
+                      </Col>
+                      <Col className="text-end">
+                        <Button onClick={() => setShowReview(true)}>
+                          Write a review
+                        </Button>
+                      </Col>
                     </Row>
                     {product.reviews.length === 0 && (
                       <Message>No Reviews</Message>
@@ -347,6 +356,22 @@ const ProductScreen = () => {
               </Tabs>
             </div>
           </Container>
+          <Modal show={showReview} onHide={() => setShowReview(false)}>
+            <Modal.Header closeButton>
+              <Modal.Title>Modal heading</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              Woohoo, you are reading this text in a modal!
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={() => setShowReview(false)}>
+                Close
+              </Button>
+              <Button variant="primary" onClick={() => setShowReview(false)}>
+                Save Changes
+              </Button>
+            </Modal.Footer>
+          </Modal>
         </>
       )}
     </>

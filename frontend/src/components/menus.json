@@ -44,30 +44,45 @@
     },
     {
       "id": 3,
-      "text": "Library",
-      "link": ""
+      "text": "Knowledge",
+      "link": "",
+      "mega": [
+        {
+          "id": 3.1,
+          "text": "Membership",
+          "link": "",
+          "image": "/images/pepsz-yogaban-200x200.webp"
+        },
+        {
+          "id": "3.2",
+          "text": "Online Courses",
+          "link": "",
+          "image": "/images/ecoprint-04-200x200.webp"
+        },
+        {
+          "id": "3.3",
+          "text": "Retreats & Workshop",
+          "link": "",
+          "image": "/images/ecoprint-01-200x200.webp"
+        },
+        {
+          "id": "3.4",
+          "text": "PantherStuff Blog",
+          "link": "",
+          "image": "/images/ecoprint-05-200x200.webp"
+        },
+        {
+          "id": "3.5",
+          "text": "Library",
+          "link": "",
+          "image": "/images/ecoprint-06-200x200.webp"
+        }
+      ]
     },
     {
       "id": 4,
       "text": "Blog",
-      "link": "",
-      "dropdown": [
-        {
-          "id": 4.1,
-          "text": "Test1",
-          "link": "/cart"
-        },
-        {
-          "id": 4.2,
-          "text": "Test2",
-          "link": ""
-        },
-        {
-          "id": 4.3,
-          "text": "Test3",
-          "link": ""
-        }
-      ]
+      "link": "/blog"
     },
     {
       "id": 5,

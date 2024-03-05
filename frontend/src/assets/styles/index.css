@@ -836,6 +836,23 @@ table th {
   font-size: 1.875rem;
 }
 
+/* BLOG */
+.article-card .card-img-top {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.article-card .card-title {
+  font-size: 2rem;
+}
+
+.suggested-image {
+  width: 75px;
+  height: 100%;
+  object-fit: cover;
+}
+
 /* Media Querys */
 @media (min-width: 481px) {
   .product .image {
@@ -896,6 +913,17 @@ table th {
 
   .offcanvas {
     backdrop-filter: unset;
+  }
+
+  .article-card .card-img-top {
+    width: 200px;
+    height: 100%;
+  }
+
+  .suggested-image {
+    width: 200px;
+    height: 100%;
+    object-fit: cover;
   }
 }
 
@@ -1021,6 +1049,10 @@ table th {
 
   .mega-menu-wrapper .mega-item .image {
     display: block;
+  }
+
+  .suggested-image {
+    width: 75px;
   }
 }
 
