@@ -1,9 +1,9 @@
 import { LinkContainer } from 'react-router-bootstrap';
 import { Table, Button, Container } from 'react-bootstrap';
 import { FaTimes, FaTrash, FaEdit, FaCheck } from 'react-icons/fa';
+import AdminLayout from '../../components/AdminLayout';
 import Message from '../../components/Message';
 import Loader from '../../components/Loader';
-import Banner from '../../components/Banner';
 import { toast } from 'react-toastify';
 import {
   useGetUsersQuery,
@@ -28,8 +28,7 @@ const UserListScreen = () => {
   };
 
   return (
-    <>
-      <Banner title="Users" />
+    <AdminLayout>
       <Container>
         {loadingDelete && <Loader />}
         {isLoading ? (
@@ -82,7 +81,7 @@ const UserListScreen = () => {
           </Table>
         )}
       </Container>
-    </>
+    </AdminLayout>
   );
 };
 

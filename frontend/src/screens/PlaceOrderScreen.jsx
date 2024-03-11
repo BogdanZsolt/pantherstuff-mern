@@ -11,6 +11,8 @@ import {
   Container,
 } from 'react-bootstrap';
 import { toast } from 'react-toastify';
+import MainLayout from '../components/MainLayout';
+import Banner from '../components/Banner';
 import CheckoutSteps from '../components/CheckoutSteps';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
@@ -51,7 +53,8 @@ const PlaceOrderScreen = () => {
   };
 
   return (
-    <>
+    <MainLayout>
+      <Banner title="Order" />
       <Container>
         <CheckoutSteps step1 step2 step3 step4 />
         <Row>
@@ -165,7 +168,7 @@ const PlaceOrderScreen = () => {
           </Col>
         </Row>
       </Container>
-    </>
+    </MainLayout>
   );
 };
 

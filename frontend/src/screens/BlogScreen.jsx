@@ -1,4 +1,5 @@
 import { Container, Row, Col } from 'react-bootstrap';
+import MainLayout from '../components/MainLayout';
 import Loader from '../components/Loader';
 import Banner from '../components/Banner';
 import Meta from '../components/Meta';
@@ -7,9 +8,9 @@ import Post from '../components/Post';
 import { useGetPostsQuery } from '../slices/postsApiSlice';
 
 const BlogScreen = () => {
-  const { data, isLoading, error } = useGetPostsQuery();
+  const { data: posts, isLoading, error } = useGetPostsQuery();
   return (
-    <>
+    <MainLayout>
       {isLoading ? (
         <Loader />
       ) : error ? (
@@ -21,14 +22,14 @@ const BlogScreen = () => {
           <Banner src="/images/ecoprint-03-1280x360.webp" title="Blog" />
           <Meta title="Blog" />
           <Container>
-            <Row>
-              {data.posts.map((post) => (
+            <Row style={{ '--bs-gutter-y': '1.5rem' }}>
+              {posts.map((post) => (
                 <Col xl={6} key={post._id}>
                   <Post
                     src={
                       post.bannerImage ? post.bannerImage : '/images/sample.jpg'
                     }
-                    slug={post.slug}
+                    postId={post._id}
                     title={post.title}
                     description={post.description}
                     author={post.user.name}
@@ -40,7 +41,7 @@ const BlogScreen = () => {
           </Container>
         </>
       )}
-    </>
+    </MainLayout>
   );
 };
 

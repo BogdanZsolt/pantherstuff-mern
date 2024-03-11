@@ -11,7 +11,7 @@ import {
 const CommentsContainer = ({
   className,
   comments = [],
-  slug,
+  postId,
   logginedUserId = '',
   refetch,
 }) => {
@@ -27,13 +27,13 @@ const CommentsContainer = ({
   ) => {
     try {
       await createComment({
-        slug: slug,
+        post: postId,
         description: value,
         parent: parent,
         replyOnUser: replyOnUser,
       });
       setAffectedComment(null);
-      refetch;
+      refetch();
     } catch (err) {
       toast.error(err?.data?.message || err.error);
     }

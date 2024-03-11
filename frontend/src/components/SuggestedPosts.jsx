@@ -10,7 +10,7 @@ const SuggestedPosts = ({ className, header, posts = [], tags = [] }) => {
           <Col xs={4}>
             <img
               src={item.bannerImage}
-              alt="post"
+              alt={item.title}
               className="suggested-image"
             />
           </Col>
@@ -18,9 +18,12 @@ const SuggestedPosts = ({ className, header, posts = [], tags = [] }) => {
             xs={8}
             className="d-flex flex-column align-items-start justify-content-center"
           >
-            <span className="fw-semibold" style={{ fontSize: '1rem' }}>
-              {item.title}
-            </span>
+            <span>{item.user.name}</span>
+            <Link to={`/post/${item._id}`}>
+              <span className="fw-semibold" style={{ fontSize: '1rem' }}>
+                {item.title}
+              </span>
+            </Link>
             <span
               className="text-secondary"
               style={{ fontSize: '0.875rem', '--bs-text-opacity': '0.8' }}

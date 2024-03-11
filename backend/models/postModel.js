@@ -22,6 +22,9 @@ const postSchema = new mongoose.Schema(
   }
 );
 
+postSchema.index({ createdAt: -1 });
+postSchema.index({ slug: 1 });
+
 postSchema.virtual('comments', {
   ref: 'Comment',
   localField: '_id',

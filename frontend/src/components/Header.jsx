@@ -97,6 +97,11 @@ const Header = () => {
                 </li>
                 {userInfo ? (
                   <NavDropdown title={userInfo.name} id="username" as="li">
+                    {userInfo.isAdmin && (
+                      <LinkContainer to="/admin">
+                        <NavDropdown.Item>Admin Dashboard</NavDropdown.Item>
+                      </LinkContainer>
+                    )}
                     <LinkContainer to="/profile">
                       <NavDropdown.Item>Profile</NavDropdown.Item>
                     </LinkContainer>

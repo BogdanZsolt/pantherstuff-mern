@@ -2,16 +2,14 @@ import { Card, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 
-const ArticleCard = ({ slug, src, title, description, author, date }) => {
-  console.log(title);
-
+const ArticleCard = ({ postId, src, title, description, author, date }) => {
   return (
     <Card className="article-card flex-column flex-md-row">
-      <Link to={`/post/${slug}`}>
+      <Link to={`/post/${postId}`}>
         <Card.Img src={src} variant="top" />
       </Link>
       <Card.Body>
-        <Link to={`/post/${slug}`}>
+        <Link to={`/post/${postId}`}>
           <Card.Title className="fw-bold">{title}</Card.Title>
         </Link>
         <Card.Text>
@@ -32,7 +30,7 @@ const ArticleCard = ({ slug, src, title, description, author, date }) => {
           </span>
         </Card.Text>
         <span className="d-flex justify-content-end align-items-end">
-          <LinkContainer to={`/post/${slug}`}>
+          <LinkContainer to={`/post/${postId}`}>
             <Button>Read more</Button>
           </LinkContainer>
         </span>

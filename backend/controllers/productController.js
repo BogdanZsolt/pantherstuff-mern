@@ -1,13 +1,11 @@
 import asyncHandler from '../middleware/asyncHandler.js';
+import { getAll, getOne } from './handlerFactory.js';
 import Product from '../models/productModel.js';
 
-// @desc    Fetch all products with paginate
-// @route   GET /api/products
+// @desc    Fetch all products
+// @route   GET /api/products/all
 // @access  Public
-const getAllProducts = asyncHandler(async (req, res) => {
-  const products = await Product.find({});
-  res.json({ products });
-});
+const getAllProducts = getAll(Product);
 
 // @desc    Fetch all products with paginate
 // @route   GET /api/products
@@ -31,15 +29,7 @@ const getProducts = asyncHandler(async (req, res) => {
 // @desc    Fetch a product
 // @route   GET /api/products/:id
 // @access  Public
-const getProductById = asyncHandler(async (req, res) => {
-  const product = await Product.findById(req.params.id);
-  if (product) {
-    return res.json(product);
-  } else {
-    res.status(404);
-    throw new Error('Resource not found');
-  }
-});
+const getProductById = getOne(Product);
 
 // @desc    Create a product
 // @route   POST /api/products

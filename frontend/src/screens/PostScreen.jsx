@@ -1,58 +1,56 @@
 import { useParams, Link } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
+import { generateHTML } from '@tiptap/html';
+import parse from 'html-react-parser';
+import Bold from '@tiptap/extension-bold';
+import Document from '@tiptap/extension-document';
+import Paragraph from '@tiptap/extension-paragraph';
+import Text from '@tiptap/extension-text';
+import Italic from '@tiptap/extension-italic';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
 import Banner from '../components/Banner';
 import Meta from '../components/Meta';
-import { useGetPostDetailsQuery } from '../slices/postsApiSlice.js';
+import {
+  useGetPostDetailsQuery,
+  useLastNumPostsQuery,
+} from '../slices/postsApiSlice.js';
+import MainLayout from '../components/MainLayout.jsx';
 import SuggestedPosts from '../components/SuggestedPosts';
 import CommentsContainer from '../components/comments/CommentsContainer.jsx';
 import SocialShareButtons from '../components/SocialShareButtons.jsx';
-import { useSelector } from 'react-redux';
 
 const PostScreen = () => {
-  const { slug: postSlug } = useParams();
+  const { id: postId } = useParams();
   const {
     data: post,
     refetch,
     isLoading,
     error,
-  } = useGetPostDetailsQuery(postSlug);
+  } = useGetPostDetailsQuery(postId);
 
-  const postsData = [
-    {
-      _id: '1',
-      bannerImage: '/images/sample.jpg',
-      title: "És így lett a La'Saphire",
-      createdAt: '2024-03-01T06:48:14.509Z',
-    },
-    {
-      _id: '2',
-      bannerImage: '/images/sample.jpg',
-      title: 'A herbárium project',
-      createdAt: '2024-02-29T11:39:14.142Z',
-    },
-    {
-      _id: '1',
-      bannerImage: '/images/sample.jpg',
-      title: 'Fantasztikus gombák - film',
-      createdAt: '2024-02-28T13:28:05.143Z',
-    },
-  ];
+  const {
+    data: postsData,
+    isPostDataLoading,
+    postDataError,
+  } = useLastNumPostsQuery({
+    sort: '-createdAt',
+    limit: '3',
+    fields: '_id,user,bannerImage,title,createdAt',
+  });
 
-  const tagsData = [
-    'Ecoprint',
-    'Lifestyle',
-    'Dye',
-    'Education',
-    'Nature',
-    'Dress',
-  ];
+  const convert = (doc) => {
+    const conv = parse(
+      generateHTML(doc, [Bold, Italic, Text, Paragraph, Document])
+    );
+    return conv;
+  };
 
   const { userInfo } = useSelector((state) => state.auth);
 
   return (
-    <>
+    <MainLayout>
       {isLoading ? (
         <Loader />
       ) : error ? (
@@ -72,69 +70,65 @@ const PostScreen = () => {
                 <Col lg={9}>
                   <article>
                     <div className="mb-2">
-                      <span className="fw-bold">{post.user.name} </span>
+                      <span className="fw-bold">{post?.user?.name} </span>
                       {new Date(post.createdAt).toLocaleDateString('hu-HU', {
                         year: 'numeric',
                         month: 'long',
                         day: 'numeric',
                       })}
                     </div>
-                    <Link
-                      className="mb-2 d-inline-block"
-                      to="/blog?category=selectedCategory"
-                    >
-                      OPINION
-                    </Link>
-                    <h2 className="fs-1">{post.title}</h2>
-                    <div className="mt-3">
-                      <p className="lead">Háromszor.</p>
-                      <p className="lead">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Numquam at nam voluptates repellendus iste beatae
-                        laudantium eum quae! Quasi, qui? Odit officia placeat
-                        natus omnis cum debitis pariatur eum dolorum culpa
-                        deserunt.
-                      </p>
-                      <p className="lead">
-                        Placeat ullam, incidunt voluptas aliquid voluptatum iste
-                        odio inventore culpa quam sed eaque cum veniam nemo
-                        rerum repellat recusandae fuga rem nisi, cumque deleniti
-                        dolorum est natus debitis. Autem quibusdam minima
-                        laudantium asperiores, eaque aut non necessitatibus
-                        culpa repudiandae dolor tenetur dolorem.{' '}
-                      </p>
+                    <div className="mt-4 d-flex gap-1">
+                      {post?.categories?.map((category, index) => (
+                        <Link
+                          key={index}
+                          className="mb-2 d-inline-block"
+                          to={`/blog?category=${category.name}`}
+                        >
+                          {category.name}
+                        </Link>
+                      ))}
                     </div>
+                    <h2 className="fs-1">{post.title}</h2>
+                    <div className="mt-3">{convert(post.body)}</div>
                     <CommentsContainer
                       className="mt-4"
                       comments={post.comments}
-                      slug={postSlug}
+                      postId={postId}
                       logginedUserId={userInfo?._id}
                       refetch={refetch}
                     />
                   </article>
                 </Col>
-                <Col lg={3} className="mt-3 mt-lg-0">
-                  <div>
-                    <SuggestedPosts
-                      header="Latest Posts"
-                      posts={postsData}
-                      tags={tagsData}
-                    />
-                  </div>
-                  <div className="mt-4">
-                    <h2 className="mb-1">Share on:</h2>
-                    <SocialShareButtons
-                      url={encodeURI()}
-                      // title={encodeURIComponent('Fantasztikus Gombák – film')}
-                    />
-                  </div>
-                </Col>
+                {isPostDataLoading ? (
+                  <Loader />
+                ) : postDataError ? (
+                  <Message variant="danger">
+                    {postDataError?.data?.message || error.error}
+                  </Message>
+                ) : (
+                  <Col lg={3} className="mt-3 mt-lg-0">
+                    <div>
+                      <SuggestedPosts
+                        header="Latest Posts"
+                        posts={postsData}
+                        tags={post?.tags}
+                      />
+                    </div>
+                    <div className="mt-4">
+                      <h2 className="mb-1">Share on:</h2>
+                      <SocialShareButtons
+                        url={encodeURI()}
+                        // title={encodeURIComponent('Fantasztikus Gombák – film')}
+                      />
+                    </div>
+                  </Col>
+                )}
               </Row>
             </div>
           </Container>
         </>
       )}
-    </>
+    </MainLayout>
   );
 };
 

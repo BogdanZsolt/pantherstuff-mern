@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Form, Button, Container } from 'react-bootstrap';
+import { Form, Button, Container, Row, Col } from 'react-bootstrap';
+import AdminLayout from '../../components/AdminLayout';
 import Message from '../../components/Message';
 import Loader from '../../components/Loader';
 import FormContainer from '../../components/FormContainer';
 import { toast } from 'react-toastify';
-import Banner from '../../components/Banner';
 import {
   useGetProductDetailsQuery,
   useUpdateProductMutation,
@@ -72,8 +72,8 @@ const ProductEditScreen = () => {
       setThumbnailHover(product.thumbnailHover);
       setDescription(product.description);
       setCategory(product.category);
-      setBeforePrice(product.beforePrice);
-      setCurrentPrice(product.currentPrice);
+      setBeforePrice(product.beforePrice || 0);
+      setCurrentPrice(product.currentPrice || 0);
       setCountInStock(product.countInStock);
       setColors(product.colors);
       setThumbnails(product.thumbnails);
@@ -94,12 +94,15 @@ const ProductEditScreen = () => {
   };
 
   return (
-    <>
-      <Banner title="Edit Product" />
-      <Container>
-        <Link to="/admin/productlist" className="btn btn-light my-3">
-          Go Back
-        </Link>
+    <AdminLayout>
+      <Container className="mt-5">
+        <Row>
+          <Col>
+            <Link to="/admin/productlist" className="btn btn-primary my-3">
+              Go Back
+            </Link>
+          </Col>
+        </Row>
         <FormContainer>
           {loadingUpdate && <Loader />}
           {isLoading ? (
@@ -198,7 +201,7 @@ const ProductEditScreen = () => {
           )}
         </FormContainer>
       </Container>
-    </>
+    </AdminLayout>
   );
 };
 

@@ -140,6 +140,11 @@ img.logo {
   z-index: -1;
 }
 
+.dropdown-item:hover {
+  color: var(--bs-primary);
+  background-color: var(--bs-secondary);
+}
+
 /* MOBILE MENU BUTTON */
 .navbar-toggler {
   width: 2rem;

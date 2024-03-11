@@ -10,7 +10,7 @@ import { RiArrowLeftLine, RiArrowRightLine } from 'react-icons/ri';
 import { useGetAllProductsQuery } from '../slices/productsApiSlice.js';
 
 const ProductCarousel = () => {
-  const { data, isLoading, error } = useGetAllProductsQuery();
+  const { data: products, isLoading, error } = useGetAllProductsQuery();
 
   return (
     <>
@@ -52,7 +52,7 @@ const ProductCarousel = () => {
               },
             }}
           >
-            {data.products.map((product) => (
+            {products.map((product) => (
               <SwiperSlide key={product._id}>
                 <Product product={product} />
               </SwiperSlide>

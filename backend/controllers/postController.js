@@ -1,57 +1,74 @@
 import asyncHandler from '../middleware/asyncHandler.js';
 import Post from '../models/postModel.js';
+import { createOne, getAll, getOne, updateOne } from './handlerFactory.js';
 import Comment from '../models/commentModel.js';
 
-// @desc    Create post
-// @route   POST /api/posts
-// @access  Private/Admin
-const createPost = asyncHandler(async (req, res) => {
-  const post = new Post({
-    user: req.user._id,
-    title: 'Simple title',
-    caption: 'Simple caption',
-    description: 'Simple description',
-    body: {
-      type: 'doc',
-      content: [],
-    },
-    bannerImage: '/images/sample.jpg',
-  });
-  const createdPost = await post.save();
-  res.status(201).json(createdPost);
-});
+const postsPopOption = [{ path: 'user', select: ['name'] }];
+const postPopOption = [
+  { path: 'user', select: ['name'] },
+  {
+    path: 'comments',
+    match: { check: true, parent: null },
+    populate: [
+      { path: 'user', select: ['name'] },
+      {
+        path: 'replies',
+        match: { check: true },
+        populate: [{ path: 'user', select: ['name'] }],
+      },
+    ],
+  },
+];
+
+const createInit = (req, res, next) => {
+  req.body.user = req.user._id;
+  req.body.title = 'Simple title';
+  req.body.caption = 'Simple caption';
+  req.body.description = 'Simple description';
+  req.body.body = {
+    type: 'doc',
+    content: [
+      {
+        type: 'paragraph',
+        content: [
+          {
+            type: 'text',
+            text: 'Wow, this editor instance exports its content as JSON.',
+          },
+        ],
+      },
+    ],
+  };
+  req.body.tags = ['simple'];
+  req.body.bannerImage = '/images/sample.jpg';
+  next();
+};
+
+// @desc    Get posts
+// @route   GET /api/posts
+// @access  Public
+const getPosts = getAll(Post, postsPopOption);
+
+// @desc    Get a post by ID
+// @route   GET /api/posts/:id
+// @access  Public
+const getPostById = getOne(Post, postPopOption);
 
 // @desc    Create post
 // @route   POST /api/posts
 // @access  Private/Admin
-const updatePost = asyncHandler(async (req, res) => {
-  const post = await Post.findOne({ slug: req.params.slug });
+const createPost = createOne(Post);
 
-  const { title, caption, description, body, bannerImage, tags, categories } =
-    req.body;
-
-  if (post) {
-    post.title = title || post.title;
-    post.caption = caption || post.caption;
-    post.description = description || post.description;
-    post.body = body || post.body;
-    post.bannerImage = bannerImage || post.bannerImage;
-    post.tags = tags || post.tags;
-    post.categories = categories || post.categories;
-
-    const updatedPost = await post.save();
-    res.json(updatedPost);
-  } else {
-    res.status(404);
-    throw new Error('Resource not found');
-  }
-});
+// @desc    Update a post
+// @route   PUT /api/posts/:id
+// @access  Private/Admin
+const updatePost = updateOne(Post);
 
 // @desc    Delete post
 // @route   DELETE /api/posts/:slug
 // @access  Private/Admin
 const deletePost = asyncHandler(async (req, res) => {
-  const post = await Post.findOneAndDelete({ slug: req.params.slug });
+  const post = await Post.findByIdAndDelete({ _id: req.params.id });
 
   if (!post) {
     res.status(404);
@@ -62,62 +79,29 @@ const deletePost = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc    Get a post
-// @route   GET /api/post/:slug
+// @desc    Get last 3 posts
+// @route   GET /api/posts/last
 // @access  Public
-const getPostBySlug = asyncHandler(async (req, res) => {
-  const post = await Post.findOne({ slug: req.params.slug }).populate([
-    {
-      path: 'user',
-      select: ['name'],
-    },
-    {
-      path: 'comments',
-      match: {
-        check: true,
-        parent: null,
+const getLastPosts = asyncHandler(async (req, res) => {
+  const posts = await Post.find({})
+    .sort({ createdAt: -1 })
+    .limit(3)
+    .populate([
+      {
+        path: 'user',
+        select: ['name'],
       },
-      populate: [
-        {
-          path: 'user',
-          select: ['name'],
-        },
-        {
-          path: 'replies',
-          match: {
-            check: true,
-          },
-          populate: [
-            {
-              path: 'user',
-              select: ['name'],
-            },
-          ],
-        },
-      ],
-    },
-  ]);
-
-  if (post) {
-    return res.json(post);
-  } else {
-    res.status(404);
-    throw new Error('resource not found');
-  }
-});
-
-// @desc    Get all posts
-// @route   GET /api/posts
-// @access  Public
-const getPosts = asyncHandler(async (req, res) => {
-  const posts = await Post.find({}).populate([
-    {
-      path: 'user',
-      select: ['name'],
-    },
-  ]);
+    ]);
 
   res.json({ posts });
 });
 
-export { createPost, updatePost, deletePost, getPostBySlug, getPosts };
+export {
+  createPost,
+  updatePost,
+  deletePost,
+  getPostById,
+  getPosts,
+  getLastPosts,
+  createInit,
+};

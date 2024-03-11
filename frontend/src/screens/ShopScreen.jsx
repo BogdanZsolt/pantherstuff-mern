@@ -16,6 +16,7 @@ import {
   RiLayoutGridLine,
   RiLayoutMasonryLine,
 } from 'react-icons/ri';
+import MainLayout from '../components/MainLayout.jsx';
 import Product from '../components/Product.jsx';
 import Loader from '../components/Loader.jsx';
 import Message from '../components/Message.jsx';
@@ -44,7 +45,7 @@ const ShopScreen = () => {
           {error?.data?.message || error.error}
         </Message>
       ) : (
-        <>
+        <MainLayout>
           <Banner
             title="shop"
             src="/images/ecoprint-04.webp"
@@ -125,7 +126,7 @@ const ShopScreen = () => {
               you have chosen. Like, text, images, lists, etc.
             </Offcanvas.Body>
           </Offcanvas>
-        </>
+        </MainLayout>
       )}
       ;
     </>

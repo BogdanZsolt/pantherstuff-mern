@@ -10,9 +10,15 @@ export const postsApiSlice = apiSlice.injectEndpoints({
       }),
       keepUnusedDataFor: 5,
     }),
+    getLastPosts: builder.query({
+      query: () => ({
+        url: `${POSTS_URL}/last`,
+      }),
+      keepUnusedDataFor: 5,
+    }),
     getPostDetails: builder.query({
-      query: (slug) => ({
-        url: `${POSTS_URL}/${slug}`,
+      query: (id) => ({
+        url: `${POSTS_URL}/${id}`,
       }),
       keepUnusedDataFor: 5,
     }),
@@ -36,6 +42,18 @@ export const postsApiSlice = apiSlice.injectEndpoints({
         url: `${POSTS_URL}/${slug}`,
         method: 'DELETE',
       }),
+    }),
+    lastNumPosts: builder.query({
+      query: ({ sort, limit, fields }) => ({
+        url: POSTS_URL,
+        params: {
+          sort,
+          limit,
+          fields,
+        },
+      }),
+      providesTags: ['Posts'],
+      keepUnusedDataFor: 5,
     }),
     createComment: builder.mutation({
       query: (data) => ({
@@ -68,6 +86,7 @@ export const {
   useCreatePostMutation,
   useUpdatePostMutation,
   useDeletePostMutation,
+  useLastNumPostsQuery,
   useCreateCommentMutation,
   useUpdateCommentMutation,
   useDeleteCommentMutation,

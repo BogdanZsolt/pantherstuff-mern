@@ -2,10 +2,11 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { Table, Button, Row, Col, Container } from 'react-bootstrap';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { useParams } from 'react-router-dom';
-import AdminLayout from '../../components/AdminLayout.jsx';
+import MainLayout from '../../components/MainLayout';
 import Message from '../../components/Message';
 import Loader from '../../components/Loader';
 import Paginate from '../../components/Paginate';
+import Banner from '../../components/Banner';
 import { toast } from 'react-toastify';
 import {
   useGetProductsQuery,
@@ -50,11 +51,9 @@ const ProductListScreen = () => {
   };
 
   return (
-    <AdminLayout>
-      <Container className="mt-5">
-        <Row className="text-center">
-          <h2 className="fs-1 fw-semibold">Products</h2>
-        </Row>
+    <MainLayout>
+      <Banner title="Products" />
+      <Container>
         <Row className="align-items-center">
           <Col className="text-end">
             <Button className="btn-sm m-3" onClick={createProductHandler}>
@@ -112,7 +111,7 @@ const ProductListScreen = () => {
           </>
         )}
       </Container>
-    </AdminLayout>
+    </MainLayout>
   );
 };
 

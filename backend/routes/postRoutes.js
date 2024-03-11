@@ -2,18 +2,21 @@ import express from 'express';
 const router = express.Router();
 import {
   createPost,
+  createInit,
   updatePost,
   deletePost,
-  getPostBySlug,
+  getPostById,
   getPosts,
+  getLastPosts,
 } from '../controllers/postController.js';
 import { protect, admin } from '../middleware/authMiddleware.js';
 
-router.route('/').get(getPosts).post(protect, admin, createPost);
+router.route('/').get(getPosts).post(protect, admin, createInit, createPost);
+router.route('/last').get(getLastPosts);
 router
-  .route('/:slug')
+  .route('/:id')
   .put(protect, admin, updatePost)
   .delete(protect, admin, deletePost)
-  .get(getPostBySlug);
+  .get(getPostById);
 
 export default router;

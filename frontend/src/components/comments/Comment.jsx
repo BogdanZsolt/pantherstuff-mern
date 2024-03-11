@@ -25,8 +25,6 @@ const Comment = ({
   const repliedCommentId = parentId ? parentId : comment._id;
   const replyOnUserId = comment.user._id;
 
-  console.log(comment);
-
   return (
     <Row
       className="d-flex flex-nowrap align-items-start px-3 pt-3 rounded border-5 bg-secondary"

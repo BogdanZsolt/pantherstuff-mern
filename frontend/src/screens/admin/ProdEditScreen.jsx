@@ -77,7 +77,6 @@ const ProductEditScreen = () => {
       setColors(product.colors);
       setThumbnails(product.thumbnails);
     }
-    }
   }, [product]);
 
   const uploadFileHandler = async (e) => {
@@ -94,7 +93,7 @@ const ProductEditScreen = () => {
 
   return (
     <>
-      <Link to='/admin/productlist' className="btn btn-light my-3">
+      <Link to="/admin/productlist" className="btn btn-light my-3">
         Go Back
       </Link>
       <FormContainer>

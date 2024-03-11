@@ -1,0 +1,10 @@
+.sidebar ul li:hover {
+  background-color: rgba(var(--bs-primary-rgb), 0.35);
+  border-radius: var(--bs-border-radius-sm);
+  cursor: pointer;
+}
+
+.active {
+  background-color: rgba(var(--bs-primary-rgb), 0.35);
+  border-radius: var(--bs-border-radius-sm);
+}

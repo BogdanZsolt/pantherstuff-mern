@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Form, Button, Container } from 'react-bootstrap';
+import AdminLayout from '../../components/AdminLayout.jsx';
 import Message from '../../components/Message';
 import Loader from '../../components/Loader';
 import FormContainer from '../../components/FormContainer';
-import Banner from '../../components/Banner.jsx';
 import { toast } from 'react-toastify';
 import {
   useGetUserDetailsQuery,
@@ -55,10 +55,9 @@ const UserEditScreen = () => {
   };
 
   return (
-    <>
-      <Banner title={`Edit ${name}`} />
-      <Container>
-        <Link to="/admin/userlist" className="btn btn-light my-3">
+    <AdminLayout>
+      <Container className="mt-5">
+        <Link to="/admin/userlist" className="btn btn-primary my-3">
           Go Back
         </Link>
         <FormContainer>
@@ -105,7 +104,7 @@ const UserEditScreen = () => {
           )}
         </FormContainer>
       </Container>
-    </>
+    </AdminLayout>
   );
 };
 
