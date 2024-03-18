@@ -1,13 +1,7 @@
 import { useParams, Link } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import { generateHTML } from '@tiptap/html';
 import parse from 'html-react-parser';
-import Bold from '@tiptap/extension-bold';
-import Document from '@tiptap/extension-document';
-import Paragraph from '@tiptap/extension-paragraph';
-import Text from '@tiptap/extension-text';
-import Italic from '@tiptap/extension-italic';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
 import Banner from '../components/Banner';
@@ -40,12 +34,12 @@ const PostScreen = () => {
     fields: '_id,user,bannerImage,title,createdAt',
   });
 
-  const convert = (doc) => {
-    const conv = parse(
-      generateHTML(doc, [Bold, Italic, Text, Paragraph, Document])
-    );
-    return conv;
-  };
+  // const convert = (doc) => {
+  //   const conv = parse(
+  //     generateHTML(doc, [Bold, Italic, Text, Paragraph, Document])
+  //   );
+  //   return conv;
+  // };
 
   const { userInfo } = useSelector((state) => state.auth);
 
@@ -89,7 +83,7 @@ const PostScreen = () => {
                       ))}
                     </div>
                     <h2 className="fs-1">{post.title}</h2>
-                    <div className="mt-3">{convert(post.body)}</div>
+                    <div className="mt-3">{parse(post.body)}</div>
                     <CommentsContainer
                       className="mt-4"
                       comments={post.comments}

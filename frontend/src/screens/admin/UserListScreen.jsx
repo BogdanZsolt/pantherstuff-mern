@@ -1,7 +1,6 @@
 import { LinkContainer } from 'react-router-bootstrap';
-import { Table, Button, Container } from 'react-bootstrap';
+import { Table, Button, Container, Row } from 'react-bootstrap';
 import { FaTimes, FaTrash, FaEdit, FaCheck } from 'react-icons/fa';
-import AdminLayout from '../../components/AdminLayout';
 import Message from '../../components/Message';
 import Loader from '../../components/Loader';
 import { toast } from 'react-toastify';
@@ -28,60 +27,64 @@ const UserListScreen = () => {
   };
 
   return (
-    <AdminLayout>
-      <Container>
-        {loadingDelete && <Loader />}
-        {isLoading ? (
-          <Loader />
-        ) : error ? (
-          <Message variant="danger">{error.data.message}</Message>
-        ) : (
-          <Table striped hover responsive className="table-sm">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>NAME</th>
-                <th>EMAIL</th>
-                <th>ADMIN</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {users.map((user) => (
-                <tr key={user._id}>
-                  <td>{user._id}</td>
-                  <td>{user.name}</td>
-                  <td>
-                    <a href={`mailto: ${user.email}`}>{user.email}</a>
-                  </td>
-                  <td>
-                    {user.isAdmin ? (
-                      <FaCheck style={{ color: 'green' }} />
-                    ) : (
-                      <FaTimes style={{ color: 'red' }} />
-                    )}
-                  </td>
-                  <td>
-                    <LinkContainer to={`/admin/user/${user._id}/edit`}>
-                      <Button variant="light" className="btn-sm">
-                        <FaEdit />
-                      </Button>
-                    </LinkContainer>
-                    <Button
-                      variant="danger"
-                      className="btn-sm"
-                      onClick={() => deleteHandler(user._id)}
-                    >
-                      <FaTrash style={{ color: 'white' }} />
+    <Container className="mt-5">
+      <Row className="text-center">
+        <h2 className="fs-1 fw-semibold">Users</h2>
+      </Row>
+      {loadingDelete && <Loader />}
+      {isLoading ? (
+        <Loader />
+      ) : error ? (
+        <Message variant="danger">{error.data.message}</Message>
+      ) : (
+        <Table striped hover responsive className="table-sm">
+          <thead>
+            <tr>
+              <th className="d-none d-lg-block">ID</th>
+              <th>NAME</th>
+              <th>EMAIL</th>
+              <th>ADMIN</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {users.map((user) => (
+              <tr key={user._id}>
+                <td className="d-none d-lg-table-cell">{user._id}</td>
+                <td className="">
+                  <div>{user.name}</div>
+                  <div className="d-table-cell d-lg-none">{user._id}</div>
+                </td>
+                <td>
+                  <a href={`mailto: ${user.email}`}>{user.email}</a>
+                </td>
+                <td>
+                  {user.isAdmin ? (
+                    <FaCheck style={{ color: 'green' }} />
+                  ) : (
+                    <FaTimes style={{ color: 'red' }} />
+                  )}
+                </td>
+                <td>
+                  <LinkContainer to={`/admin/user/${user._id}/edit`}>
+                    <Button variant="light" className="btn-sm">
+                      <FaEdit />
                     </Button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        )}
-      </Container>
-    </AdminLayout>
+                  </LinkContainer>
+                  <Button
+                    variant="danger"
+                    className="btn-sm"
+                    onClick={() => deleteHandler(user._id)}
+                  >
+                    <FaTrash style={{ color: 'white' }} />
+                  </Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      )}
+    </Container>
   );
 };
 

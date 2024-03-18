@@ -9,6 +9,7 @@ import productRoutes from './routes/productRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
 import postRoutes from './routes/postRoutes.js';
+import postCategoryRoutes from './routes/postCategoryRoutes.js';
 import commentRoutes from './routes/commentRoutes.js';
 import uploadRoutes from './routes/uploadRoutes.js';
 const port = process.env.PORT || 5000;
@@ -28,6 +29,7 @@ app.use('/api/products', productRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/posts', postRoutes);
+app.use('/api/postcategories', postCategoryRoutes);
 app.use('/api/comments', commentRoutes);
 app.use('/api/upload', uploadRoutes);
 

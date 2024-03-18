@@ -1,14 +1,11 @@
 import { Row, Col, Offcanvas } from 'react-bootstrap';
-import Sidebar from '../screens/admin/components/Sidebar.jsx';
-import SideMenu from '../screens/admin/components/SideMenu.jsx';
-import NavBar from '../screens/admin/components/NavBar.jsx';
+import SideMenu from './admin/SideMenu.jsx';
+import NavBar from './admin/NavBar.jsx';
 import '../assets/styles/admin-dashboard.css';
 import { useState } from 'react';
 
 const AdminLayout = ({ children }) => {
-  const [show, setShow] = useState(true);
-
-  console.log(show);
+  const [show, setShow] = useState(false);
 
   const handleClose = () => {
     setShow(false);
@@ -25,9 +22,7 @@ const AdminLayout = ({ children }) => {
       </Row>
       <Row>
         <Col lg={2}>
-          <Sidebar>
-            <SideMenu />
-          </Sidebar>
+          <SideMenu />
         </Col>
         <Col xs={12} lg={10}>
           {children}
@@ -37,12 +32,14 @@ const AdminLayout = ({ children }) => {
         show={show}
         onHide={handleClose}
         responsive="lg"
-        className="bg-secondary"
+        backdrop={false}
+        scroll={false}
+        style={{ '--bs-offcanvas-bg': 'var(--bs-secondary)' }}
       >
-        <Offcanvas.Header closeButton>
-          <Offcanvas.Title>Responsive offcanvas</Offcanvas.Title>
+        <Offcanvas.Header closeButton closeVariant="white">
+          <Offcanvas.Title></Offcanvas.Title>
         </Offcanvas.Header>
-        <Offcanvas.Body>
+        <Offcanvas.Body className="d-flex d-lg-none">
           <SideMenu />
         </Offcanvas.Body>
       </Offcanvas>

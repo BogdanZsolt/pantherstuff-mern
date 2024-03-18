@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Form, Button, Container } from 'react-bootstrap';
-import AdminLayout from '../../components/AdminLayout.jsx';
+import { Form, Button, Container, Row } from 'react-bootstrap';
 import Message from '../../components/Message';
 import Loader from '../../components/Loader';
 import FormContainer from '../../components/FormContainer';
@@ -55,56 +54,57 @@ const UserEditScreen = () => {
   };
 
   return (
-    <AdminLayout>
-      <Container className="mt-5">
-        <Link to="/admin/userlist" className="btn btn-primary my-3">
-          Go Back
-        </Link>
-        <FormContainer>
-          {loadingUpdate && <Loader />}
-          {isLoading ? (
-            <Loader />
-          ) : error ? (
-            <Message variant="danger">{error.data.message}</Message>
-          ) : (
-            <Form onSubmit={submitHandler}>
-              <Form.Group controlId="name">
-                <Form.Label>Name</Form.Label>
-                <Form.Control
-                  type="name"
-                  placeholder="Enter name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                ></Form.Control>
-              </Form.Group>
+    <Container className="mt-5">
+      <Link to="/admin/userlist" className="btn btn-primary my-3">
+        Go Back
+      </Link>
+      <Row>
+        <h2 className="text-center fs-1 fw-bold">Edit User</h2>
+      </Row>
+      <FormContainer>
+        {loadingUpdate && <Loader />}
+        {isLoading ? (
+          <Loader />
+        ) : error ? (
+          <Message variant="danger">{error.data.message}</Message>
+        ) : (
+          <Form onSubmit={submitHandler}>
+            <Form.Group controlId="name">
+              <Form.Label>Name</Form.Label>
+              <Form.Control
+                type="name"
+                placeholder="Enter name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
 
-              <Form.Group controlId="email" className="my-2">
-                <Form.Label>Email</Form.Label>
-                <Form.Control
-                  type="email"
-                  placeholder="Enter email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                ></Form.Control>
-              </Form.Group>
+            <Form.Group controlId="email" className="my-2">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                type="email"
+                placeholder="Enter email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
 
-              <Form.Group controlId="isAdmin" className="my-2">
-                <Form.Check
-                  type="checkbox"
-                  label="Is Admin"
-                  checked={isAdmin}
-                  onChange={(e) => setIsAdmin(e.target.checked)}
-                ></Form.Check>
-              </Form.Group>
+            <Form.Group controlId="isAdmin" className="my-2">
+              <Form.Check
+                type="checkbox"
+                label="Is Admin"
+                checked={isAdmin}
+                onChange={(e) => setIsAdmin(e.target.checked)}
+              ></Form.Check>
+            </Form.Group>
 
-              <Button type="submit" variant="primary" className="my-2">
-                Update
-              </Button>
-            </Form>
-          )}
-        </FormContainer>
-      </Container>
-    </AdminLayout>
+            <Button type="submit" variant="primary" className="my-2">
+              Update
+            </Button>
+          </Form>
+        )}
+      </FormContainer>
+    </Container>
   );
 };
 

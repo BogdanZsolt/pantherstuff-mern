@@ -9,10 +9,10 @@ import {
 import { LinkContainer } from 'react-router-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import logo from '../../../assets/logo-200x200.png';
-import { useLogoutMutation } from '../../../slices/usersApiSlice';
+import logo from '../../assets/logo-200x200.png';
+import { useLogoutMutation } from '../../slices/usersApiSlice';
 import { RiUserLine } from 'react-icons/ri';
-import { logout } from '../../../slices/authSlice';
+import { logout } from '../../slices/authSlice';
 
 const NavBar = ({ show }) => {
   const { userInfo } = useSelector((state) => state.auth);

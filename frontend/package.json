@@ -12,10 +12,6 @@
   "dependencies": {
     "@paypal/react-paypal-js": "^8.1.3",
     "@reduxjs/toolkit": "^2.1.0",
-    "@tiptap/html": "^2.2.4",
-    "@tiptap/pm": "^2.2.4",
-    "@tiptap/react": "^2.2.4",
-    "@tiptap/starter-kit": "^2.2.4",
     "axios": "^1.6.7",
     "bootstrap": "^5.3.2",
     "html-react-parser": "^5.1.8",
@@ -25,6 +21,7 @@
     "react-helmet-async": "^2.0.4",
     "react-icons": "^5.0.1",
     "react-native-listener": "^1.1.0",
+    "react-quill": "^2.0.0",
     "react-redux": "^9.1.0",
     "react-router-bootstrap": "^0.26.2",
     "react-router-dom": "^6.22.0",

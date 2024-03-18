@@ -117,7 +117,7 @@ const Header = () => {
                     </Nav.Link>
                   </LinkContainer>
                 )}
-                {userInfo && userInfo.isAdmin && (
+                {/* {userInfo && userInfo.isAdmin && (
                   <NavDropdown title="Admin" id="admin-menu" as="li">
                     <LinkContainer to="/admin/productlist">
                       <NavDropdown.Item>Products</NavDropdown.Item>
@@ -129,7 +129,7 @@ const Header = () => {
                       <NavDropdown.Item>Orders</NavDropdown.Item>
                     </LinkContainer>
                   </NavDropdown>
-                )}
+                )} */}
               </Nav>
             </Offcanvas.Body>
           </Navbar.Offcanvas>

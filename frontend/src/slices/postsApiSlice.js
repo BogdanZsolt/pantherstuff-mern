@@ -31,15 +31,15 @@ export const postsApiSlice = apiSlice.injectEndpoints({
     }),
     updatePost: builder.mutation({
       query: (data) => ({
-        url: `${POSTS_URL}/${data.slug}`,
+        url: `${POSTS_URL}/${data.postId}`,
         method: 'PUT',
         body: data,
       }),
       invalidatesTags: ['Posts'],
     }),
     deletePost: builder.mutation({
-      query: (slug) => ({
-        url: `${POSTS_URL}/${slug}`,
+      query: (postId) => ({
+        url: `${POSTS_URL}/${postId}`,
         method: 'DELETE',
       }),
     }),

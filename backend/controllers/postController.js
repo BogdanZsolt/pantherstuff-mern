@@ -3,7 +3,10 @@ import Post from '../models/postModel.js';
 import { createOne, getAll, getOne, updateOne } from './handlerFactory.js';
 import Comment from '../models/commentModel.js';
 
-const postsPopOption = [{ path: 'user', select: ['name'] }];
+const postsPopOption = [
+  { path: 'user', select: ['name'] },
+  { path: 'category', select: ['title'] },
+];
 const postPopOption = [
   { path: 'user', select: ['name'] },
   {
@@ -23,22 +26,22 @@ const postPopOption = [
 const createInit = (req, res, next) => {
   req.body.user = req.user._id;
   req.body.title = 'Simple title';
-  req.body.caption = 'Simple caption';
   req.body.description = 'Simple description';
-  req.body.body = {
-    type: 'doc',
-    content: [
-      {
-        type: 'paragraph',
-        content: [
-          {
-            type: 'text',
-            text: 'Wow, this editor instance exports its content as JSON.',
-          },
-        ],
-      },
-    ],
-  };
+  req.body.body = '<p>Simple Post</>';
+  // req.body.body = {
+  //   type: 'doc',
+  //   content: [
+  //     {
+  //       type: 'paragraph',
+  //       content: [
+  //         {
+  //           type: 'text',
+  //           text: 'Wow, this editor instance exports its content as JSON.',
+  //         },
+  //       ],
+  //     },
+  //   ],
+  // };
   req.body.tags = ['simple'];
   req.body.bannerImage = '/images/sample.jpg';
   next();

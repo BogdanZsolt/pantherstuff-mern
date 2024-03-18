@@ -24,7 +24,7 @@ const BlogScreen = () => {
           <Container>
             <Row style={{ '--bs-gutter-y': '1.5rem' }}>
               {posts.map((post) => (
-                <Col xl={6} key={post._id}>
+                <Col lg={6} key={post._id}>
                   <Post
                     src={
                       post.bannerImage ? post.bannerImage : '/images/sample.jpg'

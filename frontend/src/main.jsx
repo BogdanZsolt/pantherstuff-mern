@@ -14,7 +14,6 @@ import './assets/styles/bootstrap.custom.css';
 import './assets/styles/index.css';
 import App from './App.jsx';
 import PrivateRoute from './components/PrivateRoute.jsx';
-import AdminRoute from './components/AdminRoute.jsx';
 import HomeScreen from './screens/HomeScreen.jsx';
 import ProductScreen from './screens/ProductScreen.jsx';
 import CartScreen from './screens/CartScreen.jsx';
@@ -34,7 +33,11 @@ import ShopScreen from './screens/ShopScreen.jsx';
 import HerStoryScreen from './screens/HerStoryScreen.jsx';
 import BlogScreen from './screens/BlogScreen.jsx';
 import PostScreen from './screens/PostScreen.jsx';
-import PostListScreen from './screens/PostListScreen.jsx';
+import PostListScreen from './screens/admin/PostListScreen.jsx';
+import PostEditScreen from './screens/admin/PostEditScreen.jsx';
+import AdminScreen from './screens/admin/AdminScreen.jsx';
+import PostCategoryListScreen from './screens/admin/PostCategoryListScreen.jsx';
+import PostCatEditScreen from './screens/admin/PostCatEditScreen.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -61,8 +64,8 @@ const router = createBrowserRouter(
         <Route path="/order/:id" element={<OrderScreen />} />
         <Route path="/profile" element={<ProfileScreen />} />
       </Route>
-      <Route path="" element={<AdminRoute />}>
-        <Route path="/admin" element={<ProductListScreen />} />
+      <Route path="" element={<AdminScreen />}>
+        <Route index={true} path="/admin" element={<ProductListScreen />} />
         <Route path="/admin/productlist" element={<ProductListScreen />} />
         <Route
           path="/admin/productlist/:pageNumber"
@@ -70,6 +73,15 @@ const router = createBrowserRouter(
         />
         <Route path="/admin/product/:id/edit" element={<ProductEditScreen />} />
         <Route path="/admin/postlist" element={<PostListScreen />} />
+        <Route path="/admin/post/:id/edit" element={<PostEditScreen />} />
+        <Route
+          path="/admin/postcategorylist"
+          element={<PostCategoryListScreen />}
+        />
+        <Route
+          path="/admin/postcategory/:id/edit"
+          element={<PostCatEditScreen />}
+        />
         <Route path="/admin/userlist" element={<UserListScreen />} />
         <Route path="/admin/user/:id/edit" element={<UserEditScreen />} />
         <Route path="/admin/orderlist" element={<OrderListScreen />} />

@@ -7,14 +7,12 @@ const postSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
     },
-    title: { type: String, required: true, unique: true, trim: true },
-    caption: { type: String, required: true },
-    slug: String,
+    title: { type: String, required: true, trim: true },
     description: { type: String, required: true },
-    body: { type: Object, required: true },
+    body: { type: String, required: true },
     bannerImage: { type: String, required: false },
     tags: { type: [String] },
-    categories: { type: [mongoose.Schema.Types.ObjectId], ref: 'PostCategory' },
+    category: { type: mongoose.Schema.Types.ObjectId, ref: 'PostCategory' },
   },
   {
     timestamps: true,
@@ -23,19 +21,11 @@ const postSchema = new mongoose.Schema(
 );
 
 postSchema.index({ createdAt: -1 });
-postSchema.index({ slug: 1 });
 
 postSchema.virtual('comments', {
   ref: 'Comment',
   localField: '_id',
   foreignField: 'post',
-});
-
-postSchema.pre('save', function (next) {
-  this.slug = slugify(this.title, {
-    lower: true,
-  });
-  next();
 });
 
 const Post = mongoose.model('Post', postSchema);

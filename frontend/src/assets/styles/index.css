@@ -858,6 +858,28 @@ table th {
   object-fit: cover;
 }
 
+/* POST */
+/* .post p {
+  font-size: 1.25rem;
+  font-weight: 300;
+}
+
+.ql-align-center {
+  text-align: center;
+}
+
+.ql-align-left {
+  text-align: left;
+}
+
+.ql-align-right {
+  text-align: right;
+}
+
+.ql-align-justify {
+  text-align: justify;
+} */
+
 /* Media Querys */
 @media (min-width: 481px) {
   .product .image {

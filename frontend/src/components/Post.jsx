@@ -1,41 +1,40 @@
-import { Card, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { LinkContainer } from 'react-router-bootstrap';
+import { RiArrowRightSLine } from 'react-icons/ri';
 
-const ArticleCard = ({ postId, src, title, description, author, date }) => {
+const ArticleCard = ({ postId, src, title, description, date }) => {
   return (
-    <Card className="article-card flex-column flex-md-row">
-      <Link to={`/post/${postId}`}>
-        <Card.Img src={src} variant="top" />
-      </Link>
-      <Card.Body>
+    <div className="row g-0 border border-secondary rounded overflow-hidden flex-md-row mb-4 shadow-md h-md-250 position-relative">
+      <div className="col p-4 d-flex flex-column position-static">
+        <strong className="d-inline-block mb-2 text-primary-emphasis">
+          World
+        </strong>
         <Link to={`/post/${postId}`}>
-          <Card.Title className="fw-bold">{title}</Card.Title>
+          <h3 className="mb-0">{title}</h3>
         </Link>
-        <Card.Text>
-          {description}
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis
-          facilis repudiandae velit qui doloribus, ipsam illum iusto deleniti
-          sapiente voluptatum iste soluta commodi itaque atque perspiciatis
-          ullam voluptatibus. Amet, placeat.
-        </Card.Text>
-        <Card.Text>
-          <span className="d-flex justify-content-between align-items-center">
-            <span className="fw-bold">{author} </span>
-            {new Date(date).toLocaleDateString('hu-HU', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric',
-            })}
-          </span>
-        </Card.Text>
-        <span className="d-flex justify-content-end align-items-end">
-          <LinkContainer to={`/post/${postId}`}>
-            <Button>Read more</Button>
-          </LinkContainer>
-        </span>
-      </Card.Body>
-    </Card>
+        <div className="mb-1 text-body-secondary">
+          {new Date(date).toLocaleDateString('hu-HU', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          })}
+        </div>
+        <p className="card-text mb-auto">{description}</p>
+        <Link
+          to={`/post/${postId}`}
+          className="icon-link gap-1 icon-link-hover"
+        >
+          Continue reading
+          <RiArrowRightSLine style={{ fontSize: '1.875rem' }} />
+        </Link>
+      </div>
+      <Link
+        to={`/post/${postId}`}
+        className="col-auto d-block"
+        style={{ width: '250px', height: '250px' }}
+      >
+        <img src={src} alt="post" />
+      </Link>
+    </div>
   );
 };
 

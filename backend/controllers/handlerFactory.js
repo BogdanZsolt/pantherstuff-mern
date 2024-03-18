@@ -62,7 +62,7 @@ const deleteOne = (Model) =>
       res.status(404);
       throw new Error('Resource not found');
     } else {
-      res.status(200).json({ message: 'Post deleted' });
+      res.status(200).json({ message: 'Resource deleted' });
     }
   });
 
