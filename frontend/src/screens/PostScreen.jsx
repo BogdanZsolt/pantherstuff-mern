@@ -10,7 +10,6 @@ import {
   useGetPostDetailsQuery,
   useLastNumPostsQuery,
 } from '../slices/postsApiSlice.js';
-import MainLayout from '../components/MainLayout.jsx';
 import SuggestedPosts from '../components/SuggestedPosts';
 import CommentsContainer from '../components/comments/CommentsContainer.jsx';
 import SocialShareButtons from '../components/SocialShareButtons.jsx';
@@ -34,17 +33,10 @@ const PostScreen = () => {
     fields: '_id,user,bannerImage,title,createdAt',
   });
 
-  // const convert = (doc) => {
-  //   const conv = parse(
-  //     generateHTML(doc, [Bold, Italic, Text, Paragraph, Document])
-  //   );
-  //   return conv;
-  // };
-
   const { userInfo } = useSelector((state) => state.auth);
 
   return (
-    <MainLayout>
+    <>
       {isLoading ? (
         <Loader />
       ) : error ? (
@@ -63,13 +55,25 @@ const PostScreen = () => {
               <Row className="my-5">
                 <Col lg={9}>
                   <article>
+                    <Link
+                      to={`/category/${post.category._id}`}
+                      className="fw-bold fs-5"
+                    >
+                      {post.category.title}
+                    </Link>
                     <div className="mb-2">
-                      <span className="fw-bold">{post?.user?.name} </span>
                       {new Date(post.createdAt).toLocaleDateString('hu-HU', {
                         year: 'numeric',
                         month: 'long',
                         day: 'numeric',
                       })}
+                      <span className="mx-1">by</span>
+                      <Link
+                        to={`/author/${post?.user?._id}`}
+                        className="fw-bold"
+                      >
+                        {post?.user?.name}{' '}
+                      </Link>
                     </div>
                     <div className="mt-4 d-flex gap-1">
                       {post?.categories?.map((category, index) => (
@@ -122,7 +126,7 @@ const PostScreen = () => {
           </Container>
         </>
       )}
-    </MainLayout>
+    </>
   );
 };
 

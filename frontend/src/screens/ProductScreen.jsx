@@ -26,7 +26,6 @@ import {
   RiTruckLine,
 } from 'react-icons/ri';
 import { toast } from 'react-toastify';
-import MainLayout from '../components/MainLayout';
 import Rating from '../components/Rating';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
@@ -87,7 +86,7 @@ const ProductScreen = () => {
   };
 
   return (
-    <MainLayout>
+    <>
       {isLoading ? (
         <Loader />
       ) : error ? (
@@ -375,7 +374,7 @@ const ProductScreen = () => {
           </Modal>
         </>
       )}
-    </MainLayout>
+    </>
   );
 };
 

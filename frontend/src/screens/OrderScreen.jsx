@@ -9,7 +9,6 @@ import {
   Button,
   Container,
 } from 'react-bootstrap';
-import MainLayout from '../components/MainLayout';
 import Banner from '../components/Banner';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
@@ -60,7 +59,7 @@ const OrderScreen = () => {
     <Message variant="danger">{error.data.message}</Message>
   ) : (
     <>
-      <MainLayout>
+      <>
         <Banner title="Order" />
         <Container>
           <h1>Order {order._id}</h1>
@@ -192,7 +191,7 @@ const OrderScreen = () => {
             </Col>
           </Row>
         </Container>
-      </MainLayout>
+      </>
     </>
   );
 };

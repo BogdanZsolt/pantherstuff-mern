@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Container, Row, Form, Button, Image } from 'react-bootstrap';
 import { Link, useParams, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import FormContainer from '../../components/FormContainer';
 import Loader from '../../components/Loader';
 import Message from '../../components/Message';
@@ -12,16 +13,19 @@ import {
 } from '../../slices/postsApiSlice';
 import { useUploadImageMutation } from '../../slices/uploadImageApiSlice';
 import { useGetPostCategoriesQuery } from '../../slices/postCategoriiesApiSlice';
+import { useGetUsersQuery } from '../../slices/usersApiSlice';
 
 const PostEditScreen = () => {
   const { id: postId } = useParams();
+  const navigate = useNavigate();
 
+  const userInfo = useSelector((state) => state.auth);
   const [title, setTitle] = useState('');
   const [bannerImage, setBannerImage] = useState('');
   const [body, setBody] = useState('');
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState('');
-  const [user, setUser] = useState('');
+  const [author, setAuthor] = useState(userInfo._id);
 
   const {
     data: post,
@@ -31,16 +35,22 @@ const PostEditScreen = () => {
   } = useGetPostDetailsQuery(postId);
 
   const {
+    data: users,
+    isLoading: loadingUsers,
+    error: errorUsers,
+  } = useGetUsersQuery();
+
+  const {
     data: cats,
     isLoading: loadingGetCats,
     error: errGetCats,
   } = useGetPostCategoriesQuery();
 
+  console.log(author);
+
   const [updatePost, { isLoading: updateLoading }] = useUpdatePostMutation();
 
   const [uploadImage, { isLoading: loadingImage }] = useUploadImageMutation();
-
-  const navigate = useNavigate();
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -52,7 +62,7 @@ const PostEditScreen = () => {
         body,
         description,
         category,
-        user,
+        user: author,
       }).unwrap();
       toast.success('Post updated');
       refetch();
@@ -69,7 +79,7 @@ const PostEditScreen = () => {
       setBody(post.body);
       setDescription(post.description);
       setCategory(post.category);
-      setUser(post.user);
+      setAuthor(post.user._id);
     }
   }, [post]);
 
@@ -127,6 +137,29 @@ const PostEditScreen = () => {
             </Form.Group>
 
             {/* Author Select from users */}
+            {loadingUsers ? (
+              <Loader />
+            ) : errorUsers ? (
+              <Message variant="danger">{errorUsers.data.message}</Message>
+            ) : (
+              users &&
+              users.length > 0 && (
+                <Form.Group controlId="user" className="mb-2">
+                  <Form.Label>Author</Form.Label>
+                  <Form.Select
+                    value={author}
+                    onChange={(e) => setAuthor(e.target.value)}
+                  >
+                    <option>Select author</option>
+                    {users.map((user) => (
+                      <option key={user._id} value={user._id}>
+                        {user.name}
+                      </option>
+                    ))}
+                  </Form.Select>
+                </Form.Group>
+              )
+            )}
 
             {/* Category Select from post category  */}
             {loadingGetCats ? (

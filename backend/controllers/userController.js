@@ -183,6 +183,23 @@ const updateUser = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc    Get author
+// @route   GET /api/users/:id/author
+// @access  Public
+const getAuthor = asyncHandler(async (req, res) => {
+  const author = await User.findById(req.params.id)
+    .select('-password -isAdmin -email, -__v')
+    .populate({
+      path: 'posts',
+      select: '-body -__v',
+      populate: [
+        { path: 'user', select: 'name' },
+        { path: 'category', select: 'title' },
+      ],
+    });
+  res.status(200).json(author);
+});
+
 export {
   authUser,
   registerUser,
@@ -193,4 +210,5 @@ export {
   getUserByID,
   deletetUser,
   updateUser,
+  getAuthor,
 };

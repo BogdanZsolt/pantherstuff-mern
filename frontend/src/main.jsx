@@ -38,31 +38,38 @@ import PostEditScreen from './screens/admin/PostEditScreen.jsx';
 import AdminScreen from './screens/admin/AdminScreen.jsx';
 import PostCategoryListScreen from './screens/admin/PostCategoryListScreen.jsx';
 import PostCatEditScreen from './screens/admin/PostCatEditScreen.jsx';
+import AuthorScreen from './screens/AuthorScreen.jsx';
+import MainScreen from './screens/MainScreen.jsx';
+import CategoryPostScreen from './screens/CategoryPostScreen.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
-      <Route index={true} path="/" element={<HomeScreen />} />
-      <Route path="/herstory" element={<HerStoryScreen />} />
-      <Route path="/shop" element={<ShopScreen />} />
-      <Route path="/shop/search/:keyword" element={<ShopScreen />} />
-      <Route path="/shop/page/:pageNumber" element={<ShopScreen />} />
-      <Route
-        path="/shop/search/:keyword/page/:pageNumber"
-        element={<ShopScreen />}
-      />
-      <Route path="/product/:id" element={<ProductScreen />} />
-      <Route path="/blog" element={<BlogScreen />} />
-      <Route path="/post/:id" element={<PostScreen />} />
-      <Route path="/cart" element={<CartScreen />} />
-      <Route path="/login" element={<LoginScreen />} />
-      <Route path="/register" element={<RegisterScreen />} />
-      <Route path="" element={<PrivateRoute />}>
-        <Route path="/shipping" element={<ShippingScreen />} />
-        <Route path="/payment" element={<PaymentScreen />} />
-        <Route path="/placeorder" element={<PlaceOrderScreen />} />
-        <Route path="/order/:id" element={<OrderScreen />} />
-        <Route path="/profile" element={<ProfileScreen />} />
+      <Route path="" element={<MainScreen />}>
+        <Route index element={<HomeScreen />} />
+        <Route path="/herstory" element={<HerStoryScreen />} />
+        <Route path="/shop" element={<ShopScreen />} />
+        <Route path="/shop/search/:keyword" element={<ShopScreen />} />
+        <Route path="/shop/page/:pageNumber" element={<ShopScreen />} />
+        <Route
+          path="/shop/search/:keyword/page/:pageNumber"
+          element={<ShopScreen />}
+        />
+        <Route path="/product/:id" element={<ProductScreen />} />
+        <Route path="/blog" element={<BlogScreen />} />
+        <Route path="/post/:id" element={<PostScreen />} />
+        <Route path="/author/:id" element={<AuthorScreen />} />
+        <Route path="/category/:id" element={<CategoryPostScreen />} />
+        <Route path="/cart" element={<CartScreen />} />
+        <Route path="/login" element={<LoginScreen />} />
+        <Route path="/register" element={<RegisterScreen />} />
+        <Route path="" element={<PrivateRoute />}>
+          <Route path="/shipping" element={<ShippingScreen />} />
+          <Route path="/payment" element={<PaymentScreen />} />
+          <Route path="/placeorder" element={<PlaceOrderScreen />} />
+          <Route path="/order/:id" element={<OrderScreen />} />
+          <Route path="/profile" element={<ProfileScreen />} />
+        </Route>
       </Route>
       <Route path="" element={<AdminScreen />}>
         <Route index={true} path="/admin" element={<ProductListScreen />} />

@@ -1,13 +1,21 @@
+import { useParams } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 import Loader from '../components/Loader';
+import Message from '../components/Message';
 import Banner from '../components/Banner';
 import Meta from '../components/Meta';
-import Message from '../components/Message';
 import Post from '../components/Post';
-import { useGetPostsQuery } from '../slices/postsApiSlice';
+import { useGetPostCategoryDetailsQuery } from '../slices/postCategoriiesApiSlice';
 
-const BlogScreen = () => {
-  const { data: posts, isLoading, error } = useGetPostsQuery();
+const CategoryPostScreen = () => {
+  const { id: catId } = useParams();
+
+  const {
+    data: category,
+    isLoading,
+    error,
+  } = useGetPostCategoryDetailsQuery(catId);
+
   return (
     <>
       {isLoading ? (
@@ -18,22 +26,26 @@ const BlogScreen = () => {
         </Message>
       ) : (
         <>
-          <Banner src="/images/ecoprint-03-1280x360.webp" title="Blog" />
-          <Meta title="Blog" />
+          <Banner
+            title={`category: ${category?.title}`}
+            src={category?.posts[0]?.bannerImage}
+            alt="Banner"
+          />
+          <Meta title={`Category: ${category?.title}`} />
           <Container>
             <Row style={{ '--bs-gutter-y': '1.5rem' }}>
-              {posts.map((post) => (
+              {category?.posts?.map((post) => (
                 <Col lg={6} key={post._id}>
                   <Post
+                    postId={post._id}
                     src={
                       post.bannerImage ? post.bannerImage : '/images/sample.jpg'
                     }
-                    postId={post._id}
                     title={post.title}
+                    category={post.category}
                     description={post.description}
-                    author={post.user.name}
+                    author={post.user}
                     date={post.createdAt}
-                    category={post?.category}
                   />
                 </Col>
               ))}
@@ -41,8 +53,9 @@ const BlogScreen = () => {
           </Container>
         </>
       )}
+      ;
     </>
   );
 };
 
-export default BlogScreen;
+export default CategoryPostScreen;

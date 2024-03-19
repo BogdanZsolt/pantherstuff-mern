@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Form, Button, Row, Col, Container } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import MainLayout from '../components/MainLayout.jsx';
 import Banner from '../components/Banner.jsx';
 import FormContainer from '../components/FormContainer.jsx';
 import Loader from '../components/Loader.jsx';
@@ -42,7 +41,7 @@ const LoginScreen = () => {
   };
 
   return (
-    <MainLayout>
+    <>
       <Banner title="Sign in" />
       <Container>
         <FormContainer>
@@ -90,7 +89,7 @@ const LoginScreen = () => {
           </Row>
         </FormContainer>
       </Container>
-    </MainLayout>
+    </>
   );
 };
 

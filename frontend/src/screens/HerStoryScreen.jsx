@@ -1,10 +1,11 @@
 import { Container } from 'react-bootstrap';
 import Banner from '../components/Banner';
-import MainLayout from '../components/MainLayout';
+// import MainLayout from '../components/MainLayout';
 
 const HerStoryScreen = () => {
   return (
-    <MainLayout>
+    <>
+      {/* <MainLayout> */}
       <Banner title="Our History" />
       <Container>
         <p>
@@ -43,7 +44,8 @@ const HerStoryScreen = () => {
           beszerzésű gyógy és fűszernövénye
         </p>
       </Container>
-    </MainLayout>
+      {/* </MainLayout> */}
+    </>
   );
 };
 

@@ -11,7 +11,6 @@ import {
   Container,
 } from 'react-bootstrap';
 import { FaTrash } from 'react-icons/fa';
-import MainLayout from '../components/MainLayout';
 import Message from '../components/Message';
 import Banner from '../components/Banner';
 import { addToCart, removeFromCart } from '../slices/cartSlice';
@@ -36,7 +35,7 @@ const CartScreen = () => {
   };
 
   return (
-    <MainLayout>
+    <>
       <Banner src="/images/ecoprint-01.webp" title="shopping cart" />
       <Container>
         <Row>
@@ -124,7 +123,7 @@ const CartScreen = () => {
           </Col>
         </Row>
       </Container>
-    </MainLayout>
+    </>
   );
 };
 

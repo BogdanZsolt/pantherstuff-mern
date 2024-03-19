@@ -9,6 +9,7 @@ const postsPopOption = [
 ];
 const postPopOption = [
   { path: 'user', select: ['name'] },
+  { path: 'category', select: 'title' },
   {
     path: 'comments',
     match: { check: true, parent: null },

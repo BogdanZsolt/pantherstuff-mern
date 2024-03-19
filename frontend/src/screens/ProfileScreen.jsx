@@ -11,7 +11,6 @@ import {
 import { LinkContainer } from 'react-router-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import MainLayout from '../components/MainLayout';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { FaTimes } from 'react-icons/fa';
@@ -64,7 +63,7 @@ const ProfileScreen = () => {
   };
 
   return (
-    <MainLayout>
+    <>
       <Banner
         src="/images/ecoprint-02.webp"
         alt="ecoprint"
@@ -177,7 +176,7 @@ const ProfileScreen = () => {
           </Col>
         </Row>
       </Container>
-    </MainLayout>
+    </>
   );
 };
 

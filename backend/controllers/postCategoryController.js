@@ -10,6 +10,14 @@ import {
 const postCategoriesPopOption = [{ path: 'parent', select: ['title'] }];
 const postCategoryPopOption = [
   { path: 'children', select: '_id title description -parent' },
+  {
+    path: 'posts',
+    select: '-body -__v',
+    populate: [
+      { path: 'user', select: 'name' },
+      { path: 'category', select: 'title' },
+    ],
+  },
 ];
 
 const createInit = (req, res, next) => {

@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form, Button, Container } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import MainLayout from '../components/MainLayout.jsx';
 import Banner from '../components/Banner.jsx';
 import FormContainer from '../components/FormContainer.jsx';
 import { saveShippingAddress } from '../slices/cartSlice.js';
@@ -29,7 +28,7 @@ const ShippingScreen = () => {
   };
 
   return (
-    <MainLayout>
+    <>
       <Banner title="Shipping" />
       <Container>
         <FormContainer>
@@ -82,7 +81,7 @@ const ShippingScreen = () => {
           </Form>
         </FormContainer>
       </Container>
-    </MainLayout>
+    </>
   );
 };
 

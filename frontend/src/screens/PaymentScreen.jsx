@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Form, Button, Col, Container } from 'react-bootstrap';
-import MainLayout from '../components/MainLayout.jsx';
 import Banner from '../components/Banner.jsx';
 import FormContainer from '../components/FormContainer.jsx';
 import CheckoutSteps from '../components/CheckoutSteps.jsx';
@@ -30,7 +29,7 @@ const PaymentScreen = () => {
   };
 
   return (
-    <MainLayout>
+    <>
       <Banner title="Payment Method" />
       <Container>
         <FormContainer>
@@ -58,7 +57,7 @@ const PaymentScreen = () => {
           </Form>
         </FormContainer>
       </Container>
-    </MainLayout>
+    </>
   );
 };
 

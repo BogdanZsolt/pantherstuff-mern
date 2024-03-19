@@ -57,6 +57,12 @@ export const usersApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['User'],
     }),
+    getAuthor: builder.query({
+      query: (id) => ({
+        url: `${USERS_URL}/${id}/author`,
+      }),
+      keepUnusedDataFor: 5,
+    }),
   }),
 });
 
@@ -69,4 +75,5 @@ export const {
   useDeleteUserMutation,
   useGetUserDetailsQuery,
   useUpdateUserMutation,
+  useGetAuthorQuery,
 } = usersApiSlice;

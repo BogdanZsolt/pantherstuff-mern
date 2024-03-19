@@ -1,28 +1,40 @@
+import { useParams } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 import Loader from '../components/Loader';
+import Message from '../components/Message';
 import Banner from '../components/Banner';
 import Meta from '../components/Meta';
-import Message from '../components/Message';
 import Post from '../components/Post';
-import { useGetPostsQuery } from '../slices/postsApiSlice';
+import { useGetAuthorQuery } from '../slices/usersApiSlice';
 
-const BlogScreen = () => {
-  const { data: posts, isLoading, error } = useGetPostsQuery();
+const AuthorScreen = () => {
+  const { id: authorId } = useParams();
+
+  const {
+    data: user,
+    isLoaing: loadingUser,
+    error: errorUser,
+  } = useGetAuthorQuery(authorId);
+
   return (
     <>
-      {isLoading ? (
+      {loadingUser ? (
         <Loader />
-      ) : error ? (
+      ) : errorUser ? (
         <Message variant="danger">
-          {error?.data?.message || error.error}
+          {errorUser?.data?.message || errorUser.error}
         </Message>
       ) : (
         <>
-          <Banner src="/images/ecoprint-03-1280x360.webp" title="Blog" />
-          <Meta title="Blog" />
+          <Banner
+            title={`Author: ${user?.name}`}
+            src={user?.posts[0]?.bannerImage}
+            alt="Banner"
+          />
+          <Meta title={`Author: ${user?.name}`} />
           <Container>
             <Row style={{ '--bs-gutter-y': '1.5rem' }}>
-              {posts.map((post) => (
+              {user?.posts?.map((post) => (
                 <Col lg={6} key={post._id}>
                   <Post
                     src={
@@ -30,10 +42,10 @@ const BlogScreen = () => {
                     }
                     postId={post._id}
                     title={post.title}
+                    category={post.category}
                     description={post.description}
-                    author={post.user.name}
+                    author={post.user}
                     date={post.createdAt}
-                    category={post?.category}
                   />
                 </Col>
               ))}
@@ -41,8 +53,9 @@ const BlogScreen = () => {
           </Container>
         </>
       )}
+      ;
     </>
   );
 };
 
-export default BlogScreen;
+export default AuthorScreen;
