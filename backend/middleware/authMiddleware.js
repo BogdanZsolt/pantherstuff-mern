@@ -35,4 +35,14 @@ const admin = asyncHandler(async (req, res, next) => {
   }
 });
 
+// Premium member middleware
+const premium = asyncHandler(async (req, res, next) => {
+  if (req.user && req.user.isPremium) {
+    next();
+  } else {
+    res.status(401);
+    throw new Error('Not authorized as Premium member.');
+  }
+});
+
 export { protect, admin };

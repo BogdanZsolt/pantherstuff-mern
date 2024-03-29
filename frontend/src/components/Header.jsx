@@ -85,7 +85,7 @@ const Header = () => {
                 {/* <SearchBox /> */}
                 <li className="d-flex justify-content-center align-items-center">
                   <LinkContainer to="/cart">
-                    <Nav.Link>
+                    <Nav.Link className="d-flex justify-content-center align-items-center">
                       <RiShoppingBagLine />
                       {cartItems.length > 0 && (
                         <Badge pill bg="success" style={{ marginLeft: '5px' }}>

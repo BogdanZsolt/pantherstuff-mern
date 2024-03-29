@@ -34,6 +34,11 @@ const SideMenu = ({ value, setValue }) => {
               <Nav.Link>Post Categories</Nav.Link>
             </LinkContainer>
           </Nav.Item>
+          <Nav.Item>
+            <LinkContainer to="/admin/commentlist" className="ps-3">
+              <Nav.Link>Comments</Nav.Link>
+            </LinkContainer>
+          </Nav.Item>
         </Accordion.Body>
       </Accordion.Item>
       <Accordion.Item eventKey="users">
@@ -58,6 +63,19 @@ const SideMenu = ({ value, setValue }) => {
           <Nav.Item>
             <LinkContainer to="/admin/orderlist" className="ps-3">
               <Nav.Link>All Orders</Nav.Link>
+            </LinkContainer>
+          </Nav.Item>
+        </Accordion.Body>
+      </Accordion.Item>
+      <Accordion.Item eventKey="subscribe">
+        <Accordion.Header onClick={() => setValue('subscribe')}>
+          <BsTable />
+          Subscribe
+        </Accordion.Header>
+        <Accordion.Body>
+          <Nav.Item>
+            <LinkContainer to="/admin/subscriberlist" className="ps-3">
+              <Nav.Link>Subscribers</Nav.Link>
             </LinkContainer>
           </Nav.Item>
         </Accordion.Body>

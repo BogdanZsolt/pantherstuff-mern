@@ -31,7 +31,7 @@ const BlogScreen = () => {
                     postId={post._id}
                     title={post.title}
                     description={post.description}
-                    author={post.user.name}
+                    author={post.user}
                     date={post.createdAt}
                     category={post?.category}
                   />

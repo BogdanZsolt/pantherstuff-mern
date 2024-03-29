@@ -69,13 +69,33 @@ export const postsApiSlice = apiSlice.injectEndpoints({
         method: 'PUT',
         body: data,
       }),
-      invalidatesTags: ['Post'],
+      invalidatesTags: ['Posts'],
+    }),
+    adminUpdateComment: builder.mutation({
+      query: (data) => ({
+        url: `${COMMENTS_URL}/${data.commentId}`,
+        method: 'PUT',
+        body: data,
+      }),
+      invalidatesTags: ['Comments'],
     }),
     deleteComment: builder.mutation({
       query: (commentId) => ({
         url: `${COMMENTS_URL}/${commentId}`,
         method: 'DELETE',
       }),
+    }),
+    getComments: builder.query({
+      query: () => ({
+        url: COMMENTS_URL,
+      }),
+      keepUnusedDataFor: 5,
+    }),
+    getCommentDetails: builder.query({
+      query: (id) => ({
+        url: `${COMMENTS_URL}/${id}`,
+      }),
+      keepUnusedDataFor: 5,
     }),
   }),
 });
@@ -89,5 +109,8 @@ export const {
   useLastNumPostsQuery,
   useCreateCommentMutation,
   useUpdateCommentMutation,
+  useAdminUpdateCommentMutation,
   useDeleteCommentMutation,
+  useGetCommentsQuery,
+  useGetCommentDetailsQuery,
 } = postsApiSlice;

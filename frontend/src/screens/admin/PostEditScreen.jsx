@@ -46,8 +46,6 @@ const PostEditScreen = () => {
     error: errGetCats,
   } = useGetPostCategoriesQuery();
 
-  console.log(author);
-
   const [updatePost, { isLoading: updateLoading }] = useUpdatePostMutation();
 
   const [uploadImage, { isLoading: loadingImage }] = useUploadImageMutation();
@@ -78,7 +76,7 @@ const PostEditScreen = () => {
       setBannerImage(post.bannerImage);
       setBody(post.body);
       setDescription(post.description);
-      setCategory(post.category);
+      setCategory(post?.category?._id || '');
       setAuthor(post.user._id);
     }
   }, [post]);

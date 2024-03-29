@@ -12,6 +12,8 @@ import postRoutes from './routes/postRoutes.js';
 import postCategoryRoutes from './routes/postCategoryRoutes.js';
 import commentRoutes from './routes/commentRoutes.js';
 import uploadRoutes from './routes/uploadRoutes.js';
+import groupRoutes from './routes/groupRoutes.js';
+import subscriberRoutes from './routes/subscriberRoutes.js';
 const port = process.env.PORT || 5000;
 
 connectDB(); // Connect to MongoDB
@@ -32,6 +34,8 @@ app.use('/api/posts', postRoutes);
 app.use('/api/postcategories', postCategoryRoutes);
 app.use('/api/comments', commentRoutes);
 app.use('/api/upload', uploadRoutes);
+app.use('/api/groups', groupRoutes);
+app.use('/api/subscribers', subscriberRoutes);
 
 const __dirname = path.resolve();
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));

@@ -14,25 +14,25 @@
         {
           "id": 1.2,
           "text": "Me Petra",
-          "link": "",
+          "link": "/mepetra",
           "image": "/images/pepsz-yogaban-200x200.webp"
         },
         {
           "id": 1.3,
           "text": "Base Materials",
-          "link": "",
+          "link": "/base_materials",
           "image": "/images/ecoprint-04-200x200.webp"
         },
         {
           "id": 1.4,
           "text": "Values & Intentions",
-          "link": "",
+          "link": "/values",
           "image": "/images/our_values-150x150.jpg"
         },
         {
           "id": 1.5,
           "text": "Frequently Asked Quetions",
-          "link": "",
+          "link": "/faqs",
           "image": "/images/ecoprint-06-200x200.webp"
         }
       ]
@@ -87,7 +87,7 @@
     {
       "id": 5,
       "text": "Contact",
-      "link": ""
+      "link": "/contact"
     }
   ]
 }

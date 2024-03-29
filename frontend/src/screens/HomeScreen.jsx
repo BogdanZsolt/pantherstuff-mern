@@ -1,8 +1,9 @@
 import { Container } from 'react-bootstrap';
 import { useParams, Link } from 'react-router-dom';
 import Hero from '../components/Hero.jsx';
-import PhotoGallery from '../components/PhotoGallery.jsx';
 import ProductCarousel from '../components/ProductCarousel.jsx';
+import PhotoGallery from '../components/PhotoGallery.jsx';
+import SubscribeForm from '../components/SubscribeForm.jsx';
 
 const HomeScreens = () => {
   const { keyword } = useParams();
@@ -19,6 +20,7 @@ const HomeScreens = () => {
       <Container className="my-4">
         <h1>Latest Products</h1>
         <ProductCarousel />
+        <SubscribeForm />
         <PhotoGallery />
       </Container>
     </>

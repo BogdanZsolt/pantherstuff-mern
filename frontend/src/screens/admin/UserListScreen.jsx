@@ -60,9 +60,9 @@ const UserListScreen = () => {
                 </td>
                 <td>
                   {user.isAdmin ? (
-                    <FaCheck style={{ color: 'green' }} />
+                    <FaCheck className="text-success" />
                   ) : (
-                    <FaTimes style={{ color: 'red' }} />
+                    <FaTimes className="text-danger" />
                   )}
                 </td>
                 <td>

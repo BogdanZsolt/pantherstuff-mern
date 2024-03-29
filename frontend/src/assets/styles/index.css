@@ -145,6 +145,52 @@ img.logo {
   background-color: var(--bs-secondary);
 }
 
+.ps-images-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: var(--ps-images-group-gutter, 1rem);
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.ps-single-image {
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  max-width: 50%;
+  height: 100%;
+  border-radius: 7px;
+  overflow: hidden;
+}
+
+.ps-single-image img {
+  display: block;
+  max-width: 100%;
+  object-fit: cover;
+}
+
+.ps-image-item {
+  display: block;
+  position: relative;
+  flex: 1 0 0%;
+  max-width: 50%;
+  height: 100%;
+  border-radius: 7px;
+  overflow: hidden;
+  box-shadow: 0 5px 10px -5px rgba(var(--bs-secondary-rgb), 0.6);
+}
+
+.ps-image-item img {
+  display: block;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
 /* MOBILE MENU BUTTON */
 .navbar-toggler {
   width: 2rem;
@@ -858,13 +904,20 @@ table th {
   object-fit: cover;
 }
 
+/* SUBSCRIBE FORM */
+.subscribe-decoration {
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: 0.8;
+}
+
 /* POST */
-/* .post p {
+.post p {
   font-size: 1.25rem;
   font-weight: 300;
 }
 
-.ql-align-center {
+/* .ql-align-center {
   text-align: center;
 }
 

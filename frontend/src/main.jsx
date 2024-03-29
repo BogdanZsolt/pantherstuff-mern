@@ -31,6 +31,8 @@ import UserListScreen from './screens/admin/UserListScreen.jsx';
 import UserEditScreen from './screens/admin/UserEditScreen.jsx';
 import ShopScreen from './screens/ShopScreen.jsx';
 import HerStoryScreen from './screens/HerStoryScreen.jsx';
+import MePetraScreen from './screens/MePetraScreen.jsx';
+import ValuesScreen from './screens/ValuesScreen.jsx';
 import BlogScreen from './screens/BlogScreen.jsx';
 import PostScreen from './screens/PostScreen.jsx';
 import PostListScreen from './screens/admin/PostListScreen.jsx';
@@ -41,6 +43,12 @@ import PostCatEditScreen from './screens/admin/PostCatEditScreen.jsx';
 import AuthorScreen from './screens/AuthorScreen.jsx';
 import MainScreen from './screens/MainScreen.jsx';
 import CategoryPostScreen from './screens/CategoryPostScreen.jsx';
+import CommentListScreen from './screens/admin/CommentListScreen.jsx';
+import CommentCheckScreen from './screens/admin/CommentCheckScreen.jsx';
+import SubscriberListScreen from './screens/admin/SubscriberListScreen.jsx';
+import BaseMaterialsScreen from './screens/BaseMaterialsScreen.jsx';
+import FaqsScreen from './screens/FaqsScreen.jsx';
+import ContactScreen from './screens/ContactScreen.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -48,6 +56,11 @@ const router = createBrowserRouter(
       <Route path="" element={<MainScreen />}>
         <Route index element={<HomeScreen />} />
         <Route path="/herstory" element={<HerStoryScreen />} />
+        <Route path="/mepetra" element={<MePetraScreen />} />
+        <Route path="/values" element={<ValuesScreen />} />
+        <Route path="/base_materials" element={<BaseMaterialsScreen />} />
+        <Route path="/faqs" element={<FaqsScreen />} />
+        <Route path="/contact" element={<ContactScreen />} />
         <Route path="/shop" element={<ShopScreen />} />
         <Route path="/shop/search/:keyword" element={<ShopScreen />} />
         <Route path="/shop/page/:pageNumber" element={<ShopScreen />} />
@@ -85,6 +98,8 @@ const router = createBrowserRouter(
           path="/admin/postcategorylist"
           element={<PostCategoryListScreen />}
         />
+        <Route path="/admin/commentlist" element={<CommentListScreen />} />
+        <Route path="/admin/comment/:id" element={<CommentCheckScreen />} />
         <Route
           path="/admin/postcategory/:id/edit"
           element={<PostCatEditScreen />}
@@ -92,6 +107,10 @@ const router = createBrowserRouter(
         <Route path="/admin/userlist" element={<UserListScreen />} />
         <Route path="/admin/user/:id/edit" element={<UserEditScreen />} />
         <Route path="/admin/orderlist" element={<OrderListScreen />} />
+        <Route
+          path="/admin/subscriberlist"
+          element={<SubscriberListScreen />}
+        />
       </Route>
     </Route>
   )

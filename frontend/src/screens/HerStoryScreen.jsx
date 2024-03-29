@@ -1,14 +1,16 @@
 import { Container } from 'react-bootstrap';
 import Banner from '../components/Banner';
-// import MainLayout from '../components/MainLayout';
 
 const HerStoryScreen = () => {
   return (
     <>
-      {/* <MainLayout> */}
-      <Banner title="Our History" />
+      <Banner
+        title="Our Hertory"
+        src="/images/ecoprint-02.webp"
+        alt="Our History"
+      />
       <Container>
-        <p>
+        <p className="lead">
           Zafír. A fekete macska, akire 20 évet vártam, ( kb 10 éves koromtól
           égett bele a klisés, archetipikus fekete boszorkánymacska képe) és aki
           két éve a legkedvesebb kis állattársam. Egy fekete macskalánnyal
@@ -22,7 +24,18 @@ const HerStoryScreen = () => {
           amúgy is egy kollektív társadalmi téma, amin van mit boncolgatni,
           megváltoztatni és átalakítani egyéni / nagyobb skálán is.
         </p>
-        <p>
+        <div className="ps-images-group">
+          <div className="ps-image-item">
+            <img src="/images/our-history-01.jpg" alt="our story 1" />
+          </div>
+          <div className="ps-image-item">
+            <img src="/images/our-history-02.png" alt="our story 2" />
+          </div>
+          <div className="ps-image-item">
+            <img src="/images/our-history-03.png" alt="our story 3" />
+          </div>
+        </div>
+        <p className="lead">
           2019 telén, újdonsült macskámmal valamint újdonsült lakótársammal
           kitaláltuk, just for fun, hogy készítsünk karácsonyi szappanokat.
           Mission accomplished. Annyira jól sikerültek, hogy rajtamaradtunk, és
@@ -44,7 +57,6 @@ const HerStoryScreen = () => {
           beszerzésű gyógy és fűszernövénye
         </p>
       </Container>
-      {/* </MainLayout> */}
     </>
   );
 };
