@@ -191,6 +191,14 @@ img.logo {
   object-fit: cover;
 }
 
+.social-menu {
+  margin-top: 1rem;
+  display: flex;
+  margin-bottom: 1.5rem;
+  align-items: center;
+  gap: 1rem;
+}
+
 /* MOBILE MENU BUTTON */
 .navbar-toggler {
   width: 2rem;
