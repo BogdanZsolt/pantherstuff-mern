@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 import {
   createBrowserRouter,
@@ -9,107 +9,390 @@ import {
 import { HelmetProvider } from 'react-helmet-async';
 import { Provider } from 'react-redux';
 import store from './store.js';
+import Loader from './components/Loader.jsx';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import './assets/styles/bootstrap.custom.css';
 import './assets/styles/index.css';
-import App from './App.jsx';
-import PrivateRoute from './components/PrivateRoute.jsx';
-import HomeScreen from './screens/HomeScreen.jsx';
-import ProductScreen from './screens/ProductScreen.jsx';
-import CartScreen from './screens/CartScreen.jsx';
-import LoginScreen from './screens/LoginScreen.jsx';
-import RegisterScreen from './screens/RegisterScreen.jsx';
-import ShippingScreen from './screens/ShippingScreen.jsx';
-import PaymentScreen from './screens/PaymentScreen.jsx';
-import PlaceOrderScreen from './screens/PlaceOrderScreen.jsx';
-import OrderScreen from './screens/OrderScreen.jsx';
-import ProfileScreen from './screens/ProfileScreen.jsx';
-import ProductListScreen from './screens/admin/ProductListScreen.jsx';
-import OrderListScreen from './screens/admin/OrderListScreen.jsx';
-import ProductEditScreen from './screens/admin/ProductEditScreen.jsx';
-import UserListScreen from './screens/admin/UserListScreen.jsx';
-import UserEditScreen from './screens/admin/UserEditScreen.jsx';
-import ShopScreen from './screens/ShopScreen.jsx';
-import HerStoryScreen from './screens/HerStoryScreen.jsx';
-import MePetraScreen from './screens/MePetraScreen.jsx';
-import ValuesScreen from './screens/ValuesScreen.jsx';
-import BlogScreen from './screens/BlogScreen.jsx';
-import PostScreen from './screens/PostScreen.jsx';
-import PostListScreen from './screens/admin/PostListScreen.jsx';
-import PostEditScreen from './screens/admin/PostEditScreen.jsx';
-import AdminScreen from './screens/admin/AdminScreen.jsx';
-import PostCategoryListScreen from './screens/admin/PostCategoryListScreen.jsx';
-import PostCatEditScreen from './screens/admin/PostCatEditScreen.jsx';
-import AuthorScreen from './screens/AuthorScreen.jsx';
-import MainScreen from './screens/MainScreen.jsx';
-import CategoryPostScreen from './screens/CategoryPostScreen.jsx';
-import CommentListScreen from './screens/admin/CommentListScreen.jsx';
-import CommentCheckScreen from './screens/admin/CommentCheckScreen.jsx';
-import SubscriberListScreen from './screens/admin/SubscriberListScreen.jsx';
-import BaseMaterialsScreen from './screens/BaseMaterialsScreen.jsx';
-import FaqsScreen from './screens/FaqsScreen.jsx';
-import ContactScreen from './screens/ContactScreen.jsx';
+import {
+  App,
+  MainScreen,
+  HomeScreen,
+  ShopScreen,
+  ProductScreen,
+  LoginScreen,
+  RegisterScreen,
+  CartScreen,
+  ShippingScreen,
+  PaymentScreen,
+  HerStory,
+  MePetraScreen,
+  ValuesScreen,
+  BaseMaterialsScreen,
+  FaqsScreen,
+  ContactScreen,
+  BlogScreen,
+  PostScreen,
+  AuthorScreen,
+  CategoryPostScreen,
+  PrivateRoute,
+  PlaceOrderScreen,
+  OrderScreen,
+  ProfileScreen,
+  AdminScreen,
+  ProductListScreen,
+  ProductEditScreen,
+  PostListScreen,
+  PostEditScreen,
+  PostCategoryListScreen,
+  PostCatEditScreen,
+  CommentListScreen,
+  CommentCheckScreen,
+  UserListScreen,
+  UserEditScreen,
+  OrderListScreen,
+  SubscriberListScreen,
+} from './Pages.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<App />}>
-      <Route path="" element={<MainScreen />}>
-        <Route index element={<HomeScreen />} />
-        <Route path="/herstory" element={<HerStoryScreen />} />
-        <Route path="/mepetra" element={<MePetraScreen />} />
-        <Route path="/values" element={<ValuesScreen />} />
-        <Route path="/base_materials" element={<BaseMaterialsScreen />} />
-        <Route path="/faqs" element={<FaqsScreen />} />
-        <Route path="/contact" element={<ContactScreen />} />
-        <Route path="/shop" element={<ShopScreen />} />
-        <Route path="/shop/search/:keyword" element={<ShopScreen />} />
-        <Route path="/shop/page/:pageNumber" element={<ShopScreen />} />
+    <Route
+      path="/"
+      element={
+        <Suspense fallback={<Loader />}>
+          <App />
+        </Suspense>
+      }
+    >
+      <Route
+        path=""
+        element={
+          <Suspense fallback={<Loader />}>
+            <MainScreen />
+          </Suspense>
+        }
+      >
+        <Route
+          index
+          element={
+            <Suspense fallback={<Loader />}>
+              <HomeScreen />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/herstory"
+          element={
+            <Suspense fallback={<Loader />}>
+              <HerStory />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/mepetra"
+          element={
+            <Suspense fallback={<Loader />}>
+              <MePetraScreen />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/base_materials"
+          element={
+            <Suspense fallback={<Loader />}>
+              <BaseMaterialsScreen />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/values"
+          element={
+            <Suspense fallback={<Loader />}>
+              <ValuesScreen />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/faqs"
+          element={
+            <Suspense fallback={<Loader />}>
+              <FaqsScreen />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/contact"
+          element={
+            <Suspense fallback={<Loader />}>
+              <ContactScreen />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/shop"
+          element={
+            <Suspense fallback={<Loader />}>
+              <ShopScreen />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/shop/search/:keyword"
+          element={
+            <Suspense fallback={<Loader />}>
+              <ShopScreen />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/shop/page/:pageNumber"
+          element={
+            <Suspense fallback={<Loader />}>
+              <ShopScreen />
+            </Suspense>
+          }
+        />
         <Route
           path="/shop/search/:keyword/page/:pageNumber"
-          element={<ShopScreen />}
+          element={
+            <Suspense fallback={<Loader />}>
+              <ShopScreen />
+            </Suspense>
+          }
         />
-        <Route path="/product/:id" element={<ProductScreen />} />
-        <Route path="/blog" element={<BlogScreen />} />
-        <Route path="/post/:id" element={<PostScreen />} />
-        <Route path="/author/:id" element={<AuthorScreen />} />
-        <Route path="/category/:id" element={<CategoryPostScreen />} />
-        <Route path="/cart" element={<CartScreen />} />
-        <Route path="/login" element={<LoginScreen />} />
-        <Route path="/register" element={<RegisterScreen />} />
-        <Route path="" element={<PrivateRoute />}>
-          <Route path="/shipping" element={<ShippingScreen />} />
-          <Route path="/payment" element={<PaymentScreen />} />
-          <Route path="/placeorder" element={<PlaceOrderScreen />} />
-          <Route path="/order/:id" element={<OrderScreen />} />
-          <Route path="/profile" element={<ProfileScreen />} />
+        <Route
+          path="/product/:id"
+          element={
+            <Suspense fallback={<Loader />}>
+              <ProductScreen />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/blog"
+          element={
+            <Suspense fallback={<Loader />}>
+              <BlogScreen />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/post/:id"
+          element={
+            <Suspense fallback={<Loader />}>
+              <PostScreen />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/author/:id"
+          element={
+            <Suspense fallback={<Loader />}>
+              <AuthorScreen />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/category/:id"
+          element={
+            <Suspense fallback={<Loader />}>
+              <CategoryPostScreen />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/cart"
+          element={
+            <Suspense fallback={<Loader />}>
+              <CartScreen />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <Suspense fallback={<Loader />}>
+              <LoginScreen />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <Suspense fallback={<Loader />}>
+              <RegisterScreen />
+            </Suspense>
+          }
+        />
+        <Route
+          path=""
+          element={
+            <Suspense fallback={<Loader />}>
+              <PrivateRoute />
+            </Suspense>
+          }
+        >
+          <Route
+            path="/shipping"
+            element={
+              <Suspense fallback={<Loader />}>
+                <ShippingScreen />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/payment"
+            element={
+              <Suspense fallback={<Loader />}>
+                <PaymentScreen />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/placeorder"
+            element={
+              <Suspense fallback={<Loader />}>
+                <PlaceOrderScreen />
+              </Suspense>
+            }
+          />
+
+          <Route
+            path="/order/:id"
+            element={
+              <Suspense fallback={<Loader />}>
+                <OrderScreen />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <Suspense fallback={<Loader />}>
+                <ProfileScreen />
+              </Suspense>
+            }
+          />
         </Route>
       </Route>
-      <Route path="" element={<AdminScreen />}>
-        <Route index={true} path="/admin" element={<ProductListScreen />} />
-        <Route path="/admin/productlist" element={<ProductListScreen />} />
+      <Route
+        path=""
+        element={
+          <Suspense fallback={<Loader />}>
+            <AdminScreen />
+          </Suspense>
+        }
+      >
+        <Route
+          path="/admin"
+          element={
+            <Suspense fallback={<Loader />}>
+              <ProductListScreen />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/admin/productlist"
+          element={
+            <Suspense fallback={<Loader />}>
+              <ProductListScreen />
+            </Suspense>
+          }
+        />
         <Route
           path="/admin/productlist/:pageNumber"
-          element={<ProductListScreen />}
+          element={
+            <Suspense fallback={<Loader />}>
+              <ProductListScreen />
+            </Suspense>
+          }
         />
-        <Route path="/admin/product/:id/edit" element={<ProductEditScreen />} />
-        <Route path="/admin/postlist" element={<PostListScreen />} />
-        <Route path="/admin/post/:id/edit" element={<PostEditScreen />} />
+        <Route
+          path="/admin/product/:id/edit"
+          element={
+            <Suspense fallback={<Loader />}>
+              <ProductEditScreen />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/admin/postlist"
+          element={
+            <Suspense fallback={<Loader />}>
+              <PostListScreen />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/admin/post/:id/edit"
+          element={
+            <Suspense fallback={<Loader />}>
+              <PostEditScreen />
+            </Suspense>
+          }
+        />
         <Route
           path="/admin/postcategorylist"
-          element={<PostCategoryListScreen />}
+          element={
+            <Suspense fallback={<Loader />}>
+              <PostCategoryListScreen />
+            </Suspense>
+          }
         />
-        <Route path="/admin/commentlist" element={<CommentListScreen />} />
-        <Route path="/admin/comment/:id" element={<CommentCheckScreen />} />
         <Route
           path="/admin/postcategory/:id/edit"
-          element={<PostCatEditScreen />}
+          element={
+            <Suspense fallback={<Loader />}>
+              <PostCatEditScreen />
+            </Suspense>
+          }
         />
-        <Route path="/admin/userlist" element={<UserListScreen />} />
-        <Route path="/admin/user/:id/edit" element={<UserEditScreen />} />
-        <Route path="/admin/orderlist" element={<OrderListScreen />} />
+        <Route
+          path="/admin/commentlist"
+          element={
+            <Suspense fallback={<Loader />}>
+              <CommentListScreen />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/admin/comment/:id"
+          element={
+            <Suspense fallback={<Loader />}>
+              <CommentCheckScreen />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/admin/userlist"
+          element={
+            <Suspense fallback={<Loader />}>
+              <UserListScreen />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/admin/user/:id/edit"
+          element={
+            <Suspense fallback={<Loader />}>
+              <UserEditScreen />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/admin/orderlist"
+          element={
+            <Suspense fallback={<Loader />}>
+              <OrderListScreen />
+            </Suspense>
+          }
+        />
         <Route
           path="/admin/subscriberlist"
-          element={<SubscriberListScreen />}
+          element={
+            <Suspense fallback={<Loader />}>
+              <SubscriberListScreen />
+            </Suspense>
+          }
         />
       </Route>
     </Route>
