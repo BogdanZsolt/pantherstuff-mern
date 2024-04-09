@@ -1,25 +1,30 @@
-import { useState, useEffect } from 'react';
-import { Container, Row, Form, Button, Image } from 'react-bootstrap';
+import { useState, useEffect, lazy } from 'react';
+import { Container, Row, Form, Button } from 'react-bootstrap';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import FormContainer from '../../components/FormContainer';
 import Loader from '../../components/Loader';
 import Message from '../../components/Message';
 import { toast } from 'react-toastify';
-import Editor from '../../components/admin/Editor';
+// import Editor from '../../components/admin/Editor';
 import {
   useGetPostDetailsQuery,
   useUpdatePostMutation,
-} from '../../slices/postsApiSlice';
-import { useUploadImageMutation } from '../../slices/uploadImageApiSlice';
-import { useGetPostCategoriesQuery } from '../../slices/postCategoriiesApiSlice';
-import { useGetUsersQuery } from '../../slices/usersApiSlice';
+} from '../../slices/postsApiSlice.js';
+// import { useUploadImageMutation } from '../../slices/uploadImageApiSlice.js';
+import { useGetPostCategoriesQuery } from '../../slices/postCategoriiesApiSlice.js';
+import { useGetUsersQuery } from '../../slices/usersApiSlice.js';
+
+const Editor = lazy(() => import('../../components/Editor.jsx'));
+const BannerImage = lazy(() =>
+  import('../../components/admin/BannerImage.jsx')
+);
 
 const PostEditScreen = () => {
   const { id: postId } = useParams();
   const navigate = useNavigate();
 
-  const userInfo = useSelector((state) => state.auth);
+  const { userInfo } = useSelector((state) => state.auth);
   const [title, setTitle] = useState('');
   const [bannerImage, setBannerImage] = useState('');
   const [body, setBody] = useState('');
@@ -48,7 +53,7 @@ const PostEditScreen = () => {
 
   const [updatePost, { isLoading: updateLoading }] = useUpdatePostMutation();
 
-  const [uploadImage, { isLoading: loadingImage }] = useUploadImageMutation();
+  // const [uploadImage, { isLoading: loadingImage }] = useUploadImageMutation();
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -81,18 +86,20 @@ const PostEditScreen = () => {
     }
   }, [post]);
 
-  const uploadFileHandler = async (e) => {
-    const formData = new FormData();
-    formData.append('image', e.target.files[0]);
-    try {
-      const res = await uploadImage(formData).unwrap();
-      console.log(res);
-      toast.success(res.message);
-      setBannerImage(res.image);
-    } catch (err) {
-      toast.error(err?.data?.message || err.error);
-    }
-  };
+  // const uploadFileHandler = async (e) => {
+  //   const formData = new FormData();
+  //   formData.append('image', e.target.files[0]);
+  //   try {
+  //     const res = await uploadImage(formData).unwrap();
+  //     console.log(res);
+  //     toast.success(res.message);
+  //     setBannerImage(res.image);
+  //   } catch (err) {
+  //     toast.error(err?.data?.message || err.error);
+  //   }
+  // };
+
+  console.log(body);
 
   return (
     <Container className="mt-5" fluid>
@@ -110,7 +117,7 @@ const PostEditScreen = () => {
           <Message variant="danger">{error.data.message}</Message>
         ) : (
           <Form onSubmit={submitHandler}>
-            <Form.Group controlId="bannerImage" className="mb-2">
+            {/* <Form.Group controlId="bannerImage" className="mb-2">
               <Form.Label>Banner Image</Form.Label>
               <Form.Control
                 type="text"
@@ -132,7 +139,8 @@ const PostEditScreen = () => {
                   style={{ width: '100%', height: 'auto' }}
                 />
               )}
-            </Form.Group>
+            </Form.Group> */}
+            <BannerImage value={bannerImage} setValue={setBannerImage} />
 
             {/* Author Select from users */}
             {loadingUsers ? (
@@ -206,7 +214,17 @@ const PostEditScreen = () => {
 
             <Form.Group controlId="body" className="my-2">
               <Form.Label>Content</Form.Label>
-              <Editor value={body} onChange={setBody} />
+              {/* <Editor value={body} onChange={setBody} /> */}
+              <Editor
+                content={body}
+                onDataChange={(data) => setBody(data)}
+                editable
+              />
+              {/* <Form.Control
+                as="textarea"
+                value={body}
+                onChange={(e) => setBody(e.target.value)}
+              /> */}
             </Form.Group>
 
             <Button type="submit" variant="primary" className="my-2">

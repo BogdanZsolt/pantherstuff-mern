@@ -72,7 +72,7 @@ const router = createBrowserRouter(
         }
       >
         <Route
-          index
+          path="/"
           element={
             <Suspense fallback={<Loader />}>
               <HomeScreen />

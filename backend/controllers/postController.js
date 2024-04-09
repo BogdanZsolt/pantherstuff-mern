@@ -28,7 +28,7 @@ const createInit = (req, res, next) => {
   req.body.user = req.user._id;
   req.body.title = 'Simple title';
   req.body.description = 'Simple description';
-  req.body.body = '<p>Simple Post</>';
+  req.body.body = '<p>Simple Post</p>';
   // req.body.body = {
   //   type: 'doc',
   //   content: [

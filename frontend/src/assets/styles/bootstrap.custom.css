@@ -141,6 +141,10 @@
   --transition-filter: filter 0.3s;
   --transition-shadow: box-shadow 0.3s;
   --transition-opacity: opacity 0.3s;
+  --jd-color-background-default: var(--bs-primary);
+  --jd-color-border: var(--bs-secondary);
+  --jd-color-panel: var(--bs-primary);
+  --jd-color-icon: var(--bs-secondary);
 }
 
 [data-bs-theme='dark'] {
