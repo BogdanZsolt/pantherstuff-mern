@@ -14,7 +14,12 @@ import commentRoutes from './routes/commentRoutes.js';
 import uploadRoutes from './routes/uploadRoutes.js';
 import groupRoutes from './routes/groupRoutes.js';
 import subscriberRoutes from './routes/subscriberRoutes.js';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename).split('/').slice(0, -1).join('/');
 const port = process.env.PORT || 5000;
+
+console.log(`__dirname: ${__dirname}`);
 
 connectDB(); // Connect to MongoDB
 
