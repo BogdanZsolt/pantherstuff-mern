@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { Form } from 'react-bootstrap';
-import Select, { components } from 'react-select';
+import Select from 'react-select';
 import {
   RiBold,
   RiItalic,
@@ -14,7 +14,6 @@ import {
   RiAlignCenter,
   RiAlignRight,
   RiAlignJustify,
-  RiTable2,
   RiLink,
   RiImageAddLine,
 } from 'react-icons/ri';
@@ -59,27 +58,7 @@ const Menubar = ({ editor }) => {
     return null;
   }
 
-  const headings = [
-    { value: 0, label: 'Paragraph' },
-    { value: 1, label: 'Heading-1' },
-    { value: 2, label: 'Heading-2' },
-    { value: 3, label: 'Heading-3' },
-    { value: 4, label: 'Heading-4' },
-    { value: 5, label: 'Heading-5' },
-    { value: 6, label: 'Heading-6' },
-  ];
-
-  const Option = (props) => (
-    <components.Option
-      {...props}
-      className={`${
-        props.data.value !== 0 ? 'font-cursive' : 'font-sans-serif'
-      } ${props.data.value > 0 ? 'fs-' + props.data.value : ''}`}
-    >
-      {props.data.label}
-    </components.Option>
-  );
-
+  const headings = [0, 1, 2, 3, 4, 5, 6];
   const aligns = [
     { value: 'left', label: <RiAlignLeft /> },
     { value: 'center', label: <RiAlignCenter /> },
@@ -92,24 +71,7 @@ const Menubar = ({ editor }) => {
     { label: 'Macondo', value: 'Macondo' },
   ];
   const fontSizes = [
-    { value: 'reset', label: 'Reset' },
-    { value: '8px', label: '8px' },
-    { value: '9px', label: '9px' },
-    { value: '10px', label: '10px' },
-    { value: '12px', label: '12px' },
-    { value: '14px', label: '14px' },
-    { value: '16px', label: '16px' },
-    { value: '18px', label: '18px' },
-    { value: '20px', label: '20px' },
-    { value: '24px', label: '24px' },
-    { value: '28px', label: '28px' },
-    { value: '32px', label: '32px' },
-    { value: '36px', label: '36px' },
-    { value: '40px', label: '40px' },
-    { value: '48px', label: '48px' },
-    { value: '60px', label: '60px' },
-    { value: '72px', label: '72px' },
-    { value: '96px', label: '90px' },
+    8, 9, 10, 12, 14, 16, 18, 20, 24, 28, 32, 36, 40, 48, 60, 72, 96,
   ];
 
   const selectStyles = {
@@ -133,17 +95,36 @@ const Menubar = ({ editor }) => {
       ...styles,
       color: '#36241b',
     }),
-    option: (styles, state) => ({
+    menuList: (styles) => ({
       ...styles,
-      color: state.isSelected ? '#faf0d1' : '#36241b',
-      backgroundColor: state.isSelected ? '#36241b' : '#faf0d1',
-      width: 'auto',
+      backgroundColor: '#faf0d1',
+      color: '#36241b',
     }),
-    menu: (styles) => ({
-      ...styles,
-      width: 'max-content',
-      minWidth: '100%',
-    }),
+  };
+
+  // const getHeading = () => {
+  //   for (let i = 1; i <= 6; i++) {
+  //     if (editor.isActive('heading', { level: i })) {
+  //       return `Heading ${i}`;
+  //     }
+  //   }
+  //   return 'paragraph';
+  // };
+
+  // const getAlign = () => {
+  //   for (let i = 0; i <= aligns.length - 1; i++) {
+  //     if (editor.isActive({ textAlign: aligns[i].value })) {
+  //       return aligns[i].label;
+  //     }
+  //   }
+  // };
+
+  const getAlignValue = () => {
+    for (let i = 0; i <= aligns.length - 1; i++) {
+      if (editor.isActive({ textAlign: aligns[i].value })) {
+        return aligns[i];
+      }
+    }
   };
 
   const colorInHex = (rgbColor) => {
@@ -169,14 +150,21 @@ const Menubar = ({ editor }) => {
   // const capitalize = (value) => {
   //   return value.charAt(0).toUpperCase() + value.slice(1);
   // };
-
-  const headingHandler = (val) => {
-    let { value } = val;
+  const headingHandler = (value) => {
+    console.log(value);
+    value = Number(value);
     if (value === 0) {
+      console.log(`console: ${value}`);
       editor.chain().focus().setParagraph().run();
     } else {
+      console.log(`else: ${value}`);
       editor.chain().focus().toggleHeading({ level: value }).run();
     }
+    // if (value === 0) {
+    //   editor.chain().focus().setParagraph().run();
+    // } else {
+    //   editor.chain().focus().toggleHeading({ level: value }).run();
+    // }
   };
 
   const fontFamilyHandler = (choice) => {
@@ -189,9 +177,7 @@ const Menubar = ({ editor }) => {
     }
   };
 
-  const fontSizeHandler = (val) => {
-    const { value } = val;
-    console.log(value);
+  const fontSizeHandler = (value) => {
     if (value && value === 'reset') {
       editor.chain().focus().unsetFontSize().run();
     } else {
@@ -201,6 +187,7 @@ const Menubar = ({ editor }) => {
 
   const textAlignHandler = (choice) => {
     const { value } = choice;
+    console.log(value);
     editor.chain().focus().setTextAlign(value).run();
   };
 
@@ -218,7 +205,7 @@ const Menubar = ({ editor }) => {
     return font;
   };
 
-  const getFontFamilyValue = () => {
+  const getFontFamilyObject = () => {
     let font = '';
     if (
       editor.isActive('textStyle') &&
@@ -234,6 +221,23 @@ const Menubar = ({ editor }) => {
     }
     const object = fontFamilyValue(font);
     return object;
+  };
+
+  const getFontFamilyValue = () => {
+    let font = '';
+    if (
+      editor.isActive('textStyle') &&
+      editor.getAttributes('textStyle').fontFamily
+    ) {
+      font = editor.getAttributes('textStyle').fontFamily;
+    } else if (editor.isActive('paragraph')) {
+      font = 'Poppins';
+    } else if (editor.isActive('heading')) {
+      font = 'Macondo';
+    } else {
+      font = 'Poppins';
+    }
+    return font;
   };
 
   const getFontSizeValue = () => {
@@ -269,61 +273,102 @@ const Menubar = ({ editor }) => {
     } else {
       size = '20px';
     }
-    let fs = {};
-    fontSizes.map((fontSize) => {
-      if (fontSize.value === size) {
-        fs = fontSize;
-      }
-    });
-    return fs;
+    return size;
   };
 
-  const getHeading = () => {
-    const h = editor.isActive('paragraph')
-      ? 0
-      : editor.getAttributes('heading').level;
-    let heading = {};
-    headings.map((head) => {
-      if (head.value === h) {
-        heading = head;
-      }
-    });
-    return heading;
-  };
-
-  const getAlignValue = () => {
-    for (let i = 0; i <= aligns.length - 1; i++) {
-      if (editor.isActive({ textAlign: aligns[i].value })) {
-        return aligns[i];
-      }
-    }
-  };
-
-  console.log(editor.can().chain().focus().undo().run());
+  // console.log(editor.getAttributes('heading').level);
+  console.log(getFontFamilyObject());
+  console.log(fonts.map((font) => font));
+  // console.log(getAlignValue());
 
   return (
     <div className="tiptap-menu">
       <Select
         onChange={fontFamilyHandler}
-        value={getFontFamilyValue()}
+        value={getFontFamilyObject()}
         options={fonts}
         styles={selectStyles}
       />
-      <Select
-        options={headings}
-        styles={selectStyles}
-        value={getHeading()}
-        onChange={headingHandler}
-        components={{
-          Option,
-        }}
-      />
-      <Select
-        options={fontSizes}
+      <Form.Select
+        aria-label="Default select fontFamily"
+        onChange={(e) => fontFamilyHandler(e.target.value)}
+        className="tiptap-select"
+        value={getFontFamilyValue()}
+      >
+        {fonts.map((font, index) => (
+          <option key={index} value={font.value}>
+            {font.label}
+          </option>
+        ))}
+      </Form.Select>
+      <Form.Select
+        aria-label="select heading"
+        className="tiptap-select"
+        onChange={(e) => headingHandler(e.target.value)}
+        value={
+          editor.isActive('paragraph')
+            ? 0
+            : editor.getAttributes('heading').level
+        }
+      >
+        {headings.map((heading, index) => (
+          <option
+            key={index}
+            value={heading}
+            className={heading === 0 ? '' : `fs-${heading} font-cursive`}
+          >
+            {heading === 0 ? 'Paragraph' : `Heading-${heading}`}
+          </option>
+        ))}
+      </Form.Select>
+      {/* <Dropdown as="span">
+        <Dropdown.Toggle
+          variant="secondary"
+          id="dropdown-basic"
+          className="tiptap-btn"
+        >
+          {editor.isActive('paragraph') ? 'Paragaph' : getHeading()}
+        </Dropdown.Toggle>
+
+        <Dropdown.Menu>
+          <Dropdown.Item
+            onClick={() => editor.chain().focus().setParagraph().run()}
+            className={`lead ${
+              editor.isActive('paragraph') ? 'is-active' : ''
+            }`}
+          >
+            Paragraph
+          </Dropdown.Item>
+          {headings.map((heading) => (
+            <Dropdown.Item
+              key={heading}
+              onClick={() =>
+                editor.chain().focus().toggleHeading({ level: heading }).run()
+              }
+              className={`fs-${heading} font-cursive ${
+                editor.isActive('heading', { level: heading })
+                  ? 'is-active'
+                  : ''
+              }`}
+            >
+              Heading {heading}
+            </Dropdown.Item>
+          ))}
+        </Dropdown.Menu>
+      </Dropdown> */}
+      <Form.Select
+        aria-label="Default select fontSize"
+        onChange={(e) => fontSizeHandler(e.target.value)}
+        className="tiptap-select"
         value={getFontSizeValue()}
-        onChange={fontSizeHandler}
-        styles={selectStyles}
-      />
+      >
+        <option value="reset">Reset</option>
+        {fontSizes.map((fontSize, index) => (
+          <option key={index} value={`${fontSize}px`}>
+            {`${fontSize}px`}
+          </option>
+        ))}
+      </Form.Select>
       <a
         onClick={() => editor.chain().focus().toggleBold().run()}
         disabled={!editor.can().chain().focus().toggleBold().run()}
@@ -373,6 +418,35 @@ const Menubar = ({ editor }) => {
         options={aligns}
         styles={selectStyles}
       />
+      {/* TextAlign Dropdown */}
+      {/* <Dropdown as="span">
+        <Dropdown.Toggle
+          variant="secondary"
+          id="dropdown-text-align"
+          className="tiptap-btn"
+          title={`Text align`}
+        >
+          {getAlign()}
+        </Dropdown.Toggle>
+
+        <Dropdown.Menu style={{ '--bs-dropdown-min-width': 0 }}>
+          {aligns.map((align, index) => (
+            <Dropdown.Item
+              key={index}
+              onClick={() =>
+                editor.chain().focus().setTextAlign(align.value).run()
+              }
+              className={
+                editor.isActive({ textAlign: align.value }) ? 'is-active' : ''
+              }
+              title={`Text align ${align.value}`}
+            >
+              {align.label}
+            </Dropdown.Item>
+          ))}
+        </Dropdown.Menu>
+      </Dropdown> */}
+      {/* End TextAlign Dropdown */}
       <a
         onClick={() => editor.chain().focus().toggleCode().run()}
         disabled={!editor.can().chain().focus().toggleCode().run()}
@@ -463,19 +537,6 @@ const Menubar = ({ editor }) => {
         title="redo"
       >
         <AiOutlineRedo />
-      </a>
-      <a
-        onClick={() =>
-          editor
-            .chain()
-            .focus()
-            .insertTable({ rows: 2, cols: 3, withHeaderRow: true })
-            .run()
-        }
-        className="tiptap-btn"
-        title="Insert table"
-      >
-        <RiTable2 />
       </a>
       <Form.Control
         type="color"

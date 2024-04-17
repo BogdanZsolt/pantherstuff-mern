@@ -1,7 +1,8 @@
 import { useParams, Link } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import parse from 'html-react-parser';
+// import parse from 'html-react-parser';
+import Editor from '../components/Editor.jsx';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
 import Banner from '../components/Banner';
@@ -87,7 +88,8 @@ const PostScreen = () => {
                       ))}
                     </div>
                     <h2 className="fs-1">{post.title}</h2>
-                    <div className="mt-3">{parse(post.body)}</div>
+                    <Editor content={post.body} editable={false} />
+                    {/* <div className="mt-3">{parse(post.body)}</div> */}
                     <CommentsContainer
                       className="mt-4"
                       comments={post.comments}

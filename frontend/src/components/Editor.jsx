@@ -1,27 +1,73 @@
-import {
-  useEffect,
-  // useCallback
-} from 'react';
+import { useEffect } from 'react';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Underline from '@tiptap/extension-underline';
+// import BubbleMenu from '@tiptap/extension-bubble-menu';
 import FontFamily from '@tiptap/extension-font-family';
 import TextStyle from '@tiptap/extension-text-style';
+import Color from '@tiptap/extension-color';
+import Highlight from '@tiptap/extension-highlight';
 import Link from '@tiptap/extension-link';
 import { TextAlign } from '@tiptap/extension-text-align';
+import Dropcursor from '@tiptap/extension-dropcursor';
+import MyImage from './editor/MyImage';
+import Table from '@tiptap/extension-table';
+import TableCell from '@tiptap/extension-table-cell';
+import TableHeader from '@tiptap/extension-table-header';
+import TableRow from '@tiptap/extension-table-row';
+// import Image from '@tiptap/extension-image';
+import Typography from '@tiptap/extension-typography';
+// import ImageResize from 'tiptap-extension-resize-image';
 import FontSize from './editor/fontSize';
 import Menubar from './editor/Menubar';
+import TableMenu from './editor/TableMenu';
+// import TableMenu from './editor/TableMenu';
+// const Table = lazy(() => import('@tiptap/extension-table'));
 
 const extensions = [
   StarterKit,
+  Typography,
   Underline,
   TextStyle,
   FontFamily,
   FontSize,
-  Link.configure({ validate: (href) => /^https?:\/\//.test(href) }),
-  TextAlign.configure({
-    types: ['heading', 'paragraph'],
+  Color,
+  // BubbleMenu.configure({
+  //   shouldShow: ({ editor }) => {
+  //     return editor.isActive('table');
+  //   },
+  //   element: document.querySelector('.table-menu'),
+  // }),
+  Highlight.configure({
+    multicolor: true,
   }),
+  Link.configure({
+    autolink: false,
+    openOnClick: 'whenNotEditable',
+    protocols: [
+      'mailto',
+      {
+        scheme: 'tel',
+        optionalSlashes: true,
+      },
+    ],
+    validate: (href) => /^https?:\/\//.test(href),
+    HTMLAttributes: {
+      target: '_blank',
+    },
+  }),
+  TextAlign.configure({
+    types: ['heading', 'paragraph', 'image'],
+    defaultAlignment: 'left',
+  }),
+  Dropcursor,
+  Table.configure({
+    resizable: true,
+  }),
+  TableRow,
+  TableCell,
+  TableHeader,
+  MyImage,
 ];
 
 // const content = ``;
@@ -39,30 +85,15 @@ const Editor = ({ content, onDataChange, editable }) => {
       const html = editor.getHTML();
       onDataChange(html);
     },
-    content: '',
+    content: content || '',
   });
 
   useEffect(() => {
-    editor?.commands?.setContent(content);
-  }, [content, editor]);
-
-  // const setLink = useCallback(() => {
-  //   const previousUrl = editor.getAttributes('link').href;
-  //   const url = window.prompt('URL', previousUrl);
-
-  //   // cancelled
-  //   if (url === null) {
-  //     return;
-  //   }
-
-  //   // empty
-  //   if (url === '') {
-  //     editor.chain().focus().extendMarkRange('link').unsetLink().run();
-
-  //     return;
-  //   }
-  //   editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run();
-  // }, [editor]);
+    if (!editor) return;
+    let { from, to } = editor.state.selection;
+    editor.commands.setContent(content, false, { preserveWhitespace: 'full' });
+    editor.commands.setTextSelection({ from, to });
+  }, [editor, content]);
 
   if (!editor) {
     return null;
@@ -71,6 +102,7 @@ const Editor = ({ content, onDataChange, editable }) => {
   return (
     <div>
       {editable && <Menubar editor={editor} />}
+      {editable && <TableMenu editor={editor} />}
       <EditorContent editor={editor} />
     </div>
   );

@@ -925,10 +925,26 @@ table th {
   font-weight: 300;
 }
 
+.post .tiptap-editor {
+  border: 0;
+}
+
 /* Tiptap */
+.tiptap > * + * {
+  margin-top: 0.75em;
+}
+
+.tiptop img {
+  max-width: 100%;
+  height: auto;
+}
+
+.ProseMirror-selectednode img {
+  outline: 3px solid #68cef8;
+}
+
 .tiptap-btn {
   text-decoration: none;
-  margin-right: 0.25rem;
   padding: 0.2rem 0.4rem;
   border: 1px solid var(--bs-secondary);
   border-radius: 0.3rem;
@@ -936,6 +952,13 @@ table th {
   color: var(--bs-secondary);
   cursor: pointer;
   transition: background-color 0.3s;
+}
+
+.tiptap-btn[disabled] {
+  cursor: default;
+  pointer-events: none;
+  border-color: rgba(var(--bs-secondary-rgb), 0.4);
+  color: rgba(var(--bs-secondary-rgb), 0.4);
 }
 
 .tiptap-btn:hover,
@@ -950,6 +973,13 @@ table th {
   border: 1px solid var(--bs-secondary);
 }
 
+.tiptap-color {
+  width: 4rem;
+  height: calc(0.5rem + 1.75rem + calc(var(--bs-border-width) * 2));
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--bs-secondary);
+}
+
 .tiptap-editor {
   background-color: var(--bs-primary);
   color: var(--bs-secondary);
@@ -957,6 +987,97 @@ table th {
   padding: 0.5rem;
   border: 1px solid var(--bs-secondary);
   border-radius: 0.725rem;
+}
+
+.tiptap-menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.2rem;
+}
+
+.tiptap-bubble {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  background-color: var(--bs-primary);
+  gap: 0.2rem;
+}
+
+.tiptap p {
+  font-size: 20px;
+  font-weight: 300;
+}
+
+.tiptap-select {
+  min-height: 36px;
+}
+
+.tiptap table {
+  border-collapse: collapse;
+  margin: 0;
+  overflow: hidden;
+  table-layout: fixed;
+  width: 100%;
+}
+
+.tiptap table :where(td, th) {
+  border: 2px solid rgba(var(--bs-secondary-rgb), 0.4);
+  border-radius: var(--bs-border-radius);
+  box-sizing: border-box;
+  min-width: 1em;
+  padding: 3px 5px;
+  position: relative;
+  vertical-align: top;
+}
+
+.tiptap table > * {
+  margin-bottom: 0;
+}
+
+.tiptap table th {
+  background-color: rgba(var(--bs-secondary-rgb), 0.1);
+  font-weight: bold;
+  text-align: left;
+}
+
+.tiptap table .selectedCell:after {
+  background: rgba(200, 200, 255, 0.4);
+  content: '';
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  pointer-events: none;
+  position: absolute;
+  z-index: 2;
+}
+
+.tiptap table .column-resize-handle {
+  background-color: #adf;
+  bottom: -2px;
+  position: absolute;
+  right: -2px;
+  pointer-events: none;
+  top: 0;
+  width: 4px;
+}
+
+.tiptap table p {
+  margin: 0;
+}
+
+.tableWrapper {
+  padding: 1rem 0;
+  overflow-x: auto;
+}
+
+.resize-cursor {
+  cursor: ew-resize;
+  cursor: col-resize;
 }
 
 /* Media Querys */
@@ -995,6 +1116,9 @@ table th {
   .tail {
     grid-row: span 2;
   }
+  .banner .title h3 {
+    max-width: 35.875rem;
+  }
 }
 
 @media (min-width: 768px) {
@@ -1030,6 +1154,9 @@ table th {
     width: 200px;
     height: 100%;
     object-fit: cover;
+  }
+  .banner .title h3 {
+    max-width: 45rem;
   }
 }
 
@@ -1160,12 +1287,18 @@ table th {
   .suggested-image {
     width: 75px;
   }
+  .banner .title h3 {
+    max-width: 60rem;
+  }
 }
 
 @media (min-width: 1200px) {
   .title-box {
     --mx-width: 107.5rem;
     --gutter: 2.5rem;
+  }
+  .banner .title h3 {
+    max-width: 71.25rem;
   }
 }
 
@@ -1183,5 +1316,8 @@ table th {
   }
   .product .image {
     overflow: unset;
+  }
+  .banner .title h3 {
+    max-width: 82.5rem;
   }
 }

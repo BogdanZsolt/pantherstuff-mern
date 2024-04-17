@@ -1,5 +1,3 @@
-import { Container } from 'react-bootstrap';
-
 const Banner = ({ src, alt, title, video }) => {
   return (
     <div className="banner">
@@ -9,9 +7,7 @@ const Banner = ({ src, alt, title, video }) => {
         <img src={src} alt={alt} className="banner-image" />
       )}
       <div className="title">
-        <Container>
-          <h3>{title}</h3>
-        </Container>
+        <h3>{title}</h3>
       </div>
     </div>
   );

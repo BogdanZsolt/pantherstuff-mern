@@ -99,8 +99,6 @@ const PostEditScreen = () => {
   //   }
   // };
 
-  console.log(body);
-
   return (
     <Container className="mt-5" fluid>
       <Link to="/admin/postlist" className="btn btn-primary my-3">

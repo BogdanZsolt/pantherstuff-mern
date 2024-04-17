@@ -367,8 +367,11 @@ small,
 
 mark,
 .mark {
-  padding: 0.1875em;
-  background-color: var(--bs-highlight-bg);
+  background-color: #ffe066;
+  border-radius: 0.25em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  padding: 0.125em 0;
 }
 
 sub,
@@ -8630,6 +8633,10 @@ fieldset:disabled .btn {
 .column-gap-5 {
   -moz-column-gap: 3.6rem !important;
   column-gap: 3.6rem !important;
+}
+
+.font-sans-serif {
+  font-family: var(--bs-font-sans-serif) !important;
 }
 
 .font-cursive {
