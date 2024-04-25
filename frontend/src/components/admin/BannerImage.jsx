@@ -1,48 +1,40 @@
-import { Form, Image } from 'react-bootstrap';
-import Loader from '../Loader';
-import { toast } from 'react-toastify';
-import { useUploadImageMutation } from '../../slices/uploadImageApiSlice.js';
+import { useState } from 'react';
+import { Form, Image, Button } from 'react-bootstrap';
+import MediaLibrary from '../../components/MediaLibrary.jsx';
 
 const BannerImage = ({ value, setValue }) => {
-  const [uploadImage, { isLoading: loadingImage }] = useUploadImageMutation();
-
-  const uploadFileHandler = async (e) => {
-    const formData = new FormData();
-    formData.append('image', e.target.files[0]);
-    try {
-      const res = await uploadImage(formData).unwrap();
-      console.log(res);
-      toast.success(res.message);
-      setValue(res.image);
-    } catch (err) {
-      toast.error(err?.data?.message || err.error);
-    }
-  };
+  const [show, setShow] = useState(false);
 
   return (
-    <Form.Group controlId="bannerImage" className="mb-2">
-      <Form.Label>Banner Image</Form.Label>
-      <Form.Control
-        type="text"
-        placeholder="Enter image url"
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
+    <>
+      <Form.Group controlId="bannerImage" className="mb-2">
+        <Form.Label>Banner Image</Form.Label>
+        <div className="d-flex">
+          <Button onClick={() => setShow(true)} className="text-nowrap">
+            Media Library
+          </Button>
+          <Form.Control
+            type="text"
+            placeholder="Enter image url"
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+          />
+        </div>
+        {value && (
+          <Image
+            src={value}
+            alt="banner"
+            rounded
+            style={{ width: '100%', height: 'auto' }}
+          />
+        )}
+      </Form.Group>
+      <MediaLibrary
+        displayMedia={show}
+        setDisplayMedia={setShow}
+        setSelectedImg={setValue}
       />
-      <Form.Control
-        label="Choose File"
-        onChange={uploadFileHandler}
-        type="file"
-      />
-      {loadingImage && <Loader />}
-      {value && (
-        <Image
-          src={value}
-          alt="banner"
-          rounded
-          style={{ width: '100%', height: 'auto' }}
-        />
-      )}
-    </Form.Group>
+    </>
   );
 };
 

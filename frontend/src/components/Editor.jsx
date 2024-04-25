@@ -10,12 +10,12 @@ import Highlight from '@tiptap/extension-highlight';
 import Link from '@tiptap/extension-link';
 import { TextAlign } from '@tiptap/extension-text-align';
 import Dropcursor from '@tiptap/extension-dropcursor';
-import MyImage from './editor/MyImage';
+// import MyImage from './editor/MyImage';
 import Table from '@tiptap/extension-table';
 import TableCell from '@tiptap/extension-table-cell';
 import TableHeader from '@tiptap/extension-table-header';
 import TableRow from '@tiptap/extension-table-row';
-// import Image from '@tiptap/extension-image';
+import Image from '@tiptap/extension-image';
 import Typography from '@tiptap/extension-typography';
 // import ImageResize from 'tiptap-extension-resize-image';
 import FontSize from './editor/fontSize';
@@ -32,12 +32,6 @@ const extensions = [
   FontFamily,
   FontSize,
   Color,
-  // BubbleMenu.configure({
-  //   shouldShow: ({ editor }) => {
-  //     return editor.isActive('table');
-  //   },
-  //   element: document.querySelector('.table-menu'),
-  // }),
   Highlight.configure({
     multicolor: true,
   }),
@@ -67,7 +61,11 @@ const extensions = [
   TableRow,
   TableCell,
   TableHeader,
-  MyImage,
+  Image.configure({
+    inline: true,
+    allowBase64: true,
+  }),
+  // MyImage,
 ];
 
 // const content = ``;

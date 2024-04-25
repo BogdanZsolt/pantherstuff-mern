@@ -10,7 +10,23 @@ export const uploadImageApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+    getImages: builder.query({
+      query: () => ({
+        url: UPLOAD_URL,
+      }),
+      keepUnusedDataFor: 5,
+    }),
+    deleteImage: builder.mutation({
+      query: (id) => ({
+        url: `${UPLOAD_URL}/${id}`,
+        method: 'DELETE',
+      }),
+    }),
   }),
 });
 
-export const { useUploadImageMutation } = uploadImageApiSlice;
+export const {
+  useUploadImageMutation,
+  useGetImagesQuery,
+  useDeleteImageMutation,
+} = uploadImageApiSlice;

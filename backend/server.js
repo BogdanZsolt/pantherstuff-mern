@@ -14,9 +14,9 @@ import commentRoutes from './routes/commentRoutes.js';
 import uploadRoutes from './routes/uploadRoutes.js';
 import groupRoutes from './routes/groupRoutes.js';
 import subscriberRoutes from './routes/subscriberRoutes.js';
-import { fileURLToPath } from 'url';
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename).split('/').slice(0, -1).join('/');
+// import { fileURLToPath } from 'url';
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = path.dirname(__filename).split('/').slice(0, -1).join('/');
 const port = process.env.PORT || 5000;
 
 connectDB(); // Connect to MongoDB
@@ -40,7 +40,10 @@ app.use('/api/upload', uploadRoutes);
 app.use('/api/groups', groupRoutes);
 app.use('/api/subscribers', subscriberRoutes);
 
-// const __dirname = path.resolve();
+const __dirname = path.resolve();
+// app.use(express.static('public'));
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
+
 // app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
 if (process.env.NODE_ENV === 'production') {

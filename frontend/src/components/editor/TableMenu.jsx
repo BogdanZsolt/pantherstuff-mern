@@ -15,8 +15,6 @@ import {
 import { TbTableOff } from 'react-icons/tb';
 
 const TableMenu = ({ editor }) => {
-  console.log(editor.isActive('headercell'));
-
   return (
     <BubbleMenu
       editor={editor}

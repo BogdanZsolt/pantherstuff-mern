@@ -925,10 +925,6 @@ table th {
   font-weight: 300;
 }
 
-.post .tiptap-editor {
-  border: 0;
-}
-
 /* Tiptap */
 .tiptap > * + * {
   margin-top: 0.75em;
@@ -939,9 +935,9 @@ table th {
   height: auto;
 }
 
-.ProseMirror-selectednode img {
-  outline: 3px solid #68cef8;
-}
+/* .post .tiptap-editor {
+  border: 0;
+} */
 
 .tiptap-btn {
   text-decoration: none;
@@ -985,8 +981,15 @@ table th {
   color: var(--bs-secondary);
   margin-top: 0.75rem;
   padding: 0.5rem;
+}
+
+.tiptap-editor[contenteditable='true'] {
   border: 1px solid var(--bs-secondary);
   border-radius: 0.725rem;
+}
+
+.tiptap-editor[contenteditable='true'] img.ProseMirror-selectednode {
+  outline: 5px solid rgba(var(--bs-success-rgb), 0.7);
 }
 
 .tiptap-menu {
@@ -999,6 +1002,10 @@ table th {
 
 .tiptap-bubble {
   width: 100%;
+  padding: 0.25rem 0.25rem;
+  border: 1px solid rgba(var(--bs-secondary-rgb), 0.5);
+  border-radius: var(--bs-border-radius);
+  box-shadow: var(--bs-box-shadow);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1070,6 +1077,15 @@ table th {
   margin: 0;
 }
 
+.tiptap img {
+  max-width: 100%;
+  border-radius: var(--bs-border-radius);
+}
+
+.tiptap a {
+  cursor: pointer;
+}
+
 .tableWrapper {
   padding: 1rem 0;
   overflow-x: auto;
@@ -1078,6 +1094,36 @@ table th {
 .resize-cursor {
   cursor: ew-resize;
   cursor: col-resize;
+}
+
+/* React Media Library Modal */
+.react-media-library .react-media-library__modal {
+  background-color: var(--bs-primary);
+  color: var(--bs-secondary);
+}
+
+.react-media-library__file-library-card__image {
+  aspect-ratio: unset !important;
+}
+
+.react-media-library .is-selected .react-media-library__file-library-card {
+  border-color: var(--bs-secondary);
+  box-shadow: var(--bs-box-shadow-lg);
+}
+
+.react-media-library .react-media-library__tabs__header__item.is-active button {
+  background-color: var(--bs-secondary);
+}
+
+.react-media-library
+  .react-media-library__file-library-selected-items__actions__select {
+  background-color: var(--bs-secondary);
+}
+
+.react-media-library .react-media-library__tabs__header__item button {
+  border: 2px solid var(--bs-secondary);
+  background-color: var(--bs-primary);
+  border-bottom: unset;
 }
 
 /* Media Querys */

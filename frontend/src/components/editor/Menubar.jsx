@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Form } from 'react-bootstrap';
 import Select, { components } from 'react-select';
 import {
@@ -27,8 +27,12 @@ import {
   AiOutlineClose,
 } from 'react-icons/ai';
 import { PiCodeBlock } from 'react-icons/pi';
+import MediaLibrary from '../MediaLibrary';
 
 const Menubar = ({ editor }) => {
+  const [show, setShow] = useState(false);
+  const [image, setImage] = useState('');
+
   const setLink = useCallback(() => {
     const previousUrl = editor.getAttributes('link').href;
     const url = window.prompt('URL', previousUrl);
@@ -47,13 +51,17 @@ const Menubar = ({ editor }) => {
     editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run();
   }, [editor]);
 
-  const addImage = useCallback(() => {
-    const url = window.prompt('URL');
+  const addImage = () => {
+    setShow(true);
+  };
 
-    if (url) {
-      editor.chain().focus().setImage({ src: url }).run();
+  useEffect(() => {
+    console.log(image);
+    if (image !== '') {
+      editor.chain().focus().setImage({ src: image }).run();
+      setImage('');
     }
-  }, [editor]);
+  }, [image, editor]);
 
   if (!editor) {
     return null;
@@ -181,7 +189,6 @@ const Menubar = ({ editor }) => {
 
   const fontFamilyHandler = (choice) => {
     const { value } = choice;
-    console.log(value);
     if (value && value === 'reset') {
       editor.chain().focus().unsetFontFamily().run();
     } else {
@@ -191,7 +198,6 @@ const Menubar = ({ editor }) => {
 
   const fontSizeHandler = (val) => {
     const { value } = val;
-    console.log(value);
     if (value && value === 'reset') {
       editor.chain().focus().unsetFontSize().run();
     } else {
@@ -299,255 +305,266 @@ const Menubar = ({ editor }) => {
     }
   };
 
-  console.log(editor.can().chain().focus().undo().run());
-
   return (
-    <div className="tiptap-menu">
-      <Select
-        onChange={fontFamilyHandler}
-        value={getFontFamilyValue()}
-        options={fonts}
-        styles={selectStyles}
-      />
-      <Select
-        options={headings}
-        styles={selectStyles}
-        value={getHeading()}
-        onChange={headingHandler}
-        components={{
-          Option,
-        }}
-      />
-      <Select
-        options={fontSizes}
-        value={getFontSizeValue()}
-        onChange={fontSizeHandler}
-        styles={selectStyles}
-      />
-      <a
-        onClick={() => editor.chain().focus().toggleBold().run()}
-        disabled={!editor.can().chain().focus().toggleBold().run()}
-        className={`tiptap-btn ${editor.isActive('bold') ? 'is-active' : ''}`}
-        title="bold"
-      >
-        <strong>
-          <RiBold />
-        </strong>
-      </a>
-      <a
-        onClick={() => editor.chain().focus().toggleItalic().run()}
-        disabled={!editor.can().chain().focus().toggleItalic().run()}
-        className={`tiptap-btn ${editor.isActive('italic') ? 'is-active' : ''}`}
-        title="Italic"
-      >
-        <RiItalic />
-      </a>
-      <a
-        onClick={() => editor.chain().focus().toggleUnderline().run()}
-        disabled={!editor.can().chain().focus().toggleUnderline().run()}
-        className={`tiptap-btn ${
-          editor.isActive('underline') ? 'is-active' : ''
-        }`}
-        title="Underline"
-      >
-        <RiUnderline />
-      </a>
-      <a
-        onClick={() => editor.chain().focus().toggleStrike().run()}
-        disabled={!editor.can().chain().focus().toggleStrike().run()}
-        className={`tiptap-btn ${editor.isActive('strike') ? 'is-active' : ''}`}
-        title="strike"
-      >
-        <RiStrikethrough />
-      </a>
-      <a
-        onClick={setLink}
-        className={`tiptap-btn ${editor.isActive('link') ? 'is-active' : ''}`}
-        title="Link"
-      >
-        <RiLink />
-      </a>
-      <Select
-        value={getAlignValue()}
-        onChange={textAlignHandler}
-        options={aligns}
-        styles={selectStyles}
-      />
-      <a
-        onClick={() => editor.chain().focus().toggleCode().run()}
-        disabled={!editor.can().chain().focus().toggleCode().run()}
-        className={`tiptap-btn ${editor.isActive('code') ? 'is-active' : ''}`}
-        title="code"
-      >
-        <RiCodeLine />
-      </a>
-      <a
-        onClick={() => editor.chain().focus().unsetAllMarks().run()}
-        className="tiptap-btn"
-        title="clear marks"
-      >
-        <MdOutlineLayersClear />
-      </a>
-      <a
-        onClick={() => editor.chain().focus().clearNodes().run()}
-        className="tiptap-btn"
-        title="clear nodes"
-      >
-        <AiOutlineClose />
-      </a>
-      <a
-        onClick={() => editor.chain().focus().toggleBulletList().run()}
-        className={`tiptap-btn ${
-          editor.isActive('bulletList') ? 'is-active' : ''
-        }`}
-        title="bulleted list"
-      >
-        <RiListUnordered />
-      </a>
-      <a
-        onClick={() => editor.chain().focus().toggleOrderedList().run()}
-        className={`tiptap-btn ${
-          editor.isActive('orderedList') ? 'is-active' : ''
-        }`}
-        title="ordered list"
-      >
-        <RiListOrdered />
-      </a>
-      <a
-        onClick={() => editor.chain().focus().toggleCodeBlock().run()}
-        className={`tiptap-btn ${
-          editor.isActive('codeBlock') ? 'is-active' : ''
-        }`}
-        title="Code block"
-      >
-        <PiCodeBlock />
-      </a>
-      <a onClick={addImage} title="Add image" className="tiptap-btn">
-        <RiImageAddLine />
-      </a>
-      <a
-        onClick={() => editor.chain().focus().toggleBlockquote().run()}
-        className={`tiptap-btn ${
-          editor.isActive('blockquote') ? 'is-active' : ''
-        }`}
-        title="blockquote"
-      >
-        <RiDoubleQuotesL />
-      </a>
-      <a
-        onClick={() => editor.chain().focus().setHorizontalRule().run()}
-        className="tiptap-btn"
-        title="horizontal rule"
-      >
-        <TbSpacingVertical />
-      </a>
-      <a
-        onClick={() => editor.chain().focus().setHardBreak().run()}
-        className="tiptap-btn"
-        title="hard break"
-      >
-        <AiOutlineEnter />
-      </a>
-      <a
-        onClick={() => editor.chain().focus().undo().run()}
-        disabled={!editor.can().chain().focus().undo().run()}
-        className="tiptap-btn"
-        title="undo"
-      >
-        <AiOutlineUndo />
-      </a>
-      <a
-        onClick={() => editor.chain().focus().redo().run()}
-        disabled={!editor.can().chain().focus().redo().run()}
-        className="tiptap-btn"
-        title="redo"
-      >
-        <AiOutlineRedo />
-      </a>
-      <a
-        onClick={() =>
-          editor
-            .chain()
-            .focus()
-            .insertTable({ rows: 2, cols: 3, withHeaderRow: true })
-            .run()
-        }
-        className="tiptap-btn"
-        title="Insert table"
-      >
-        <RiTable2 />
-      </a>
-      <Form.Control
-        type="color"
-        list="presetColor"
-        onInput={(event) =>
-          editor.chain().focus().setColor(event.target.value).run()
-        }
-        value={colorInHex(editor.getAttributes('textStyle').color) || '#36241b'}
-        className="tiptap-color"
-        title="Text color"
-      />
-      <datalist id="presetColor">
-        <option>#36241b</option>
-        <option>#FAF0D1</option>
-        <option>#3c4c5d</option>
-        <option>#6f42c1</option>
-        <option>#d63384</option>
-        <option>#d63384</option>
-        <option>#e74c3c</option>
-        <option>#fd7e14</option>
-        <option>#f39c12</option>
-        <option>#18bc9c</option>
-        <option>#20c997</option>
-        <option>#3498db</option>
-        <option>#7b8a8b</option>
-        <option>#f4f4f4</option>
-        <option>#bdcecf</option>
-        <option>#b5c0c1</option>
-        <option>#9cabac</option>
-        <option>#7b8a8b</option>
-        <option>#486629</option>
-        <option>#fff</option>
-        <option>#000</option>
-      </datalist>
-      <Form.Control
-        type="color"
-        list="presetBgColor"
-        onChange={(e) =>
-          editor.chain().focus().setHighlight({ color: e.target.value }).run()
-        }
-        value={
-          editor.isActive('highlight')
-            ? editor.getAttributes('highlight').color
-            : '#FAF0D1'
-        }
-        className="tiptap-color"
-        title="Highlight color"
-      />
-      <datalist id="presetBgColor">
-        <option>#36241b</option>
-        <option>#FAF0D1</option>
-        <option>#3c4c5d</option>
-        <option>#6f42c1</option>
-        <option>#d63384</option>
-        <option>#d63384</option>
-        <option>#e74c3c</option>
-        <option>#fd7e14</option>
-        <option>#f39c12</option>
-        <option>#18bc9c</option>
-        <option>#20c997</option>
-        <option>#3498db</option>
-        <option>#7b8a8b</option>
-        <option>#f4f4f4</option>
-        <option>#bdcecf</option>
-        <option>#b5c0c1</option>
-        <option>#9cabac</option>
-        <option>#7b8a8b</option>
-        <option>#486629</option>
-        <option>#fff</option>
-        <option>#000</option>
-      </datalist>
-    </div>
+    <>
+      <div className="tiptap-menu">
+        <Select
+          onChange={fontFamilyHandler}
+          value={getFontFamilyValue()}
+          options={fonts}
+          styles={selectStyles}
+        />
+        <Select
+          options={headings}
+          styles={selectStyles}
+          value={getHeading()}
+          onChange={headingHandler}
+          components={{
+            Option,
+          }}
+        />
+        <Select
+          options={fontSizes}
+          value={getFontSizeValue()}
+          onChange={fontSizeHandler}
+          styles={selectStyles}
+        />
+        <a
+          onClick={() => editor.chain().focus().toggleBold().run()}
+          disabled={!editor.can().chain().focus().toggleBold().run()}
+          className={`tiptap-btn ${editor.isActive('bold') ? 'is-active' : ''}`}
+          title="bold"
+        >
+          <strong>
+            <RiBold />
+          </strong>
+        </a>
+        <a
+          onClick={() => editor.chain().focus().toggleItalic().run()}
+          disabled={!editor.can().chain().focus().toggleItalic().run()}
+          className={`tiptap-btn ${
+            editor.isActive('italic') ? 'is-active' : ''
+          }`}
+          title="Italic"
+        >
+          <RiItalic />
+        </a>
+        <a
+          onClick={() => editor.chain().focus().toggleUnderline().run()}
+          disabled={!editor.can().chain().focus().toggleUnderline().run()}
+          className={`tiptap-btn ${
+            editor.isActive('underline') ? 'is-active' : ''
+          }`}
+          title="Underline"
+        >
+          <RiUnderline />
+        </a>
+        <a
+          onClick={() => editor.chain().focus().toggleStrike().run()}
+          disabled={!editor.can().chain().focus().toggleStrike().run()}
+          className={`tiptap-btn ${
+            editor.isActive('strike') ? 'is-active' : ''
+          }`}
+          title="strike"
+        >
+          <RiStrikethrough />
+        </a>
+        <a
+          onClick={setLink}
+          className={`tiptap-btn ${editor.isActive('link') ? 'is-active' : ''}`}
+          title="Link"
+        >
+          <RiLink />
+        </a>
+        <Select
+          value={getAlignValue()}
+          onChange={textAlignHandler}
+          options={aligns}
+          styles={selectStyles}
+        />
+        <a
+          onClick={() => editor.chain().focus().toggleCode().run()}
+          disabled={!editor.can().chain().focus().toggleCode().run()}
+          className={`tiptap-btn ${editor.isActive('code') ? 'is-active' : ''}`}
+          title="code"
+        >
+          <RiCodeLine />
+        </a>
+        <a
+          onClick={() => editor.chain().focus().unsetAllMarks().run()}
+          className="tiptap-btn"
+          title="clear marks"
+        >
+          <MdOutlineLayersClear />
+        </a>
+        <a
+          onClick={() => editor.chain().focus().clearNodes().run()}
+          className="tiptap-btn"
+          title="clear nodes"
+        >
+          <AiOutlineClose />
+        </a>
+        <a
+          onClick={() => editor.chain().focus().toggleBulletList().run()}
+          className={`tiptap-btn ${
+            editor.isActive('bulletList') ? 'is-active' : ''
+          }`}
+          title="bulleted list"
+        >
+          <RiListUnordered />
+        </a>
+        <a
+          onClick={() => editor.chain().focus().toggleOrderedList().run()}
+          className={`tiptap-btn ${
+            editor.isActive('orderedList') ? 'is-active' : ''
+          }`}
+          title="ordered list"
+        >
+          <RiListOrdered />
+        </a>
+        <a
+          onClick={() => editor.chain().focus().toggleCodeBlock().run()}
+          className={`tiptap-btn ${
+            editor.isActive('codeBlock') ? 'is-active' : ''
+          }`}
+          title="Code block"
+        >
+          <PiCodeBlock />
+        </a>
+        <a onClick={addImage} title="Add image" className="tiptap-btn">
+          <RiImageAddLine />
+        </a>
+        <a
+          onClick={() => editor.chain().focus().toggleBlockquote().run()}
+          className={`tiptap-btn ${
+            editor.isActive('blockquote') ? 'is-active' : ''
+          }`}
+          title="blockquote"
+        >
+          <RiDoubleQuotesL />
+        </a>
+        <a
+          onClick={() => editor.chain().focus().setHorizontalRule().run()}
+          className="tiptap-btn"
+          title="horizontal rule"
+        >
+          <TbSpacingVertical />
+        </a>
+        <a
+          onClick={() => editor.chain().focus().setHardBreak().run()}
+          className="tiptap-btn"
+          title="hard break"
+        >
+          <AiOutlineEnter />
+        </a>
+        <a
+          onClick={() => editor.chain().focus().undo().run()}
+          disabled={!editor.can().chain().focus().undo().run()}
+          className="tiptap-btn"
+          title="undo"
+        >
+          <AiOutlineUndo />
+        </a>
+        <a
+          onClick={() => editor.chain().focus().redo().run()}
+          disabled={!editor.can().chain().focus().redo().run()}
+          className="tiptap-btn"
+          title="redo"
+        >
+          <AiOutlineRedo />
+        </a>
+        <a
+          onClick={() =>
+            editor
+              .chain()
+              .focus()
+              .insertTable({ rows: 2, cols: 3, withHeaderRow: true })
+              .run()
+          }
+          className="tiptap-btn"
+          title="Insert table"
+        >
+          <RiTable2 />
+        </a>
+        <Form.Control
+          type="color"
+          list="presetColor"
+          onInput={(event) =>
+            editor.chain().focus().setColor(event.target.value).run()
+          }
+          value={
+            colorInHex(editor.getAttributes('textStyle').color) || '#36241b'
+          }
+          className="tiptap-color"
+          title="Text color"
+        />
+        <datalist id="presetColor">
+          <option>#36241b</option>
+          <option>#FAF0D1</option>
+          <option>#3c4c5d</option>
+          <option>#6f42c1</option>
+          <option>#d63384</option>
+          <option>#d63384</option>
+          <option>#e74c3c</option>
+          <option>#fd7e14</option>
+          <option>#f39c12</option>
+          <option>#18bc9c</option>
+          <option>#20c997</option>
+          <option>#3498db</option>
+          <option>#7b8a8b</option>
+          <option>#f4f4f4</option>
+          <option>#bdcecf</option>
+          <option>#b5c0c1</option>
+          <option>#9cabac</option>
+          <option>#7b8a8b</option>
+          <option>#486629</option>
+          <option>#fff</option>
+          <option>#000</option>
+        </datalist>
+        <Form.Control
+          type="color"
+          list="presetBgColor"
+          onChange={(e) =>
+            editor.chain().focus().setHighlight({ color: e.target.value }).run()
+          }
+          value={
+            editor.isActive('highlight')
+              ? editor.getAttributes('highlight').color
+              : '#FAF0D1'
+          }
+          className="tiptap-color"
+          title="Highlight color"
+        />
+        <datalist id="presetBgColor">
+          <option>#36241b</option>
+          <option>#FAF0D1</option>
+          <option>#3c4c5d</option>
+          <option>#6f42c1</option>
+          <option>#d63384</option>
+          <option>#d63384</option>
+          <option>#e74c3c</option>
+          <option>#fd7e14</option>
+          <option>#f39c12</option>
+          <option>#18bc9c</option>
+          <option>#20c997</option>
+          <option>#3498db</option>
+          <option>#7b8a8b</option>
+          <option>#f4f4f4</option>
+          <option>#bdcecf</option>
+          <option>#b5c0c1</option>
+          <option>#9cabac</option>
+          <option>#7b8a8b</option>
+          <option>#486629</option>
+          <option>#fff</option>
+          <option>#000</option>
+        </datalist>
+        <MediaLibrary
+          displayMedia={show}
+          setDisplayMedia={setShow}
+          setSelectedImg={setImage}
+        />
+      </div>
+    </>
   );
 };
 
