@@ -1,5 +1,5 @@
 import { useState, useEffect, lazy } from 'react';
-import { Container, Row, Form, Button } from 'react-bootstrap';
+import { Container, Row, Form, Button, Image } from 'react-bootstrap';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import FormContainer from '../../components/FormContainer';
@@ -16,9 +16,7 @@ import { useGetPostCategoriesQuery } from '../../slices/postCategoriiesApiSlice.
 import { useGetUsersQuery } from '../../slices/usersApiSlice.js';
 
 const Editor = lazy(() => import('../../components/Editor.jsx'));
-const BannerImage = lazy(() =>
-  import('../../components/admin/BannerImage.jsx')
-);
+const ImageForm = lazy(() => import('../../components/admin/ImageForm.jsx'));
 
 const PostEditScreen = () => {
   const { id: postId } = useParams();
@@ -138,7 +136,15 @@ const PostEditScreen = () => {
                 />
               )}
             </Form.Group> */}
-            <BannerImage value={bannerImage} setValue={setBannerImage} />
+            <ImageForm value={bannerImage} setValue={setBannerImage} />
+            {bannerImage && (
+              <Image
+                src={bannerImage}
+                alt="banner"
+                rounded
+                style={{ width: '100%', height: 'auto' }}
+              />
+            )}
 
             {/* Author Select from users */}
             {loadingUsers ? (

@@ -35,7 +35,7 @@ const CategoryPostScreen = () => {
           <Container>
             <Row style={{ '--bs-gutter-y': '1.5rem' }}>
               {category?.posts?.map((post) => (
-                <Col lg={6} key={post._id}>
+                <Col lg={12} key={post._id}>
                   <Post
                     postId={post._id}
                     src={

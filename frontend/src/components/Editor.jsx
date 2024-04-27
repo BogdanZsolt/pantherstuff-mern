@@ -21,6 +21,7 @@ import Typography from '@tiptap/extension-typography';
 import FontSize from './editor/fontSize';
 import Menubar from './editor/Menubar';
 import TableMenu from './editor/TableMenu';
+import Video from '@tiptap/extension-youtube';
 // import TableMenu from './editor/TableMenu';
 // const Table = lazy(() => import('@tiptap/extension-table'));
 
@@ -51,7 +52,7 @@ const extensions = [
     },
   }),
   TextAlign.configure({
-    types: ['heading', 'paragraph', 'image'],
+    types: ['heading', 'paragraph', 'image', 'youtube'],
     defaultAlignment: 'left',
   }),
   Dropcursor,
@@ -64,6 +65,13 @@ const extensions = [
   Image.configure({
     inline: true,
     allowBase64: true,
+  }),
+  Video.configure({
+    inline: true,
+    width: 640,
+    height: 480,
+    controls: true,
+    autoplay: false,
   }),
   // MyImage,
 ];

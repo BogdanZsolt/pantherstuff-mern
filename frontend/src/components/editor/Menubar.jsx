@@ -17,6 +17,7 @@ import {
   RiTable2,
   RiLink,
   RiImageAddLine,
+  RiYoutubeLine,
 } from 'react-icons/ri';
 import { TbSpacingVertical } from 'react-icons/tb';
 import { MdOutlineLayersClear } from 'react-icons/md';
@@ -56,12 +57,23 @@ const Menubar = ({ editor }) => {
   };
 
   useEffect(() => {
-    console.log(image);
     if (image !== '') {
       editor.chain().focus().setImage({ src: image }).run();
       setImage('');
     }
   }, [image, editor]);
+
+  const addVideo = () => {
+    const url = prompt('Enter YouTube URL');
+
+    if (url) {
+      editor.commands.setYoutubeVideo({
+        src: url,
+        width: 640,
+        height: 480,
+      });
+    }
+  };
 
   if (!editor) {
     return null;
@@ -433,6 +445,9 @@ const Menubar = ({ editor }) => {
         </a>
         <a onClick={addImage} title="Add image" className="tiptap-btn">
           <RiImageAddLine />
+        </a>
+        <a onClick={addVideo} title="Add Video" className="tiptap-btn">
+          <RiYoutubeLine />
         </a>
         <a
           onClick={() => editor.chain().focus().toggleBlockquote().run()}

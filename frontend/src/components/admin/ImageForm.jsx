@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { Form, Image, Button } from 'react-bootstrap';
-import MediaLibrary from '../../components/MediaLibrary.jsx';
+import { Form, Button } from 'react-bootstrap';
+import MediaLibrary from '../MediaLibrary.jsx';
 
-const BannerImage = ({ value, setValue }) => {
+const ImageForm = ({ value, setValue }) => {
   const [show, setShow] = useState(false);
 
   return (
@@ -20,14 +20,6 @@ const BannerImage = ({ value, setValue }) => {
             onChange={(e) => setValue(e.target.value)}
           />
         </div>
-        {value && (
-          <Image
-            src={value}
-            alt="banner"
-            rounded
-            style={{ width: '100%', height: 'auto' }}
-          />
-        )}
       </Form.Group>
       <MediaLibrary
         displayMedia={show}
@@ -38,4 +30,4 @@ const BannerImage = ({ value, setValue }) => {
   );
 };
 
-export default BannerImage;
+export default ImageForm;

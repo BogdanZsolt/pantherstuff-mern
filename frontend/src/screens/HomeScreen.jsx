@@ -4,6 +4,7 @@ import Hero from '../components/Hero.jsx';
 import ProductCarousel from '../components/ProductCarousel.jsx';
 import PhotoGallery from '../components/PhotoGallery.jsx';
 import SubscribeForm from '../components/SubscribeForm.jsx';
+import LatestPosts from '../components/LatestPosts.jsx';
 
 const HomeScreens = () => {
   const { keyword } = useParams();
@@ -20,6 +21,7 @@ const HomeScreens = () => {
       <Container className="my-4">
         <h1>Latest Products</h1>
         <ProductCarousel />
+        <LatestPosts />
         <SubscribeForm />
         <PhotoGallery />
       </Container>

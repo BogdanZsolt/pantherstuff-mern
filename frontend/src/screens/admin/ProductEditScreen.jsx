@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Form, Button, Container, Row } from 'react-bootstrap';
+import { Form, Button, Container, Row, Image } from 'react-bootstrap';
 import Message from '../../components/Message';
 import Loader from '../../components/Loader';
 import FormContainer from '../../components/FormContainer';
+import ImageForm from '../../components/admin/ImageForm';
 import { toast } from 'react-toastify';
 import {
   useGetProductDetailsQuery,
   useUpdateProductMutation,
-  useUploadProductImageMutation,
+  // useUploadProductImageMutation,
 } from '../../slices/productsApiSlice';
 
 const ProductEditScreen = () => {
@@ -35,8 +36,8 @@ const ProductEditScreen = () => {
   const [updateProduct, { isLoading: loadingUpdate }] =
     useUpdateProductMutation();
 
-  const [uploadProductImage, { isLoading: loadingUpload }] =
-    useUploadProductImageMutation();
+  // const [uploadProductImage, { isLoading: loadingUpload }] =
+  //   useUploadProductImageMutation();
 
   const navigate = useNavigate();
 
@@ -79,18 +80,18 @@ const ProductEditScreen = () => {
     }
   }, [product]);
 
-  const uploadFileHandler = async (e) => {
-    const formData = new FormData();
-    formData.append('image', e.target.files[0]);
-    try {
-      const res = await uploadProductImage(formData).unwrap();
-      console.log(res);
-      toast.success(res.message);
-      setThumbnail(res.image);
-    } catch (err) {
-      toast.error(err?.data?.message || err.error);
-    }
-  };
+  // const uploadFileHandler = async (e) => {
+  //   const formData = new FormData();
+  //   formData.append('image', e.target.files[0]);
+  //   try {
+  //     const res = await uploadProductImage(formData).unwrap();
+  //     console.log(res);
+  //     toast.success(res.message);
+  //     setThumbnail(res.image);
+  //   } catch (err) {
+  //     toast.error(err?.data?.message || err.error);
+  //   }
+  // };
 
   return (
     <Container className="mt-5">
@@ -119,7 +120,16 @@ const ProductEditScreen = () => {
             </Form.Group>
 
             {/* THUMBNAIL INPUT PLACEHOLDER */}
-            <Form.Group controlId="thumbnail">
+            <ImageForm value={thumbnail} setValue={setThumbnail} />
+            {thumbnail && (
+              <Image
+                src={thumbnail}
+                alt={name}
+                rounded
+                style={{ width: '150px', height: 'auto' }}
+              />
+            )}
+            {/* <Form.Group controlId="thumbnail">
               <Form.Label>Thumbnail</Form.Label>
               <Form.Control
                 type="text"
@@ -133,9 +143,18 @@ const ProductEditScreen = () => {
                 type="file"
               ></Form.Control>
               {loadingUpload && <Loader />}
-            </Form.Group>
+            </Form.Group> */}
 
             {/* THUMBNAIL HOVER INPUT PLACEHOLDER */}
+            <ImageForm value={thumbnailHover} setValue={setThumbnailHover} />
+            {thumbnailHover && (
+              <Image
+                src={thumbnailHover}
+                alt={name}
+                rounded
+                style={{ width: '150px', height: 'auto' }}
+              />
+            )}
 
             <Form.Group controlId="description" className="my-2">
               <Form.Label>Description</Form.Label>

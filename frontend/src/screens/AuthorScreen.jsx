@@ -35,7 +35,7 @@ const AuthorScreen = () => {
           <Container>
             <Row style={{ '--bs-gutter-y': '1.5rem' }}>
               {user?.posts?.map((post) => (
-                <Col lg={6} key={post._id}>
+                <Col lg={12} key={post._id}>
                   <Post
                     src={
                       post.bannerImage ? post.bannerImage : '/images/sample.jpg'

@@ -1,45 +1,41 @@
 import { Link } from 'react-router-dom';
-import { RiArrowRightSLine } from 'react-icons/ri';
+import { Image } from 'react-bootstrap';
+// import { RiArrowRightSLine } from 'react-icons/ri';
 
 const Post = ({ postId, src, category, author, title, description, date }) => {
   console.log(postId);
   return (
-    <div className="row g-0 border border-secondary rounded overflow-hidden flex-md-row mb-4 shadow-md h-md-250 position-relative">
-      <div className="col p-4 d-flex flex-column position-static">
-        <strong className="d-inline-block mb-2 text-primary-emphasis">
-          <Link to={`/category/${category._id}`}>{category.title}</Link>
-        </strong>
-        <div className="mb-1 text-body-secondary">
+    <article className="blog-post">
+      <strong
+        className="d-inline-block mb-2 text-primary-emphasis"
+        style={{ fontSize: '1.25rem' }}
+      >
+        <Link to={`/category/${category._id}`}>{category.title}</Link>
+      </strong>
+      <div className="post-image-wrapper">
+        <Image src={src} className="post-image" />
+        <h2 className="title display-5 link-body-emphasis mb-2">{title}</h2>
+      </div>
+      <p className="blog-post-meta">
+        <span className="fw-bold">
           {new Date(date).toLocaleDateString('hu-HU', {
             year: 'numeric',
             month: 'long',
             day: 'numeric',
           })}
-          <span className="mx-1">by</span>
-          <Link to={`/author/${author._id}`} className="fw-bold">
-            {author.name}
-          </Link>
-        </div>
-        <Link to={`/post/${postId}`}>
-          <h3 className="mb-0">{title}</h3>
+        </span>
+        <span className="mx-1">by</span>
+        <Link to={`/author/${author._id}`} className="fw-bold">
+          {author.name}
         </Link>
-        <p className="card-text mb-auto">{description}</p>
-        <Link
-          to={`/post/${postId}`}
-          className="icon-link gap-1 icon-link-hover"
-        >
-          Continue reading
-          <RiArrowRightSLine style={{ fontSize: '1.875rem' }} />
+      </p>
+      <p className="lead">{description}</p>
+      <p className="lead mb-0">
+        <Link to={`/post/${postId}`} className="text-body-emphasis fw-bold">
+          Continue reading...
         </Link>
-      </div>
-      <Link
-        to={`/post/${postId}`}
-        className="col-auto d-block"
-        style={{ width: '250px', height: '250px' }}
-      >
-        <img src={src} alt="post" />
-      </Link>
-    </div>
+      </p>
+    </article>
   );
 };
 
