@@ -21,6 +21,7 @@ const importData = async () => {
     const createdUsers = await User.insertMany(users);
 
     const adminUser = createdUsers[0]._id;
+    console.log(adminUser);
 
     const sampleProducts = products.map((product) => {
       return { ...product, user: adminUser };
@@ -40,7 +41,7 @@ const destroyData = async () => {
   try {
     await Order.deleteMany();
     await Product.deleteMany();
-    await User.deleteMany();
+    // await User.deleteMany();
 
     console.log('Data Destroyed!'.red.inverse);
     process.exit();

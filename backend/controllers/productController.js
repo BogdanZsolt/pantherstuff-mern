@@ -38,8 +38,7 @@ const createProduct = asyncHandler(async (req, res) => {
   const product = new Product({
     name: 'Sample name',
     user: req.user._id,
-    thumbnail: '/images/sample.jpg',
-    thumbnailHover: '/images/sample.jpg',
+    thumbnails: ['/images/sample.jpg'],
     description: 'Sample description',
     category: 'sample category',
     beforePrice: 0,
@@ -48,7 +47,6 @@ const createProduct = asyncHandler(async (req, res) => {
     rating: 0,
     numReviews: 0,
     colors: ['#ffffff'],
-    thumbnails: [''],
   });
 
   const createdProduct = await product.save();

@@ -1,30 +1,28 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Form, Button, Container, Row, Image } from 'react-bootstrap';
+import { Form, Button, Container, Row } from 'react-bootstrap';
 import Message from '../../components/Message';
 import Loader from '../../components/Loader';
 import FormContainer from '../../components/FormContainer';
-import ImageForm from '../../components/admin/ImageForm';
+import ImageList from '../../components/ImageList';
 import { toast } from 'react-toastify';
 import {
   useGetProductDetailsQuery,
   useUpdateProductMutation,
-  // useUploadProductImageMutation,
 } from '../../slices/productsApiSlice';
 
 const ProductEditScreen = () => {
   const { id: productId } = useParams();
 
   const [name, setName] = useState('');
-  const [thumbnail, setThumbnail] = useState('');
-  const [thumbnailHover, setThumbnailHover] = useState('');
+  const [thumbnails, setThumbnails] = useState([]);
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState('');
   const [beforePrice, setBeforePrice] = useState(0);
   const [currentPrice, setCurrentPrice] = useState(0);
   const [countInStock, setCountInStock] = useState(0);
   const [colors, setColors] = useState(['']);
-  const [thumbnails, setThumbnails] = useState(['']);
+  const [active, setActive] = useState('');
 
   const {
     data: product,
@@ -33,11 +31,21 @@ const ProductEditScreen = () => {
     error,
   } = useGetProductDetailsQuery(productId);
 
+  useEffect(() => {
+    if (product) {
+      setName(product.name);
+      setThumbnails(product.thumbnails);
+      setDescription(product.description);
+      setCategory(product.category);
+      setBeforePrice(product.beforePrice || 0);
+      setCurrentPrice(product.currentPrice || 0);
+      setCountInStock(product.countInStock);
+      setColors(product.colors);
+    }
+  }, [product]);
+
   const [updateProduct, { isLoading: loadingUpdate }] =
     useUpdateProductMutation();
-
-  // const [uploadProductImage, { isLoading: loadingUpload }] =
-  //   useUploadProductImageMutation();
 
   const navigate = useNavigate();
 
@@ -47,15 +55,13 @@ const ProductEditScreen = () => {
       await updateProduct({
         productId,
         name,
-        thumbnail,
-        thumbnailHover,
+        thumbnails,
         description,
         category,
         beforePrice,
         currentPrice,
         countInStock,
         colors,
-        thumbnails,
       }).unwrap(); // NOTE: here we need to unwrap the Promise to catch any rejection in our catch block
       toast.success('Product updated');
       refetch();
@@ -65,33 +71,7 @@ const ProductEditScreen = () => {
     }
   };
 
-  useEffect(() => {
-    if (product) {
-      setName(product.name);
-      setThumbnail(product.thumbnail);
-      setThumbnailHover(product.thumbnailHover);
-      setDescription(product.description);
-      setCategory(product.category);
-      setBeforePrice(product.beforePrice || 0);
-      setCurrentPrice(product.currentPrice || 0);
-      setCountInStock(product.countInStock);
-      setColors(product.colors);
-      setThumbnails(product.thumbnails);
-    }
-  }, [product]);
-
-  // const uploadFileHandler = async (e) => {
-  //   const formData = new FormData();
-  //   formData.append('image', e.target.files[0]);
-  //   try {
-  //     const res = await uploadProductImage(formData).unwrap();
-  //     console.log(res);
-  //     toast.success(res.message);
-  //     setThumbnail(res.image);
-  //   } catch (err) {
-  //     toast.error(err?.data?.message || err.error);
-  //   }
-  // };
+  console.log(thumbnails);
 
   return (
     <Container className="mt-5">
@@ -120,41 +100,12 @@ const ProductEditScreen = () => {
             </Form.Group>
 
             {/* THUMBNAIL INPUT PLACEHOLDER */}
-            <ImageForm value={thumbnail} setValue={setThumbnail} />
-            {thumbnail && (
-              <Image
-                src={thumbnail}
-                alt={name}
-                rounded
-                style={{ width: '150px', height: 'auto' }}
-              />
-            )}
-            {/* <Form.Group controlId="thumbnail">
-              <Form.Label>Thumbnail</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter thumbnail url"
-                value={thumbnail}
-                onChange={(e) => setThumbnail(e.target.value)}
-              ></Form.Control>
-              <Form.Control
-                label="Choose File"
-                onChange={uploadFileHandler}
-                type="file"
-              ></Form.Control>
-              {loadingUpload && <Loader />}
-            </Form.Group> */}
-
-            {/* THUMBNAIL HOVER INPUT PLACEHOLDER */}
-            <ImageForm value={thumbnailHover} setValue={setThumbnailHover} />
-            {thumbnailHover && (
-              <Image
-                src={thumbnailHover}
-                alt={name}
-                rounded
-                style={{ width: '150px', height: 'auto' }}
-              />
-            )}
+            <ImageList
+              images={thumbnails}
+              setImages={setThumbnails}
+              activeImage={active}
+              setActiveImage={setActive}
+            />
 
             <Form.Group controlId="description" className="my-2">
               <Form.Label>Description</Form.Label>
@@ -207,8 +158,6 @@ const ProductEditScreen = () => {
             </Form.Group>
 
             {/* COLORS INPUT PLACEHOLDER */}
-
-            {/* THUMBNAILS INPUT PLACEHOLDER */}
 
             <Button type="submit" variant="primary" className="my-2">
               Update

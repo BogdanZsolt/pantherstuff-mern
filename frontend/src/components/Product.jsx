@@ -11,9 +11,9 @@ const Product = ({ product }) => {
   return (
     <Card className="my-3 rounded" border="secondary">
       <Link to={`/product/${product._id}`}>
-        <Card.Img src={product.thumbnail} variant="top" />
+        <Card.Img src={product.thumbnails[0]} variant="top" />
         <Card.Img
-          src={product.thumbnailHover}
+          src={product.thumbnails[1]}
           variant="top"
           className="hover-img"
         />

@@ -961,6 +961,77 @@ table th {
   z-index: 2;
 }
 
+/* Image List */
+.image-list-container {
+  display: flex;
+  gap: 0.5rem;
+}
+.image-list-photo {
+  flex: 10%;
+  display: flex;
+  gap: 0.25rem;
+  align-items: flex-start;
+  flex-direction: column;
+}
+.image-list-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex-wrap: nowrap;
+  padding: 0.5rem;
+  border: var(--bs-border-width) solid var(--bs-secondary);
+  border-radius: var(--bs-border-radius);
+  overflow-x: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: var(--bs-secondary) var(--bs-primary);
+}
+
+.image-list-wrapper::-webkit-scrollbar {
+  height: 0.3rem;
+}
+
+.image-list-wrapper::-webkit-scrollbar-track {
+  background: var(--bs-primary); /* color of the tracking area */
+}
+
+.image-list-wrapper::-webkit-scrollbar-thumb {
+  background-color: var(--bs-secondary); /* color of the scroll thumb */
+  border-radius: 0.5rem; /* roundness of the scroll thumb */
+  border: 4px solid var(--bs-secondary); /* creates padding around scroll thumb */
+}
+.image-list-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.25rem;
+  text-wrap: nowrap;
+  align-items: center;
+  background-color: rgba(var(--bs-secondary-rgb), 0.15);
+  padding: 0.25rem;
+  border: var(--bs-border-width) solid var(--bs-secondary);
+  border-radius: var(--bs-border-radius);
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.image-list-item.active {
+  background-color: rgba(var(--bs-secondary-rgb), 0.25);
+}
+
+.image-list-item__remove {
+  padding: 0.5rem;
+  background-color: rgba(var(--bs-secondary-rgb), 0.2);
+  font-size: 2rem;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.image-list-image__active {
+  max-width: 150px;
+  height: auto;
+  border-radius: var(--bs-border-radius-lg);
+}
+
 /* SUBSCRIBE FORM */
 .subscribe-decoration {
   background-repeat: no-repeat;

@@ -36,12 +36,9 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    thumbnail: {
-      type: String,
+    thumbnails: {
+      type: [String],
       required: true,
-    },
-    thumbnailHover: {
-      type: String,
     },
     description: {
       type: String,
@@ -77,9 +74,6 @@ const productSchema = new mongoose.Schema(
       type: [String],
       required: true,
       default: [''],
-    },
-    thumbnails: {
-      type: [String],
     },
   },
   {

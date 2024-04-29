@@ -1,8 +1,11 @@
 const products = [
   {
     name: 'elf "hoodie" jacket',
-    thumbnail: '/images/manopulcsi-01-450x600.webp',
-    thumbnailHover: '/images/manopulcsi-02-450x600.webp',
+    thumbnails: [
+      '/images/manopulcsi-01-450x600.webp',
+      '/images/manopulcsi-02-450x600.webp',
+      '/images/manopulcsi-03-450x600.webp',
+    ],
     description:
       'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Autem tenetur adipisci ex et dolorem ea veniam maiores vitae!',
     category: 'hoodie',
@@ -12,16 +15,10 @@ const products = [
     rating: 4.5,
     numReviews: '12',
     colors: ['#5a5240'],
-    thumbnails: [
-      '/images/manopulcsi-01-450x600.webp',
-      '/images/manopulcsi-02-450x600.webp',
-      '/images/manopulcsi-03-450x600.webp',
-    ],
   },
   {
     name: 'Ocean Blue LLC2',
-    thumbnail: '/images/product_02.jpg',
-    thumbnailHover: '/images/product_02b.jpg',
+    thumbnails: ['/images/product_02.jpg', '/images/product_02b.jpg'],
     description:
       'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Autem tenetur adipisci ex et dolorem ea veniam maiores vitae!',
     category: 'hoodie',
@@ -30,12 +27,10 @@ const products = [
     rating: 4.5,
     numReviews: '12',
     colors: ['#9DC5D5'],
-    thumbnails: ['/images/product_02.jpg', '/images/product_02b.jpg'],
   },
   {
     name: 'Inner Sweater at Office',
-    thumbnail: '/images/product_03.jpg',
-    thumbnailHover: '/images/product_03b.jpg',
+    thumbnails: ['/images/product_03.jpg', '/images/product_03b.jpg'],
     description:
       'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Autem tenetur adipisci ex et dolorem ea veniam maiores vitae!',
     category: 'hoodie',
@@ -44,12 +39,10 @@ const products = [
     rating: 4.5,
     numReviews: '12',
     colors: ['#D1DDE9'],
-    thumbnails: ['/images/product_03.jpg', '/images/product_03b.jpg'],
   },
   {
     name: 'XYZ Hoodie 485',
-    thumbnail: '/images/product_04.jpg',
-    thumbnailHover: '/images/product_04b.jpg',
+    thumbnails: ['/images/product_04.jpg', '/images/product_04b.jpg'],
     description:
       'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Autem tenetur adipisci ex et dolorem ea veniam maiores vitae!',
     category: 'hoodie',
@@ -59,12 +52,10 @@ const products = [
     rating: 4.5,
     numReviews: '12',
     colors: ['#A6A9BC'],
-    thumbnails: ['/images/product_04.jpg', '/images/product_04b.jpg'],
   },
   {
     name: 'Light Blue Hoodie',
-    thumbnail: '/images/product_05.jpg',
-    thumbnailHover: '/images/product_05b.jpg',
+    thumbnails: ['/images/product_05.jpg', '/images/product_05b.jpg'],
     description:
       'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Autem tenetur adipisci ex et dolorem ea veniam maiores vitae!',
     category: 'hoodie',
@@ -74,12 +65,10 @@ const products = [
     rating: 4.5,
     numReviews: '12',
     colors: ['#CCDFEB'],
-    thumbnails: ['/images/product_05.jpg', '/images/product_05b.jpg'],
   },
   {
     name: 'Brown Gold Mix',
-    thumbnail: '/images/product_06.jpg',
-    thumbnailHover: '/images/product_06b.jpg',
+    thumbnails: ['/images/product_06.jpg', '/images/product_06b.jpg'],
     description:
       'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Autem tenetur adipisci ex et dolorem ea veniam maiores vitae!',
     category: 'hoodie',
@@ -89,12 +78,10 @@ const products = [
     rating: 4.5,
     numReviews: '12',
     colors: ['#AF8060'],
-    thumbnails: ['/images/product_06.jpg', '/images/product_06b.jpg'],
   },
   {
     name: 'Inner Sweater at Office',
-    thumbnail: '/images/product_07.jpg',
-    thumbnailHover: '/images/product_07b.jpg',
+    thumbnails: ['/images/product_07.jpg', '/images/product_07b.jpg'],
     description:
       'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Autem tenetur adipisci ex et dolorem ea veniam maiores vitae!',
     category: 'hoodie',
@@ -104,12 +91,10 @@ const products = [
     rating: 4.5,
     numReviews: '12',
     colors: ['#E98F8F'],
-    thumbnails: ['/images/product_07.jpg', '/images/product_07b.jpg'],
   },
   {
     name: 'The Maroon Four',
-    thumbnail: '/images/product_08.jpg',
-    thumbnailHover: '/images/product_08b.jpg',
+    thumbnails: ['/images/product_08.jpg', '/images/product_08b.jpg'],
     description:
       'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Autem tenetur adipisci ex et dolorem ea veniam maiores vitae!',
     category: 'hoodie',
@@ -119,7 +104,6 @@ const products = [
     rating: 4.5,
     numReviews: '12',
     colors: ['#5D121A'],
-    thumbnails: ['/images/product_08.jpg', '/images/product_08b.jpg'],
   },
 ];
 
