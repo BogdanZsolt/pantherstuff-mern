@@ -1232,6 +1232,37 @@ table th {
   height: 100%;
 }
 
+.resizable-img-container {
+  display: inline-block;
+  position: relative;
+  border-radius: var(--bs-border-radius-lg);
+}
+
+.resizable-img-container.ProseMirror-selectednode {
+  outline: 5px solid rgba(var(--bs-success-rgb), 0.7);
+}
+
+.resizable-img {
+  display: block;
+  border-radius: var(--bs-border-radius-lg);
+  cursor: pointer;
+}
+
+.resizable-img-seected {
+  outline: 5px solid rgba(var(--bs-success-rgb), 0.7);
+}
+
+.ProseMirror-selectednode .resizable-img-resizer {
+  position: absolute;
+  bottom: -9px;
+  right: -9px;
+  width: 15px;
+  height: 15px;
+  border-radius: var(--bs-border-radius-pill);
+  background-color: rgba(var(--bs-success-rgb), 0.7);
+  cursor: nwse-resize;
+}
+
 /* React Media Library Modal */
 .react-media-library .react-media-library__modal {
   background-color: var(--bs-primary);

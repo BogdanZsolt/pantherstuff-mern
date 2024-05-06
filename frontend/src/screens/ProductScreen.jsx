@@ -24,6 +24,7 @@ import {
   RiQuestionLine,
   RiGiftLine,
   RiTruckLine,
+  RiHeartFill,
 } from 'react-icons/ri';
 import { toast } from 'react-toastify';
 import Rating from '../components/Rating';
@@ -37,6 +38,7 @@ import {
   useCreateReviewMutation,
 } from '../slices/productsApiSlice';
 import { addToCart } from '../slices/cartSlice';
+import { toggleWishList } from '../slices/wishListSlice';
 
 const ProductScreen = () => {
   const { id: productId } = useParams();
@@ -62,10 +64,17 @@ const ProductScreen = () => {
     useCreateReviewMutation();
 
   const { userInfo } = useSelector((state) => state.auth);
+  const { wishListItems } = useSelector((state) => state.wishList);
 
   const addToCartHandler = () => {
     dispatch(addToCart({ ...product, qty }));
     navigate('/cart');
+  };
+
+  const isWishListed = () => {
+    const content = wishListItems.find((x) => x._id === productId);
+
+    return content?._id === productId ? true : false;
   };
 
   const submitHandler = async (e) => {
@@ -83,6 +92,10 @@ const ProductScreen = () => {
     } catch (err) {
       toast.error(err?.data?.message || err.error);
     }
+  };
+
+  const addToWishListHandler = () => {
+    dispatch(toggleWishList({ ...product }));
   };
 
   return (
@@ -204,8 +217,8 @@ const ProductScreen = () => {
                     <ListGroup.Item>
                       <ul className="action">
                         <li>
-                          <Link>
-                            <RiHeartLine />
+                          <Link onClick={addToWishListHandler}>
+                            {isWishListed() ? <RiHeartFill /> : <RiHeartLine />}
                             <span>Add to wishlist</span>
                           </Link>
                         </li>

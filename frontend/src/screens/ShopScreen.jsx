@@ -66,7 +66,7 @@ const ShopScreen = () => {
                     className="d-flex align-items-center justify-content-end"
                   >
                     <Form.Select aria-label="Default sorting">
-                      <option>Default sorting</option>
+                      <option value="0">Default sorting</option>
                       <option value="1">Popular</option>
                       <option value="2">Rating</option>
                       <option value="3">Latest</option>

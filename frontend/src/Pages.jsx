@@ -9,6 +9,9 @@ export const RegisterScreen = lazy(() =>
   import('./screens/RegisterScreen.jsx')
 );
 export const CartScreen = lazy(() => import('./screens/CartScreen.jsx'));
+export const WishListScreen = lazy(() =>
+  import('./screens/WishListScreen.jsx')
+);
 export const ShippingScreen = lazy(() =>
   import('./screens/ShippingScreen.jsx')
 );
@@ -75,3 +78,4 @@ export const OrderListScreen = lazy(() =>
 export const SubscriberListScreen = lazy(() =>
   import('./screens/admin/SubscriberListScreen.jsx')
 );
+export const ProtectRoute = lazy(() => import('./components/ProtectRoute.jsx'));

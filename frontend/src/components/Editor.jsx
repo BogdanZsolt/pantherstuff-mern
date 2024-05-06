@@ -16,8 +16,8 @@ import TableCell from '@tiptap/extension-table-cell';
 import TableHeader from '@tiptap/extension-table-header';
 import TableRow from '@tiptap/extension-table-row';
 import Image from '@tiptap/extension-image';
+import ImageResize from './editor/ImageResize.js';
 import Typography from '@tiptap/extension-typography';
-// import ImageResize from 'tiptap-extension-resize-image';
 import FontSize from './editor/fontSize';
 import Menubar from './editor/Menubar';
 import TableMenu from './editor/TableMenu';
@@ -62,6 +62,7 @@ const extensions = [
   TableRow,
   TableCell,
   TableHeader,
+  ImageResize,
   Image.configure({
     inline: true,
     allowBase64: true,

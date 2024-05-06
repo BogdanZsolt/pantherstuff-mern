@@ -7,7 +7,7 @@ import {
   NavDropdown,
   Badge,
 } from 'react-bootstrap';
-import { RiShoppingBagLine, RiUserLine } from 'react-icons/ri';
+import { RiHeartLine, RiShoppingBagLine, RiUserLine } from 'react-icons/ri';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
@@ -19,6 +19,7 @@ import { logout } from '../slices/authSlice';
 
 const Header = () => {
   const { cartItems } = useSelector((state) => state.cart);
+  const { wishListItems } = useSelector((state) => state.wishList);
   const { userInfo } = useSelector((state) => state.auth);
   const [scrollClass, setScrollClass] = useState('');
 
@@ -83,18 +84,6 @@ const Header = () => {
                 as="ul"
               >
                 {/* <SearchBox /> */}
-                <li className="d-flex justify-content-center align-items-center">
-                  <LinkContainer to="/cart">
-                    <Nav.Link className="d-flex justify-content-center align-items-center">
-                      <RiShoppingBagLine />
-                      {cartItems.length > 0 && (
-                        <Badge pill bg="success" style={{ marginLeft: '5px' }}>
-                          {cartItems.reduce((a, c) => a + c.qty, 0)}
-                        </Badge>
-                      )}
-                    </Nav.Link>
-                  </LinkContainer>
-                </li>
                 {userInfo ? (
                   <NavDropdown title={userInfo.name} id="username" as="li">
                     {userInfo.isAdmin && (
@@ -117,19 +106,30 @@ const Header = () => {
                     </Nav.Link>
                   </LinkContainer>
                 )}
-                {/* {userInfo && userInfo.isAdmin && (
-                  <NavDropdown title="Admin" id="admin-menu" as="li">
-                    <LinkContainer to="/admin/productlist">
-                      <NavDropdown.Item>Products</NavDropdown.Item>
-                    </LinkContainer>
-                    <LinkContainer to="/admin/userlist">
-                      <NavDropdown.Item>Users</NavDropdown.Item>
-                    </LinkContainer>
-                    <LinkContainer to="/admin/orderlist">
-                      <NavDropdown.Item>Orders</NavDropdown.Item>
-                    </LinkContainer>
-                  </NavDropdown>
-                )} */}
+                <li className="d-flex justify-content-center align-items-center">
+                  <LinkContainer to="/cart">
+                    <Nav.Link className="d-flex justify-content-center align-items-center">
+                      <RiShoppingBagLine />
+                      {cartItems.length > 0 && (
+                        <Badge pill bg="success" style={{ marginLeft: '5px' }}>
+                          {cartItems.reduce((a, c) => a + c.qty, 0)}
+                        </Badge>
+                      )}
+                    </Nav.Link>
+                  </LinkContainer>
+                </li>
+                <li className="d-flex justify-content-center align-items-center">
+                  <LinkContainer to="/wishlist">
+                    <Nav.Link className="d-flex justify-content-center align-items-center">
+                      <RiHeartLine />
+                      {wishListItems.length > 0 && (
+                        <Badge pill bg="success" style={{ marginLeft: '5px' }}>
+                          {wishListItems.length}
+                        </Badge>
+                      )}
+                    </Nav.Link>
+                  </LinkContainer>
+                </li>
               </Nav>
             </Offcanvas.Body>
           </Navbar.Offcanvas>

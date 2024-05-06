@@ -1,13 +1,38 @@
 import { Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   RiStarLine,
-  RiArrowLeftRightLine,
   RiShoppingBagLine,
+  RiHeartLine,
+  RiHeartFill,
 } from 'react-icons/ri';
 import Rating from './Rating';
+import { addToCart } from '../slices/cartSlice';
+import { toggleWishList } from '../slices/wishListSlice';
 
 const Product = ({ product }) => {
+  const dispatch = useDispatch();
+  const wishList = useSelector((state) => state.wishList);
+  const { wishListItems } = wishList;
+
+  const isWishListed = (productId) => {
+    const content = wishListItems.find((x) => x._id === productId);
+
+    return content?._id === productId ? true : false;
+  };
+
+  const addToCartHandler = (e) => {
+    e.preventDefault();
+    const qty = 1;
+    dispatch(addToCart({ ...product, qty }));
+  };
+
+  const addToWishListHandler = (e) => {
+    e.preventDefault();
+    dispatch(toggleWishList({ ...product }));
+  };
+
   return (
     <Card className="my-3 rounded" border="secondary">
       <Link to={`/product/${product._id}`}>
@@ -25,12 +50,12 @@ const Product = ({ product }) => {
               </button>
             </li>
             <li>
-              <button>
-                <RiArrowLeftRightLine />
+              <button onClick={addToWishListHandler} title="Add to wish list">
+                {isWishListed(product._id) ? <RiHeartFill /> : <RiHeartLine />}
               </button>
             </li>
             <li>
-              <button>
+              <button onClick={addToCartHandler} title="Add to cart">
                 <RiShoppingBagLine />
               </button>
             </li>

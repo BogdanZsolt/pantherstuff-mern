@@ -22,6 +22,7 @@ import {
   LoginScreen,
   RegisterScreen,
   CartScreen,
+  WishListScreen,
   ShippingScreen,
   PaymentScreen,
   HerStory,
@@ -51,6 +52,7 @@ import {
   UserEditScreen,
   OrderListScreen,
   SubscriberListScreen,
+  ProtectRoute,
 } from './Pages.jsx';
 
 const router = createBrowserRouter(
@@ -200,14 +202,6 @@ const router = createBrowserRouter(
           }
         />
         <Route
-          path="/cart"
-          element={
-            <Suspense fallback={<Loader />}>
-              <CartScreen />
-            </Suspense>
-          }
-        />
-        <Route
           path="/login"
           element={
             <Suspense fallback={<Loader />}>
@@ -247,6 +241,23 @@ const router = createBrowserRouter(
               </Suspense>
             }
           />
+        </Route>
+        <Route
+          path=""
+          element={
+            <Suspense fallback={<Loader />}>
+              <ProtectRoute />
+            </Suspense>
+          }
+        >
+          <Route
+            path="/cart"
+            element={
+              <Suspense fallback={<Loader />}>
+                <CartScreen />
+              </Suspense>
+            }
+          />
           <Route
             path="/placeorder"
             element={
@@ -255,12 +266,19 @@ const router = createBrowserRouter(
               </Suspense>
             }
           />
-
           <Route
             path="/order/:id"
             element={
               <Suspense fallback={<Loader />}>
                 <OrderScreen />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/wishlist"
+            element={
+              <Suspense fallback={<Loader />}>
+                <WishListScreen />
               </Suspense>
             }
           />
