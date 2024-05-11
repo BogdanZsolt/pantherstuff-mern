@@ -5,7 +5,7 @@ import Message from '../components/Message';
 import Banner from '../components/Banner';
 import Meta from '../components/Meta';
 import Post from '../components/Post';
-import { useGetPostCategoryDetailsQuery } from '../slices/postCategoriiesApiSlice';
+import { useGetPostCategoryDetailsQuery } from '../slices/postCategoriesApiSlice.js';
 
 const CategoryPostScreen = () => {
   const { id: catId } = useParams();

@@ -12,7 +12,7 @@ import {
   useUpdatePostMutation,
 } from '../../slices/postsApiSlice.js';
 // import { useUploadImageMutation } from '../../slices/uploadImageApiSlice.js';
-import { useGetPostCategoriesQuery } from '../../slices/postCategoriiesApiSlice.js';
+import { useGetPostCategoriesQuery } from '../../slices/postCategoriesApiSlice.js';
 import { useGetUsersQuery } from '../../slices/usersApiSlice.js';
 
 const Editor = lazy(() => import('../../components/Editor.jsx'));
