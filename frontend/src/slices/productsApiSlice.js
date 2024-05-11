@@ -5,22 +5,18 @@ const UPLOAD_URL = '/api/upload';
 export const productsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getProducts: builder.query({
-      query: ({ keyword, pageNumber }) => ({
+      query: (params) => ({
         url: PRODUCTS_URL,
-        params: {
-          keyword,
-          pageNumber,
-        },
-      }),
-      providesTags: ['Products'],
-      keepUnusedDataFor: 5,
-    }),
-    getAllProducts: builder.query({
-      query: () => ({
-        url: `${PRODUCTS_URL}/all`,
+        params,
       }),
       keepUnusedDataFor: 5,
     }),
+    // getAllProducts: builder.query({
+    //   query: () => ({
+    //     url: `${PRODUCTS_URL}/all`,
+    //   }),
+    //   keepUnusedDataFor: 5,
+    // }),
     getProductDetails: builder.query({
       query: (productId) => ({
         url: `${PRODUCTS_URL}/${productId}`,

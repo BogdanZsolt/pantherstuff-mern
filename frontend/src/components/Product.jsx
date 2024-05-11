@@ -6,6 +6,8 @@ import {
   RiShoppingBagLine,
   RiHeartLine,
   RiHeartFill,
+  // PiStarFourLight,
+  // PiStarFourFill,
 } from 'react-icons/ri';
 import Rating from './Rating';
 import { addToCart } from '../slices/cartSlice';

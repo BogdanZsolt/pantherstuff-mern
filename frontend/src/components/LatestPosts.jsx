@@ -16,8 +16,6 @@ const LatestPosts = () => {
     fields: '_id,user,bannerImage,title,description,createdAt',
   });
 
-  console.log(posts);
-
   return (
     <Container className="mt-5">
       <h2>
@@ -31,7 +29,7 @@ const LatestPosts = () => {
         </Message>
       ) : (
         <Row>
-          {posts.map((post) => (
+          {posts.data.map((post) => (
             <Col md={6} xl={4} key={post._id}>
               <Post
                 className="post-card"

@@ -13,7 +13,7 @@ const Comment = ({
   deleteComment,
 }) => {
   const isUserLoggined = Boolean(logginedUserId);
-  const commentBelongToUser = logginedUserId === comment.user._id;
+  const commentBelongToUser = logginedUserId === comment?.user?._id;
   const isReplying =
     affectedComment &&
     affectedComment.type === 'replying' &&
@@ -23,7 +23,7 @@ const Comment = ({
     affectedComment.type === 'editing' &&
     affectedComment._id === comment._id;
   const repliedCommentId = parentId ? parentId : comment._id;
-  const replyOnUserId = comment.user._id;
+  const replyOnUserId = comment?.user?._id;
 
   return (
     <Row
@@ -40,7 +40,7 @@ const Comment = ({
       </Col>
       <Col xs={10} sm={11} className="d-flex flex-column">
         <span className="font-cursive d-inline-block text-secondary fw-bold fs-6 ">
-          {comment.user.name}
+          {comment?.user?.name}
         </span>
         <span style={{ fontSize: '0.875rem' }}>
           {new Date(comment.createdAt).toLocaleDateString('hu-HU', {

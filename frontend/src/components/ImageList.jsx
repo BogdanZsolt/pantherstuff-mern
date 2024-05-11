@@ -56,10 +56,11 @@ const ImageList = ({ images, setImages }) => {
           <>
             {images.map((item, index) => (
               <div
+                onClick={() => setActive(item)}
                 className={`image-list-item ${active === item ? 'active' : ''}`}
                 key={index}
               >
-                <span onClick={() => setActive(item)}>{item}</span>
+                <span>{item}</span>
                 <RiCloseLine
                   className="image-list-item__remove"
                   onClick={() => removeItem(item)}

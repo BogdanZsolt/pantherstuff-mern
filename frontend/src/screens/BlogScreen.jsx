@@ -22,7 +22,7 @@ const BlogScreen = () => {
           <Meta title="Blog" />
           <Container>
             <Row style={{ '--bs-gutter-y': '1.5rem' }}>
-              {posts.map((post) => (
+              {posts.data.map((post) => (
                 <Col lg={6} xxl={4} key={post._id}>
                   <Post
                     src={

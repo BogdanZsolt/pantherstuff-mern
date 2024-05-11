@@ -42,11 +42,12 @@ const SubscribeForm = () => {
       >
         <Card.Body>
           <Card.Title className="text-center text-primary fs-2 fw-bold">
-            Card Title
+            PantherStuff LoveLetters
           </Card.Title>
           <Card.Text className="text-center text-primary lead fw-medium">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Officia
-            placeat corrupti laboriosam fuga minus, non magni.
+            Sign Up To Get Regular PantherStuff News, Knowledge & Events.
+            Support the Healing and Clearing of our Beloved Mother Nature by
+            transforming the cloth industry 🌎🌿🫀☀️
           </Card.Text>
           <Form onSubmit={subscribeHandler}>
             <Row>

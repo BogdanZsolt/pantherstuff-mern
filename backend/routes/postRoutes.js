@@ -2,7 +2,7 @@ import express from 'express';
 const router = express.Router();
 import {
   createPost,
-  createInit,
+  postCreateInit,
   updatePost,
   deletePost,
   getPostById,
@@ -11,7 +11,10 @@ import {
 } from '../controllers/postController.js';
 import { protect, admin } from '../middleware/authMiddleware.js';
 
-router.route('/').get(getPosts).post(protect, admin, createInit, createPost);
+router
+  .route('/')
+  .get(getPosts)
+  .post(protect, admin, postCreateInit, createPost);
 router.route('/last').get(getLastPosts);
 router
   .route('/:id')

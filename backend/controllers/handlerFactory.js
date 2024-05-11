@@ -3,18 +3,43 @@ import APIFeatures from '../utils/apiFeatures.js';
 
 const getAll = (Model, popOption) =>
   asyncHandler(async (req, res) => {
-    // EXECUTE QUERY
+    console.log(req.query);
+
+    const page = Number(req.query.page) || 1;
+    if (req.query.page) {
+      req.query.limit = req.query.limit || process.env.PAGINATION_LIMIT;
+    }
+
     const features = new APIFeatures(Model.find(), req.query, popOption)
       .filter()
       .sort()
+      .limit()
       .limitFields()
       .paginate()
       .populate();
 
+    let pages = 1;
+
+    let count = 0;
+
+    if (req.query.page) {
+      const counter = new APIFeatures(
+        Model.find(),
+        req.query,
+        popOption
+      ).filter();
+
+      const all = await counter.query;
+
+      count = all.length;
+
+      pages = Math.ceil(count / Number(req.query.limit));
+    }
+
     const doc = await features.query;
 
     // SEND RESPONSE
-    res.json(doc);
+    res.json({ data: doc, pages, page, count });
   });
 
 const getOne = (Model, popOption) =>

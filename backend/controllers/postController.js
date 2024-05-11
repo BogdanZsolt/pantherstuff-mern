@@ -24,7 +24,7 @@ const postPopOption = [
   },
 ];
 
-const createInit = (req, res, next) => {
+const postCreateInit = (req, res, next) => {
   req.body.user = req.user._id;
   req.body.title = 'Simple title';
   req.body.description = 'Simple description';
@@ -107,5 +107,5 @@ export {
   getPostById,
   getPosts,
   getLastPosts,
-  createInit,
+  postCreateInit,
 };

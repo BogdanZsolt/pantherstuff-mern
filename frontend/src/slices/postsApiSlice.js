@@ -5,8 +5,9 @@ const COMMENTS_URL = '/api/comments';
 export const postsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getPosts: builder.query({
-      query: () => ({
+      query: (params) => ({
         url: POSTS_URL,
+        params,
       }),
       keepUnusedDataFor: 5,
     }),

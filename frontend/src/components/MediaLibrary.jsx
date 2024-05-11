@@ -9,7 +9,7 @@ import Message from './Message';
 import { toast } from 'react-toastify';
 
 const MediaLibrary = ({ displayMedia, setDisplayMedia, setSelectedImg }) => {
-  const { data, isLoading, refetch, error } = useGetImagesQuery();
+  const { data: images, isLoading, refetch, error } = useGetImagesQuery();
 
   const [uploadImage, { isLoading: uploadLoading }] = useUploadImageMutation();
   const [deleteImage, { isLoading: deleteLoading }] = useDeleteImageMutation();
@@ -61,7 +61,7 @@ const MediaLibrary = ({ displayMedia, setDisplayMedia, setSelectedImg }) => {
         <ReactMediaLibrary
           isOpen={displayMedia}
           onClose={() => setDisplayMedia(false)}
-          fileLibraryList={data}
+          fileLibraryList={images.data}
           defaultSelectedItemIds={['']}
           fileUploadCallback={uploadCallback}
           filesDeleteCallback={filesDeleteCallback}

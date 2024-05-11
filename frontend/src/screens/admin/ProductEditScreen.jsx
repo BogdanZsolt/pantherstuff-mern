@@ -10,6 +10,7 @@ import {
   useGetProductDetailsQuery,
   useUpdateProductMutation,
 } from '../../slices/productsApiSlice';
+import SelectCategory from '../../components/SelectCategory';
 
 const ProductEditScreen = () => {
   const { id: productId } = useParams();
@@ -36,7 +37,7 @@ const ProductEditScreen = () => {
       setName(product.name);
       setThumbnails(product.thumbnails);
       setDescription(product.description);
-      setCategory(product.category);
+      setCategory(product?.category?._id);
       setBeforePrice(product.beforePrice || 0);
       setCurrentPrice(product.currentPrice || 0);
       setCountInStock(product.countInStock);
@@ -117,7 +118,9 @@ const ProductEditScreen = () => {
               ></Form.Control>
             </Form.Group>
 
-            <Form.Group controlId="category" className="my-2">
+            <SelectCategory category={category} setCategory={setCategory} />
+
+            {/* <Form.Group controlId="category" className="my-2">
               <Form.Label>Category</Form.Label>
               <Form.Control
                 type="text"
@@ -125,7 +128,7 @@ const ProductEditScreen = () => {
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
               ></Form.Control>
-            </Form.Group>
+            </Form.Group> */}
 
             <Form.Group controlId="beforePrice" className="my-2">
               <Form.Label>Before Price</Form.Label>

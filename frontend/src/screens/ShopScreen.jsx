@@ -25,15 +25,24 @@ import FilterSidebar from '../components/FilterSidebar.jsx';
 import { useGetProductsQuery } from '../slices/productsApiSlice.js';
 
 const ShopScreen = () => {
-  const { pageNumber, keyword } = useParams();
-  const { data, isLoading, error } = useGetProductsQuery({
-    keyword,
-    pageNumber,
-  });
+  let { pageNumber: page, keyword } = useParams();
+  if (!page) {
+    page = 1;
+  }
+  const [sort, setSort] = useState('-rating,-createdAt');
+  const [category, setCategory] = useState(undefined);
+
+  const {
+    data: products,
+    isLoading,
+    error,
+  } = useGetProductsQuery({ sort, category, page, limit: 8 });
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  console.log(category);
 
   return (
     <>
@@ -54,24 +63,33 @@ const ShopScreen = () => {
             <h2 className="text-center">Products</h2>
             <Row>
               <Col lg={3} xxl={2} className="d-none d-lg-block">
-                <FilterSidebar />
+                <FilterSidebar category={category} setCategory={setCategory} />
               </Col>
               <Col xs={12} lg={9} xxl={10}>
                 <Row className="align-items-center justify-content-between">
-                  <Col>Showing 9 of 34 results</Col>
+                  <Col>
+                    Showing {products?.data?.length} of {products?.count}{' '}
+                    results
+                  </Col>
                   <Col
                     sm={7}
                     md={6}
                     xxl={4}
                     className="d-flex align-items-center justify-content-end"
                   >
-                    <Form.Select aria-label="Default sorting">
-                      <option value="0">Default sorting</option>
-                      <option value="1">Popular</option>
-                      <option value="2">Rating</option>
-                      <option value="3">Latest</option>
-                      <option value="4">Price low to high</option>
-                      <option value="4">Price high to low</option>
+                    <Form.Select
+                      aria-label="Default sorting"
+                      value={sort}
+                      onChange={(e) => setSort(e.target.value)}
+                    >
+                      <option value="-rating,-createdAt">
+                        Default sorting
+                      </option>
+                      <option value="-rating">Popular</option>
+                      <option value="rating">Rating</option>
+                      <option value="-createdAt">Latest</option>
+                      <option value="currentPrice">Price low to high</option>
+                      <option value="-currentPrice">Price high to low</option>
                     </Form.Select>
                     <ButtonGroup>
                       <Button>
@@ -90,15 +108,15 @@ const ShopScreen = () => {
                   </Col>
                 </Row>
                 <Row>
-                  {data.products.map((product) => (
+                  {products.data.map((product) => (
                     <Col sm={6} md={4} xl={3} key={product._id}>
                       <Product product={product} />
                     </Col>
                   ))}
                 </Row>
                 <Paginate
-                  pages={data.pages}
-                  page={data.page}
+                  pages={products.pages}
+                  page={products.page}
                   keyword={keyword ? keyword : ''}
                 />
               </Col>

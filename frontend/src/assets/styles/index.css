@@ -536,6 +536,7 @@ table th {
   width: 100%;
   height: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   z-index: 2;
@@ -544,6 +545,11 @@ table th {
 .banner .title h3 {
   text-transform: capitalize;
   font-size: clamp(3rem, 2.85rem + 0.75vw, 3.75rem);
+}
+
+.banner .title p {
+  font-size: 1.25rem;
+  font-weight: 500;
 }
 
 .banner-image {

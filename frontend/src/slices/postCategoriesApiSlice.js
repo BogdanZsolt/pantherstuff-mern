@@ -4,8 +4,9 @@ const POSTCATEGORIES_URL = '/api/postcategories';
 export const postCategoriesApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getPostCategories: builder.query({
-      query: () => ({
+      query: (params) => ({
         url: POSTCATEGORIES_URL,
+        params,
       }),
       keepUnusedDataFor: 5,
     }),

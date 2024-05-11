@@ -27,6 +27,7 @@ const ContactScreen = () => {
       <Banner
         title="Contact"
         src="/images/ecoprint-06-1280x360.webp"
+        description="Lorem ipsum dolor, sit amet consectetur adipisicing elit."
         alt="Contact"
       />
       <Container>

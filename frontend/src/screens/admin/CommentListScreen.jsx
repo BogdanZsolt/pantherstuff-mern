@@ -11,7 +11,7 @@ import {
 } from '../../slices/postsApiSlice';
 
 const CommentListScreen = () => {
-  const { data, isLoading, refetch, error } = useGetCommentsQuery();
+  const { data: comments, isLoading, refetch, error } = useGetCommentsQuery();
 
   const [deleteComment, { isLoading: loadingDelete }] =
     useDeleteCommentMutation();
@@ -51,10 +51,10 @@ const CommentListScreen = () => {
           </thead>
 
           <tbody>
-            {data.map((comment) => (
+            {comments.data.map((comment) => (
               <tr key={comment._id}>
                 <td className="d-flex flex-column">
-                  {comment.user.name}
+                  {comment?.user?.name}
                   <span style={{ fontSize: '0.75rem' }}>ID: {comment._id}</span>
                 </td>
                 <td>{comment.description}</td>

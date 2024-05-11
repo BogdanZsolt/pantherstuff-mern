@@ -3,14 +3,15 @@ import { Image } from 'react-bootstrap';
 // import { RiArrowRightSLine } from 'react-icons/ri';
 
 const Post = ({ postId, src, category, author, title, description, date }) => {
-  console.log(postId);
   return (
     <article className="blog-post">
       <strong
         className="d-inline-block mb-2 text-primary-emphasis"
         style={{ fontSize: '1.25rem' }}
       >
-        <Link to={`/category/${category._id}`}>{category.title}</Link>
+        <Link to={`/category/${category?._id}`}>
+          {category?.title ? category?.title : 'undefined'}
+        </Link>
       </strong>
       <div className="post-image-wrapper">
         <Image src={src} className="post-image" />

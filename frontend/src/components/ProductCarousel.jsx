@@ -7,10 +7,14 @@ import { Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import { RiArrowLeftLine, RiArrowRightLine } from 'react-icons/ri';
-import { useGetAllProductsQuery } from '../slices/productsApiSlice.js';
+import { useGetProductsQuery } from '../slices/productsApiSlice.js';
 
 const ProductCarousel = () => {
-  const { data: products, isLoading, error } = useGetAllProductsQuery();
+  const {
+    data: products,
+    isLoading,
+    error,
+  } = useGetProductsQuery({ sort: '-createdAt' });
 
   return (
     <>
@@ -52,7 +56,7 @@ const ProductCarousel = () => {
               },
             }}
           >
-            {products.map((product) => (
+            {products.data.map((product) => (
               <SwiperSlide key={product._id}>
                 <Product product={product} />
               </SwiperSlide>

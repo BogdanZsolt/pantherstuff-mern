@@ -5,27 +5,27 @@ import Loader from '../../components/Loader.jsx';
 import Message from '../../components/Message';
 import { toast } from 'react-toastify';
 import {
-  useGetPostCategoriesQuery,
-  useCreatePostCategoryMutation,
-  useDeletePostCategoryMutation,
-} from '../../slices/postCategoriesApiSlice.js';
+  useGetProductCategoriesQuery,
+  useCreateProductCategoryMutation,
+  useDeleteProductCategoryMutation,
+} from '../../slices/productCategoriesApiSlice';
 
-const PostCategoryListScreen = () => {
+const ProductCategoryListScreen = () => {
   const {
-    data: postCats,
+    data: productCats,
     isLoading,
     refetch,
     error,
-  } = useGetPostCategoriesQuery();
-  const [createPostCategory, { isLoading: loadingCreate }] =
-    useCreatePostCategoryMutation();
-  const [deletePostCategory, { isLoading: loadingDelete }] =
-    useDeletePostCategoryMutation();
+  } = useGetProductCategoriesQuery();
+  const [createProductCategory, { isLoading: loadingCreate }] =
+    useCreateProductCategoryMutation();
+  const [deleteProductCategory, { isLoading: loadingDelete }] =
+    useDeleteProductCategoryMutation();
 
   const createHandler = async () => {
     if (window.confirm('Are you sure you want to create a new post?')) {
       try {
-        await createPostCategory();
+        await createProductCategory();
         toast.success('Category created');
         refetch();
       } catch (err) {
@@ -37,7 +37,7 @@ const PostCategoryListScreen = () => {
   const deleteHandler = async (id) => {
     if (window.confirm('Are you sure?')) {
       try {
-        await deletePostCategory(id);
+        await deleteProductCategory(id);
         toast.success('Category deleted');
         refetch();
       } catch (err) {
@@ -50,7 +50,7 @@ const PostCategoryListScreen = () => {
     <>
       <Container className="mt-5">
         <Row className="text-center">
-          <h2 className="fs-1 fw-semibold">Post Categories</h2>
+          <h2 className="fs-1 fw-semibold">Product Categories</h2>
         </Row>
         <Row className="align-items-center">
           <Col className="text-end">
@@ -78,13 +78,15 @@ const PostCategoryListScreen = () => {
               </tr>
             </thead>
             <tbody>
-              {postCats.data.map((cat) => (
+              {productCats.data.map((cat) => (
                 <tr key={cat._id}>
                   <td>{cat._id}</td>
                   <td>{cat.title}</td>
                   <td>{cat?.parent?.title}</td>
                   <td>
-                    <LinkContainer to={`/admin/postcategory/${cat._id}/edit`}>
+                    <LinkContainer
+                      to={`/admin/productcategory/${cat._id}/edit`}
+                    >
                       <Button variant="primary" className="btn-sm mx-2">
                         <span className="d-flex align-items-center justify-content-center py">
                           <FaEdit />
@@ -111,4 +113,4 @@ const PostCategoryListScreen = () => {
   );
 };
 
-export default PostCategoryListScreen;
+export default ProductCategoryListScreen;

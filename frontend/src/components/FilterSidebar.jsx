@@ -1,6 +1,7 @@
 import { Accordion, Row } from 'react-bootstrap';
+import SelectCategory from './SelectCategory';
 
-const FilterSidebar = () => {
+const FilterSidebar = ({ category, setCategory }) => {
   return (
     <>
       <h3>Filter</h3>
@@ -20,7 +21,9 @@ const FilterSidebar = () => {
           </Accordion.Item>
           <Accordion.Item eventKey="categories">
             <Accordion.Header>Categories</Accordion.Header>
-            <Accordion.Body>Categories select</Accordion.Body>
+            <Accordion.Body>
+              <SelectCategory category={category} setCategory={setCategory} />
+            </Accordion.Body>
           </Accordion.Item>
           <Accordion.Item eventKey="brands">
             <Accordion.Header>Brands</Accordion.Header>

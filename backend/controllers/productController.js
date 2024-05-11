@@ -1,57 +1,61 @@
 import asyncHandler from '../middleware/asyncHandler.js';
-import { getAll, getOne } from './handlerFactory.js';
+import { getAll, getOne, createOne } from './handlerFactory.js';
 import Product from '../models/productModel.js';
+
+const productsPopOption = [
+  { path: 'user', select: ['name'] },
+  { path: 'category', select: ['title'] },
+];
+const productPopOption = [
+  { path: 'user', select: ['name'] },
+  { path: 'category', select: 'title' },
+];
+const productCreateInit = (req, res, next) => {
+  req.body.user = req.user._id;
+  req.body.name = 'Simple title';
+  req.body.thumbnails = ['/images/sample.jpg'];
+  req.body.description = 'Simple description';
+  req.body.beforePrice = 0;
+  req.body.currentPrice = 0;
+  req.body.countInStock = 0;
+  req.body.rating = 0;
+  req.body.numReviews = 0;
+  req.body.colors = ['#ffffff'];
+  next();
+};
 
 // @desc    Fetch all products
 // @route   GET /api/products/all
 // @access  Public
-const getAllProducts = getAll(Product);
-
-// @desc    Fetch all products with paginate
-// @route   GET /api/products
-// @access  Public
-const getProducts = asyncHandler(async (req, res) => {
-  const pageSize = process.env.PAGINATION_LIMIT;
-  const page = Number(req.query.pageNumber) || 1;
-
-  const keyword = req.query.keyword
-    ? { name: { $regex: req.query.keyword, $options: 'i' } }
-    : {};
-
-  const count = await Product.countDocuments({ ...keyword });
-
-  const products = await Product.find({ ...keyword })
-    .limit(pageSize)
-    .skip(pageSize * (page - 1));
-  res.json({ products, page, pages: Math.ceil(count / pageSize) });
-});
+const getProducts = getAll(Product, productsPopOption);
 
 // @desc    Fetch a product
 // @route   GET /api/products/:id
 // @access  Public
-const getProductById = getOne(Product);
+const getProductById = getOne(Product, productPopOption);
 
 // @desc    Create a product
 // @route   POST /api/products
 // @access  Private/Admin
-const createProduct = asyncHandler(async (req, res) => {
-  const product = new Product({
-    name: 'Sample name',
-    user: req.user._id,
-    thumbnails: ['/images/sample.jpg'],
-    description: 'Sample description',
-    category: 'sample category',
-    beforePrice: 0,
-    currentPrice: 0,
-    countInStock: 0,
-    rating: 0,
-    numReviews: 0,
-    colors: ['#ffffff'],
-  });
+const createProduct = createOne(Product);
+// const createProduct = asyncHandler(async (req, res) => {
+//   const product = new Product({
+//     name: 'Sample name',
+//     user: req.user._id,
+//     thumbnails: ['/images/sample.jpg'],
+//     description: 'Sample description',
+//     category: '',
+//     beforePrice: 0,
+//     currentPrice: 0,
+//     countInStock: 0,
+//     rating: 0,
+//     numReviews: 0,
+//     colors: ['#ffffff'],
+//   });
 
-  const createdProduct = await product.save();
-  res.status(201).json(createdProduct);
-});
+//   const createdProduct = await product.save();
+//   res.status(201).json(createdProduct);
+// });
 
 // @desc    Update a product
 // @route   PUT /api/products/:id
@@ -157,7 +161,7 @@ const getTopProducts = asyncHandler(async (req, res) => {
 });
 
 export {
-  getAllProducts,
+  productCreateInit,
   getProducts,
   getProductById,
   createProduct,

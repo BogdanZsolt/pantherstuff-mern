@@ -5,34 +5,34 @@ import FormContainer from '../../components/FormContainer';
 import Loader from '../../components/Loader';
 import Message from '../../components/Message';
 import {
-  useGetPostCategoryDetailsQuery,
-  useUpdatePostCategoryMutation,
-  useGetPostCategoriesQuery,
-} from '../../slices/postCategoriesApiSlice';
+  useGetProductCategoryDetailsQuery,
+  useUpdateProductCategoryMutation,
+  useGetProductCategoriesQuery,
+} from '../../slices/productCategoriesApiSlice';
 import { toast } from 'react-toastify';
 
-const PostCatEditScreen = () => {
-  const { id: postCatId } = useParams();
+const ProductCatEditScreen = () => {
+  const { id: productCatId } = useParams();
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [parent, setParent] = useState('');
 
   const {
-    data: postCats,
+    data: productCats,
     isLoading: GetLoading,
     error: getError,
-  } = useGetPostCategoriesQuery({ sort: '-title' });
+  } = useGetProductCategoriesQuery({ sort: '-title' });
 
   const {
     data: category,
     isLoading,
     refetch,
     error,
-  } = useGetPostCategoryDetailsQuery(postCatId);
+  } = useGetProductCategoryDetailsQuery(productCatId);
 
-  const [updatePostCategory, { isLoading: loadingUpdate }] =
-    useUpdatePostCategoryMutation();
+  const [updateProductCategory, { isLoading: loadingUpdate }] =
+    useUpdateProductCategoryMutation();
 
   const navigate = useNavigate();
 
@@ -47,29 +47,29 @@ const PostCatEditScreen = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      await updatePostCategory({
-        postCatId,
+      await updateProductCategory({
+        productCatId,
         title,
         description,
         parent,
       }).unwrap();
       toast.success('Category updated');
       refetch();
-      navigate('/admin/postcategorylist');
+      navigate('/admin/productcategorylist');
     } catch (err) {
       toast.error(err?.data?.message || err.error);
     }
   };
 
-  console.log(postCats);
+  console.log(productCats);
 
   return (
     <Container className="mt-5" fluid>
-      <Link to="/admin/postcategorylist" className="btn btn-primary my-3">
+      <Link to="/admin/productcategorylist" className="btn btn-primary my-3">
         Go Back
       </Link>
       <Row>
-        <h2 className="text-center fs-1 fw-bold">Edit Post Category</h2>
+        <h2 className="text-center fs-1 fw-bold">Edit Product Category</h2>
       </Row>
       <FormContainer>
         {loadingUpdate && <Loader />}
@@ -102,8 +102,8 @@ const PostCatEditScreen = () => {
             ) : getError ? (
               <Message variant="danger">{getError.data.message}</Message>
             ) : (
-              postCats.data &&
-              postCats.data.length > 1 && (
+              productCats.data &&
+              productCats.data.length > 1 && (
                 <Form.Group controlId="parent" className="my-2">
                   <Form.Label>Parent</Form.Label>
                   <Form.Select
@@ -111,7 +111,7 @@ const PostCatEditScreen = () => {
                     onChange={(e) => setParent(e.target.value)}
                   >
                     <option>No parent</option>
-                    {postCats.data.map((cat) => (
+                    {productCats.data.map((cat) => (
                       <option key={cat._id} value={cat._id}>
                         {cat.title}
                       </option>
@@ -131,4 +131,4 @@ const PostCatEditScreen = () => {
   );
 };
 
-export default PostCatEditScreen;
+export default ProductCatEditScreen;

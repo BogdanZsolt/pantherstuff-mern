@@ -1,4 +1,4 @@
-const Banner = ({ src, alt, title, video }) => {
+const Banner = ({ src, alt, title, description, video }) => {
   return (
     <div className="banner">
       {video ? (
@@ -8,6 +8,7 @@ const Banner = ({ src, alt, title, video }) => {
       )}
       <div className="title">
         <h3>{title}</h3>
+        {description && <p>{description}</p>}
       </div>
     </div>
   );

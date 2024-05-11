@@ -33,6 +33,15 @@ class APIFeatures {
     return this;
   }
 
+  limit() {
+    if (!this.queryString.page && this.queryString.limit) {
+      const limit = this.queryString.limit;
+      this.query = this.query.limit(limit);
+    }
+
+    return this;
+  }
+
   limitFields() {
     if (this.queryString.fields) {
       const fields = this.queryString.fields.split(',').join(' ');
@@ -45,11 +54,13 @@ class APIFeatures {
   }
 
   paginate() {
-    const page = this.queryString.page * 1 || 1;
-    const limit = this.queryString.limit * 1 || 8;
-    const skip = (page - 1) * limit;
-
-    this.query = this.query.skip(skip).limit(limit);
+    if (this.queryString.page) {
+      const page = this.queryString.page * 1 || 1;
+      const limit = this.queryString.limit * 1 || 8;
+      const skip = (page - 1) * limit;
+      this.query = this.query.skip(skip).limit(limit);
+    }
+    // console.log(this.query);
 
     return this;
   }

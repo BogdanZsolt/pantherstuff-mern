@@ -5,7 +5,7 @@ const HerStoryScreen = () => {
   return (
     <>
       <Banner
-        title="Our Hertory"
+        title="Our HerStory"
         src="/images/ecoprint-02.webp"
         alt="Our History"
       />

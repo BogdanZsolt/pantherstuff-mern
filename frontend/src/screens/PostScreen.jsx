@@ -9,7 +9,7 @@ import Banner from '../components/Banner';
 import Meta from '../components/Meta';
 import {
   useGetPostDetailsQuery,
-  useLastNumPostsQuery,
+  // useGetPostsQuery,
 } from '../slices/postsApiSlice.js';
 import SuggestedPosts from '../components/SuggestedPosts';
 import CommentsContainer from '../components/comments/CommentsContainer.jsx';
@@ -23,16 +23,6 @@ const PostScreen = () => {
     isLoading,
     error,
   } = useGetPostDetailsQuery(postId);
-
-  const {
-    data: postsData,
-    isPostDataLoading,
-    postDataError,
-  } = useLastNumPostsQuery({
-    sort: '-createdAt',
-    limit: '3',
-    fields: '_id,user,bannerImage,title,createdAt',
-  });
 
   const { userInfo } = useSelector((state) => state.auth);
 
@@ -57,10 +47,10 @@ const PostScreen = () => {
                 <Col lg={9}>
                   <article>
                     <Link
-                      to={`/category/${post.category._id}`}
+                      to={`/category/${post?.category?._id}`}
                       className="fw-bold fs-5"
                     >
-                      {post.category.title}
+                      {post?.category?.title}
                     </Link>
                     <div className="mb-2">
                       {new Date(post.createdAt).toLocaleDateString('hu-HU', {
@@ -99,30 +89,18 @@ const PostScreen = () => {
                     />
                   </article>
                 </Col>
-                {isPostDataLoading ? (
-                  <Loader />
-                ) : postDataError ? (
-                  <Message variant="danger">
-                    {postDataError?.data?.message || error.error}
-                  </Message>
-                ) : (
-                  <Col lg={3} className="mt-3 mt-lg-0">
-                    <div>
-                      <SuggestedPosts
-                        header="Latest Posts"
-                        posts={postsData}
-                        tags={post?.tags}
-                      />
-                    </div>
-                    <div className="mt-4">
-                      <h2 className="mb-1">Share on:</h2>
-                      <SocialShareButtons
-                        url={encodeURI()}
-                        // title={encodeURIComponent('Fantasztikus Gombák – film')}
-                      />
-                    </div>
-                  </Col>
-                )}
+                <Col lg={3} className="mt-3 mt-lg-0">
+                  <div>
+                    <SuggestedPosts header="Latest Posts" tags={post?.tags} />
+                  </div>
+                  <div className="mt-4">
+                    <h2 className="mb-1">Share on:</h2>
+                    <SocialShareButtons
+                      url={encodeURI()}
+                      // title={encodeURIComponent('Fantasztikus Gombák – film')}
+                    />
+                  </div>
+                </Col>
               </Row>
             </div>
           </Container>

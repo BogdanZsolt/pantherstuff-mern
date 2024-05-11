@@ -11,7 +11,14 @@ import {
 } from '../../slices/postsApiSlice';
 
 const PostListScreen = () => {
-  const { data, isLoading, refetch, error } = useGetPostsQuery();
+  const {
+    data: posts,
+    isLoading,
+    refetch,
+    error,
+  } = useGetPostsQuery({
+    sort: '-createdAt',
+  });
   const [createPost, { isLoading: loadingCreate }] = useCreatePostMutation();
   const [deletePost, { isLoading: loadingDelete }] = useDeletePostMutation();
 
@@ -70,7 +77,7 @@ const PostListScreen = () => {
               </tr>
             </thead>
             <tbody>
-              {data.map((post) => (
+              {posts.data.map((post) => (
                 <tr key={post._id}>
                   <td>{post._id}</td>
                   <td>{post.title}</td>
