@@ -42,8 +42,6 @@ const ShopScreen = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  console.log(category);
-
   return (
     <>
       {isLoading ? (

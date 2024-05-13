@@ -10,6 +10,14 @@ class APIFeatures {
     const excludedFields = ['page', 'sort', 'limit', 'fields'];
     excludedFields.forEach((el) => delete queryObj[el]);
 
+    for (let key in queryObj) {
+      let val = queryObj[key];
+      if (typeof val === 'string') {
+        val = val.split(',');
+      }
+      queryObj[key] = val;
+    }
+
     // 1b) Advenced filtering
     let queryStr = JSON.stringify(queryObj);
     queryStr = queryStr.replace(
@@ -60,7 +68,6 @@ class APIFeatures {
       const skip = (page - 1) * limit;
       this.query = this.query.skip(skip).limit(limit);
     }
-    // console.log(this.query);
 
     return this;
   }

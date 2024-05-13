@@ -3,7 +3,7 @@ import APIFeatures from '../utils/apiFeatures.js';
 
 const getAll = (Model, popOption) =>
   asyncHandler(async (req, res) => {
-    console.log(req.query);
+    // console.log(req.query);
 
     const page = Number(req.query.page) || 1;
     if (req.query.page) {
