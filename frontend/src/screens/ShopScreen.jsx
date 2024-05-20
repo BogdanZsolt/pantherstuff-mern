@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import {
   Container,
@@ -22,28 +22,57 @@ import Message from '../components/Message.jsx';
 import Paginate from '../components/Paginate';
 import Banner from '../components/Banner.jsx';
 import FilterSidebar from '../components/FilterSidebar.jsx';
-import { useGetProductsQuery } from '../slices/productsApiSlice.js';
+import {
+  useGetProductsQuery,
+  useGetProductsMinMaxPriceQuery,
+} from '../slices/productsApiSlice.js';
 
 const ShopScreen = () => {
-  let { pageNumber: page, keyword } = useParams();
-  if (!page) {
-    page = 1;
+  let { pageNumber, keyword } = useParams();
+
+  if (!pageNumber) {
+    pageNumber = 1;
   }
+
   const [sort, setSort] = useState('-rating,-createdAt');
   const [category, setCategory] = useState(undefined);
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(100);
+  const [show, setShow] = useState(false);
+  const [page, setPage] = useState(pageNumber);
+  const [pages, setPages] = useState(1);
+
+  const { data: minmax, isLoading: isMinMaxLoading } =
+    useGetProductsMinMaxPriceQuery();
 
   const {
     data: products,
     isLoading,
     error,
-  } = useGetProductsQuery({ sort, category, page, limit: 8 });
-  const [show, setShow] = useState(false);
+  } = useGetProductsQuery({
+    sort,
+    category,
+    page,
+    limit: 8,
+    currentPrice_gte: minPrice === 0 ? undefined : minPrice,
+    currentPrice_lte: maxPrice === 0 ? undefined : maxPrice,
+  });
+
+  useEffect(() => {
+    if (products) {
+      setPages(products.pages);
+      pages < page ? setPage(pages) : setPage(pageNumber);
+    }
+  }, [products, pages, page, pageNumber]);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  console.log(`pages: ${pages}, page: ${page}`);
+
   return (
     <>
+      {isMinMaxLoading && <Loader />}
       {isLoading ? (
         <Loader />
       ) : error ? (
@@ -61,7 +90,16 @@ const ShopScreen = () => {
             <h2 className="text-center">Products</h2>
             <Row>
               <Col lg={3} xxl={2} className="d-none d-lg-block">
-                <FilterSidebar category={category} setCategory={setCategory} />
+                <FilterSidebar
+                  category={category}
+                  setCategory={setCategory}
+                  min={minmax[0].minPrice}
+                  minPrice={minPrice}
+                  setMinPrice={setMinPrice}
+                  max={minmax[0].maxPrice}
+                  maxPrice={maxPrice}
+                  setMaxPrice={setMaxPrice}
+                />
               </Col>
               <Col xs={12} lg={9} xxl={10}>
                 <Row className="align-items-center justify-content-between">
@@ -113,8 +151,8 @@ const ShopScreen = () => {
                   ))}
                 </Row>
                 <Paginate
-                  pages={products.pages}
-                  page={products.page}
+                  pages={pages}
+                  page={page}
                   keyword={keyword ? keyword : ''}
                 />
               </Col>
@@ -137,8 +175,16 @@ const ShopScreen = () => {
               <Offcanvas.Title>Offcanvas</Offcanvas.Title>
             </Offcanvas.Header>
             <Offcanvas.Body>
-              Some text as placeholder. In real life you can have the elements
-              you have chosen. Like, text, images, lists, etc.
+              <FilterSidebar
+                category={category}
+                setCategory={setCategory}
+                min={minmax[0].minPrice}
+                minPrice={minPrice}
+                setMinPrice={setMinPrice}
+                max={minmax[0].maxPrice}
+                maxPrice={maxPrice}
+                setMaxPrice={setMaxPrice}
+              />
             </Offcanvas.Body>
           </Offcanvas>
         </>

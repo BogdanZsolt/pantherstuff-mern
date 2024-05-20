@@ -2,6 +2,8 @@ import express from 'express';
 const router = express.Router();
 import {
   productCreateInit,
+  getProductStats,
+  getProductsMinMaxPrice,
   getProducts,
   getProductById,
   createProduct,
@@ -17,6 +19,8 @@ router
   .get(getProducts)
   .post(protect, admin, productCreateInit, createProduct);
 router.route('/top').get(getTopProducts);
+router.route('/stats').get(getProductStats);
+router.route('/minmax').get(getProductsMinMaxPrice);
 router
   .route('/:id')
   .get(getProductById)

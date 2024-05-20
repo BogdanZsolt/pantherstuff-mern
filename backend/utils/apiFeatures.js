@@ -11,7 +11,19 @@ class APIFeatures {
     excludedFields.forEach((el) => delete queryObj[el]);
 
     for (let key in queryObj) {
+      let newKey = key;
       let val = queryObj[key];
+      newKey = newKey.split('_');
+      if (newKey.length > 1) {
+        delete queryObj[key];
+        key = newKey[0];
+        let v = {};
+        if (queryObj[key]) {
+          v = queryObj[key];
+        }
+        v[newKey[1]] = val;
+        val = v;
+      }
       if (typeof val === 'string') {
         val = val.split(',');
       }

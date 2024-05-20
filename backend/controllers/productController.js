@@ -1,6 +1,8 @@
 import asyncHandler from '../middleware/asyncHandler.js';
 import { getAll, getOne, createOne } from './handlerFactory.js';
+import APIFeatures from '../utils/apiFeatures.js';
 import Product from '../models/productModel.js';
+import { response } from 'express';
 
 const productsPopOption = [
   { path: 'user', select: ['name'] },
@@ -24,10 +26,82 @@ const productCreateInit = (req, res, next) => {
   next();
 };
 
+const documentumCount = (docs) => {
+  return docs.length;
+};
+
+const minPrice = (docs) => {
+  let min = 0;
+  docs.map((doc) => {
+    min =
+      min === 0
+        ? doc.currentPrice
+        : min > doc.currentPrice
+        ? doc.currentPrice
+        : min;
+  });
+  return min;
+};
+
+const maxPrice = (docs) => {
+  let max = 0;
+  docs.map((doc) => {
+    max =
+      max === 0
+        ? doc.currentPrice
+        : max < doc.currentPrice
+        ? doc.currentPrice
+        : max;
+  });
+  return max;
+};
+
 // @desc    Fetch all products
 // @route   GET /api/products/all
 // @access  Public
-const getProducts = getAll(Product, productsPopOption);
+// const getProducts = getAll(Product, productsPopOption);
+const getProducts = asyncHandler(async (req, res) => {
+  const page = Number(req.query.page) || 1;
+  if (req.query.page) {
+    req.query.limit = req.query.limit || process.env.PAGINATION_LIMIT;
+  }
+
+  const features = new APIFeatures(Product.find(), req.query, productsPopOption)
+    .filter()
+    .sort()
+    .limit()
+    .limitFields()
+    .paginate()
+    .populate();
+
+  const doc = await features.query;
+  let pages = 1;
+  let count = 0;
+  let minCurrentPrice = 0;
+  let maxCurrentPrice = 0;
+
+  if (req.query.page) {
+    const counter = new APIFeatures(
+      Product.find(),
+      req.query,
+      productsPopOption
+    ).filter();
+
+    const docs = await counter.query;
+    count = documentumCount(docs);
+    minCurrentPrice = minPrice(docs);
+    maxCurrentPrice = maxPrice(docs);
+
+    pages = Math.ceil(count / Number(req.query.limit));
+  } else {
+    count = documentumCount(doc);
+    minCurrentPrice = minPrice(doc);
+    maxCurrentPrice = maxPrice(doc);
+  }
+
+  // SEND RESPONSE
+  res.json({ data: doc, pages, page, count, minCurrentPrice, maxCurrentPrice });
+});
 
 // @desc    Fetch a product
 // @route   GET /api/products/:id
@@ -38,24 +112,6 @@ const getProductById = getOne(Product, productPopOption);
 // @route   POST /api/products
 // @access  Private/Admin
 const createProduct = createOne(Product);
-// const createProduct = asyncHandler(async (req, res) => {
-//   const product = new Product({
-//     name: 'Sample name',
-//     user: req.user._id,
-//     thumbnails: ['/images/sample.jpg'],
-//     description: 'Sample description',
-//     category: '',
-//     beforePrice: 0,
-//     currentPrice: 0,
-//     countInStock: 0,
-//     rating: 0,
-//     numReviews: 0,
-//     colors: ['#ffffff'],
-//   });
-
-//   const createdProduct = await product.save();
-//   res.status(201).json(createdProduct);
-// });
 
 // @desc    Update a product
 // @route   PUT /api/products/:id
@@ -160,8 +216,56 @@ const getTopProducts = asyncHandler(async (req, res) => {
   res.status(200).json(products);
 });
 
+const getProductStats = asyncHandler(async (req, res) => {
+  try {
+    const stats = await Product.aggregate([
+      // {
+      //   $match: { rating: { $gte: 4.5 } },
+      // },
+      {
+        $group: {
+          _id: '$rating',
+          numProducts: { $sum: 1 },
+          numRatings: { $sum: '$rating' },
+          avgRating: { $avg: '$rating' },
+          avgPrice: { $avg: '$currentPrice' },
+          minPrice: { $min: '$currentPrice' },
+          maxPrice: { $max: '$currentPrice' },
+        },
+      },
+      {
+        $sort: { avgPrice: 1 },
+      },
+    ]);
+    res.status(200).json(stats);
+  } catch (err) {
+    res.status(404);
+    throw new Error('Resource not found');
+  }
+});
+
+const getProductsMinMaxPrice = asyncHandler(async (req, res) => {
+  try {
+    const minMaxPrice = await Product.aggregate([
+      {
+        $group: {
+          _id: null,
+          minPrice: { $min: '$currentPrice' },
+          maxPrice: { $max: '$currentPrice' },
+        },
+      },
+    ]);
+    res.status(200).json(minMaxPrice);
+  } catch (err) {
+    res.status(404);
+    throw new Error('Resource not found');
+  }
+});
+
 export {
   productCreateInit,
+  getProductStats,
+  getProductsMinMaxPrice,
   getProducts,
   getProductById,
   createProduct,

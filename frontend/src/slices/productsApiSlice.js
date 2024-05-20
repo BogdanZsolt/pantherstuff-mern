@@ -11,15 +11,15 @@ export const productsApiSlice = apiSlice.injectEndpoints({
       }),
       keepUnusedDataFor: 5,
     }),
-    // getAllProducts: builder.query({
-    //   query: () => ({
-    //     url: `${PRODUCTS_URL}/all`,
-    //   }),
-    //   keepUnusedDataFor: 5,
-    // }),
     getProductDetails: builder.query({
       query: (productId) => ({
         url: `${PRODUCTS_URL}/${productId}`,
+      }),
+      keepUnusedDataFor: 5,
+    }),
+    getProductsMinMaxPrice: builder.query({
+      query: () => ({
+        url: `${PRODUCTS_URL}/minmax`,
       }),
       keepUnusedDataFor: 5,
     }),
@@ -70,6 +70,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
 
 export const {
   useGetProductsQuery,
+  useGetProductsMinMaxPriceQuery,
   useGetAllProductsQuery,
   useGetProductDetailsQuery,
   useCreateProductMutation,

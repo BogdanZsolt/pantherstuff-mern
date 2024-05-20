@@ -1,7 +1,17 @@
 import { Accordion, Row } from 'react-bootstrap';
 import SelectCategory from './SelectCategory';
+import PriceSlider from './PriceSlider';
 
-const FilterSidebar = ({ category, setCategory }) => {
+const FilterSidebar = ({
+  category,
+  setCategory,
+  min,
+  minPrice,
+  setMinPrice,
+  max,
+  maxPrice,
+  setMaxPrice,
+}) => {
   return (
     <>
       <h3>Filter</h3>
@@ -31,7 +41,16 @@ const FilterSidebar = ({ category, setCategory }) => {
           </Accordion.Item>
           <Accordion.Item eventKey="price">
             <Accordion.Header>Price</Accordion.Header>
-            <Accordion.Body>Price select</Accordion.Body>
+            <Accordion.Body>
+              <PriceSlider
+                min={min}
+                minPrice={minPrice}
+                setMinPrice={setMinPrice}
+                max={max}
+                maxPrice={maxPrice}
+                setMaxPrice={setMaxPrice}
+              />
+            </Accordion.Body>
           </Accordion.Item>
         </Accordion>
       </Row>

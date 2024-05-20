@@ -9,13 +9,20 @@ const SelectCategory = ({ category, setCategory }) => {
   const animatedComponents = makeAnimated();
 
   const selectStyles = {
-    control: (base) => ({
+    control: (base, state) => ({
       ...base,
       backgroundColor: 'var(--bs-primary)',
       color: 'var(--bs-secondary)',
-      borderColor: 'var(--bs-secondary)',
       minHeight: 'unset',
       maxHeight: '36px',
+      borderColor: state.isFocused
+        ? 'var(--bs-secondary)'
+        : 'var(--bs-secondary)',
+      '&:hover': {
+        border: state.isFocused
+          ? '2px solid var(--bs-secondary)'
+          : '1px solid var(--bs-secondary)',
+      },
     }),
     valueContainer: (base) => ({
       ...base,

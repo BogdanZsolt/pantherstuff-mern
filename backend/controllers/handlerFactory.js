@@ -3,8 +3,6 @@ import APIFeatures from '../utils/apiFeatures.js';
 
 const getAll = (Model, popOption) =>
   asyncHandler(async (req, res) => {
-    // console.log(req.query);
-
     const page = Number(req.query.page) || 1;
     if (req.query.page) {
       req.query.limit = req.query.limit || process.env.PAGINATION_LIMIT;
@@ -18,6 +16,8 @@ const getAll = (Model, popOption) =>
       .paginate()
       .populate();
 
+    const doc = await features.query;
+
     let pages = 1;
 
     let count = 0;
@@ -29,14 +29,12 @@ const getAll = (Model, popOption) =>
         popOption
       ).filter();
 
-      const all = await counter.query;
-
-      count = all.length;
+      count = await counter.query.estimatedDocumentCount();
 
       pages = Math.ceil(count / Number(req.query.limit));
+    } else {
+      count = doc.length;
     }
-
-    const doc = await features.query;
 
     // SEND RESPONSE
     res.json({ data: doc, pages, page, count });
