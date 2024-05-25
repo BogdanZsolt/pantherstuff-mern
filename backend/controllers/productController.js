@@ -1,8 +1,7 @@
 import asyncHandler from '../middleware/asyncHandler.js';
-import { getAll, getOne, createOne } from './handlerFactory.js';
+import { getOne, createOne } from './handlerFactory.js';
 import APIFeatures from '../utils/apiFeatures.js';
 import Product from '../models/productModel.js';
-import { response } from 'express';
 
 const productsPopOption = [
   { path: 'user', select: ['name'] },
@@ -61,6 +60,7 @@ const maxPrice = (docs) => {
 // @access  Public
 // const getProducts = getAll(Product, productsPopOption);
 const getProducts = asyncHandler(async (req, res) => {
+  // console.log(req.query);
   const page = Number(req.query.page) || 1;
   if (req.query.page) {
     req.query.limit = req.query.limit || process.env.PAGINATION_LIMIT;
@@ -262,10 +262,45 @@ const getProductsMinMaxPrice = asyncHandler(async (req, res) => {
   }
 });
 
+const getProductsAllColors = asyncHandler(async (req, res) => {
+  try {
+    const allColors = await Product.aggregate([
+      {
+        $group: {
+          _id: null,
+          colors: { $addToSet: '$colors' },
+        },
+      },
+      {
+        $addFields: {
+          colors: {
+            $reduce: {
+              input: '$colors',
+              initialValue: [],
+              in: {
+                $concatArrays: ['$$value', '$$this'],
+              },
+            },
+          },
+        },
+      },
+    ]);
+    const filtered = allColors[0].colors.filter(
+      (val, index) => allColors[0].colors.indexOf(val) === index
+    );
+    allColors[0].colors = [...filtered];
+    res.status(200).json(allColors);
+  } catch (err) {
+    res.status(404);
+    throw new Error('Resource not found');
+  }
+});
+
 export {
   productCreateInit,
   getProductStats,
   getProductsMinMaxPrice,
+  getProductsAllColors,
   getProducts,
   getProductById,
   createProduct,

@@ -23,6 +23,12 @@ export const productsApiSlice = apiSlice.injectEndpoints({
       }),
       keepUnusedDataFor: 5,
     }),
+    getProductsAllColors: builder.query({
+      query: () => ({
+        url: `${PRODUCTS_URL}/allcolors`,
+      }),
+      keepUnusedDataFor: 5,
+    }),
     createProduct: builder.mutation({
       query: () => ({
         url: PRODUCTS_URL,
@@ -71,6 +77,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
 export const {
   useGetProductsQuery,
   useGetProductsMinMaxPriceQuery,
+  useGetProductsAllColorsQuery,
   useGetAllProductsQuery,
   useGetProductDetailsQuery,
   useCreateProductMutation,

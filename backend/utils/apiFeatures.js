@@ -17,6 +17,8 @@ class APIFeatures {
       if (newKey.length > 1) {
         delete queryObj[key];
         key = newKey[0];
+        let teszt = val.split(',');
+        teszt.length > 1 ? (val = teszt) : (val = teszt[0]);
         let v = {};
         if (queryObj[key]) {
           v = queryObj[key];
@@ -33,9 +35,11 @@ class APIFeatures {
     // 1b) Advenced filtering
     let queryStr = JSON.stringify(queryObj);
     queryStr = queryStr.replace(
-      /\b(gte|gt|lte|lt|regex)\b/g,
+      /\b(gte|gt|lte|lt|regex|and|eq|in)\b/g,
       (match) => `$${match}`
     );
+
+    // console.log(queryStr);
 
     this.query = this.query.find(JSON.parse(queryStr));
 

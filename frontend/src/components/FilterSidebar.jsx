@@ -1,6 +1,7 @@
 import { Accordion, Row } from 'react-bootstrap';
 import SelectCategory from './SelectCategory';
 import PriceSlider from './PriceSlider';
+import SelectColors from './SelectColors';
 
 const FilterSidebar = ({
   category,
@@ -11,7 +12,11 @@ const FilterSidebar = ({
   max,
   maxPrice,
   setMaxPrice,
+  colors,
+  setColors,
 }) => {
+  console.log(colors);
+
   return (
     <>
       <h3>Filter</h3>
@@ -27,7 +32,9 @@ const FilterSidebar = ({
           </Accordion.Item>
           <Accordion.Item eventKey="color">
             <Accordion.Header>Color</Accordion.Header>
-            <Accordion.Body>Color App</Accordion.Body>
+            <Accordion.Body>
+              <SelectColors colors={colors} setColors={setColors} />
+            </Accordion.Body>
           </Accordion.Item>
           <Accordion.Item eventKey="categories">
             <Accordion.Header>Categories</Accordion.Header>
@@ -36,8 +43,8 @@ const FilterSidebar = ({
             </Accordion.Body>
           </Accordion.Item>
           <Accordion.Item eventKey="brands">
-            <Accordion.Header>Brands</Accordion.Header>
-            <Accordion.Body>brands select</Accordion.Body>
+            <Accordion.Header>Collection</Accordion.Header>
+            <Accordion.Body>Collection select</Accordion.Body>
           </Accordion.Item>
           <Accordion.Item eventKey="price">
             <Accordion.Header>Price</Accordion.Header>

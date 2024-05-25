@@ -36,11 +36,12 @@ const ShopScreen = () => {
 
   const [sort, setSort] = useState('-rating,-createdAt');
   const [category, setCategory] = useState(undefined);
-  const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(100);
+  const [minPrice, setMinPrice] = useState(undefined);
+  const [maxPrice, setMaxPrice] = useState(undefined);
   const [show, setShow] = useState(false);
   const [page, setPage] = useState(pageNumber);
   const [pages, setPages] = useState(1);
+  const [colors, setColors] = useState([]);
 
   const { data: minmax, isLoading: isMinMaxLoading } =
     useGetProductsMinMaxPriceQuery();
@@ -52,6 +53,7 @@ const ShopScreen = () => {
   } = useGetProductsQuery({
     sort,
     category,
+    colors_in: colors.length > 0 ? colors : undefined,
     page,
     limit: 8,
     currentPrice_gte: minPrice === 0 ? undefined : minPrice,
@@ -63,12 +65,16 @@ const ShopScreen = () => {
       setPages(products.pages);
       pages < page ? setPage(pages) : setPage(pageNumber);
     }
-  }, [products, pages, page, pageNumber]);
+    if (minmax) {
+      minPrice === undefined && setMinPrice(minmax[0].minPrice);
+      maxPrice === undefined && setMaxPrice(minmax[0].maxPrice);
+    }
+  }, [products, pages, page, pageNumber, minmax, minPrice, maxPrice]);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  console.log(`pages: ${pages}, page: ${page}`);
+  console.log(minPrice);
 
   return (
     <>
@@ -99,6 +105,8 @@ const ShopScreen = () => {
                   max={minmax[0].maxPrice}
                   maxPrice={maxPrice}
                   setMaxPrice={setMaxPrice}
+                  colors={colors}
+                  setColors={setColors}
                 />
               </Col>
               <Col xs={12} lg={9} xxl={10}>
@@ -184,6 +192,8 @@ const ShopScreen = () => {
                 max={minmax[0].maxPrice}
                 maxPrice={maxPrice}
                 setMaxPrice={setMaxPrice}
+                colors={colors}
+                setColors={setColors}
               />
             </Offcanvas.Body>
           </Offcanvas>
