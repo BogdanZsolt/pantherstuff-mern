@@ -35,13 +35,14 @@ const ShopScreen = () => {
   }
 
   const [sort, setSort] = useState('-rating,-createdAt');
-  const [category, setCategory] = useState(undefined);
+  const [category, setCategory] = useState('');
   const [minPrice, setMinPrice] = useState(undefined);
   const [maxPrice, setMaxPrice] = useState(undefined);
   const [show, setShow] = useState(false);
   const [page, setPage] = useState(pageNumber);
   const [pages, setPages] = useState(1);
   const [colors, setColors] = useState([]);
+  const [sizes, setSizes] = useState([]);
 
   const { data: minmax, isLoading: isMinMaxLoading } =
     useGetProductsMinMaxPriceQuery();
@@ -52,7 +53,8 @@ const ShopScreen = () => {
     error,
   } = useGetProductsQuery({
     sort,
-    category,
+    category: category === '' ? undefined : category,
+    sizes_in: sizes.length > 0 ? sizes : undefined,
     colors_in: colors.length > 0 ? colors : undefined,
     page,
     limit: 8,
@@ -62,7 +64,7 @@ const ShopScreen = () => {
 
   useEffect(() => {
     if (products) {
-      setPages(products.pages);
+      products.pages < 1 ? setPages(1) : setPages(products.pages);
       pages < page ? setPage(pages) : setPage(pageNumber);
     }
     if (minmax) {
@@ -73,8 +75,6 @@ const ShopScreen = () => {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
-  console.log(minPrice);
 
   return (
     <>
@@ -97,6 +97,8 @@ const ShopScreen = () => {
             <Row>
               <Col lg={3} xxl={2} className="d-none d-lg-block">
                 <FilterSidebar
+                  size={sizes}
+                  setSize={setSizes}
                   category={category}
                   setCategory={setCategory}
                   min={minmax[0].minPrice}

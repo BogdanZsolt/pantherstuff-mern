@@ -13,8 +13,6 @@ const PriceSlider = ({
     setMaxPrice(val[1]);
   };
 
-  console.log(min);
-
   return (
     <div className="price-slider-container">
       <div className="price-slider-label">

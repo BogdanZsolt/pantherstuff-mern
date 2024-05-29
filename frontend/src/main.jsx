@@ -44,6 +44,8 @@ import {
   ProductEditScreen,
   ProductCategoryListScreen,
   ProductCatEditScreen,
+  ProductSizeListScreen,
+  ProductSizeEditScreen,
   PostListScreen,
   PostEditScreen,
   PostCategoryListScreen,
@@ -347,6 +349,22 @@ const router = createBrowserRouter(
           element={
             <Suspense fallback={<Loader />}>
               <ProductCatEditScreen />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/admin/productsizelist"
+          element={
+            <Suspense fallback={<Loader />}>
+              <ProductSizeListScreen />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/admin/productsize/:id/edit"
+          element={
+            <Suspense fallback={<Loader />}>
+              <ProductSizeEditScreen />
             </Suspense>
           }
         />

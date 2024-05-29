@@ -7,6 +7,7 @@ import connectDB from './config/db.js';
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 import productRoutes from './routes/productRoutes.js';
 import ProductCategoryRoutes from './routes/productCategoryRoutes.js';
+import ProductSizeRoutes from './routes/productSizeRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
 import postRoutes from './routes/postRoutes.js';
@@ -33,6 +34,7 @@ app.use(cookieParser());
 
 app.use('/api/products', productRoutes);
 app.use('/api/productcategories', ProductCategoryRoutes);
+app.use('/api/productsizes', ProductSizeRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/posts', postRoutes);

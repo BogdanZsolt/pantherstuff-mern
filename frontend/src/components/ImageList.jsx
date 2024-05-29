@@ -39,8 +39,6 @@ const ImageList = ({ images, setImages }) => {
     }
   }, [active, images, setImages, url, selected]);
 
-  console.log(selected);
-
   return (
     <div className="image-list-container flex-column-reverse flex-xl-row">
       <div className="image-list-photo flex-row-reverse flex-xl-column align-items-start align-items-xl-stretch">

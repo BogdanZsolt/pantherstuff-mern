@@ -1,15 +1,14 @@
-import { useGetProductsAllColorsQuery } from '../slices/productsApiSlice';
 import ColorCheckBox from './ColorCheckBox';
 import Loader from './Loader';
 import Message from './Message';
 import { RiCloseLine } from 'react-icons/ri';
+import { useGetProductsAllColorsQuery } from '../slices/productsApiSlice';
 
 const SelectColors = ({ colors, setColors }) => {
   const { data: allColors, isLoading, error } = useGetProductsAllColorsQuery();
 
   const colorHandler = (e, index) => {
     const activeData = document.getElementById(index).checked;
-    console.log(activeData);
     if (activeData) {
       setColors((oldData) => [...oldData, e.target.value]);
     } else {
@@ -25,8 +24,6 @@ const SelectColors = ({ colors, setColors }) => {
       setColors([]);
     }
   };
-
-  console.log(colors);
 
   return (
     <>

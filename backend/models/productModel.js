@@ -75,6 +75,12 @@ const productSchema = new mongoose.Schema(
       required: true,
       default: [],
     },
+    sizes: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'ProductSize',
+      },
+    ],
   },
   {
     timestamps: true,

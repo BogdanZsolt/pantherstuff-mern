@@ -128,6 +128,7 @@ const updateProduct = asyncHandler(async (req, res) => {
     countInStock,
     colors,
     thumbnails,
+    sizes,
   } = req.body;
 
   const product = await Product.findById(req.params.id);
@@ -142,6 +143,7 @@ const updateProduct = asyncHandler(async (req, res) => {
     product.currentPrice = currentPrice;
     product.countInStock = countInStock;
     product.colors = colors;
+    product.sizes = sizes;
     product.thumbnails = thumbnails;
 
     const updatedProduct = await product.save();

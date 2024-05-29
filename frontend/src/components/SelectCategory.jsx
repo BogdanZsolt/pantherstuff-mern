@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import Loader from './Loader';
@@ -5,8 +6,9 @@ import Message from './Message';
 import { useGetProductCategoriesQuery } from '../slices/productCategoriesApiSlice';
 import { Form } from 'react-bootstrap';
 
-const SelectCategory = ({ category, setCategory }) => {
+const SelectCategory = ({ category, setCategory, multi = false }) => {
   const animatedComponents = makeAnimated();
+  const [defaultCategory, setDefaultCategory] = useState('');
 
   const selectStyles = {
     control: (base, state) => ({
@@ -73,15 +75,32 @@ const SelectCategory = ({ category, setCategory }) => {
     return options;
   };
 
-  const selectCategoryHandler = (choice) => {
-    if (choice.length === 0) {
-      setCategory(undefined);
-    } else {
-      let cat = [];
-      choice.map((x) => {
-        cat = [...cat, x.value];
+  useEffect(() => {
+    if (categories) {
+      if (category === '') {
+        setDefaultCategory('select');
+      }
+      categories.data.map((item) => {
+        if (item._id === category) {
+          setDefaultCategory({ value: item._id, label: item.title });
+        }
       });
-      setCategory(cat);
+    }
+  }, [categories, category]);
+
+  const selectCategoryHandler = (choice) => {
+    if (multi) {
+      if (choice.length === 0) {
+        setCategory(undefined);
+      } else {
+        let cat = [];
+        choice.map((x) => {
+          cat = [...cat, x.value];
+        });
+        setCategory(cat);
+      }
+    } else {
+      !choice ? setCategory(undefined) : setCategory(choice.value);
     }
   };
 
@@ -92,16 +111,18 @@ const SelectCategory = ({ category, setCategory }) => {
       ) : error ? (
         <Message variant="danger">{error.data.Message}</Message>
       ) : (
-        categories.data && (
+        categories.data &&
+        defaultCategory && (
           <Form.Group controlId="category" className="my-2">
             <Select
               name="categories"
               options={getOptions()}
-              defaultValue={category}
+              defaultValue={defaultCategory}
               components={animatedComponents}
               styles={selectStyles}
               isClearable
-              isMulti
+              isSearchable
+              isMulti={multi}
               onChange={selectCategoryHandler}
             />
           </Form.Group>
