@@ -186,6 +186,8 @@ const ShopScreen = () => {
             </Offcanvas.Header>
             <Offcanvas.Body>
               <FilterSidebar
+                size={sizes}
+                setSize={setSizes}
                 category={category}
                 setCategory={setCategory}
                 min={minmax[0].minPrice}
