@@ -84,19 +84,6 @@ const PostEditScreen = () => {
     }
   }, [post]);
 
-  // const uploadFileHandler = async (e) => {
-  //   const formData = new FormData();
-  //   formData.append('image', e.target.files[0]);
-  //   try {
-  //     const res = await uploadImage(formData).unwrap();
-  //     console.log(res);
-  //     toast.success(res.message);
-  //     setBannerImage(res.image);
-  //   } catch (err) {
-  //     toast.error(err?.data?.message || err.error);
-  //   }
-  // };
-
   return (
     <Container className="mt-5" fluid>
       <Link to="/admin/postlist" className="btn btn-primary my-3">

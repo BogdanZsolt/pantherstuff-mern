@@ -1,5 +1,6 @@
 import { Accordion, Row } from 'react-bootstrap';
 import SelectCategory from './SelectCategory';
+import SelectCollection from './SelectCollection';
 import PriceSlider from './PriceSlider';
 import SelectColors from './SelectColors';
 import SelectSizes from './SelectSizes';
@@ -9,6 +10,8 @@ const FilterSidebar = ({
   setSize,
   category,
   setCategory,
+  collection,
+  setCollection,
   min,
   minPrice,
   setMinPrice,
@@ -23,7 +26,13 @@ const FilterSidebar = ({
       <h3>Filter</h3>
       <Row>
         <Accordion
-          defaultActiveKey={['size', 'color', 'categories', 'brands', 'price']}
+          defaultActiveKey={[
+            'size',
+            'color',
+            'categories',
+            'collections',
+            'price',
+          ]}
           flush
           alwaysOpen
         >
@@ -49,9 +58,15 @@ const FilterSidebar = ({
               />
             </Accordion.Body>
           </Accordion.Item>
-          <Accordion.Item eventKey="brands">
+          <Accordion.Item eventKey="collections">
             <Accordion.Header>Collection</Accordion.Header>
-            <Accordion.Body>Collection select</Accordion.Body>
+            <Accordion.Body>
+              <SelectCollection
+                collection={collection}
+                setCollection={setCollection}
+                multi
+              />
+            </Accordion.Body>
           </Accordion.Item>
           <Accordion.Item eventKey="price">
             <Accordion.Header>Price</Accordion.Header>

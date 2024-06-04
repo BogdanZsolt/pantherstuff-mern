@@ -20,8 +20,6 @@ const ContactScreen = () => {
     e.preventDefault();
   };
 
-  console.log(telephone);
-
   return (
     <>
       <Banner

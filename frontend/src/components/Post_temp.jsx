@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom';
 import { RiArrowRightSLine } from 'react-icons/ri';
 
 const Post = ({ postId, src, category, author, title, description, date }) => {
-  console.log(postId);
   return (
     <div className="row g-0 border border-secondary rounded overflow-hidden flex-md-row mb-4 shadow-md h-md-250 position-relative">
       <div className="col p-4 d-flex flex-column position-static">

@@ -36,6 +36,7 @@ const ShopScreen = () => {
 
   const [sort, setSort] = useState('-rating,-createdAt');
   const [category, setCategory] = useState('');
+  const [collection, setCollection] = useState([]);
   const [minPrice, setMinPrice] = useState(undefined);
   const [maxPrice, setMaxPrice] = useState(undefined);
   const [show, setShow] = useState(false);
@@ -54,6 +55,7 @@ const ShopScreen = () => {
   } = useGetProductsQuery({
     sort,
     category: category === '' ? undefined : category,
+    collections_in: collection.length > 0 ? collection : undefined,
     sizes_in: sizes.length > 0 ? sizes : undefined,
     colors_in: colors.length > 0 ? colors : undefined,
     page,
@@ -101,6 +103,8 @@ const ShopScreen = () => {
                   setSize={setSizes}
                   category={category}
                   setCategory={setCategory}
+                  collection={collection}
+                  setCollection={setCollection}
                   min={minmax[0].minPrice}
                   minPrice={minPrice}
                   setMinPrice={setMinPrice}

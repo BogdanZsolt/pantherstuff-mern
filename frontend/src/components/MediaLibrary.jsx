@@ -33,13 +33,11 @@ const MediaLibrary = ({ displayMedia, setDisplayMedia, setSelectedImg }) => {
   };
 
   const filesSelectCallback = (item) => {
-    console.log(item[0]);
     setDisplayMedia(false);
     setSelectedImg(item[0].thumbnailUrl);
   };
 
   const filesDeleteCallback = async (item) => {
-    console.log(item);
     try {
       const res = await deleteImage(item[0]._id);
       toast.success(res.message);

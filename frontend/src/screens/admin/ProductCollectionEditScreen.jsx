@@ -5,57 +5,47 @@ import FormContainer from '../../components/FormContainer';
 import Loader from '../../components/Loader';
 import Message from '../../components/Message';
 import {
-  useGetProductCategoryDetailsQuery,
-  useUpdateProductCategoryMutation,
-  useGetProductCategoriesQuery,
-} from '../../slices/productCategoriesApiSlice';
+  useGetProductCollectionDetailsQuery,
+  useUpdateProductCollectionMutation,
+} from '../../slices/productCollectionsApiSlice';
 import { toast } from 'react-toastify';
 
-const ProductCatEditScreen = () => {
-  const { id: productCatId } = useParams();
+const ProductCollectionEditScreen = () => {
+  const { id: productCollId } = useParams();
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [parent, setParent] = useState('');
 
   const {
-    data: productCats,
-    isLoading: GetLoading,
-    error: getError,
-  } = useGetProductCategoriesQuery({ sort: '-title' });
-
-  const {
-    data: category,
+    data: collection,
     isLoading,
     refetch,
     error,
-  } = useGetProductCategoryDetailsQuery(productCatId);
+  } = useGetProductCollectionDetailsQuery(productCollId);
 
-  const [updateProductCategory, { isLoading: loadingUpdate }] =
-    useUpdateProductCategoryMutation();
+  const [updateProductCollection, { isLoading: loadingUpdate }] =
+    useUpdateProductCollectionMutation();
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (category) {
-      setTitle(category.title);
-      setDescription(category.description);
-      setParent(category.parent);
+    if (collection) {
+      setTitle(collection.title);
+      setDescription(collection.description);
     }
-  }, [category]);
+  }, [collection]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      await updateProductCategory({
-        productCatId,
+      await updateProductCollection({
+        productCollId,
         title,
         description,
-        parent,
       }).unwrap();
-      toast.success('Category updated');
+      toast.success('Collection updated');
       refetch();
-      navigate('/admin/productcategorylist');
+      navigate('/admin/productcollectionlist');
     } catch (err) {
       toast.error(err?.data?.message || err.error);
     }
@@ -63,11 +53,11 @@ const ProductCatEditScreen = () => {
 
   return (
     <Container className="mt-5" fluid>
-      <Link to="/admin/productcategorylist" className="btn btn-primary my-3">
+      <Link to="/admin/productcollectionlist" className="btn btn-primary my-3">
         Go Back
       </Link>
       <Row>
-        <h2 className="text-center fs-1 fw-bold">Edit Product Category</h2>
+        <h2 className="text-center fs-1 fw-bold">Edit Product Collection</h2>
       </Row>
       <FormContainer>
         {loadingUpdate && <Loader />}
@@ -95,30 +85,6 @@ const ProductCatEditScreen = () => {
                 onChange={(e) => setDescription(e.target.value)}
               ></Form.Control>
             </Form.Group>
-            {GetLoading ? (
-              <Loader />
-            ) : getError ? (
-              <Message variant="danger">{getError.data.message}</Message>
-            ) : (
-              productCats.data &&
-              productCats.data.length > 1 && (
-                <Form.Group controlId="parent" className="my-2">
-                  <Form.Label>Parent</Form.Label>
-                  <Form.Select
-                    value={parent}
-                    onChange={(e) => setParent(e.target.value)}
-                  >
-                    <option>No parent</option>
-                    {productCats.data.map((cat) => (
-                      <option key={cat._id} value={cat._id}>
-                        {cat.title}
-                      </option>
-                    ))}
-                  </Form.Select>
-                </Form.Group>
-              )
-            )}
-
             <Button type="submit" variant="primary" className="my-2">
               Update
             </Button>
@@ -129,4 +95,4 @@ const ProductCatEditScreen = () => {
   );
 };
 
-export default ProductCatEditScreen;
+export default ProductCollectionEditScreen;

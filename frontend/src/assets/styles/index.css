@@ -1349,6 +1349,10 @@ table th {
   width: 100%;
   display: flex;
   flex-wrap: nowrap;
+  max-height: 5.9rem;
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: var(--bs-secondary) var(--bs-primary);
 }
 
 .select-colors {
@@ -1470,6 +1474,70 @@ table th {
 
 .size-reset {
   font-size: 1.5rem;
+}
+
+.colors-container {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: start;
+}
+
+.colors-add-btn,
+.colors-remove-btn,
+.colors-picker-btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.25rem;
+  color: var(--bs-secondary);
+  background-color: transparent;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 2px solid var(--bs-secondary);
+  border-radius: var(--bs-border-radius);
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.colors-add-btn:hover,
+.colors-remove-btn:hover,
+.colors-picker-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 10px 20px -10px var(--bs-secondary);
+}
+
+.color-box {
+  width: 2.5rem;
+  height: 2.5rem;
+
+  border: 3px solid transparent;
+  border-radius: var(--bs-border-radius);
+  cursor: pointer;
+}
+
+.color-box.selected {
+  box-shadow: inset 0 0 0 0.25rem var(--bs-primary);
+}
+
+.color-picker-container {
+  display: block;
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.color-picker-container .react-colorful {
+  box-shadow: 0 10px 20px -10px var(--bs-secondary);
+}
+
+.color-picker-container .color-picker-input {
+  text-align: center;
+  width: 200px;
+  background-color: var(--bs-primary);
+  border: 0;
+  border-bottom: 1px solid var(--bs-secondary);
+  margin-top: 0.6rem;
+  margin-bottom: 0.6rem;
 }
 
 /* Media Querys */

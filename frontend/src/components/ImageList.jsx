@@ -30,7 +30,6 @@ const ImageList = ({ images, setImages }) => {
     }
     if (url !== '') {
       setImages((images) => [...images, url]);
-      console.log(images);
       setUrl('');
     }
     if (selected !== '') {

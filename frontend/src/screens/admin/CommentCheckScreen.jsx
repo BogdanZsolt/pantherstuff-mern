@@ -36,7 +36,6 @@ const CommentCheckScreen = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    console.log(check);
     try {
       await AdminUpdateComment({
         commentId,

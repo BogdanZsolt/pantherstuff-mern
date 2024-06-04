@@ -16,6 +16,7 @@ import commentRoutes from './routes/commentRoutes.js';
 import uploadRoutes from './routes/uploadRoutes.js';
 import groupRoutes from './routes/groupRoutes.js';
 import subscriberRoutes from './routes/subscriberRoutes.js';
+import ProductCollectionRoutes from './routes/productCollectionRoutes.js';
 // import { fileURLToPath } from 'url';
 // const __filename = fileURLToPath(import.meta.url);
 // const __dirname = path.dirname(__filename).split('/').slice(0, -1).join('/');
@@ -34,6 +35,7 @@ app.use(cookieParser());
 
 app.use('/api/products', productRoutes);
 app.use('/api/productcategories', ProductCategoryRoutes);
+app.use('/api/productcollections', ProductCollectionRoutes);
 app.use('/api/productsizes', ProductSizeRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/orders', orderRoutes);

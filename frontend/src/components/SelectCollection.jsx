@@ -1,18 +1,19 @@
 import { useEffect, useState } from 'react';
+import { Form } from 'react-bootstrap';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import Loader from './Loader';
 import Message from './Message';
-import { useGetProductCategoriesQuery } from '../slices/productCategoriesApiSlice';
-import { Form } from 'react-bootstrap';
+import { useGetProductCollectionsQuery } from '../slices/productCollectionsApiSlice';
 
-const SelectCategory = ({ category, setCategory, multi = false }) => {
+const SelectCollection = ({ collection, setCollection, multi = false }) => {
   const animatedComponents = makeAnimated();
-  const [defaultCategory, setDefaultCategory] = useState('');
+  const [collectionOptions, setCollectionOptions] = useState(null);
+  const [defaultCollection, setDefaultCollection] = useState([]);
 
   const selectStyles = {
-    control: (baseStyle, state) => ({
-      ...baseStyle,
+    control: (baseStyles, state) => ({
+      ...baseStyles,
       backgroundColor: 'var(--bs-primary)',
       color: 'var(--bs-secondary)',
       minHeight: 'unset',
@@ -26,34 +27,34 @@ const SelectCategory = ({ category, setCategory, multi = false }) => {
           : '1px solid var(--bs-secondary)',
       },
     }),
-    valueContainer: (baseStyle) => ({
-      ...baseStyle,
+    valueContainer: (baseStyles) => ({
+      ...baseStyles,
       flexWrap: 'nowrap',
     }),
-    multiValue: (baseStyle) => ({
-      ...baseStyle,
+    multiValue: (baseStyles) => ({
+      ...baseStyles,
       color: 'var(--bs-secondary)',
       backgroundColor: 'rgba(var(--bs-secondary-rgb), 0.15)',
     }),
-    indicatorSeparator: (baseStyle) => ({
-      ...baseStyle,
+    indicatorSeparator: (baseStyles) => ({
+      ...baseStyles,
       color: 'var(--bs-secondary)',
       backgroundColor: 'var(--bs-secondary)',
     }),
-    indicatorContainer: (baseStyle) => ({
-      ...baseStyle,
+    indicatorContainer: (baseStyles) => ({
+      ...baseStyles,
       color: 'var(--bs-secondary)',
     }),
-    option: (baseStyle, state) => ({
-      ...baseStyle,
+    option: (baseStyles, state) => ({
+      ...baseStyles,
       color: state.isSelected ? 'var(--bs-primary)' : 'var(--bs-secondary)',
       backgroundColor: state.isSelected
         ? 'var(--bs-secondary)'
         : 'var(--bs-primary)',
       width: 'auto',
     }),
-    menu: (baseStyle) => ({
-      ...baseStyle,
+    menu: (baseStyles) => ({
+      ...baseStyles,
       width: 'max-content',
       minWidth: '100%',
       zIndex: 5,
@@ -63,47 +64,35 @@ const SelectCategory = ({ category, setCategory, multi = false }) => {
   };
 
   const {
-    data: categories,
+    data: collections,
     isLoading,
     error,
-  } = useGetProductCategoriesQuery({ sort: '-title' });
-
-  const getOptions = () => {
-    let options = [];
-    if (!categories.data) return;
-
-    categories.data.map((cat) => {
-      options = [...options, { value: cat._id, label: cat.title }];
-    });
-    return options;
-  };
+  } = useGetProductCollectionsQuery({ sort: 'title' });
 
   useEffect(() => {
-    if (categories) {
-      if (category === '') {
-        setDefaultCategory('select');
-      }
-      categories.data.map((item) => {
-        if (item._id === category) {
-          setDefaultCategory({ value: item._id, label: item.title });
+    if (collections && collection) {
+      let coll = [];
+      let defColl = [];
+      collections.data.map((item) => {
+        coll = [...coll, { value: item._id, label: item.title }];
+        if (collection.includes(item._id)) {
+          defColl = [...defColl, { value: item._id, label: item.title }];
         }
       });
+      setCollectionOptions(coll);
+      setDefaultCollection(defColl);
     }
-  }, [categories, category]);
+  }, [collections, collection]);
 
-  const selectCategoryHandler = (choice) => {
+  const selectCollectionHandler = (choice) => {
     if (multi) {
-      if (choice.length === 0) {
-        setCategory(undefined);
-      } else {
-        let cat = [];
-        choice.map((x) => {
-          cat = [...cat, x.value];
-        });
-        setCategory(cat);
-      }
+      let coll = [];
+      choice.map((x) => {
+        coll = [...coll, x.value];
+      });
+      setCollection(coll);
     } else {
-      !choice ? setCategory(undefined) : setCategory(choice.value);
+      !choice ? setCollection(undefined) : setCollection(choice.value);
     }
   };
 
@@ -114,19 +103,18 @@ const SelectCategory = ({ category, setCategory, multi = false }) => {
       ) : error ? (
         <Message variant="danger">{error.data.Message}</Message>
       ) : (
-        categories.data &&
-        defaultCategory && (
+        collectionOptions && (
           <Form.Group controlId="category" className="my-2">
             <Select
-              name="categories"
-              options={getOptions()}
-              defaultValue={defaultCategory}
+              closeMenuOnSelect={false}
               components={animatedComponents}
+              defaultValue={defaultCollection}
               styles={selectStyles}
+              isMulti={multi}
               isClearable
               isSearchable
-              isMulti={multi}
-              onChange={selectCategoryHandler}
+              options={collectionOptions}
+              onChange={selectCollectionHandler}
             />
           </Form.Group>
         )
@@ -135,4 +123,4 @@ const SelectCategory = ({ category, setCategory, multi = false }) => {
   );
 };
 
-export default SelectCategory;
+export default SelectCollection;

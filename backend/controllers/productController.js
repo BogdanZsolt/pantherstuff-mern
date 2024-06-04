@@ -1,5 +1,5 @@
 import asyncHandler from '../middleware/asyncHandler.js';
-import { getOne, createOne } from './handlerFactory.js';
+import { getOne, createOne, updateOne } from './handlerFactory.js';
 import APIFeatures from '../utils/apiFeatures.js';
 import Product from '../models/productModel.js';
 
@@ -60,7 +60,6 @@ const maxPrice = (docs) => {
 // @access  Public
 // const getProducts = getAll(Product, productsPopOption);
 const getProducts = asyncHandler(async (req, res) => {
-  // console.log(req.query);
   const page = Number(req.query.page) || 1;
   if (req.query.page) {
     req.query.limit = req.query.limit || process.env.PAGINATION_LIMIT;
@@ -116,44 +115,45 @@ const createProduct = createOne(Product);
 // @desc    Update a product
 // @route   PUT /api/products/:id
 // @access  Private/Admin
-const updateProduct = asyncHandler(async (req, res) => {
-  const {
-    name,
-    thumbnail,
-    thumbnailHover,
-    description,
-    category,
-    beforePrice,
-    currentPrice,
-    countInStock,
-    colors,
-    thumbnails,
-    sizes,
-  } = req.body;
+const updateProduct = updateOne(Product);
+// const updateProduct = asyncHandler(async (req, res) => {
+//   const {
+//     name,
+//     thumbnail,
+//     thumbnailHover,
+//     description,
+//     category,
+//     beforePrice,
+//     currentPrice,
+//     countInStock,
+//     colors,
+//     thumbnails,
+//     sizes,
+//   } = req.body;
 
-  const product = await Product.findById(req.params.id);
+//   const product = await Product.findById(req.params.id);
 
-  if (product) {
-    product.name = name;
-    product.thumbnail = thumbnail;
-    product.thumbnailHover = thumbnailHover;
-    product.description = description;
-    product.category = category;
-    product.beforePrice = beforePrice;
-    product.currentPrice = currentPrice;
-    product.countInStock = countInStock;
-    product.colors = colors;
-    product.sizes = sizes;
-    product.thumbnails = thumbnails;
+//   if (product) {
+//     product.name = name;
+//     product.thumbnail = thumbnail;
+//     product.thumbnailHover = thumbnailHover;
+//     product.description = description;
+//     product.category = category;
+//     product.beforePrice = beforePrice;
+//     product.currentPrice = currentPrice;
+//     product.countInStock = countInStock;
+//     product.colors = colors;
+//     product.sizes = sizes;
+//     product.thumbnails = thumbnails;
 
-    const updatedProduct = await product.save();
+//     const updatedProduct = await product.save();
 
-    res.json(updatedProduct);
-  } else {
-    res.status(404);
-    throw new Error('Resource not found');
-  }
-});
+//     res.json(updatedProduct);
+//   } else {
+//     res.status(404);
+//     throw new Error('Resource not found');
+//   }
+// });
 
 // @desc    Delete a product
 // @route   DELETE /api/products/:id

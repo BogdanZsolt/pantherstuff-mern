@@ -48,6 +48,12 @@ const productSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'ProductCategory',
     },
+    collections: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'ProductCollection',
+      },
+    ],
     beforePrice: Number,
     currentPrice: {
       type: Number,

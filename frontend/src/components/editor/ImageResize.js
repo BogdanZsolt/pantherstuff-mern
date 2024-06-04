@@ -28,8 +28,6 @@ const ImageResize = Image.extend({
       const $container = document.createElement('div');
       const $img = document.createElement('img');
 
-      console.log(style);
-
       $container.appendChild($img);
       $container.setAttribute('class', 'resizable-img-container');
       $img.setAttribute('src', src);
@@ -105,7 +103,6 @@ const ImageResize = Image.extend({
           $container.removeAttribute('style');
           $container.removeChild($container.lastChild);
           $container.classList.remove('isSelected');
-          console.log('töröl');
         }
       });
 

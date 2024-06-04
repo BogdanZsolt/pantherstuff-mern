@@ -25,7 +25,7 @@ export default Extension.create({
               };
             },
             parseHTML: (element) => {
-              console.log(element.style.color); // Why is the initial value converted to rgb?
+              // console.log(element.style.color); // Why is the initial value converted to rgb?
               return {
                 color: element.style.color.replace(/['"]+/g, ''),
               };

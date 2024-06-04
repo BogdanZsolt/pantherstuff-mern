@@ -1,4 +1,4 @@
-import ProductCategory from '../models/productCategoryModel.js';
+import ProductCollection from '../models/productCollectionModel.js';
 import {
   createOne,
   getAll,
@@ -7,63 +7,52 @@ import {
   updateOne,
 } from './handlerFactory.js';
 
-const productCategoriesPopOption = [{ path: 'parent', select: ['title'] }];
-const productCategoryPopOption = [
-  { path: 'children', select: '_id title description -parent' },
-  { path: 'parent', select: 'title' },
-  {
-    path: 'products',
-    select: '-body -__v',
-    populate: [
-      { path: 'user', select: 'name' },
-      { path: 'category', select: 'title' },
-    ],
-  },
-];
+const productCollectionsPopOption = [{ path: 'user', select: ['name'] }];
+const productCollectionPopOption = [{ path: 'user', select: 'name' }];
 
 const createInit = (req, res, next) => {
   req.body.user = req.user._id;
-  req.body.title = 'Simple category';
+  req.body.title = 'Simple collection';
   req.body.description = 'Simple description';
   next();
 };
 
-// @desc    Get productCategories
-// @route   GET /api/productcategories
+// @desc    Get productCollections
+// @route   GET /api/productcollections
 // @access  Public
-const getProductCategories = getAll(
-  ProductCategory,
-  productCategoriesPopOption
+const getProductCollections = getAll(
+  ProductCollection,
+  productCollectionsPopOption
 );
 
-// @desc    Get a productCategory by ID
-// @route   GET /api/productcategories/:id
+// @desc    Get a productCollection by ID
+// @route   GET /api/productcollections/:id
 // @access  Public
-const getProductCategoryById = getOne(
-  ProductCategory,
-  productCategoryPopOption
+const getProductCollectionById = getOne(
+  ProductCollection,
+  productCollectionPopOption
 );
 
-// @desc    Create productCategory
-// @route   POST /api/productcategories
+// @desc    Create productCollection
+// @route   POST /api/productcollections
 // @access  Private/Admin
-const createProductCategory = createOne(ProductCategory);
+const createProductCollection = createOne(ProductCollection);
 
-// @desc    delete productCategory by ID
-// @route   DELETE /api/productcategories/:id
+// @desc    delete productCollection by ID
+// @route   DELETE /api/productcollections/:id
 // @access  Private/Admin
-const deleteProductCategory = deleteOne(ProductCategory);
+const deleteProductCollection = deleteOne(ProductCollection);
 
-// @desc    Update productCategory
-// @route   PUT /api/productcategories/:id
+// @desc    Update productCollection
+// @route   PUT /api/productcollections/:id
 // @access  Private/Admin
-const updateProductCategory = updateOne(ProductCategory);
+const updateProductCollection = updateOne(ProductCollection);
 
 export {
   createInit,
-  getProductCategories,
-  getProductCategoryById,
-  createProductCategory,
-  deleteProductCategory,
-  updateProductCategory,
+  getProductCollections,
+  getProductCollectionById,
+  createProductCollection,
+  deleteProductCollection,
+  updateProductCollection,
 };

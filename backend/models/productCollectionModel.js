@@ -13,6 +13,12 @@ const productCollectionSchema = new mongoose.Schema({
   description: { type: String },
 });
 
+productCollectionSchema.virtual('products', {
+  ref: 'Product',
+  localField: '_id',
+  foreignField: 'collections',
+});
+
 const ProductCollection = mongoose.model(
   'ProductCollection',
   productCollectionSchema

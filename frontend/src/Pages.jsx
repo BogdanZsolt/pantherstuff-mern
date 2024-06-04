@@ -54,6 +54,12 @@ export const ProductCategoryListScreen = lazy(() =>
 export const ProductCatEditScreen = lazy(() =>
   import('./screens/admin/ProductCatEditScreen.jsx')
 );
+export const ProductCollectionListScreen = lazy(() =>
+  import('./screens/admin/ProductCollectionListScreen.jsx')
+);
+export const ProductCollectionEditScreen = lazy(() =>
+  import('./screens/admin/ProductCollectionEditScreen.jsx')
+);
 export const ProductSizeListScreen = lazy(() =>
   import('./screens/admin/ProductSizeListScreen.jsx')
 );

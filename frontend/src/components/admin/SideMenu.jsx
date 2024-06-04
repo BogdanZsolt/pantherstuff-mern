@@ -22,6 +22,11 @@ const SideMenu = ({ value, setValue }) => {
             </LinkContainer>
           </Nav.Item>
           <Nav.Item>
+            <LinkContainer to="/admin/productcollectionlist" className="ps-3">
+              <Nav.Link>Product Collections</Nav.Link>
+            </LinkContainer>
+          </Nav.Item>
+          <Nav.Item>
             <LinkContainer to="/admin/productsizelist" className="ps-3">
               <Nav.Link>Product Sizes</Nav.Link>
             </LinkContainer>
