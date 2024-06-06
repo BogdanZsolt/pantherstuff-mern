@@ -115,45 +115,43 @@ const createProduct = createOne(Product);
 // @desc    Update a product
 // @route   PUT /api/products/:id
 // @access  Private/Admin
-const updateProduct = updateOne(Product);
-// const updateProduct = asyncHandler(async (req, res) => {
-//   const {
-//     name,
-//     thumbnail,
-//     thumbnailHover,
-//     description,
-//     category,
-//     beforePrice,
-//     currentPrice,
-//     countInStock,
-//     colors,
-//     thumbnails,
-//     sizes,
-//   } = req.body;
+// const updateProduct = updateOne(Product);
+const updateProduct = asyncHandler(async (req, res) => {
+  const {
+    name,
+    thumbnails,
+    description,
+    category,
+    collections,
+    beforePrice,
+    currentPrice,
+    countInStock,
+    colors,
+    sizes,
+  } = req.body;
 
-//   const product = await Product.findById(req.params.id);
+  const product = await Product.findById(req.params.id);
 
-//   if (product) {
-//     product.name = name;
-//     product.thumbnail = thumbnail;
-//     product.thumbnailHover = thumbnailHover;
-//     product.description = description;
-//     product.category = category;
-//     product.beforePrice = beforePrice;
-//     product.currentPrice = currentPrice;
-//     product.countInStock = countInStock;
-//     product.colors = colors;
-//     product.sizes = sizes;
-//     product.thumbnails = thumbnails;
+  if (product) {
+    product.name = name || product.name;
+    product.thumbnails = thumbnails || product.thumbnails;
+    product.description = description || product.description;
+    product.category = category || product.category;
+    product.collections = collections || product.collections;
+    product.beforePrice = beforePrice || product.beforePrice;
+    product.currentPrice = currentPrice || product.currentPrice;
+    product.countInStock = countInStock || product.countInStock;
+    product.colors = colors || product.colors;
+    product.sizes = sizes || product.sizes;
 
-//     const updatedProduct = await product.save();
+    const updatedProduct = await product.save();
 
-//     res.json(updatedProduct);
-//   } else {
-//     res.status(404);
-//     throw new Error('Resource not found');
-//   }
-// });
+    res.json(updatedProduct);
+  } else {
+    res.status(404);
+    throw new Error('Resource not found');
+  }
+});
 
 // @desc    Delete a product
 // @route   DELETE /api/products/:id
