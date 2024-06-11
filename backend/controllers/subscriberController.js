@@ -3,7 +3,6 @@ import dotenv from 'dotenv';
 dotenv.config();
 import MailerLite from '@mailerlite/mailerlite-nodejs';
 import MailerCheck from '../utils/mailerCheck.js';
-import { response } from 'express';
 
 const mailerlite = new MailerLite({
   api_key: process.env.MAILERLITE_API_KEY,

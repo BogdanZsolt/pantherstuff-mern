@@ -2,10 +2,104 @@ import { useState } from 'react';
 import { Nav, NavDropdown, Container, Image } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
-import mainMenus from './menus.json';
+import { useTranslation } from 'react-i18next';
+// import mainMenus from './menus.json';
 
 const Menu = () => {
-  const { menus } = mainMenus;
+  const { t } = useTranslation(['menu']);
+  const menus = [
+    {
+      id: 1,
+      text: t('about'),
+      link: '',
+      mega: [
+        {
+          id: 1.1,
+          text: t('ourHerStory'),
+          link: '/herstory',
+          image: '/images/ecoprint-01-200x200.webp',
+        },
+        {
+          id: 1.2,
+          text: t('mePetra'),
+          link: '/mepetra',
+          image: '/images/pepsz-yogaban-200x200.webp',
+        },
+        {
+          id: 1.3,
+          text: t('baseMaterials'),
+          link: '/base_materials',
+          image: '/images/ecoprint-04-200x200.webp',
+        },
+        {
+          id: 1.4,
+          text: t('valuesAndIntentions'),
+          link: '/values',
+          image: '/images/our_values-150x150.jpg',
+        },
+        {
+          id: 1.5,
+          text: t('faqs'),
+          link: '/faqs',
+          image: '/images/ecoprint-06-200x200.webp',
+        },
+      ],
+    },
+    {
+      id: 2,
+      text: t('shop'),
+      link: '/shop',
+    },
+    {
+      id: 3,
+      text: t('knowledge'),
+      link: '',
+      mega: [
+        {
+          id: 3.1,
+          text: t('membership'),
+          link: '',
+          image: '/images/pepsz-yogaban-200x200.webp',
+        },
+        {
+          id: '3.2',
+          text: t('onlineCourses'),
+          link: '',
+          image: '/images/ecoprint-04-200x200.webp',
+        },
+        {
+          id: '3.3',
+          text: t('retreatsAndWorkshop'),
+          link: '',
+          image: '/images/ecoprint-01-200x200.webp',
+        },
+        {
+          id: '3.4',
+          text: t('pantherStuffBlog'),
+          link: '',
+          image: '/images/ecoprint-05-200x200.webp',
+        },
+        {
+          id: '3.5',
+          text: t('library'),
+          link: '',
+          image: '/images/ecoprint-06-200x200.webp',
+        },
+      ],
+    },
+    {
+      id: 4,
+      text: t('blog'),
+      link: '/blog',
+    },
+    {
+      id: 5,
+      text: t('contact'),
+      link: '/contact',
+    },
+  ];
+
+  // const { menus } = mainMenus;
   const [show, setShow] = useState(false);
 
   const mobileShowHandler = () => {

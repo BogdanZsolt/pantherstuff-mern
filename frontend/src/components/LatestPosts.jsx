@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { Trans, useTranslation } from 'react-i18next';
 import { Container, Row, Col } from 'react-bootstrap';
 import Post from './Post';
 import Message from './Message';
@@ -6,6 +7,8 @@ import Loader from './Loader';
 import { useLastNumPostsQuery } from '../slices/postsApiSlice';
 
 const LatestPosts = () => {
+  const { t } = useTranslation(['home']);
+
   const {
     data: posts,
     isLoading,
@@ -19,7 +22,11 @@ const LatestPosts = () => {
   return (
     <Container className="mt-5">
       <h2>
-        Latest <Link to={`/blog`}>Posts</Link>
+        <Trans
+          i18nKey={t('latestPosts')}
+          components={{ 1: <Link to={'blog'} /> }}
+        />
+        {/* <Link to={`/blog`}>Posts</Link> */}
       </h2>
       {isLoading ? (
         <Loader />

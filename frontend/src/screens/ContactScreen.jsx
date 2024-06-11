@@ -9,8 +9,11 @@ import {
 } from 'react-icons/ri';
 import SocialMenu from '../components/SocialMenu';
 import ContactEmailForm from '../components/ContactEmailForm';
+import { useTranslation } from 'react-i18next';
 
 const ContactScreen = () => {
+  const { t } = useTranslation(['contact']);
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [telephone, setTelephone] = useState('');
@@ -23,60 +26,62 @@ const ContactScreen = () => {
   return (
     <>
       <Banner
-        title="Contact"
+        title={t('contact')}
         src="/images/ecoprint-06-1280x360.webp"
-        description="Lorem ipsum dolor, sit amet consectetur adipisicing elit."
+        description={t('contactDescription')}
         alt="Contact"
       />
       <Container>
         <Row className="mb-md-5">
           <Col md={6} className="mb-5">
-            <h3>Bravely Reach Out in Person!</h3>
+            <h3>{t('bravely')}</h3>
             <div className="d-flex flex-column mb-2">
               <div className="d-inline-flex justify-content-start align-items-center">
                 <RiMapPinLine className="lead mb-3" />
-                <p className="lead">Address</p>
+                <p className="lead">{t('address')}</p>
               </div>
               <div className="d-flex flex-column ps-3">
-                <span>1122. Budapest</span>
-                <span>Hungary</span>
+                <span>{t('city')}</span>
+                <span>{t('country')}</span>
               </div>
             </div>
             <div className="d-flex flex-column mb-2">
               <div className="d-inline-flex justify-content-start align-items-center">
                 <RiHourglassLine className="lead mb-3" />
-                <p className="lead">Contact Hours</p>
+                <p className="lead">{t('contactHoursTitle')}</p>
               </div>
               <div className="d-flex flex-column ps-3">
-                <span>Monday - Friday: 9:00am - 6:00pm</span>
+                <span>{t('contactHours')}</span>
               </div>
             </div>
             <div className="d-flex flex-column mb-2">
               <div className="d-inline-flex justify-content-start align-items-center">
                 <RiPhoneLine className="lead mb-3" />
-                <p className="lead">Telephone</p>
+                <p className="lead">{t('telephone')}</p>
               </div>
               <div className="d-flex flex-column ps-3">
                 <span>
-                  <a href="tel:+36304225096">+36 (30) 422-5096</a>
+                  <a href={`tel:${t('phoneNumberHrf')}`}>{t('phoneNumber')}</a>
                 </span>
               </div>
             </div>
             <div className="d-flex flex-column mb-2">
               <div className="d-inline-flex justify-content-start align-items-center">
                 <RiMailLine className="lead mb-3 me-1" />
-                <p className="lead">Email</p>
+                <p className="lead">{t('ownerEmail')}</p>
               </div>
               <div className="d-flex flex-column ps-3">
                 <span>
-                  <a href="mailto: cspetra8@gmail.com">cspetra8@gmail.com</a>
+                  <a href={`mailto: ${t('ownerEmailAddress')}`}>
+                    {t('ownerEmailAddress')}
+                  </a>
                 </span>
               </div>
             </div>
             <SocialMenu />
           </Col>
           <Col md={6}>
-            <h3>Waiting for your message!</h3>
+            <h3>{t('waitingMessage')}</h3>
             <ContactEmailForm
               name={name}
               setName={setName}

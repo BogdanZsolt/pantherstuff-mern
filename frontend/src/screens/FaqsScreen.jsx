@@ -1,14 +1,12 @@
 import { Container } from 'react-bootstrap';
 import Banner from '../components/Banner';
+import { useTranslation } from 'react-i18next';
 
 const FaqsScreen = () => {
+  const { t } = useTranslation();
   return (
     <>
-      <Banner
-        title="Frequently Asked Question"
-        alt="Frequently Asked Question"
-        video
-      />
+      <Banner title={t('faqs')} alt={t('faqs')} />
       <Container>FaqsScreen</Container>;
     </>
   );

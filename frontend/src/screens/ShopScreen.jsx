@@ -26,6 +26,7 @@ import {
   useGetProductsQuery,
   useGetProductsMinMaxPriceQuery,
 } from '../slices/productsApiSlice.js';
+import { useTranslation } from 'react-i18next';
 
 const ShopScreen = () => {
   let { pageNumber, keyword } = useParams();
@@ -33,6 +34,8 @@ const ShopScreen = () => {
   if (!pageNumber) {
     pageNumber = 1;
   }
+
+  const { t } = useTranslation();
 
   const [sort, setSort] = useState('-rating,-createdAt');
   const [category, setCategory] = useState('');
@@ -69,14 +72,19 @@ const ShopScreen = () => {
       products.pages < 1 ? setPages(1) : setPages(products.pages);
       pages < page ? setPage(pages) : setPage(pageNumber);
     }
+  }, [products, pages, page, pageNumber]);
+
+  useEffect(() => {
     if (minmax) {
       minPrice === undefined && setMinPrice(minmax[0].minPrice);
       maxPrice === undefined && setMaxPrice(minmax[0].maxPrice);
     }
-  }, [products, pages, page, pageNumber, minmax, minPrice, maxPrice]);
+  }, [minmax, minPrice, maxPrice]);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  console.log(minmax);
 
   return (
     <>
@@ -90,7 +98,7 @@ const ShopScreen = () => {
       ) : (
         <>
           <Banner
-            title="shop"
+            title={t('shop')}
             src="/images/ecoprint-04.webp"
             alt="Shop Banner"
           />
@@ -98,22 +106,24 @@ const ShopScreen = () => {
             <h2 className="text-center">Products</h2>
             <Row>
               <Col lg={3} xxl={2} className="d-none d-lg-block">
-                <FilterSidebar
-                  size={sizes}
-                  setSize={setSizes}
-                  category={category}
-                  setCategory={setCategory}
-                  collection={collection}
-                  setCollection={setCollection}
-                  min={minmax[0].minPrice}
-                  minPrice={minPrice}
-                  setMinPrice={setMinPrice}
-                  max={minmax[0].maxPrice}
-                  maxPrice={maxPrice}
-                  setMaxPrice={setMaxPrice}
-                  colors={colors}
-                  setColors={setColors}
-                />
+                {minmax && (
+                  <FilterSidebar
+                    size={sizes}
+                    setSize={setSizes}
+                    category={category}
+                    setCategory={setCategory}
+                    collection={collection}
+                    setCollection={setCollection}
+                    min={minmax[0].minPrice}
+                    minPrice={minPrice}
+                    setMinPrice={setMinPrice}
+                    max={minmax[0].maxPrice}
+                    maxPrice={maxPrice}
+                    setMaxPrice={setMaxPrice}
+                    colors={colors}
+                    setColors={setColors}
+                  />
+                )}
               </Col>
               <Col xs={12} lg={9} xxl={10}>
                 <Row className="align-items-center justify-content-between">

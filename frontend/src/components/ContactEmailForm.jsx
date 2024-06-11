@@ -6,6 +6,7 @@ import {
   FloatingLabel,
   Button,
 } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 
 const ContactEmailForm = ({
   name,
@@ -18,16 +19,18 @@ const ContactEmailForm = ({
   setMessage,
   messageHandler,
 }) => {
+  const { t } = useTranslation(['contact']);
+
   console.log(telephone);
   return (
     <Container fluid>
       <Row>
         <Form onSubmit={messageHandler}>
           <Form.Group as={Col} className="mb-3" controlId="name">
-            <FloatingLabel label="Name">
+            <FloatingLabel label={t('formName')}>
               <Form.Control
                 type="text"
-                placeholder="Enter name"
+                placeholder={t('formEnterName')}
                 required
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -35,29 +38,29 @@ const ContactEmailForm = ({
             </FloatingLabel>
           </Form.Group>
           <Form.Group as={Col} className="mb-3" controlId="email">
-            <FloatingLabel label="Email">
+            <FloatingLabel label={t('formEmail')}>
               <Form.Control
                 type="email"
-                placeholder="Enter email"
+                placeholder={t('formEnterEmail')}
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
             </FloatingLabel>
           </Form.Group>
-          <Form.Group as={Col} className="mb-3" controlId="email">
-            <FloatingLabel label="Phone Number">
+          <Form.Group as={Col} className="mb-3" controlId="phone">
+            <FloatingLabel label={t('formPhoneNumber')}>
               <Form.Control
                 type="tel"
-                placeholder="Enter phone number"
+                placeholder={t('formEnterPhoneNumber')}
                 value={telephone}
                 onChange={(e) => setTelephone(e.target.value)}
                 pattern="+[0-9]{2}-[0-9]{2}-[0-9]{3}-[0-9]{4}"
               />
             </FloatingLabel>
           </Form.Group>
-          <Form.Group as={Col} className="mb-3" controlId="email">
-            <FloatingLabel label="Message">
+          <Form.Group as={Col} className="mb-3" controlId="message">
+            <FloatingLabel label={t('formMessage')}>
               <Form.Control
                 as="textarea"
                 rows={5}
@@ -76,7 +79,7 @@ const ContactEmailForm = ({
               variant="success"
               className="text-primary btn-lasaphire"
             >
-              Send
+              {t('formSend')}
             </Button>
           </Col>
         </Form>

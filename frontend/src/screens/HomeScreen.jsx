@@ -5,9 +5,11 @@ import ProductCarousel from '../components/ProductCarousel.jsx';
 import PhotoGallery from '../components/PhotoGallery.jsx';
 import SubscribeForm from '../components/SubscribeForm.jsx';
 import LatestPosts from '../components/LatestPosts.jsx';
+import { useTranslation } from 'react-i18next';
 
 const HomeScreens = () => {
   const { keyword } = useParams();
+  const { t } = useTranslation(['home']);
 
   return (
     <>
@@ -19,7 +21,7 @@ const HomeScreens = () => {
 
       <Hero />
       <Container className="my-4">
-        <h1>Latest Products</h1>
+        <h1>{t('latestProducts')}</h1>
         <ProductCarousel />
         <LatestPosts />
         <SubscribeForm />

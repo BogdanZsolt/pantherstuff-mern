@@ -5,8 +5,11 @@ import Meta from '../components/Meta';
 import Message from '../components/Message';
 import Post from '../components/Post';
 import { useGetPostsQuery } from '../slices/postsApiSlice';
+import { useTranslation } from 'react-i18next';
 
 const BlogScreen = () => {
+  const { t } = useTranslation();
+
   const { data: posts, isLoading, error } = useGetPostsQuery();
   return (
     <>
@@ -18,8 +21,8 @@ const BlogScreen = () => {
         </Message>
       ) : (
         <>
-          <Banner src="/images/ecoprint-03-1280x360.webp" title="Blog" />
-          <Meta title="Blog" />
+          <Banner src="/images/ecoprint-03-1280x360.webp" title={t('blog')} />
+          <Meta title={t('blog')} />
           <Container>
             <Row style={{ '--bs-gutter-y': '1.5rem' }}>
               {posts.data.map((post) => (

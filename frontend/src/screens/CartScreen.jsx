@@ -14,10 +14,12 @@ import { FaTrash } from 'react-icons/fa';
 import Message from '../components/Message';
 import Banner from '../components/Banner';
 import { addToCart, removeFromCart } from '../slices/cartSlice';
+import { useTranslation } from 'react-i18next';
 
 const CartScreen = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
@@ -36,14 +38,14 @@ const CartScreen = () => {
 
   return (
     <>
-      <Banner src="/images/ecoprint-01.webp" title="shopping cart" />
+      <Banner src="/images/ecoprint-01.webp" title={t('shoppingCart')} />
       <Container>
         <Row>
           <Col md={8}>
             {/* <h1 style={{ marginBottom: '20px' }}>Shopping Cart</h1> */}
             {cartItems.length === 0 ? (
               <Message>
-                Your cart is empty <Link to="/">Go Back</Link>
+                {t('yourCartIsEmpty')} <Link to="/">{t('goBack')}</Link>
               </Message>
             ) : (
               <ListGroup variant="flush">
@@ -97,8 +99,9 @@ const CartScreen = () => {
               <ListGroup variant="flush">
                 <ListGroup.Item>
                   <h2>
-                    Subtotal (
-                    {cartItems.reduce((acc, item) => acc + item.qty, 0)}) items
+                    {t('subtotal')} (
+                    {cartItems.reduce((acc, item) => acc + item.qty, 0)}){' '}
+                    {t('items')}
                   </h2>
                   $
                   {cartItems
@@ -115,7 +118,7 @@ const CartScreen = () => {
                     disabled={cartItems.length === 0}
                     onClick={checkoutHandler}
                   >
-                    Proceed To Checkout
+                    {t('proceedToCheckout')}
                   </Button>
                 </ListGroup.Item>
               </ListGroup>

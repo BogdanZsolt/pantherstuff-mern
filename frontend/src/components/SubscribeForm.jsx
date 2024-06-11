@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Container,
   Card,
@@ -14,6 +15,8 @@ import { useCreateSubscriberMutation } from '../slices/subscribersApiSlice';
 import Message from './Message';
 
 const SubscribeForm = () => {
+  const { t } = useTranslation(['home']);
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
 
@@ -42,12 +45,10 @@ const SubscribeForm = () => {
       >
         <Card.Body>
           <Card.Title className="text-center text-primary fs-2 fw-bold">
-            PantherStuff LoveLetters
+            {t('loveLetters')}
           </Card.Title>
           <Card.Text className="text-center text-primary lead fw-medium">
-            Sign Up To Get Regular PantherStuff News, Knowledge & Events.
-            Support the Healing and Clearing of our Beloved Mother Nature by
-            transforming the cloth industry 🌎🌿🫀☀️
+            {t('loveLettersDescription')} 🌎🌿🫀☀️
           </Card.Text>
           <Form onSubmit={subscribeHandler}>
             <Row>
@@ -57,10 +58,10 @@ const SubscribeForm = () => {
                 className="mb-2 mb-lg-0"
                 controlId="name"
               >
-                <FloatingLabel label="Name">
+                <FloatingLabel label={t('name')}>
                   <Form.Control
                     type="text"
-                    placeholder="Enter name"
+                    placeholder={t('enterName')}
                     required
                     value={name}
                     onChange={(e) => setName(e.target.value)}
@@ -74,10 +75,10 @@ const SubscribeForm = () => {
                 className="mb-2 mb-lg-0"
                 controlId="email"
               >
-                <FloatingLabel label="Email">
+                <FloatingLabel label={t('email')}>
                   <Form.Control
                     type="email"
-                    placeholder="Enter email"
+                    placeholder={t('enterEmail')}
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -94,7 +95,7 @@ const SubscribeForm = () => {
                   variant="success"
                   className="text-primary btn-lasaphire"
                 >
-                  Subscribe
+                  {t('subscribe')}
                 </Button>
                 {isLoading && <Loader />}
               </Col>

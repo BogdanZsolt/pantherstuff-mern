@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Image } from 'react-bootstrap';
 // import { RiArrowRightSLine } from 'react-icons/ri';
 
 const Post = ({ postId, src, category, author, title, description, date }) => {
+  const { t } = useTranslation(['home']);
   return (
     <article className="blog-post">
       <strong
@@ -33,7 +35,7 @@ const Post = ({ postId, src, category, author, title, description, date }) => {
       <p className="lead">{description}</p>
       <p className="lead mb-0">
         <Link to={`/post/${postId}`} className="text-body-emphasis fw-bold">
-          Continue reading...
+          {t('continueReading')}...
         </Link>
       </p>
     </article>

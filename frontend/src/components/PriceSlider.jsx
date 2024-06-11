@@ -16,8 +16,8 @@ const PriceSlider = ({
   return (
     <div className="price-slider-container">
       <div className="price-slider-label">
-        <span className="min-value">${min}</span>
-        <span className="max-value">${max}</span>
+        <span>${min}</span>
+        <span>${max}</span>
       </div>
       <span className="range-label">current range ${maxPrice - minPrice}</span>
       <Slider

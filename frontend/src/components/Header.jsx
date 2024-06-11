@@ -16,6 +16,7 @@ import logo from '../assets/logo-200x200.png';
 // import SearchBox from './SearchBox';
 import { useLogoutMutation } from '../slices/usersApiSlice';
 import { logout } from '../slices/authSlice';
+import LanguageSelector from './LanguageSelector';
 
 const Header = () => {
   const { cartItems } = useSelector((state) => state.cart);
@@ -129,6 +130,9 @@ const Header = () => {
                       )}
                     </Nav.Link>
                   </LinkContainer>
+                </li>
+                <li className="d-flex justify-content-center align-items-center">
+                  <LanguageSelector />
                 </li>
               </Nav>
             </Offcanvas.Body>
