@@ -1,4 +1,4 @@
-import { useState, useEffect, lazy } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Form, Button, Container, Row } from 'react-bootstrap';
 import Message from '../../components/Message';
@@ -9,12 +9,14 @@ import SelectSizes from '../../components/SelectSizes';
 import { toast } from 'react-toastify';
 import SelectCategory from '../../components/SelectCategory';
 import SelectCollection from '../../components/SelectCollection';
+import LangSelectInput from '../../components/LangSelectInput';
 import {
   useGetProductDetailsQuery,
   useUpdateProductMutation,
 } from '../../slices/productsApiSlice';
 import InputColors from '../../components/InputColors.jsx';
-const Editor = lazy(() => import('../../components/Editor.jsx'));
+import LangSelectEditor from '../../components/LangSelectEditor.jsx';
+// const Editor = lazy(() => import('../../components/Editor.jsx'));
 
 const ProductEditScreen = () => {
   const { id: productId } = useParams();
@@ -30,6 +32,10 @@ const ProductEditScreen = () => {
   const [colors, setColors] = useState(['']);
   const [sizes, setSizes] = useState([]);
   const [active, setActive] = useState('');
+  const [transNameHu, setTransNameHu] = useState('');
+  const [transDescHu, setTransDescHu] = useState('');
+  const [transBeforePriceHu, setTransBeforePriceHu] = useState(0);
+  const [transCurrentPriceHu, setTransCurrentPriceHu] = useState(0);
 
   const {
     data: product,
@@ -55,8 +61,20 @@ const ProductEditScreen = () => {
       setCountInStock(product.countInStock);
       setColors(product.colors);
       setSizes(product.sizes);
+      setTransNameHu(product.translations?.hu?.name || product.name);
+      setTransDescHu(
+        product.translations?.hu?.description || product.description
+      );
+      setTransBeforePriceHu(
+        product.translations?.hu?.beforePrice || product.beforePrice
+      );
+      setTransCurrentPriceHu(
+        product.translations?.hu?.currentPrice || product.currentPrice
+      );
     }
   }, [product]);
+
+  console.log(transCurrentPriceHu);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -73,6 +91,14 @@ const ProductEditScreen = () => {
         countInStock,
         colors,
         sizes,
+        translations: {
+          hu: {
+            name: transNameHu,
+            description: transDescHu,
+            beforePrice: transBeforePriceHu,
+            currentPrice: transCurrentPriceHu,
+          },
+        },
       }).unwrap(); // NOTE: here we need to unwrap the Promise to catch any rejection in our catch block
       toast.success('Product updated');
       refetch();
@@ -99,15 +125,13 @@ const ProductEditScreen = () => {
           </Row>
           <FormContainer>
             <Form onSubmit={submitHandler}>
-              <Form.Group controlId="name">
-                <Form.Label>Name</Form.Label>
-                <Form.Control
-                  type="name"
-                  placeholder="Enter name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                ></Form.Control>
-              </Form.Group>
+              <LangSelectInput
+                label="Name"
+                defLang={name}
+                setDefLang={setName}
+                secLang={transNameHu}
+                setSecLang={setTransNameHu}
+              />
 
               {/* THUMBNAIL INPUT PLACEHOLDER */}
               <ImageList
@@ -187,6 +211,34 @@ const ProductEditScreen = () => {
                 </div>
               </div>
 
+              <div className="row">
+                <div className="col-md-6">
+                  <LangSelectInput
+                    label="Before Price"
+                    type="number"
+                    placeholder="Before Price"
+                    placeholder_hu="Előző ár"
+                    defLang={beforePrice}
+                    setDefLang={setBeforePrice}
+                    secLang={transBeforePriceHu}
+                    setSecLang={setTransBeforePriceHu}
+                  />
+                </div>
+
+                <div className="col-md-6">
+                  <LangSelectInput
+                    label="Current Price"
+                    type="number"
+                    placeholder="Current Price"
+                    placeholder_hu="Aktuális ár"
+                    defLang={currentPrice}
+                    setDefLang={setCurrentPrice}
+                    secLang={transCurrentPriceHu}
+                    setSecLang={setTransCurrentPriceHu}
+                  />
+                </div>
+              </div>
+
               <Form.Group controlId="countInStock" className="my-2">
                 <Form.Label>Count In Stock</Form.Label>
                 <Form.Control
@@ -197,14 +249,24 @@ const ProductEditScreen = () => {
                 ></Form.Control>
               </Form.Group>
 
-              <Form.Group controlId="body" className="my-2">
+              {/* <Form.Group controlId="body" className="my-2">
                 <Form.Label>Description</Form.Label>
                 <Editor
                   content={description}
                   onDataChange={(data) => setDescription(data)}
                   editable
                 />
-              </Form.Group>
+              </Form.Group> */}
+
+              <LangSelectEditor
+                label="Description"
+                placeholder="Enter description"
+                placeholder_hu="Add meg a leírást"
+                defLang={description}
+                setDefLang={setDescription}
+                secLang={transDescHu}
+                setSecLang={setTransDescHu}
+              />
 
               <Button type="submit" variant="primary" className="my-2">
                 Update

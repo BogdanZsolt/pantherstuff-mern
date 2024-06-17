@@ -46,6 +46,8 @@ const ProductCategoryListScreen = () => {
     }
   };
 
+  console.log(productCats);
+
   return (
     <>
       <Container className="mt-5">
@@ -81,7 +83,16 @@ const ProductCategoryListScreen = () => {
               {productCats.data.map((cat) => (
                 <tr key={cat._id}>
                   <td>{cat._id}</td>
-                  <td>{cat.title}</td>
+                  <td className="text-start">
+                    <p className="my-0 py-0">
+                      <b>en: </b>
+                      {cat.title}
+                    </p>
+                    <p className="my-0 py-0">
+                      <b>hu: </b>
+                      {cat.translations?.hu?.title}
+                    </p>
+                  </td>
                   <td>{cat?.parent?.title}</td>
                   <td>
                     <LinkContainer

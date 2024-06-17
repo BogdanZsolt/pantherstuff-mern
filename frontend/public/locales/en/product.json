@@ -1,0 +1,17 @@
+{
+  "reviews": "{{rating}} {{count}} reviews",
+  "colors": "Colors",
+  "size": "Size",
+  "instock": "<strong>{{count}}</strong> in Stock",
+  "qty": "Quantity",
+  "addToCart": "Add To Cart",
+  "addToWishlist": "Add to wishlist",
+  "share": "Share",
+  "askQuestion": "Ask Question",
+  "freeShippingAndReturn": "Free shipping & return On orders over {{price}}",
+  "estimateDelivery": "Estimate delivery:",
+  "productDetails": "Product Details",
+  "custom": "Custom",
+  "reviewsTab": "Reviews",
+  "shipping": "Shipping"
+}

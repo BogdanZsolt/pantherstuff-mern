@@ -14,6 +14,12 @@ const createInit = (req, res, next) => {
   req.body.user = req.user._id;
   req.body.title = 'Simple collection';
   req.body.description = 'Simple description';
+  req.body.translations = {
+    hu: {
+      title: 'Egyszerű kollekció',
+      description: 'Egyszerű kollekció leírás',
+    },
+  };
   next();
 };
 

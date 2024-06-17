@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Form } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import Loader from './Loader';
@@ -7,6 +8,7 @@ import Message from './Message';
 import { useGetProductCollectionsQuery } from '../slices/productCollectionsApiSlice';
 
 const SelectCollection = ({ collection, setCollection, multi = false }) => {
+  const { i18n } = useTranslation(['shop']);
   const animatedComponents = makeAnimated();
   const [collectionOptions, setCollectionOptions] = useState(null);
   const [defaultCollection, setDefaultCollection] = useState([]);
@@ -74,15 +76,33 @@ const SelectCollection = ({ collection, setCollection, multi = false }) => {
       let coll = [];
       let defColl = [];
       collections.data.map((item) => {
-        coll = [...coll, { value: item._id, label: item.title }];
+        coll = [
+          ...coll,
+          {
+            value: item._id,
+            label:
+              i18n.language === 'en'
+                ? item.title
+                : item.translations?.hu?.title || item.title,
+          },
+        ];
         if (collection.includes(item._id)) {
-          defColl = [...defColl, { value: item._id, label: item.title }];
+          defColl = [
+            ...defColl,
+            {
+              value: item._id,
+              label:
+                i18n.language === 'en'
+                  ? item.title
+                  : item.translations?.hu?.title || item.title,
+            },
+          ];
         }
       });
       setCollectionOptions(coll);
       setDefaultCollection(defColl);
     }
-  }, [collections, collection]);
+  }, [collections, collection, i18n.language]);
 
   const selectCollectionHandler = (choice) => {
     if (multi) {

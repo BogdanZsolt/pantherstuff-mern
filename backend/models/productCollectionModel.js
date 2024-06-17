@@ -1,17 +1,30 @@
 import mongoose from 'mongoose';
 
-const productCollectionSchema = new mongoose.Schema({
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    ref: 'User',
+const productCollectionSchema = new mongoose.Schema(
+  {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: 'User',
+    },
+    title: {
+      type: String,
+      required: true,
+    },
+    description: { type: String },
+    translations: {
+      hu: {
+        title: { type: String },
+        description: { type: String },
+      },
+    },
   },
-  title: {
-    type: String,
-    required: true,
-  },
-  description: { type: String },
-});
+  {
+    timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
+  }
+);
 
 productCollectionSchema.virtual('products', {
   ref: 'Product',

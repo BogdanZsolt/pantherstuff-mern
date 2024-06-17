@@ -26,7 +26,7 @@ const port = process.env.PORT || 5000;
 connectDB(); // Connect to MongoDB
 
 const app = express();
-
+0;
 // Body parser middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

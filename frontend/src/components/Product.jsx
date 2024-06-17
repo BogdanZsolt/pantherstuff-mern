@@ -12,8 +12,12 @@ import {
 import Rating from './Rating';
 import { addToCart } from '../slices/cartSlice';
 import { toggleWishList } from '../slices/wishListSlice';
+import { useTranslation } from 'react-i18next';
+import { toCurrency } from '../utils/converter.js';
 
 const Product = ({ product }) => {
+  const { t, i18n } = useTranslation(['shop']);
+
   const dispatch = useDispatch();
   const wishList = useSelector((state) => state.wishList);
   const { wishListItems } = wishList;
@@ -52,12 +56,12 @@ const Product = ({ product }) => {
               </button>
             </li>
             <li>
-              <button onClick={addToWishListHandler} title="Add to wish list">
+              <button onClick={addToWishListHandler} title={t('addToWishList')}>
                 {isWishListed(product._id) ? <RiHeartFill /> : <RiHeartLine />}
               </button>
             </li>
             <li>
-              <button onClick={addToCartHandler} title="Add to cart">
+              <button onClick={addToCartHandler} title={t('addToCart')}>
                 <RiShoppingBagLine />
               </button>
             </li>
@@ -67,7 +71,11 @@ const Product = ({ product }) => {
       <Card.Body>
         <Link to={`/product/${product._id}`}>
           <Card.Title as="div" className="product-title">
-            <strong>{product.name}</strong>
+            <strong>
+              {i18n.language === 'en'
+                ? product.name
+                : product.translations?.hu?.name || product.name}
+            </strong>
           </Card.Title>
         </Link>
 
@@ -78,7 +86,14 @@ const Product = ({ product }) => {
           />
         </Card.Text>
 
-        <Card.Text as="h3">${product.currentPrice}</Card.Text>
+        <Card.Text as="h3">
+          {i18n.language === 'en'
+            ? toCurrency(i18n.language, product.currentPrice)
+            : toCurrency(
+                i18n.language,
+                product.translations?.hu?.currentPrice || product.currentPrice
+              )}
+        </Card.Text>
       </Card.Body>
     </Card>
   );

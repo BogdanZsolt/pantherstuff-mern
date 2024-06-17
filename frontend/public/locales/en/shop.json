@@ -1,0 +1,22 @@
+{
+  "shop": "Shop",
+  "products": "Products",
+  "filters": "Filters",
+  "size": "Size",
+  "color": "Color",
+  "categories": "Categories",
+  "collections": "Collections",
+  "price": "Price",
+  "select": "Select",
+  "showingOfResults": "Showing {{length}} of {{count}} results",
+  "defaultSorting": "Default Sorting",
+  "popular": "Popular",
+  "rating": "Rating",
+  "latest": "Latest",
+  "PriceLowToHigh": "Price low to high",
+  "priceHighToLow": "Price high to low",
+  "addToWishList": "Add to wish list",
+  "addToCart": "Add to cart",
+  "currentRange": "current range {{price}}",
+  "": ""
+}

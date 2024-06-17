@@ -1,0 +1,22 @@
+{
+  "shop": "Bolt",
+  "products": "Termékek",
+  "filters": "Szűrők",
+  "size": "Méret",
+  "color": "Szín",
+  "categories": "Kategóriák",
+  "collections": "Kollekciók",
+  "price": "Ár",
+  "select": "Válassz",
+  "showingOfResults": "{{count}} eredményből {{length}} megjelenítése",
+  "defaultSorting": "Alapértelmezett rendezés",
+  "popular": "Népszerű",
+  "rating": "Értékelés",
+  "latest": "Legújabb",
+  "priceLowToHigh": "Ár alacsonytól magasig",
+  "priceHighToLow": "Ár magastól alacsonyig",
+  "addToWishList": "Add a Kívánságlistához",
+  "addToCart": "Tedd a kosárba",
+  "currentRange": "Aktuális tartomány {{price}}",
+  "": ""
+}

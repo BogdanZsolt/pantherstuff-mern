@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
@@ -39,9 +39,13 @@ import {
 } from '../slices/productsApiSlice';
 import { addToCart } from '../slices/cartSlice';
 import { toggleWishList } from '../slices/wishListSlice';
+import { Trans, useTranslation } from 'react-i18next';
+import { toCurrency } from '../utils/converter';
 
 const ProductScreen = () => {
   const { id: productId } = useParams();
+
+  const { t, i18n } = useTranslation(['product']);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -50,6 +54,12 @@ const ProductScreen = () => {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
   const [showReview, setShowReview] = useState(false);
+  const { userInfo } = useSelector((state) => state.auth);
+  const { wishListItems } = useSelector((state) => state.wishList);
+  const [productName, setProductName] = useState('');
+  const [beforePrice, setBeforePrice] = useState(0);
+  const [currentPrice, setCurrentPrice] = useState(0);
+  const [shippingPrice, setShippingPrice] = useState(0);
 
   const [activeTab, setActiveTab] = useState('description');
 
@@ -63,9 +73,6 @@ const ProductScreen = () => {
   const [createReview, { isLoading: loadingProductReview }] =
     useCreateReviewMutation();
 
-  const { userInfo } = useSelector((state) => state.auth);
-  const { wishListItems } = useSelector((state) => state.wishList);
-
   const addToCartHandler = () => {
     dispatch(addToCart({ ...product, qty }));
     navigate('/cart');
@@ -76,6 +83,27 @@ const ProductScreen = () => {
 
     return content?._id === productId ? true : false;
   };
+
+  useEffect(() => {
+    if (product) {
+      setProductName(
+        i18n.language === 'en'
+          ? product.name
+          : product.translations?.hu?.name || product.name
+      );
+      setBeforePrice(
+        i18n.language === 'en'
+          ? product.beforePrice
+          : product.translations?.hu?.beforePrice || product.beforePrice
+      );
+      setCurrentPrice(
+        i18n.language === 'en'
+          ? product.currentPrice
+          : product.translations?.hu?.currentPrice || product.currentPrice
+      );
+      setShippingPrice(i18n.language === 'en' ? 100 : 20000);
+    }
+  }, [product, i18n.language]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -108,8 +136,8 @@ const ProductScreen = () => {
         </Message>
       ) : (
         <>
-          <Banner src="/images/ecoprint-06.webp" title={product.name} />
-          <Meta title={product.name} />
+          <Banner src="/images/ecoprint-06.webp" title={productName} />
+          <Meta title={productName} />
           <Container>
             <div className="product">
               <Link className="btn btn-primary my-3" to="/shop">
@@ -122,23 +150,22 @@ const ProductScreen = () => {
                 <Col md={6}>
                   <ListGroup>
                     <ListGroup.Item>
-                      <h3>{product.name}</h3>
+                      <h3>{productName}</h3>
                     </ListGroup.Item>
                     <ListGroup.Item>
                       <Row className="align-items-center justify-content-between">
                         <Col className="price">
                           <span className="current">
-                            ${product.currentPrice}
+                            {toCurrency(i18n.language, currentPrice)}
                           </span>
-                          {product.beforePrice > 0 && (
+                          {beforePrice > 0 && (
                             <div className="wrap">
                               <span className="before">
-                                ${product.beforePrice}
+                                {toCurrency(i18n.language, beforePrice)}
                               </span>
                               <span className="discount">
                                 {(
-                                  (product.beforePrice / product.currentPrice -
-                                    1) *
+                                  (beforePrice / currentPrice - 1) *
                                   100
                                 ).toFixed(2)}
                                 %
@@ -148,12 +175,15 @@ const ProductScreen = () => {
                         </Col>
                         <Col className="text-end">
                           <FaStar />
-                          {product.rating} {`${product.numReviews} reviews`}
+                          {t('reviews', {
+                            rating: product.rating,
+                            count: product.numReviews,
+                          })}
                         </Col>
                       </Row>
                     </ListGroup.Item>
                     <ListGroup.Item>
-                      <Row>Colors:</Row>
+                      <Row>{t('colors')}</Row>
                       <Row>
                         {product.colors.map((color, index) => (
                           <div className="color-box" key={index}>
@@ -166,10 +196,12 @@ const ProductScreen = () => {
                       </Row>
                     </ListGroup.Item>
                     <ListGroup.Item>
-                      <Row>Size:</Row>
+                      <Row>{t('size')}</Row>
                     </ListGroup.Item>
                     <ListGroup.Item>
-                      <strong>{product.countInStock}</strong> in stock{' '}
+                      <Trans values={{ count: product.countInStock }}>
+                        {t('instock')}{' '}
+                      </Trans>
                       <RiCheckboxCircleLine
                         style={
                           product.countInStock > 0
@@ -183,7 +215,7 @@ const ProductScreen = () => {
                         {product.countInStock > 0 && (
                           <>
                             <Col xs={4} sm={4} md={6} lg={4}>
-                              Qty
+                              {t('qty')}
                             </Col>
                             <Col xs={8} sm={4} md={6} lg={4}>
                               <Form.Control
@@ -207,7 +239,7 @@ const ProductScreen = () => {
                                 disabled={product.countInStock === 0}
                                 onClick={addToCartHandler}
                               >
-                                Add To Cart
+                                {t('addToCart')}
                               </Button>
                             </Col>
                           </>
@@ -219,19 +251,19 @@ const ProductScreen = () => {
                         <li>
                           <Link onClick={addToWishListHandler}>
                             {isWishListed() ? <RiHeartFill /> : <RiHeartLine />}
-                            <span>Add to wishlist</span>
+                            <span>{t('addToWishlist')}</span>
                           </Link>
                         </li>
                         <li>
                           <Link>
                             <RiShareForwardLine />
-                            <span>Share</span>
+                            <span>{t('share')}</span>
                           </Link>
                         </li>
                         <li>
                           <Link>
                             <RiQuestionLine />
-                            <span>Ask Question</span>
+                            <span>{t('askQuestion')}</span>
                           </Link>
                         </li>
                       </ul>
@@ -241,12 +273,14 @@ const ProductScreen = () => {
                         <li>
                           <RiGiftLine />
                           <span>
-                            Free shipping & return On orders over $100
+                            {t('freeShippingAndReturn', {
+                              price: toCurrency(i18n.language, shippingPrice),
+                            })}
                           </span>
                         </li>
                         <li>
                           <RiTruckLine />
-                          <span>Estimate delivery: 01 - 07 jan, 2030</span>
+                          <span>{t('estimateDelivery')} 01 - 07 jan, 2030</span>
                         </li>
                       </ul>
                     </ListGroupItem>
@@ -260,10 +294,10 @@ const ProductScreen = () => {
                 className="mb-3 product-tab scrollto"
                 justify
               >
-                <Tab eventKey="description" title="Product Details">
+                <Tab eventKey="description" title={t('productDetails')}>
                   <p>{product.description}</p>
                 </Tab>
-                <Tab eventKey="custom" title="Custom">
+                <Tab eventKey="custom" title={t('custom')}>
                   Tab content for Profile
                 </Tab>
                 <Tab
@@ -271,7 +305,7 @@ const ProductScreen = () => {
                   title={
                     <React.Fragment>
                       <span className="position-relative">
-                        Reviews
+                        {t('reviewsTab')}
                         <Badge
                           className="position-absolute"
                           bg="secondary"
@@ -363,7 +397,7 @@ const ProductScreen = () => {
                     </ListGroup>
                   </Row>
                 </Tab>
-                <Tab eventKey="shipping" title="Shipping">
+                <Tab eventKey="shipping" title={t('shipping')}>
                   Tab content for Contact
                 </Tab>
               </Tabs>

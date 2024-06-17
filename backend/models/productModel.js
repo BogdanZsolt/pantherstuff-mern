@@ -87,9 +87,19 @@ const productSchema = new mongoose.Schema(
         ref: 'ProductSize',
       },
     ],
+    translations: {
+      hu: {
+        name: { type: String },
+        description: { type: String },
+        beforePrice: { type: Number },
+        currentPrice: { type: Number },
+      },
+    },
   },
   {
     timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
   }
 );
 

@@ -6,8 +6,13 @@ import NavBar from '../../components/admin/NavBar.jsx';
 import '../../assets/styles/admin-dashboard.css';
 import { useSelector } from 'react-redux';
 import Sidebar from '../../components/admin/Sidebar.jsx';
+import { useTranslation } from 'react-i18next';
 
 const AdminScreen = () => {
+  const { i18n } = useTranslation();
+
+  i18n.changeLanguage('en');
+
   const { userInfo } = useSelector((state) => state.auth);
   const [show, setShow] = useState(false);
   const [active, setActive] = useState('products');

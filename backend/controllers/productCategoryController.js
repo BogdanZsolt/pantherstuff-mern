@@ -9,7 +9,7 @@ import {
 
 const productCategoriesPopOption = [{ path: 'parent', select: ['title'] }];
 const productCategoryPopOption = [
-  { path: 'children', select: '_id title description -parent' },
+  { path: 'children', select: '_id title description -parent translations' },
   { path: 'parent', select: 'title' },
   {
     path: 'products',
@@ -25,6 +25,13 @@ const createInit = (req, res, next) => {
   req.body.user = req.user._id;
   req.body.title = 'Simple category';
   req.body.description = 'Simple description';
+  req.body.parent = null;
+  req.body.translations = {
+    hu: {
+      title: 'Egyszerű kategória',
+      description: 'Egyszerű leírás',
+    },
+  };
   next();
 };
 
@@ -48,6 +55,23 @@ const getProductCategoryById = getOne(
 // @route   POST /api/productcategories
 // @access  Private/Admin
 const createProductCategory = createOne(ProductCategory);
+// const createProductCategory = asyncHandler(async (req, res) => {
+//   let cat = {};
+//   cat.user = req.user._id;
+//   cat.title = 'Simple category';
+//   cat.description = 'Simple description';
+//   cat.translations = {
+//     hu: {
+//       title: 'Egyszerű kategória',
+//       description: 'Egyszerű leírás',
+//     },
+//   };
+//   console.log(cat);
+//   const create = new ProductCategory(cat);
+
+//   const doc = await create.save();
+//   res.status(201).json(doc);
+// });
 
 // @desc    delete productCategory by ID
 // @route   DELETE /api/productcategories/:id

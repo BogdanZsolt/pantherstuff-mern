@@ -5,11 +5,11 @@ import Product from '../models/productModel.js';
 
 const productsPopOption = [
   { path: 'user', select: ['name'] },
-  { path: 'category', select: ['title'] },
+  { path: 'category', select: ['title', 'translations'] },
 ];
 const productPopOption = [
   { path: 'user', select: ['name'] },
-  { path: 'category', select: 'title' },
+  { path: 'category', select: ['title', 'translations'] },
 ];
 const productCreateInit = (req, res, next) => {
   req.body.user = req.user._id;
@@ -22,6 +22,14 @@ const productCreateInit = (req, res, next) => {
   req.body.rating = 0;
   req.body.numReviews = 0;
   req.body.colors = ['#ffffff'];
+  req.body.translations = {
+    hu: {
+      name: 'Egyszerű termék',
+      description: 'Egyszerű termék leírás',
+      beforePrice: 0,
+      currentPrice: 0,
+    },
+  };
   next();
 };
 
@@ -128,6 +136,7 @@ const updateProduct = asyncHandler(async (req, res) => {
     countInStock,
     colors,
     sizes,
+    translations,
   } = req.body;
 
   const product = await Product.findById(req.params.id);
@@ -143,6 +152,9 @@ const updateProduct = asyncHandler(async (req, res) => {
     product.countInStock = countInStock || product.countInStock;
     product.colors = colors || product.colors;
     product.sizes = sizes || product.sizes;
+    product.translations = translations || product.translations;
+
+    console.log(req.body);
 
     const updatedProduct = await product.save();
 
@@ -248,10 +260,27 @@ const getProductsMinMaxPrice = asyncHandler(async (req, res) => {
   try {
     const minMaxPrice = await Product.aggregate([
       {
+        $addFields: {
+          current_hu: {
+            $ifNull: ['$translations.hu.currentPrice', '$currentPrice'],
+          },
+        },
+      },
+      {
         $group: {
           _id: null,
-          minPrice: { $min: '$currentPrice' },
-          maxPrice: { $max: '$currentPrice' },
+          minPrice: {
+            $min: '$currentPrice',
+          },
+          maxPrice: {
+            $max: '$currentPrice',
+          },
+          minPrice_hu: {
+            $min: '$current_hu',
+          },
+          maxPrice_hu: {
+            $max: '$current_hu',
+          },
         },
       },
     ]);

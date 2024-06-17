@@ -19,10 +19,10 @@ const PostCatEditScreen = () => {
   const [parent, setParent] = useState('');
 
   const {
-    data: postCats,
+    data: productCats,
     isLoading: GetLoading,
     error: getError,
-  } = useGetPostCategoriesQuery({ sort: '-title' });
+  } = useGetPostCategoriesQuery({ sort: 'title' });
 
   const {
     data: category,
@@ -31,7 +31,7 @@ const PostCatEditScreen = () => {
     error,
   } = useGetPostCategoryDetailsQuery(postCatId);
 
-  const [updatePostCategory, { isLoading: loadingUpdate }] =
+  const [updateProductCategory, { isLoading: loadingUpdate }] =
     useUpdatePostCategoryMutation();
 
   const navigate = useNavigate();
@@ -40,18 +40,18 @@ const PostCatEditScreen = () => {
     if (category) {
       setTitle(category.title);
       setDescription(category.description);
-      setParent(category.parent);
+      setParent(category.parent?._id);
     }
   }, [category]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      await updatePostCategory({
+      await updateProductCategory({
         postCatId,
         title,
         description,
-        parent,
+        parent: parent === '' ? null : parent,
       }).unwrap();
       toast.success('Category updated');
       refetch();
@@ -82,7 +82,7 @@ const PostCatEditScreen = () => {
               <Form.Control
                 type="text"
                 placeholder="Enter title"
-                value={title}
+                value={title || ''}
                 onChange={(e) => setTitle(e.target.value)}
               ></Form.Control>
             </Form.Group>
@@ -91,7 +91,7 @@ const PostCatEditScreen = () => {
               <Form.Control
                 type="text"
                 placeholder="Enter description"
-                value={description}
+                value={description || ''}
                 onChange={(e) => setDescription(e.target.value)}
               ></Form.Control>
             </Form.Group>
@@ -100,16 +100,16 @@ const PostCatEditScreen = () => {
             ) : getError ? (
               <Message variant="danger">{getError.data.message}</Message>
             ) : (
-              postCats.data &&
-              postCats.data.length > 1 && (
+              productCats.data &&
+              productCats.data.length > 1 && (
                 <Form.Group controlId="parent" className="my-2">
                   <Form.Label>Parent</Form.Label>
                   <Form.Select
                     value={parent}
                     onChange={(e) => setParent(e.target.value)}
                   >
-                    <option>No parent</option>
-                    {postCats.data.map((cat) => (
+                    <option value="">No parent</option>
+                    {productCats.data.map((cat) => (
                       <option key={cat._id} value={cat._id}>
                         {cat.title}
                       </option>

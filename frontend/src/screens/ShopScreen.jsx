@@ -35,13 +35,13 @@ const ShopScreen = () => {
     pageNumber = 1;
   }
 
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation(['shop']);
 
   const [sort, setSort] = useState('-rating,-createdAt');
   const [category, setCategory] = useState('');
   const [collection, setCollection] = useState([]);
-  const [minPrice, setMinPrice] = useState(undefined);
-  const [maxPrice, setMaxPrice] = useState(undefined);
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(0);
   const [show, setShow] = useState(false);
   const [page, setPage] = useState(pageNumber);
   const [pages, setPages] = useState(1);
@@ -76,15 +76,17 @@ const ShopScreen = () => {
 
   useEffect(() => {
     if (minmax) {
-      minPrice === undefined && setMinPrice(minmax[0].minPrice);
-      maxPrice === undefined && setMaxPrice(minmax[0].maxPrice);
+      setMinPrice(
+        i18n.language === 'en' ? minmax[0].minPrice : minmax[0].minPrice_hu
+      );
+      setMaxPrice(
+        i18n.language === 'en' ? minmax[0].maxPrice : minmax[0].maxPrice_hu
+      );
     }
-  }, [minmax, minPrice, maxPrice]);
+  }, [minmax, i18n.language]);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
-  console.log(minmax);
 
   return (
     <>
@@ -103,7 +105,7 @@ const ShopScreen = () => {
             alt="Shop Banner"
           />
           <Container className="my-4" fluid>
-            <h2 className="text-center">Products</h2>
+            <h2 className="text-center">{t('products')}</h2>
             <Row>
               <Col lg={3} xxl={2} className="d-none d-lg-block">
                 {minmax && (
@@ -114,10 +116,18 @@ const ShopScreen = () => {
                     setCategory={setCategory}
                     collection={collection}
                     setCollection={setCollection}
-                    min={minmax[0].minPrice}
+                    min={
+                      i18n.language === 'en'
+                        ? minmax[0].minPrice
+                        : minmax[0].minPrice_hu
+                    }
                     minPrice={minPrice}
                     setMinPrice={setMinPrice}
-                    max={minmax[0].maxPrice}
+                    max={
+                      i18n.language === 'en'
+                        ? minmax[0].maxPrice
+                        : minmax[0].maxPrice_hu
+                    }
                     maxPrice={maxPrice}
                     setMaxPrice={setMaxPrice}
                     colors={colors}
@@ -128,8 +138,10 @@ const ShopScreen = () => {
               <Col xs={12} lg={9} xxl={10}>
                 <Row className="align-items-center justify-content-between">
                   <Col>
-                    Showing {products?.data?.length} of {products?.count}{' '}
-                    results
+                    {t('showingOfResults', {
+                      length: products?.data?.length,
+                      count: products?.count,
+                    })}
                   </Col>
                   <Col
                     sm={7}
@@ -143,13 +155,17 @@ const ShopScreen = () => {
                       onChange={(e) => setSort(e.target.value)}
                     >
                       <option value="-rating,-createdAt">
-                        Default sorting
+                        {t('defaultSorting')}
                       </option>
-                      <option value="-rating">Popular</option>
-                      <option value="rating">Rating</option>
-                      <option value="-createdAt">Latest</option>
-                      <option value="currentPrice">Price low to high</option>
-                      <option value="-currentPrice">Price high to low</option>
+                      <option value="-rating">{t('popular')}</option>
+                      <option value="rating">{t('rating')}</option>
+                      <option value="-createdAt">{t('latest')}</option>
+                      <option value="currentPrice">
+                        {t('priceLowToHigh')}
+                      </option>
+                      <option value="-currentPrice">
+                        {t('priceHighToLow')}
+                      </option>
                     </Form.Select>
                     <ButtonGroup>
                       <Button>
@@ -199,20 +215,22 @@ const ShopScreen = () => {
               <Offcanvas.Title>Offcanvas</Offcanvas.Title>
             </Offcanvas.Header>
             <Offcanvas.Body>
-              <FilterSidebar
-                size={sizes}
-                setSize={setSizes}
-                category={category}
-                setCategory={setCategory}
-                min={minmax[0].minPrice}
-                minPrice={minPrice}
-                setMinPrice={setMinPrice}
-                max={minmax[0].maxPrice}
-                maxPrice={maxPrice}
-                setMaxPrice={setMaxPrice}
-                colors={colors}
-                setColors={setColors}
-              />
+              {minmax && (
+                <FilterSidebar
+                  size={sizes}
+                  setSize={setSizes}
+                  category={category}
+                  setCategory={setCategory}
+                  min={minmax[0].minPrice}
+                  minPrice={minPrice}
+                  setMinPrice={setMinPrice}
+                  max={minmax[0].maxPrice}
+                  maxPrice={maxPrice}
+                  setMaxPrice={setMaxPrice}
+                  colors={colors}
+                  setColors={setColors}
+                />
+              )}
             </Offcanvas.Body>
           </Offcanvas>
         </>

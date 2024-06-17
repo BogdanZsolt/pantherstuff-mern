@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
+import { Form } from 'react-bootstrap';
 import Loader from './Loader';
 import Message from './Message';
 import { useGetProductCategoriesQuery } from '../slices/productCategoriesApiSlice';
-import { Form } from 'react-bootstrap';
 
 const SelectCategory = ({ category, setCategory, multi = false }) => {
+  const { t, i18n } = useTranslation(['shop']);
   const animatedComponents = makeAnimated();
   const [defaultCategory, setDefaultCategory] = useState('');
 
@@ -66,14 +68,23 @@ const SelectCategory = ({ category, setCategory, multi = false }) => {
     data: categories,
     isLoading,
     error,
-  } = useGetProductCategoriesQuery({ sort: '-title' });
+  } = useGetProductCategoriesQuery({ sort: 'title' });
 
   const getOptions = () => {
     let options = [];
     if (!categories.data) return;
 
     categories.data.map((cat) => {
-      options = [...options, { value: cat._id, label: cat.title }];
+      options = [
+        ...options,
+        {
+          value: cat._id,
+          label:
+            i18n.language === 'en'
+              ? cat.title
+              : cat.translations?.hu?.title || cat.title,
+        },
+      ];
     });
     return options;
   };
@@ -81,15 +92,21 @@ const SelectCategory = ({ category, setCategory, multi = false }) => {
   useEffect(() => {
     if (categories) {
       if (category === '') {
-        setDefaultCategory('select');
+        setDefaultCategory(t('select'));
       }
       categories.data.map((item) => {
         if (item._id === category) {
-          setDefaultCategory({ value: item._id, label: item.title });
+          setDefaultCategory({
+            value: item._id,
+            label:
+              i18n.language === 'en'
+                ? item.title
+                : item.translations?.hu?.title || item.title,
+          });
         }
       });
     }
-  }, [categories, category]);
+  }, [categories, category, t, i18n.language]);
 
   const selectCategoryHandler = (choice) => {
     if (multi) {

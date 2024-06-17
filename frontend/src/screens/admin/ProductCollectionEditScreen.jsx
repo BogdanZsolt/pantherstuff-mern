@@ -4,6 +4,7 @@ import { Container, Row, Form, Button } from 'react-bootstrap';
 import FormContainer from '../../components/FormContainer';
 import Loader from '../../components/Loader';
 import Message from '../../components/Message';
+import LangSelectInput from '../../components/LangSelectInput';
 import {
   useGetProductCollectionDetailsQuery,
   useUpdateProductCollectionMutation,
@@ -15,6 +16,8 @@ const ProductCollectionEditScreen = () => {
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [transTitleHu, setTransTitleHu] = useState('');
+  const [transDescHu, setTransDescHu] = useState('');
 
   const {
     data: collection,
@@ -32,6 +35,10 @@ const ProductCollectionEditScreen = () => {
     if (collection) {
       setTitle(collection.title);
       setDescription(collection.description);
+      setTransTitleHu(collection.translations?.hu?.title || collection.title);
+      setTransDescHu(
+        collection.translations?.hu?.description || collection.description
+      );
     }
   }, [collection]);
 
@@ -42,6 +49,7 @@ const ProductCollectionEditScreen = () => {
         productCollId,
         title,
         description,
+        translations: { hu: { title: transTitleHu, description: transDescHu } },
       }).unwrap();
       toast.success('Collection updated');
       refetch();
@@ -67,24 +75,22 @@ const ProductCollectionEditScreen = () => {
           <Message variant="danger">{error.data.message}</Message>
         ) : (
           <Form onSubmit={submitHandler}>
-            <Form.Group controlId="title">
-              <Form.Label>Title</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
-            <Form.Group controlId="description" className="my-2">
-              <Form.Label>Description</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter description"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+            <LangSelectInput
+              label="Title"
+              defLang={title}
+              setDefLang={setTitle}
+              secLang={transTitleHu}
+              setSecLang={setTransTitleHu}
+            />
+            <LangSelectInput
+              label="Description"
+              defLang={description}
+              placeholder="Enter description"
+              placeholder_hu="Adja meg a leírást"
+              setDefLang={setDescription}
+              secLang={transDescHu}
+              setSecLang={setTransDescHu}
+            />
             <Button type="submit" variant="primary" className="my-2">
               Update
             </Button>

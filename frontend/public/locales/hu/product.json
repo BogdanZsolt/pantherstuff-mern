@@ -1,0 +1,18 @@
+{
+  "reviews": "{{rating}} {{count}} értékelés",
+  "colors": "Szinek",
+  "size": "Méret",
+  "instock": "<strong>{{count}}</strong> in Stock",
+  "qty": "Mennyiség",
+  "addToCart": "Tedd a kosárba",
+  "addToWishlist": "Add a Kívánságlistához",
+  "share": "Megoszt",
+  "askQuestion": "Kérdezek",
+  "freeShippingAndReturn": "Ingyenes szállítás és visszaküldés {{price}} feletti megrendelés esetén.",
+  "estimateDelivery": "Becsült kézbesítés:",
+  "productDetails": "Termék Leírás",
+  "custom": "Egyedi",
+  "reviewsTab": "Vélemények",
+  "shipping": "Szállítás",
+  "": ""
+}

@@ -10,6 +10,7 @@ import {
 const postCategoriesPopOption = [{ path: 'parent', select: ['title'] }];
 const postCategoryPopOption = [
   { path: 'children', select: '_id title description -parent' },
+  { path: 'parent', select: 'title' },
   {
     path: 'posts',
     select: '-body -__v',

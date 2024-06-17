@@ -14,6 +14,12 @@ const productCategorySchema = new mongoose.Schema(
       ref: 'ProductCategory',
       default: null,
     },
+    translations: {
+      hu: {
+        title: { type: String },
+        description: { type: String },
+      },
+    },
   },
   {
     timestamps: true,

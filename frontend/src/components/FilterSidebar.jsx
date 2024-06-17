@@ -4,6 +4,7 @@ import SelectCollection from './SelectCollection';
 import PriceSlider from './PriceSlider';
 import SelectColors from './SelectColors';
 import SelectSizes from './SelectSizes';
+import { useTranslation } from 'react-i18next';
 
 const FilterSidebar = ({
   size,
@@ -21,9 +22,11 @@ const FilterSidebar = ({
   colors,
   setColors,
 }) => {
+  const { t } = useTranslation(['shop']);
+
   return (
     <>
-      <h3>Filter</h3>
+      <h3>{t('filters')}</h3>
       <Row>
         <Accordion
           defaultActiveKey={[
@@ -37,19 +40,19 @@ const FilterSidebar = ({
           alwaysOpen
         >
           <Accordion.Item eventKey="size">
-            <Accordion.Header>Size</Accordion.Header>
+            <Accordion.Header>{t('size')}</Accordion.Header>
             <Accordion.Body>
               <SelectSizes productSize={size} setProductSize={setSize} />
             </Accordion.Body>
           </Accordion.Item>
           <Accordion.Item eventKey="color">
-            <Accordion.Header>Color</Accordion.Header>
+            <Accordion.Header>{t('color')}</Accordion.Header>
             <Accordion.Body>
               <SelectColors colors={colors} setColors={setColors} />
             </Accordion.Body>
           </Accordion.Item>
           <Accordion.Item eventKey="categories">
-            <Accordion.Header>Categories</Accordion.Header>
+            <Accordion.Header>{t('categories')}</Accordion.Header>
             <Accordion.Body>
               <SelectCategory
                 category={category}
@@ -59,7 +62,7 @@ const FilterSidebar = ({
             </Accordion.Body>
           </Accordion.Item>
           <Accordion.Item eventKey="collections">
-            <Accordion.Header>Collection</Accordion.Header>
+            <Accordion.Header>{t('collections')}</Accordion.Header>
             <Accordion.Body>
               <SelectCollection
                 collection={collection}
@@ -69,7 +72,7 @@ const FilterSidebar = ({
             </Accordion.Body>
           </Accordion.Item>
           <Accordion.Item eventKey="price">
-            <Accordion.Header>Price</Accordion.Header>
+            <Accordion.Header>{t('price')}</Accordion.Header>
             <Accordion.Body>
               <PriceSlider
                 min={min}

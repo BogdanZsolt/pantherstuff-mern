@@ -81,8 +81,24 @@ const ProductCollectionListScreen = () => {
               {productCollections.data.map((collection) => (
                 <tr key={collection._id}>
                   <td>{collection._id}</td>
-                  <td>{collection.title}</td>
-                  <td>{collection?.parent?.title}</td>
+                  <td className="text-center">
+                    <p className="text-start my-0 py-0">
+                      <b>en: </b> {collection.title}
+                    </p>
+                    <p className="text-start my-0 py-0">
+                      <b>hu: </b> {collection.translations?.hu?.title}
+                    </p>
+                  </td>
+                  <td className="text-center">
+                    <p className="text-start my-0 py-0">
+                      <b>en: </b>
+                      {collection.description}
+                    </p>
+                    <p className="text-start my-0 py-0">
+                      <b>hu: </b>
+                      {collection.translations?.hu?.description}
+                    </p>
+                  </td>
                   <td>
                     <LinkContainer
                       to={`/admin/productcollection/${collection._id}/edit`}
