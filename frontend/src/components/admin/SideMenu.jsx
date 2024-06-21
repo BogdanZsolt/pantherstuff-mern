@@ -2,11 +2,11 @@ import { Accordion, Nav } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { BsSpeedometer2, BsPeople, BsTable } from 'react-icons/bs';
 
-const SideMenu = ({ value, setValue }) => {
+const SideMenu = () => {
   return (
-    <Accordion defaultActiveKey={value} className="w-100" flush>
+    <Accordion defaultActiveKey="products" className="w-100" flush>
       <Accordion.Item eventKey="products">
-        <Accordion.Header onClick={() => setValue('products')}>
+        <Accordion.Header>
           <BsSpeedometer2 />
           Products
         </Accordion.Header>
@@ -34,7 +34,7 @@ const SideMenu = ({ value, setValue }) => {
         </Accordion.Body>
       </Accordion.Item>
       <Accordion.Item eventKey="posts">
-        <Accordion.Header onClick={() => setValue('posts')}>
+        <Accordion.Header>
           <BsSpeedometer2 />
           Posts
         </Accordion.Header>
@@ -57,7 +57,7 @@ const SideMenu = ({ value, setValue }) => {
         </Accordion.Body>
       </Accordion.Item>
       <Accordion.Item eventKey="users">
-        <Accordion.Header onClick={() => setValue('users')}>
+        <Accordion.Header>
           <BsPeople />
           Users
         </Accordion.Header>
@@ -70,7 +70,7 @@ const SideMenu = ({ value, setValue }) => {
         </Accordion.Body>
       </Accordion.Item>
       <Accordion.Item eventKey="orders">
-        <Accordion.Header onClick={() => setValue('orders')}>
+        <Accordion.Header>
           <BsTable />
           Orders
         </Accordion.Header>
@@ -83,7 +83,7 @@ const SideMenu = ({ value, setValue }) => {
         </Accordion.Body>
       </Accordion.Item>
       <Accordion.Item eventKey="subscribe">
-        <Accordion.Header onClick={() => setValue('subscribe')}>
+        <Accordion.Header>
           <BsTable />
           Subscribe
         </Accordion.Header>

@@ -1,4 +1,10 @@
-const Banner = ({ src, alt, title, description, video }) => {
+const Banner = ({
+  src = '',
+  alt = '',
+  title = '',
+  description,
+  video = false,
+}) => {
   return (
     <div className="banner">
       {video ? (
@@ -14,10 +20,4 @@ const Banner = ({ src, alt, title, description, video }) => {
   );
 };
 
-Banner.defaultProps = {
-  src: '',
-  alt: '',
-  title: '',
-  video: false,
-};
 export default Banner;

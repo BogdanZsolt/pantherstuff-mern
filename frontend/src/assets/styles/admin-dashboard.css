@@ -1,36 +1,8 @@
-.sidebar {
-  height: 100%;
+.sidebar .dropdown-menu__container {
+  position: relative;
 }
 
-.sidebar ul li:hover {
-  background-color: rgba(var(--bs-primary-rgb), 0.35);
-  border-radius: var(--bs-border-radius-sm);
-  cursor: pointer;
-}
-
-.active {
-  background-color: rgba(var(--bs-primary-rgb), 0.35);
-  border-radius: var(--bs-border-radius-sm);
-}
-
-:where(.sidebar, .admin-menu-canvas) .accordion {
-  --bs-accordion-color: var(--bs-primary);
-  --bs-accordion-bg: var(--bs-secondary);
-  --bs-accordion-btn-color: var(--bs-primary);
-  --bs-accordion-border-width: none;
-  --bs-accordion-active-color: var(--bs-secondary);
-  --bs-accordion-active-bg: var(--bs-primary);
-}
-
-:where(.sidebar, .admin-menu-canvas) .accordion-header .accordion-button {
-  gap: 0.25rem;
-}
-
-:where(.sidebar, .admin-menu-canvas) .accordion-body {
-  background-color: var(--bs-secondary);
-}
-
-.ql-container.ql-snow {
-  font-family: var(--bs-font-sans-serif);
-  font-size: 1rem;
+.sidebar .dropdown-menu__container .dropdown-menu {
+  top: -2rem;
+  left: 4rem;
 }

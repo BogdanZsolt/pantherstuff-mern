@@ -3129,8 +3129,8 @@ fieldset:disabled .btn {
   --bs-btn-color: var(--bs-primary);
   --bs-btn-bg: var(--bs-secondary);
   --bs-btn-border-color: var(--bs-secondary);
-  --bs-btn-hover-color: var(--bs-primary);
-  --bs-btn-hover-bg: rgba(var(--bs-secondary-rgb), 0.75);
+  --bs-btn-hover-color: var(--bs-secondary);
+  --bs-btn-hover-bg: rgba(var(--bs-primary-rgb), 0.75);
   --bs-btn-hover-border-color: #303d4a;
   --bs-btn-focus-shadow-rgb: 89, 103, 117;
   --bs-btn-active-color: var(--bs-primary);

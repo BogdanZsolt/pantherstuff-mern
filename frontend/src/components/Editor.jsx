@@ -9,7 +9,7 @@ import Color from '@tiptap/extension-color';
 import Highlight from '@tiptap/extension-highlight';
 import Link from '@tiptap/extension-link';
 import { TextAlign } from '@tiptap/extension-text-align';
-import Dropcursor from '@tiptap/extension-dropcursor';
+// import Dropcursor from '@tiptap/extension-dropcursor';
 // import MyImage from './editor/MyImage';
 import Table from '@tiptap/extension-table';
 import TableCell from '@tiptap/extension-table-cell';
@@ -55,7 +55,7 @@ const extensions = [
     types: ['heading', 'paragraph', 'image', 'youtube'],
     defaultAlignment: 'left',
   }),
-  Dropcursor,
+  // Dropcursor,
   Table.configure({
     resizable: true,
   }),
