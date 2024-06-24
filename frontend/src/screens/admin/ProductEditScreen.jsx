@@ -74,8 +74,6 @@ const ProductEditScreen = () => {
     }
   }, [product]);
 
-  console.log(transCurrentPriceHu);
-
   const submitHandler = async (e) => {
     e.preventDefault();
     try {

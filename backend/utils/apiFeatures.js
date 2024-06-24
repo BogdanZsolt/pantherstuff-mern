@@ -17,13 +17,18 @@ class APIFeatures {
       if (newKey.length > 1) {
         delete queryObj[key];
         key = newKey[0];
+        if (newKey.length > 2) {
+          for (let i = 1; i <= newKey.length - 2; i++) {
+            key = `${key}.${newKey[i]}`;
+          }
+        }
         let teszt = val.split(',');
         teszt.length > 1 ? (val = teszt) : (val = teszt[0]);
         let v = {};
         if (queryObj[key]) {
           v = queryObj[key];
         }
-        v[newKey[1]] = val;
+        v[newKey[newKey.length - 1]] = val;
         val = v;
       }
       if (typeof val === 'string') {
@@ -38,8 +43,6 @@ class APIFeatures {
       /\b(gte|gt|lte|lt|regex|and|eq|in)\b/g,
       (match) => `$${match}`
     );
-
-    // console.log(queryStr);
 
     this.query = this.query.find(JSON.parse(queryStr));
 

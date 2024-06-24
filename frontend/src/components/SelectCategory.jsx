@@ -62,6 +62,12 @@ const SelectCategory = ({ category, setCategory, multi = false }) => {
       border: '1px solid var(--bs-secondary)',
       boxShadow: '0 10px 20px -10px var(--bs-secondary)',
     }),
+    Placeholder: (baseStyle) => ({
+      ...baseStyle,
+      fontSize: '1.15rem',
+      color: 'var(--bs-secondary)',
+      fontWeight: '500',
+    }),
   };
 
   const {
@@ -91,9 +97,9 @@ const SelectCategory = ({ category, setCategory, multi = false }) => {
 
   useEffect(() => {
     if (categories) {
-      if (category === '') {
-        setDefaultCategory(t('select'));
-      }
+      // if (category === '') {
+      //   setDefaultCategory(t('select'));
+      // }
       categories.data.map((item) => {
         if (item._id === category) {
           setDefaultCategory({
@@ -106,7 +112,7 @@ const SelectCategory = ({ category, setCategory, multi = false }) => {
         }
       });
     }
-  }, [categories, category, t, i18n.language]);
+  }, [categories, category, i18n.language]);
 
   const selectCategoryHandler = (choice) => {
     if (multi) {
@@ -144,6 +150,7 @@ const SelectCategory = ({ category, setCategory, multi = false }) => {
               isSearchable
               isMulti={multi}
               onChange={selectCategoryHandler}
+              placeholder={t('select')}
             />
           </Form.Group>
         )

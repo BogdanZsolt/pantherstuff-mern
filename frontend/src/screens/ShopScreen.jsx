@@ -63,8 +63,22 @@ const ShopScreen = () => {
     colors_in: colors.length > 0 ? colors : undefined,
     page,
     limit: 8,
-    currentPrice_gte: minPrice === 0 ? undefined : minPrice,
-    currentPrice_lte: maxPrice === 0 ? undefined : maxPrice,
+    currentPrice_gte:
+      i18n.language === 'en'
+        ? minPrice === 0
+          ? undefined
+          : minPrice
+        : undefined,
+    currentPrice_lte:
+      i18n.language === 'en'
+        ? maxPrice === 0
+          ? undefined
+          : maxPrice
+        : undefined,
+    translations_hu_currentPrice_gte:
+      i18n.language === 'en' ? undefined : minPrice,
+    translations_hu_currentPrice_lte:
+      i18n.language === 'en' ? undefined : maxPrice,
   });
 
   useEffect(() => {

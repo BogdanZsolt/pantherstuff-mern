@@ -1,5 +1,5 @@
 import asyncHandler from '../middleware/asyncHandler.js';
-import { getOne, createOne, updateOne } from './handlerFactory.js';
+import { getOne, createOne } from './handlerFactory.js';
 import APIFeatures from '../utils/apiFeatures.js';
 import Product from '../models/productModel.js';
 
@@ -153,8 +153,6 @@ const updateProduct = asyncHandler(async (req, res) => {
     product.colors = colors || product.colors;
     product.sizes = sizes || product.sizes;
     product.translations = translations || product.translations;
-
-    console.log(req.body);
 
     const updatedProduct = await product.save();
 

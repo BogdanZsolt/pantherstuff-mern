@@ -8,7 +8,7 @@ import Message from './Message';
 import { useGetProductCollectionsQuery } from '../slices/productCollectionsApiSlice';
 
 const SelectCollection = ({ collection, setCollection, multi = false }) => {
-  const { i18n } = useTranslation(['shop']);
+  const { t, i18n } = useTranslation(['shop']);
   const animatedComponents = makeAnimated();
   const [collectionOptions, setCollectionOptions] = useState(null);
   const [defaultCollection, setDefaultCollection] = useState([]);
@@ -135,6 +135,7 @@ const SelectCollection = ({ collection, setCollection, multi = false }) => {
               isSearchable
               options={collectionOptions}
               onChange={selectCollectionHandler}
+              placeholder={t('select')}
             />
           </Form.Group>
         )

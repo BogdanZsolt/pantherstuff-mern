@@ -28,11 +28,13 @@ const PriceSlider = ({
         })}{' '}
       </span> */}
       <Slider
-        value={[minPrice, maxPrice]}
+        defaultValue={[minPrice, maxPrice]}
         min={min}
         max={max}
+        step={1}
         onChange={sliderHandler}
         className="price-slider"
+        pearling
         // renderThumb={(props, state) => <div {...props}>{state.valueNow}</div>}
       />
     </div>
