@@ -14,6 +14,12 @@ const postCategorySchema = new mongoose.Schema(
       ref: 'PostCategory',
       default: null,
     },
+    translations: {
+      hu: {
+        title: { type: String },
+        description: { type: String },
+      },
+    },
   },
   {
     timestamps: true,

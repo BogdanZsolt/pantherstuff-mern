@@ -6,8 +6,10 @@ import Banner from '../components/Banner.jsx';
 import FormContainer from '../components/FormContainer.jsx';
 import CheckoutSteps from '../components/CheckoutSteps.jsx';
 import { savePaymentMethod } from '../slices/cartSlice.js';
+import { useTranslation } from 'react-i18next';
 
 const PaymentScreen = () => {
+  const { t } = useTranslation();
   const [paymentMethod, setPaymentMethod] = useState('PayPal');
 
   const dispatch = useDispatch();
@@ -30,19 +32,19 @@ const PaymentScreen = () => {
 
   return (
     <>
-      <Banner title="Payment Method" />
+      <Banner title={t('paymentMethod')} />
       <Container>
         <FormContainer>
           <CheckoutSteps step1 step2 step3 />
           {/* <h1>Payment Method</h1> */}
           <Form onSubmit={submitHandler}>
             <Form.Group>
-              <Form.Label as="legend">Select Method</Form.Label>
+              <Form.Label as="legend">{t('selectMethod')}</Form.Label>
               <Col>
                 <Form.Check
                   type="radio"
                   className="my-2"
-                  label="PayPal or Credit Card"
+                  label={t('payPalOrCreditCard')}
                   id="PayPal"
                   name="paymentMethod"
                   value={paymentMethod}
@@ -52,7 +54,7 @@ const PaymentScreen = () => {
               </Col>
             </Form.Group>
             <Button type="submit" variant="primary">
-              Continue
+              {t('continue')}
             </Button>
           </Form>
         </FormContainer>

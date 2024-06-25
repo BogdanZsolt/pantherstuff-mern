@@ -9,14 +9,14 @@ import {
 
 const postCategoriesPopOption = [{ path: 'parent', select: ['title'] }];
 const postCategoryPopOption = [
-  { path: 'children', select: '_id title description -parent' },
+  { path: 'children', select: '_id title description -parent translations' },
   { path: 'parent', select: 'title' },
   {
     path: 'posts',
     select: '-body -__v',
     populate: [
       { path: 'user', select: 'name' },
-      { path: 'category', select: 'title' },
+      { path: 'category', select: ['title', 'translations'] },
     ],
   },
 ];
@@ -25,6 +25,13 @@ const createInit = (req, res, next) => {
   req.body.user = req.user._id;
   req.body.title = 'Simple category';
   req.body.description = 'Simple description';
+  req.body.parent = null;
+  req.body.translations = {
+    hu: {
+      title: 'Egyszerű Kategória',
+      description: 'Egyszerű leírás',
+    },
+  };
   next();
 };
 

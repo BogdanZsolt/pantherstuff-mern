@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 import Loader from '../components/Loader';
 import Banner from '../components/Banner';
@@ -6,11 +8,47 @@ import Message from '../components/Message';
 import Post from '../components/Post';
 import { useGetPostsQuery } from '../slices/postsApiSlice';
 import { useTranslation } from 'react-i18next';
+import Paginate from '../components/Paginate';
 
 const BlogScreen = () => {
-  const { t } = useTranslation();
+  let { pageNumber } = useParams();
 
-  const { data: posts, isLoading, error } = useGetPostsQuery();
+  if (!pageNumber) {
+    pageNumber = 1;
+  }
+
+  const { t, i18n } = useTranslation(['blog']);
+
+  const [sort, setSort] = useState('');
+  const [lang, setLang] = useState('');
+  const [page, setPage] = useState(pageNumber);
+  const [pages, setPages] = useState(1);
+
+  useEffect(() => {
+    setSort('-createdAt');
+    setLang(i18n.language);
+  }, [i18n.language]);
+
+  const {
+    data: posts,
+    isLoading,
+    error,
+  } = useGetPostsQuery({
+    sort,
+    language: lang,
+    page,
+    limit: 8,
+  });
+
+  useEffect(() => {
+    if (posts) {
+      posts.pages < 1 ? setPages(1) : setPages(posts.pages);
+      pages < page ? setPage(pages) : setPage(pageNumber);
+    }
+  }, [posts, pages, page, pageNumber]);
+
+  console.log(posts);
+
   return (
     <>
       {isLoading ? (
@@ -41,6 +79,7 @@ const BlogScreen = () => {
                 </Col>
               ))}
             </Row>
+            <Paginate pages={pages} page={page} pageName="blog" />
           </Container>
         </>
       )}

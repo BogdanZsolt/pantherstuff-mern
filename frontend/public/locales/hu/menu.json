@@ -13,5 +13,12 @@
   "pantherStuffBlog": "PantherStuff Blog",
   "library": "Könyvtár",
   "blog": "Blog",
-  "contact": "Kapcsolat"
+  "contact": "Kapcsolat",
+  "adminDashboard": "Rendszergazdai irányítópult",
+  "profile": "Profil",
+  "logOut": "Kijelentkezés",
+  "signIn": "Bejelentkezés",
+  "cart": "Bevásárlókosár",
+  "wishlist": "Kívánság lista",
+  "": ""
 }

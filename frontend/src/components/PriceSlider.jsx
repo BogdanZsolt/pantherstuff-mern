@@ -28,10 +28,9 @@ const PriceSlider = ({
         })}{' '}
       </span> */}
       <Slider
-        defaultValue={[minPrice, maxPrice]}
+        value={[minPrice, maxPrice]}
         min={min}
         max={max}
-        step={1}
         onChange={sliderHandler}
         className="price-slider"
         pearling

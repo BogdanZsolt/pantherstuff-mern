@@ -7,6 +7,7 @@ const postSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
     },
+    language: { type: String, required: true, default: 'hu' },
     title: { type: String, required: true, trim: true },
     description: { type: String, required: true },
     body: { type: String, required: true },

@@ -17,11 +17,13 @@ import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { useCreateOrderMutation } from '../slices/ordersApiSlice';
 import { clearCartItems } from '../slices/cartSlice';
+import { useTranslation } from 'react-i18next';
 
 const PlaceOrderScreen = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
+  const { t } = useTranslation();
 
   const [createOrder, { isLoading, error }] = useCreateOrderMutation();
 
@@ -53,16 +55,16 @@ const PlaceOrderScreen = () => {
 
   return (
     <>
-      <Banner title="Order" />
+      <Banner title={t('order')} />
       <Container>
         <CheckoutSteps step1 step2 step3 step4 />
         <Row>
           <Col md={8}>
             <ListGroup variant="flush">
               <ListGroup.Item>
-                <h2>Shipping</h2>
+                <h2>{t('shipping')}</h2>
                 <p>
-                  <strong>Address:</strong>
+                  <strong>{t('address')}: </strong>
                   {cart.shippingAddress.address}, {cart.shippingAddress.city}{' '}
                   {cart.shippingAddress.postalCode},{' '}
                   {cart.shippingAddress.country}
@@ -70,15 +72,15 @@ const PlaceOrderScreen = () => {
               </ListGroup.Item>
 
               <ListGroup.Item>
-                <h2>Payment Method</h2>
-                <strong>Method: </strong>
+                <h2>{t('paymentMethod')}</h2>
+                <strong>{t('method')}: </strong>
                 {cart.paymentMethod}
               </ListGroup.Item>
 
               <ListGroup.Item>
-                <h2>Order Items</h2>
+                <h2>{t('orderItems')}</h2>
                 {cart.cartItems.length === 0 ? (
-                  <Message>Your cart is empty</Message>
+                  <Message>{'yourCartIsEmpty'}</Message>
                 ) : (
                   <ListGroup variant="flush">
                     {cart.cartItems.map((item, index) => (
@@ -113,33 +115,33 @@ const PlaceOrderScreen = () => {
             <Card>
               <ListGroup variant="flush">
                 <ListGroup.Item>
-                  <h2>Order Summary</h2>
+                  <h2>{t('orderSummary')}</h2>
                 </ListGroup.Item>
 
                 <ListGroup.Item>
                   <Row>
-                    <Col>Items:</Col>
+                    <Col>{t('items')}:</Col>
                     <Col>${cart.itemsPrice}</Col>
                   </Row>
                 </ListGroup.Item>
 
                 <ListGroup.Item>
                   <Row>
-                    <Col>Shipping:</Col>
+                    <Col>{t('shipping')}:</Col>
                     <Col>${cart.shippingPrice}</Col>
                   </Row>
                 </ListGroup.Item>
 
                 <ListGroup.Item>
                   <Row>
-                    <Col>Tax:</Col>
+                    <Col>{t('tax')}:</Col>
                     <Col>${cart.taxPrice}</Col>
                   </Row>
                 </ListGroup.Item>
 
                 <ListGroup.Item>
                   <Row>
-                    <Col>Total:</Col>
+                    <Col>{t('total')}:</Col>
                     <Col>${cart.totalPrice}</Col>
                   </Row>
                 </ListGroup.Item>
@@ -157,7 +159,7 @@ const PlaceOrderScreen = () => {
                     disabled={cart.cartItems.length === 0}
                     onClick={placeOrderHandler}
                   >
-                    Place Order
+                    {t('placeOrder')}
                   </Button>
 
                   {isLoading && <Loader />}

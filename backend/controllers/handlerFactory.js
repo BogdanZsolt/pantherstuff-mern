@@ -36,6 +36,8 @@ const getAll = (Model, popOption) =>
       count = doc.length;
     }
 
+    console.log(count);
+
     // SEND RESPONSE
     res.json({ data: doc, pages, page, count });
   });

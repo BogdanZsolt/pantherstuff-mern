@@ -17,8 +17,11 @@ import logo from '../assets/logo-200x200.png';
 import { useLogoutMutation } from '../slices/usersApiSlice';
 import { logout } from '../slices/authSlice';
 import LanguageSelector from './LanguageSelector';
+import { useTranslation } from 'react-i18next';
 
 const Header = () => {
+  const { t } = useTranslation(['menu']);
+
   const { cartItems } = useSelector((state) => state.cart);
   const { wishListItems } = useSelector((state) => state.wishList);
   const { userInfo } = useSelector((state) => state.auth);
@@ -89,26 +92,28 @@ const Header = () => {
                   <NavDropdown title={userInfo.name} id="username" as="li">
                     {userInfo.isAdmin && (
                       <LinkContainer to="/admin">
-                        <NavDropdown.Item>Admin Dashboard</NavDropdown.Item>
+                        <NavDropdown.Item>
+                          {t('adminDashboard')}
+                        </NavDropdown.Item>
                       </LinkContainer>
                     )}
                     <LinkContainer to="/profile">
-                      <NavDropdown.Item>Profile</NavDropdown.Item>
+                      <NavDropdown.Item>{t('profile')}</NavDropdown.Item>
                     </LinkContainer>
                     <NavDropdown.Item onClick={logoutHandler}>
-                      LogOut
+                      {t('logOut')}
                     </NavDropdown.Item>
                   </NavDropdown>
                 ) : (
                   <LinkContainer to="/login">
                     <Nav.Link>
                       <RiUserLine />
-                      Sign In
+                      {t('signIn')}
                     </Nav.Link>
                   </LinkContainer>
                 )}
                 <li className="d-flex justify-content-center align-items-center">
-                  <LinkContainer to="/cart">
+                  <LinkContainer to="/cart" title={t('cart')}>
                     <Nav.Link className="d-flex justify-content-center align-items-center">
                       <RiShoppingBagLine />
                       {cartItems.length > 0 && (
@@ -120,7 +125,7 @@ const Header = () => {
                   </LinkContainer>
                 </li>
                 <li className="d-flex justify-content-center align-items-center">
-                  <LinkContainer to="/wishlist">
+                  <LinkContainer to="/wishlist" title={t('wishlist')}>
                     <Nav.Link className="d-flex justify-content-center align-items-center">
                       <RiHeartLine />
                       {wishListItems.length > 0 && (

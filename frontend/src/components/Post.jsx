@@ -4,15 +4,22 @@ import { Image } from 'react-bootstrap';
 // import { RiArrowRightSLine } from 'react-icons/ri';
 
 const Post = ({ postId, src, category, author, title, description, date }) => {
-  const { t } = useTranslation(['home']);
+  const { t, i18n } = useTranslation(['blog']);
+
   return (
     <article className="blog-post">
       <strong
         className="d-inline-block mb-2 text-primary-emphasis"
         style={{ fontSize: '1.25rem' }}
       >
-        <Link to={`/category/${category?._id}`}>
-          {category?.title ? category?.title : 'undefined'}
+        <Link to={category?._id ? `/category/${category?._id}` : ''}>
+          {i18n.language === 'en'
+            ? category?.title
+              ? category?.title
+              : 'Uncategorized'
+            : category?.translations?.hu?.title
+            ? category?.translations?.hu?.title
+            : t('uncategorized')}
         </Link>
       </strong>
       <div className="post-image-wrapper">

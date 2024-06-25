@@ -4,12 +4,13 @@ import { Container, Row, Form, Button } from 'react-bootstrap';
 import FormContainer from '../../components/FormContainer';
 import Loader from '../../components/Loader';
 import Message from '../../components/Message';
+import { toast } from 'react-toastify';
+import LangSelectInput from '../../components/LangSelectInput';
 import {
   useGetPostCategoryDetailsQuery,
   useUpdatePostCategoryMutation,
   useGetPostCategoriesQuery,
 } from '../../slices/postCategoriesApiSlice';
-import { toast } from 'react-toastify';
 
 const PostCatEditScreen = () => {
   const { id: postCatId } = useParams();
@@ -17,6 +18,8 @@ const PostCatEditScreen = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [parent, setParent] = useState('');
+  const [transTitleHu, setTransTitleHu] = useState('');
+  const [transDescHu, setTransDescHu] = useState('');
 
   const {
     data: productCats,
@@ -40,7 +43,11 @@ const PostCatEditScreen = () => {
     if (category) {
       setTitle(category.title);
       setDescription(category.description);
-      setParent(category.parent?._id);
+      setParent(category?.parent?._id);
+      setTransTitleHu(category.translations?.hu?.title || category.title);
+      setTransDescHu(
+        category.translations?.hu?.description || category.description
+      );
     }
   }, [category]);
 
@@ -51,6 +58,7 @@ const PostCatEditScreen = () => {
         postCatId,
         title,
         description,
+        translations: { hu: { title: transTitleHu, description: transDescHu } },
         parent: parent === '' ? null : parent,
       }).unwrap();
       toast.success('Category updated');
@@ -77,24 +85,22 @@ const PostCatEditScreen = () => {
           <Message variant="danger">{error.data.message}</Message>
         ) : (
           <Form onSubmit={submitHandler}>
-            <Form.Group controlId="title">
-              <Form.Label>Title</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter title"
-                value={title || ''}
-                onChange={(e) => setTitle(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
-            <Form.Group controlId="description" className="my-2">
-              <Form.Label>Description</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter description"
-                value={description || ''}
-                onChange={(e) => setDescription(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+            <LangSelectInput
+              label="Title"
+              defLang={title}
+              setDefLang={setTitle}
+              secLang={transTitleHu}
+              setSecLang={setTransTitleHu}
+            />
+            <LangSelectInput
+              label="Description"
+              defLang={description}
+              placeholder="Enter description"
+              placeholder_hu="Adja meg a leírást"
+              setDefLang={setDescription}
+              secLang={transDescHu}
+              setSecLang={setTransDescHu}
+            />
             {GetLoading ? (
               <Loader />
             ) : getError ? (
@@ -118,7 +124,6 @@ const PostCatEditScreen = () => {
                 </Form.Group>
               )
             )}
-
             <Button type="submit" variant="primary" className="my-2">
               Update
             </Button>

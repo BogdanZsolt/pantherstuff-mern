@@ -2,7 +2,13 @@ import { Navigate } from 'react-router-dom';
 import { Pagination } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
-const Paginate = ({ pages, page, isAdmin = false, keyword = '' }) => {
+const Paginate = ({
+  pages,
+  page,
+  isAdmin = false,
+  keyword = '',
+  pageName = 'shop',
+}) => {
   return pages > 1 ? (
     <Pagination>
       {[...Array(pages).keys()].map((x) => (
@@ -11,8 +17,8 @@ const Paginate = ({ pages, page, isAdmin = false, keyword = '' }) => {
           to={
             !isAdmin
               ? keyword !== ''
-                ? `/shop/search/${keyword}/page/${x + 1}`
-                : `/shop/page/${x + 1}`
+                ? `/${pageName}/search/${keyword}/page/${x + 1}`
+                : `/${pageName}/page/${x + 1}`
               : `/admin/productlist/${x + 1}`
           }
         >
@@ -25,8 +31,8 @@ const Paginate = ({ pages, page, isAdmin = false, keyword = '' }) => {
       to={
         !isAdmin
           ? keyword !== ''
-            ? `/shop/search/${keyword}`
-            : `/shop/`
+            ? `/${pageName}/search/${keyword}`
+            : `/${pageName}/`
           : `/admin/productlist/`
       }
     />

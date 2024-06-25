@@ -13,6 +13,7 @@ import Banner from '../components/Banner';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 import {
   useGetOrderDetailsQuery,
   usePayOrderMutation,
@@ -21,6 +22,8 @@ import {
 
 const OrderScreen = () => {
   const { id: orderId } = useParams();
+  const { t } = useTranslation();
+
   const {
     data: order,
     refetch,
@@ -40,7 +43,7 @@ const OrderScreen = () => {
     await payOrder({ orderId, details: { payer: {} } });
     refetch();
 
-    toast.success('Order is paid');
+    toast.success(t('orderIsPaid'));
   }
 
   const deliverOrderHandler = async () => {

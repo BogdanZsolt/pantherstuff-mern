@@ -15,11 +15,12 @@ import Message from '../components/Message';
 import Banner from '../components/Banner';
 import { addToCart, removeFromCart } from '../slices/cartSlice';
 import { useTranslation } from 'react-i18next';
+import { toCurrency } from '../utils/converter';
 
 const CartScreen = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
@@ -45,7 +46,7 @@ const CartScreen = () => {
             {/* <h1 style={{ marginBottom: '20px' }}>Shopping Cart</h1> */}
             {cartItems.length === 0 ? (
               <Message>
-                {t('yourCartIsEmpty')} <Link to="/">{t('goBack')}</Link>
+                {t('yourCartIsEmpty')} <Link to="/shop">{t('goBack')}</Link>
               </Message>
             ) : (
               <ListGroup variant="flush">
@@ -61,9 +62,21 @@ const CartScreen = () => {
                         />
                       </Col>
                       <Col md={3}>
-                        <Link to={`/product/${item._id}`}>{item.name}</Link>
+                        <Link to={`/product/${item._id}`}>
+                          {i18n.language === 'en'
+                            ? item.name
+                            : item.translations?.hu?.name || item.name}
+                        </Link>
                       </Col>
-                      <Col md={2}>${item.currentPrice}</Col>
+                      <Col md={2}>
+                        {toCurrency(
+                          i18n.language,
+                          i18n.language === 'en'
+                            ? item.currentPrice
+                            : item.translations?.hu?.currentPrice ||
+                                item.currentPrice
+                        )}
+                      </Col>
                       <Col md={2}>
                         <Form.Control
                           as="select"
@@ -99,17 +112,30 @@ const CartScreen = () => {
               <ListGroup variant="flush">
                 <ListGroup.Item>
                   <h2>
-                    {t('subtotal')} (
-                    {cartItems.reduce((acc, item) => acc + item.qty, 0)}){' '}
-                    {t('items')}
+                    {t('subtotal', {
+                      count: cartItems.reduce((acc, item) => acc + item.qty, 0),
+                    })}
                   </h2>
-                  $
-                  {cartItems
-                    .reduce(
-                      (acc, item) => acc + item.qty * item.currentPrice,
-                      0
-                    )
-                    .toFixed(2)}
+                  {toCurrency(
+                    i18n.language,
+                    i18n.language === 'en'
+                      ? cartItems
+                          .reduce(
+                            (acc, item) => acc + item.qty * item.currentPrice,
+                            0
+                          )
+                          .toFixed(2)
+                      : cartItems
+                          .reduce(
+                            (acc, item) =>
+                              acc +
+                              item.qty *
+                                (item.translations.hu.currentPrice ||
+                                  item.currentPrice),
+                            0
+                          )
+                          .toFixed(0)
+                  )}
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <Button

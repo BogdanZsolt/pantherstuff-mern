@@ -13,5 +13,12 @@
   "pantherStuffBlog": "PantherStuff Blog",
   "library": "Library",
   "blog": "Blog",
-  "contact": "Contact"
+  "contact": "Contact",
+  "adminDashboard": "Admin Dashboard",
+  "profile": "Profile",
+  "logOut": "LogOut",
+  "signIn": "Sign In",
+  "cart": "Shopping Cart",
+  "wishlist": "Wish List",
+  "": ""
 }

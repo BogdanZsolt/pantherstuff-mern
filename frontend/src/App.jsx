@@ -109,6 +109,20 @@ const App = () => {
             {
               path: 'blog',
               element: <BlogScreen />,
+              children: [
+                {
+                  path: 'search/:keyword',
+                  element: <BlogScreen />,
+                },
+                {
+                  path: 'page/:pageNumber',
+                  element: <BlogScreen />,
+                },
+                {
+                  path: 'search/:keyword/page/:pageNumber',
+                  element: <BlogScreen />,
+                },
+              ],
             },
             {
               path: 'post/:id',

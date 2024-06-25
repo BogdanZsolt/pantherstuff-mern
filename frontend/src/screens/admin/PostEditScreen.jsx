@@ -6,6 +6,7 @@ import FormContainer from '../../components/FormContainer';
 import Loader from '../../components/Loader';
 import Message from '../../components/Message';
 import { toast } from 'react-toastify';
+import SelectLanguage from '../../components/SelectLanguage.jsx';
 // import Editor from '../../components/admin/Editor';
 import {
   useGetPostDetailsQuery,
@@ -23,6 +24,7 @@ const PostEditScreen = () => {
   const navigate = useNavigate();
 
   const { userInfo } = useSelector((state) => state.auth);
+  const [lang, setLang] = useState('');
   const [title, setTitle] = useState('');
   const [bannerImage, setBannerImage] = useState('');
   const [body, setBody] = useState('');
@@ -58,11 +60,12 @@ const PostEditScreen = () => {
     try {
       await updatePost({
         postId,
+        language: lang,
         title,
         bannerImage,
         body,
         description,
-        category,
+        category: category === '' ? undefined : category,
         user: author,
       }).unwrap();
       toast.success('Post updated');
@@ -75,6 +78,7 @@ const PostEditScreen = () => {
 
   useEffect(() => {
     if (post) {
+      setLang(post.language || 'hu');
       setTitle(post.title);
       setBannerImage(post.bannerImage);
       setBody(post.body);
@@ -83,6 +87,8 @@ const PostEditScreen = () => {
       setAuthor(post.user._id);
     }
   }, [post]);
+
+  console.log(post);
 
   return (
     <Container className="mt-5" fluid>
@@ -158,14 +164,15 @@ const PostEditScreen = () => {
               )
             )}
 
+            <SelectLanguage lang={lang} setLang={setLang} />
+
             {/* Category Select from post category  */}
             {loadingGetCats ? (
               <Loader />
             ) : errGetCats ? (
               <Message variant="danger">{errGetCats.data.message}</Message>
             ) : (
-              cats &&
-              cats.length > 0 && (
+              cats.data && (
                 <Form.Group controlId="category" className="mb-2">
                   <Form.Label>Category</Form.Label>
                   <Form.Select
@@ -173,7 +180,7 @@ const PostEditScreen = () => {
                     onChange={(e) => setCategory(e.target.value)}
                   >
                     <option>Uncategorized</option>
-                    {cats.map((cat) => (
+                    {cats.data.map((cat) => (
                       <option key={cat._id} value={cat._id}>
                         {cat.title}
                       </option>

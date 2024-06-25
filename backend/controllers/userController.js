@@ -194,7 +194,7 @@ const getAuthor = asyncHandler(async (req, res) => {
       select: '-body -__v',
       populate: [
         { path: 'user', select: 'name' },
-        { path: 'category', select: 'title' },
+        { path: 'category', select: ['title', 'translations'] },
       ],
     });
   res.status(200).json(author);
