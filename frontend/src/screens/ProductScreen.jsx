@@ -33,14 +33,16 @@ import Message from '../components/Message';
 import Meta from '../components/Meta';
 import Banner from '../components/Banner';
 import ThumbsGallery from '../components/ThumbsGallery';
+import { Trans, useTranslation } from 'react-i18next';
+import { toCurrency } from '../utils/converter';
 import {
   useGetProductDetailsQuery,
   useCreateReviewMutation,
 } from '../slices/productsApiSlice';
 import { addToCart } from '../slices/cartSlice';
 import { toggleWishList } from '../slices/wishListSlice';
-import { Trans, useTranslation } from 'react-i18next';
-import { toCurrency } from '../utils/converter';
+import SelectColor from '../components/SelectColor';
+import SelectSize from '../components/SelectSize';
 
 const ProductScreen = () => {
   const { id: productId } = useParams();
@@ -60,6 +62,8 @@ const ProductScreen = () => {
   const [beforePrice, setBeforePrice] = useState(0);
   const [currentPrice, setCurrentPrice] = useState(0);
   const [shippingPrice, setShippingPrice] = useState(0);
+  const [color, setColor] = useState('');
+  const [size, setSize] = useState('');
 
   const [activeTab, setActiveTab] = useState('description');
 
@@ -74,7 +78,24 @@ const ProductScreen = () => {
     useCreateReviewMutation();
 
   const addToCartHandler = () => {
-    dispatch(addToCart({ ...product, qty }));
+    const { _id, name, currentPrice, thumbnails, countInStock } = product;
+    const name_hu = product.translations?.hu?.name || product.name;
+    const currentPrice_hu =
+      product.translations?.hu?.currentPrice || product.currentPrice;
+    const thumbnail = thumbnails[0];
+    dispatch(
+      addToCart({
+        _id,
+        name,
+        name_hu,
+        currentPrice,
+        currentPrice_hu,
+        thumbnail,
+        color,
+        qty,
+        countInStock,
+      })
+    );
     navigate('/cart');
   };
 
@@ -102,6 +123,8 @@ const ProductScreen = () => {
           : product.translations?.hu?.currentPrice || product.currentPrice
       );
       setShippingPrice(i18n.language === 'en' ? 100 : 20000);
+      setColor(product.colors[0]);
+      setSize(product.sizes[0]._id);
     }
   }, [product, i18n.language]);
 
@@ -125,6 +148,8 @@ const ProductScreen = () => {
   const addToWishListHandler = () => {
     dispatch(toggleWishList({ ...product }));
   };
+
+  console.log(product?.sizes);
 
   return (
     <>
@@ -184,19 +209,19 @@ const ProductScreen = () => {
                     </ListGroup.Item>
                     <ListGroup.Item>
                       <Row>{t('colors')}</Row>
-                      <Row>
-                        {product.colors.map((color, index) => (
-                          <div className="color-box" key={index}>
-                            <span
-                              className="color"
-                              style={{ backgroundColor: `${color}` }}
-                            ></span>
-                          </div>
-                        ))}
-                      </Row>
+                      <SelectColor
+                        colors={product.colors}
+                        color={color}
+                        setColor={setColor}
+                      />
                     </ListGroup.Item>
                     <ListGroup.Item>
                       <Row>{t('size')}</Row>
+                      <SelectSize
+                        sizes={product.sizes}
+                        size={size}
+                        setSize={setSize}
+                      />
                     </ListGroup.Item>
                     <ListGroup.Item>
                       <Trans values={{ count: product.countInStock }}>

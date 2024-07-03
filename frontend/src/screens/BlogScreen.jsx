@@ -47,8 +47,6 @@ const BlogScreen = () => {
     }
   }, [posts, pages, page, pageNumber]);
 
-  console.log(posts);
-
   return (
     <>
       {isLoading ? (

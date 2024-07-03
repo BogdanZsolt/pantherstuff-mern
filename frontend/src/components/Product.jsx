@@ -30,8 +30,26 @@ const Product = ({ product }) => {
 
   const addToCartHandler = (e) => {
     e.preventDefault();
+    const { _id, name, currentPrice, thumbnails, colors, countInStock } =
+      product;
+    const name_hu = product.translations?.hu?.name || product.name;
+    const currentPrice_hu =
+      product.translations?.hu?.currentPrice || product.currentPrice;
     const qty = 1;
-    dispatch(addToCart({ ...product, qty }));
+    const thumbnail = thumbnails[0];
+    dispatch(
+      addToCart({
+        _id,
+        name,
+        name_hu,
+        currentPrice,
+        currentPrice_hu,
+        thumbnail,
+        color: colors[0],
+        qty,
+        countInStock,
+      })
+    );
   };
 
   const addToWishListHandler = (e) => {

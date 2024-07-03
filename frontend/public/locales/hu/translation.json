@@ -30,5 +30,17 @@
   "items": "Tételek",
   "tax": "Adó",
   "total": "Teljes",
+  "wishlist": "Kívánság lista",
+  "yourWishListIsEmpty": "A kívánság listád üres",
+  "removeItem": "Elem eltávolítása",
+  "addToCart": "Kosárba",
+  "addItemToCart": "Elemet a Kosárba tesz",
+  "orderid": "Rendelés azonosító: {{id}}",
+  "name": "Név",
+  "email": "Email",
+  "notDelivered": "Nem kézbesített",
+  "notPaid": "Nem fizetett",
+  "categories": "Kategóriák",
+  "faqs": "Gyakran Ismételt Kérdések",
   "": ""
 }

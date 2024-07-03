@@ -17,6 +17,8 @@ import uploadRoutes from './routes/uploadRoutes.js';
 import groupRoutes from './routes/groupRoutes.js';
 import subscriberRoutes from './routes/subscriberRoutes.js';
 import ProductCollectionRoutes from './routes/productCollectionRoutes.js';
+import faqRoutes from './routes/faqRoutes.js';
+import faqCategoryRoutes from './routes/faqCategoryRoutes.js';
 
 // import { fileURLToPath } from 'url';
 // const __filename = fileURLToPath(import.meta.url);
@@ -46,6 +48,8 @@ app.use('/api/comments', commentRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/groups', groupRoutes);
 app.use('/api/subscribers', subscriberRoutes);
+app.use('/api/faqs', faqRoutes);
+app.use('/api/faqCategories', faqCategoryRoutes);
 
 const __dirname = path.resolve();
 // app.use(express.static('public'));

@@ -7,7 +7,7 @@ import { calcPrices } from '../utils/calcPrices.js';
 // @route   POST /api/orders
 // @access  Private
 const addOrderItems = asyncHandler(async (req, res) => {
-  const { orderItems, shippingAddress, paymentMethod } = req.body;
+  const { language, orderItems, shippingAddress, paymentMethod } = req.body;
 
   if (orderItems && orderItems.length === 0) {
     res.status(400);
@@ -26,18 +26,33 @@ const addOrderItems = asyncHandler(async (req, res) => {
       return {
         ...itemFromClient,
         product: itemFromClient._id,
-        price: matchingItemFromDB.currentPrice,
+        price:
+          language === 'en'
+            ? matchingItemFromDB.currentPrice
+            : (
+                (matchingItemFromDB.translations?.hu?.currentPrice ||
+                  matchingItemFromDB.currentPrice) * 0.7874
+              ).toFixed(0),
         _id: undefined,
       };
     });
 
+    const taxRate = language === 'en' ? 0.15 : 0.27;
+    const freeShipping = language === 'en' ? 100 : 20000;
+    const shipping = language === 'en' ? 10 : 1990;
+
     // calculate prices
-    const { itemsPrice, taxPrice, shippingPrice, totalPrice } =
-      calcPrices(dbOrderItems);
+    const { itemsPrice, taxPrice, shippingPrice, totalPrice } = calcPrices(
+      dbOrderItems,
+      taxRate,
+      freeShipping,
+      shipping
+    );
 
     const order = new Order({
       orderItems: dbOrderItems,
       user: req.user._id,
+      language,
       shippingAddress,
       paymentMethod,
       itemsPrice,

@@ -174,10 +174,22 @@ const ShopScreen = () => {
                       <option value="-rating">{t('popular')}</option>
                       <option value="rating">{t('rating')}</option>
                       <option value="-createdAt">{t('latest')}</option>
-                      <option value="currentPrice">
+                      <option
+                        value={
+                          i18n.language === 'en'
+                            ? 'currentPrice'
+                            : 'translations.hu.currentPrice'
+                        }
+                      >
                         {t('priceLowToHigh')}
                       </option>
-                      <option value="-currentPrice">
+                      <option
+                        value={
+                          i18n.language === 'en'
+                            ? '-currentPrice'
+                            : '-translations.hu.currentPrice'
+                        }
+                      >
                         {t('priceHighToLow')}
                       </option>
                     </Form.Select>

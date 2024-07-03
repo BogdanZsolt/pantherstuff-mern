@@ -45,7 +45,6 @@ const getGroupSubscribers = asyncHandler(async (req, res) => {
     .catch((err) => {
       if (err.response) {
         res.status(err.response.status);
-        console.log(err.response.data);
       }
     });
 });
@@ -65,7 +64,6 @@ const getSubscribers = asyncHandler(async (req, res) => {
     .catch((err) => {
       if (err.response) {
         res.status(err.response.status);
-        console.log(error.response.data);
       }
     });
 });

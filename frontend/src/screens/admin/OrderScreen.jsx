@@ -1,4 +1,5 @@
 import { Link, useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import {
   Row,
   Col,
@@ -8,20 +9,19 @@ import {
   Button,
   Container,
 } from 'react-bootstrap';
-import Banner from '../components/Banner';
-import Message from '../components/Message';
-import Loader from '../components/Loader';
+import Message from '../../components/Message';
+import Loader from '../../components/Loader';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import {
   useGetOrderDetailsQuery,
-  usePayOrderMutation,
-} from '../slices/ordersApiSlice';
-import { toCurrency } from '../utils/converter';
+  useDeliverOrderMutation,
+} from '../../slices/ordersApiSlice';
+import { toCurrency } from '../../utils/converter';
 
 const OrderScreen = () => {
   const { id: orderId } = useParams();
-  const { t } = useTranslation();
+  const { i18n } = useTranslation();
 
   const {
     data: order,
@@ -30,15 +30,20 @@ const OrderScreen = () => {
     error,
   } = useGetOrderDetailsQuery(orderId);
 
-  const [payOrder, { isLoading: loadingPay }] = usePayOrderMutation();
+  const [deliverOrder, { isLoading: loadingDeliver }] =
+    useDeliverOrderMutation();
 
-  // TESTING ONLY! REMOVE BEFORE PRODUCTION
-  async function onApproveTest() {
-    await payOrder({ orderId, details: { payer: {} } });
-    refetch();
+  const { userInfo } = useSelector((state) => state.auth);
 
-    toast.success(t('orderIsPaid'));
-  }
+  const deliverOrderHandler = async () => {
+    try {
+      await deliverOrder(orderId);
+      refetch();
+      toast.success('Order delivered');
+    } catch (err) {
+      toast.error(err?.data?.message || err.message);
+    }
+  };
 
   return isLoading ? (
     <Loader />
@@ -47,22 +52,26 @@ const OrderScreen = () => {
   ) : (
     <>
       <>
-        <Banner title={t('order')} />
-        <Container>
-          <h1>{t('orderid', { id: order._id })}</h1>
+        <Container className="mt-5">
+          <Link to="/admin/orderlist" className="btn btn-primary my-3">
+            Go Back
+          </Link>
+          <Row>
+            <h2 className="text-center fs-1 fw-bold">Order Id: {order._id}</h2>
+          </Row>
           <Row>
             <Col md={8}>
               <ListGroup variant="flush">
                 <ListGroup.Item>
-                  <h2>{t('shipping')}</h2>
+                  <h2>Shipping</h2>
                   <p>
-                    <strong>{t('name')}: </strong> {order.user.name}
+                    <strong>Name: </strong> {order.user.name}
                   </p>
                   <p>
-                    <strong>{t('email')}: </strong> {order.user.email}
+                    <strong>Email: </strong> {order.user.email}
                   </p>
                   <p>
-                    <strong>{t('address')}: </strong>
+                    <strong>Address: </strong>
                     {order.shippingAddress.address},{' '}
                     {order.shippingAddress.city}{' '}
                     {order.shippingAddress.postalCode},{' '}
@@ -73,25 +82,25 @@ const OrderScreen = () => {
                       Delivered on{order.deliveredAt}
                     </Message>
                   ) : (
-                    <Message variant="danger">{t('notDelivered')}</Message>
+                    <Message variant="danger">Not Delivered</Message>
                   )}
                 </ListGroup.Item>
 
                 <ListGroup.Item>
-                  <h2>{t('paymentMethod')}</h2>
+                  <h2>Payment Method</h2>
                   <p>
-                    <strong>{t('method')}: </strong>
+                    <strong>Method: </strong>
                     {order.paymentMethod}
                   </p>
                   {order.isPaid ? (
                     <Message variant="success">Paid on{order.paidAt}</Message>
                   ) : (
-                    <Message variant="danger">{t('notPaid')}</Message>
+                    <Message variant="danger">Not Paid</Message>
                   )}
                 </ListGroup.Item>
 
                 <ListGroup.Item>
-                  <h2>{t('orderItems')}</h2>
+                  <h2>Order Items</h2>
                   {order.orderItems.map((item, index) => (
                     <ListGroup.Item key={index}>
                       <Row>
@@ -126,43 +135,45 @@ const OrderScreen = () => {
               <Card>
                 <ListGroup variant="flush">
                   <ListGroup.Item>
-                    <h2>{t('orderSummary')}</h2>
+                    <h2>Order Summary</h2>
                   </ListGroup.Item>
                   <ListGroup.Item>
                     <Row>
-                      <Col>{t('items')}</Col>
+                      <Col>Items</Col>
                       <Col>{toCurrency(order.language, order.itemsPrice)}</Col>
                     </Row>
                     <Row>
-                      <Col>{t('shipping')}</Col>
+                      <Col>Shipping</Col>
                       <Col>
                         {toCurrency(order.language, order.shippingPrice)}
                       </Col>
                     </Row>
                     <Row>
-                      <Col>{t('tax')}</Col>
+                      <Col>Tax</Col>
                       <Col>{toCurrency(order.language, order.taxPrice)}</Col>
                     </Row>
                     <Row>
-                      <Col>{t('total')}</Col>
-                      <Col>{toCurrency(order.language, order.totalPrice)}</Col>
+                      <Col>Total</Col>
+                      <Col>{toCurrency(i18n.language, order.totalPrice)}</Col>
                     </Row>
                   </ListGroup.Item>
                   {/* PAY ORDER PLACEHOLDER */}
-                  {!order.isPaid && (
-                    <ListGroup.Item>
-                      {loadingPay ? (
-                        <Loader />
-                      ) : (
+
+                  {loadingDeliver && <Loader />}
+                  {userInfo &&
+                    userInfo.isAdmin &&
+                    order.isPaid &&
+                    !order.isDelivered && (
+                      <ListGroup.Item>
                         <Button
-                          style={{ marginBottom: '10px' }}
-                          onClick={onApproveTest}
+                          type="button"
+                          className="btn btn-block"
+                          onClick={deliverOrderHandler}
                         >
-                          Test Pay Order
+                          Mark As Delivered
                         </Button>
-                      )}
-                    </ListGroup.Item>
-                  )}
+                      </ListGroup.Item>
+                    )}
                 </ListGroup>
               </Card>
             </Col>

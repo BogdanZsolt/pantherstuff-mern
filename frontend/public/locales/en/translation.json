@@ -30,5 +30,17 @@
   "items": "Items",
   "tax": "Tax",
   "total": "Total",
+  "wishlist": "Wish List",
+  "yourWishListIsEmpty": "Your Wish List is empty",
+  "removeItem": "Remove item",
+  "addToCart": "Add to cart",
+  "addItemToCart": "Item add to cart",
+  "orderid": "Order Id: {{id}}",
+  "name": "Name",
+  "email": "Email",
+  "notDelivered": "Not Delivered",
+  "notPaid": "Not Paid",
+  "categories": "Categories",
+  "faqs": "Frequently Asked Quetions",
   "": ""
 }

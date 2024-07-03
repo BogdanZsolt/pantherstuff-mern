@@ -8,6 +8,7 @@ const LangSelectEditor = ({
   setDefLang,
   secLang,
   setSecLang,
+  className,
 }) => {
   const [lang, setLang] = useState('en');
 
@@ -17,7 +18,7 @@ const LangSelectEditor = ({
   };
 
   return (
-    <Form.Group>
+    <Form.Group className={className}>
       <Row className="mb-3">
         <Col md={3} className="align-items-end">
           <Form.Label>{label}</Form.Label>

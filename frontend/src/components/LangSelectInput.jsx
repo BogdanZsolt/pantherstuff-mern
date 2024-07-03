@@ -10,6 +10,7 @@ const LangSelectInput = ({
   setDefLang,
   secLang,
   setSecLang,
+  className,
 }) => {
   const [lang, setLang] = useState('en');
 
@@ -18,7 +19,7 @@ const LangSelectInput = ({
   };
 
   return (
-    <Form.Group>
+    <Form.Group className={className}>
       <Form.Label>{label}</Form.Label>
       <InputGroup className="my-2">
         <Col md={9}>

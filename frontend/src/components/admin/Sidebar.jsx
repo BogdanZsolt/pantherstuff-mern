@@ -9,7 +9,7 @@ import {
   Image,
 } from 'react-bootstrap';
 import logo from '../../assets/logo-200x200.png';
-import { RiArticleLine } from 'react-icons/ri';
+import { RiArticleLine, RiQuestionAnswerLine } from 'react-icons/ri';
 import {
   BsSpeedometer2,
   BsPeople,
@@ -40,8 +40,6 @@ const Sidebar = () => {
       console.log(err);
     }
   };
-
-  console.log(open);
 
   return (
     <>
@@ -199,6 +197,52 @@ const Sidebar = () => {
               </Dropdown.Menu>
             </div>
           </Nav.Item>
+
+          <Nav.Item>
+            <Dropdown.Toggle
+              className="nav-link d-flex align-items-center text-primary"
+              onClick={() => setOpen(open === 'faqs' ? '' : 'faqs')}
+              aria-controls="users-collapse"
+              aria-expanded={open}
+            >
+              <RiQuestionAnswerLine className="fs-4" />
+              <span className="ms-2 fs-4 d-none d-md-inline-flex">Faqs</span>
+            </Dropdown.Toggle>
+            <div className="d-none d-md-block">
+              <Collapse in={open === 'faqs'}>
+                <Nav id="users-collapse" className="flex-nowrap flex-column">
+                  <Nav.Item className="ms-4 p-2">
+                    <Link className="text-primary my-2" to="/admin/faqlist">
+                      <span>All Faqs</span>
+                    </Link>
+                  </Nav.Item>
+                  <Nav.Item className="ms-4 p-2">
+                    <Link
+                      className="text-primary my-2"
+                      to="/admin/faqcategorylist"
+                    >
+                      <span>Faq Categories</span>
+                    </Link>
+                  </Nav.Item>
+                </Nav>
+              </Collapse>
+            </div>
+            <div className="d-block d-md-none dropdown-menu__container">
+              <Dropdown.Menu show={open === 'faqs'}>
+                <Dropdown.Item>
+                  <Link to="/admin/faqlist">
+                    <span>All Faqs</span>
+                  </Link>
+                </Dropdown.Item>
+                <Dropdown.Item>
+                  <Link to="/admin/faqcategorylist">
+                    <span>Faq Categories</span>
+                  </Link>
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </div>
+          </Nav.Item>
+
           <Nav.Item>
             <Dropdown.Toggle
               className="nav-link d-flex align-items-center text-primary"
@@ -230,6 +274,7 @@ const Sidebar = () => {
               </Dropdown.Menu>
             </div>
           </Nav.Item>
+
           <Nav.Item>
             <Dropdown.Toggle
               className="nav-link d-flex align-items-center text-primary"
@@ -261,6 +306,7 @@ const Sidebar = () => {
               </Dropdown.Menu>
             </div>
           </Nav.Item>
+
           <Nav.Item>
             <Dropdown.Toggle
               className="nav-link d-flex align-items-center text-primary"

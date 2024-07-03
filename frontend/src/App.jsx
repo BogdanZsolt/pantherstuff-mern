@@ -47,6 +47,11 @@ import {
   UserListScreen,
   ValuesScreen,
   WishListScreen,
+  AdminOrderScreen,
+  FaqListScreen,
+  FaqEditScreen,
+  FaqCategoryListScreen,
+  FaqCategoryEditScreen,
 } from './Pages';
 import Root from './components/Root';
 
@@ -253,6 +258,22 @@ const App = () => {
               element: <CommentCheckScreen />,
             },
             {
+              path: 'faqlist',
+              element: <FaqListScreen />,
+            },
+            {
+              path: 'faq/:id/edit',
+              element: <FaqEditScreen />,
+            },
+            {
+              path: 'faqcategorylist',
+              element: <FaqCategoryListScreen />,
+            },
+            {
+              path: 'faqcategory/:id/edit',
+              element: <FaqCategoryEditScreen />,
+            },
+            {
               path: 'userlist',
               element: <UserListScreen />,
             },
@@ -263,6 +284,10 @@ const App = () => {
             {
               path: 'orderlist',
               element: <OrderListScreen />,
+            },
+            {
+              path: 'order/:id',
+              element: <AdminOrderScreen />,
             },
             {
               path: 'subscriberlist',

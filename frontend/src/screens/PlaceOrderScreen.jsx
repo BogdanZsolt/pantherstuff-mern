@@ -18,12 +18,13 @@ import Loader from '../components/Loader';
 import { useCreateOrderMutation } from '../slices/ordersApiSlice';
 import { clearCartItems } from '../slices/cartSlice';
 import { useTranslation } from 'react-i18next';
+import { toCurrency } from '../utils/converter';
 
 const PlaceOrderScreen = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const [createOrder, { isLoading, error }] = useCreateOrderMutation();
 
@@ -35,16 +36,35 @@ const PlaceOrderScreen = () => {
     }
   }, [cart.paymentMethod, cart.shippingAddress.address, navigate]);
 
+  const createItems = (items) => {
+    let newItems = [];
+    items.map((item) => {
+      let newItem = {};
+      newItem._id = item._id;
+      newItem.name = i18n.language === 'en' ? item.name : item.name_hu;
+      newItem.qty = item.qty;
+      newItem.thumbnail = item.thumbnail;
+      newItem.currentPrice =
+        i18n.language === 'en' ? item.currentPrice : item.currentPrice_hu;
+      newItems = [...newItems, newItem];
+    });
+    return newItems;
+  };
+
   const placeOrderHandler = async () => {
     try {
       const res = await createOrder({
-        orderItems: cart.cartItems,
+        language: i18n.language,
+        orderItems: createItems(cart.cartItems),
         shippingAddress: cart.shippingAddress,
         paymentMethod: cart.paymentMethod,
-        itemsPrice: cart.itemsPrice,
-        shippingPrice: cart.shippingPrice,
-        taxPrice: cart.taxPrice,
-        totalPrice: cart.totalPrice,
+        itemsPrice:
+          i18n.language === 'en' ? cart.itemsPrice : cart.itemsPrice_hu,
+        shippingPrice:
+          i18n.language === 'en' ? cart.shippingPrice : cart.shippingPrice_hu,
+        taxPrice: i18n.language === 'en' ? cart.taxPrice : cart.taxPrice_hu,
+        totalPrice:
+          i18n.language === 'en' ? cart.totalPrice : cart.totalPrice_hu,
       }).unwrap();
       dispatch(clearCartItems());
       navigate(`/order/${res._id}`);
@@ -52,6 +72,8 @@ const PlaceOrderScreen = () => {
       toast.error(err);
     }
   };
+
+  console.log(createItems(cart.cartItems));
 
   return (
     <>
@@ -89,19 +111,40 @@ const PlaceOrderScreen = () => {
                           <Col md={1}>
                             <Image
                               src={item.thumbnail}
-                              alt={item.name}
+                              alt={
+                                i18n.language === 'en'
+                                  ? item.name
+                                  : item.name_hu
+                              }
                               fluid
                               rounded
                             />
                           </Col>
                           <Col>
-                            <Link to={`/product/${item.product}`}>
-                              {item.name}
+                            <Link to={`/product/${item._id}`}>
+                              {i18n.language === 'en'
+                                ? item.name
+                                : item.name_hu}
                             </Link>
                           </Col>
                           <Col md={4}>
-                            {item.qty} x ${item.currentPrice} = $
-                            {(item.qty * (item.currentPrice * 100)) / 100}
+                            {item.qty} x{' '}
+                            {toCurrency(
+                              i18n.language,
+                              i18n.language === 'en'
+                                ? item.currentPrice
+                                : item.currentPrice_hu
+                            )}
+                            {' = '}
+                            {toCurrency(
+                              i18n.language,
+                              (item.qty *
+                                ((i18n.language === 'en'
+                                  ? item.currentPrice
+                                  : item.currentPrice_hu) *
+                                  100)) /
+                                100
+                            )}
                           </Col>
                         </Row>
                       </ListGroup.Item>
@@ -121,28 +164,56 @@ const PlaceOrderScreen = () => {
                 <ListGroup.Item>
                   <Row>
                     <Col>{t('items')}:</Col>
-                    <Col>${cart.itemsPrice}</Col>
+                    <Col>
+                      {toCurrency(
+                        i18n.language,
+                        i18n.language === 'en'
+                          ? cart.itemsPrice
+                          : cart.itemsPrice_hu
+                      )}
+                    </Col>
                   </Row>
                 </ListGroup.Item>
 
                 <ListGroup.Item>
                   <Row>
                     <Col>{t('shipping')}:</Col>
-                    <Col>${cart.shippingPrice}</Col>
+                    <Col>
+                      {toCurrency(
+                        i18n.language,
+                        i18n.language === 'en'
+                          ? cart.shippingPrice
+                          : cart.shippingPrice_hu
+                      )}
+                    </Col>
                   </Row>
                 </ListGroup.Item>
 
                 <ListGroup.Item>
                   <Row>
                     <Col>{t('tax')}:</Col>
-                    <Col>${cart.taxPrice}</Col>
+                    <Col>
+                      {toCurrency(
+                        i18n.language,
+                        i18n.language === 'en'
+                          ? cart.taxPrice
+                          : cart.taxPrice_hu
+                      )}
+                    </Col>
                   </Row>
                 </ListGroup.Item>
 
                 <ListGroup.Item>
                   <Row>
                     <Col>{t('total')}:</Col>
-                    <Col>${cart.totalPrice}</Col>
+                    <Col>
+                      {toCurrency(
+                        i18n.language,
+                        i18n.language === 'en'
+                          ? cart.totalPrice
+                          : cart.totalPrice_hu
+                      )}
+                    </Col>
                   </Row>
                 </ListGroup.Item>
 

@@ -112,7 +112,7 @@ const Header = () => {
                     </Nav.Link>
                   </LinkContainer>
                 )}
-                <li className="d-flex justify-content-center align-items-center">
+                <li className="d-flex justify-content-start justify-content-md-center align-items-center">
                   <LinkContainer to="/cart" title={t('cart')}>
                     <Nav.Link className="d-flex justify-content-center align-items-center">
                       <RiShoppingBagLine />
@@ -124,7 +124,7 @@ const Header = () => {
                     </Nav.Link>
                   </LinkContainer>
                 </li>
-                <li className="d-flex justify-content-center align-items-center">
+                <li className="d-flex justify-content-start justify-content-md-center align-items-center">
                   <LinkContainer to="/wishlist" title={t('wishlist')}>
                     <Nav.Link className="d-flex justify-content-center align-items-center">
                       <RiHeartLine />
@@ -136,7 +136,7 @@ const Header = () => {
                     </Nav.Link>
                   </LinkContainer>
                 </li>
-                <li className="d-flex justify-content-center align-items-center">
+                <li className="d-flex justify-content-start justify-content-md-center align-items-center">
                   <LanguageSelector />
                 </li>
               </Nav>

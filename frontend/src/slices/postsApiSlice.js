@@ -44,18 +44,6 @@ export const postsApiSlice = apiSlice.injectEndpoints({
         method: 'DELETE',
       }),
     }),
-    lastNumPosts: builder.query({
-      query: ({ sort, limit, fields }) => ({
-        url: POSTS_URL,
-        params: {
-          sort,
-          limit,
-          fields,
-        },
-      }),
-      providesTags: ['Posts'],
-      keepUnusedDataFor: 5,
-    }),
     createComment: builder.mutation({
       query: (data) => ({
         url: COMMENTS_URL,

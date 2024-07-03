@@ -1,11 +1,14 @@
-const ColorCheckBox = ({ index, color }) => {
+const ColorRadioBox = ({ color, name, handler, isChecked }) => {
   return (
     <label className="select-color-item">
       <input
-        id={index}
-        type="checkbox"
-        className="select-color-checkbox"
+        id={color}
+        name={name}
+        type="radio"
         value={color}
+        onChange={(e) => handler(e, color)}
+        checked={isChecked}
+        className="select-color-radiobox"
       />
       <div
         title={color}
@@ -16,4 +19,4 @@ const ColorCheckBox = ({ index, color }) => {
   );
 };
 
-export default ColorCheckBox;
+export default ColorRadioBox;

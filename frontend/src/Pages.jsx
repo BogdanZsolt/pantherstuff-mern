@@ -84,6 +84,18 @@ export const CommentListScreen = lazy(() =>
 export const CommentCheckScreen = lazy(() =>
   import('./screens/admin/CommentCheckScreen.jsx')
 );
+export const FaqListScreen = lazy(() =>
+  import('./screens/admin/FaqListScreen.jsx')
+);
+export const FaqEditScreen = lazy(() =>
+  import('./screens/admin/FaqEditScreen.jsx')
+);
+export const FaqCategoryListScreen = lazy(() =>
+  import('./screens/admin/FaqCategoryListScreen.jsx')
+);
+export const FaqCategoryEditScreen = lazy(() =>
+  import('./screens/admin/FaqCategoryEditScreen.jsx')
+);
 export const UserListScreen = lazy(() =>
   import('./screens/admin/UserListScreen.jsx')
 );
@@ -92,6 +104,9 @@ export const UserEditScreen = lazy(() =>
 );
 export const OrderListScreen = lazy(() =>
   import('./screens/admin/OrderListScreen.jsx')
+);
+export const AdminOrderScreen = lazy(() =>
+  import('./screens/admin/OrderScreen.jsx')
 );
 export const SubscriberListScreen = lazy(() =>
   import('./screens/admin/SubscriberListScreen.jsx')

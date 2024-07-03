@@ -6,9 +6,13 @@ import { FaTrash } from 'react-icons/fa';
 import Message from '../components/Message';
 import { removeFromWishList } from '../slices/wishListSlice';
 import { addToCart } from '../slices/cartSlice';
+import { useTranslation } from 'react-i18next';
+import { toCurrency } from '../utils/converter';
 
 const WishListScreen = () => {
   const dispatch = useDispatch();
+
+  const { t, i18n } = useTranslation();
 
   const wishList = useSelector((state) => state.wishList);
   const { wishListItems } = wishList;
@@ -25,19 +29,19 @@ const WishListScreen = () => {
 
   return (
     <>
-      <Banner src="/uploads/image-1710576218997.webp" title="Wish List" />
+      <Banner src="/uploads/image-1710576218997.webp" title={t('wishlist')} />
       <Container>
         <Row>
           <Col>
             {wishListItems.length === 0 ? (
               <Message>
-                Your Wish List is empty <Link to="/">Go Back</Link>
+                {t('yourWishListIsEmpty')} <Link to="/shop">{t('goBack')}</Link>
               </Message>
             ) : (
               <ListGroup variant="flush">
                 {wishListItems.map((item) => (
                   <ListGroup.Item key={item._id}>
-                    <Row>
+                    <Row className="align-items-center gap-2 gap-md-0">
                       <Col md={1}>
                         <Image
                           src={item.thumbnails[0]}
@@ -47,14 +51,27 @@ const WishListScreen = () => {
                         />
                       </Col>
                       <Col md={3}>
-                        <Link to={`/product/${item._id}`}>{item.name}</Link>
+                        <Link to={`/product/${item._id}`}>
+                          {i18n.language == 'en'
+                            ? item.name
+                            : item.translations?.hu?.name || item.name}
+                        </Link>
                       </Col>
-                      <Col md={2}>${item.currentPrice}</Col>
+                      <Col md={2}>
+                        {toCurrency(
+                          i18n.language,
+                          i18n.language === 'en'
+                            ? item.currentPrice
+                            : item.translations?.hu?.currentPrice ||
+                                item.currentPrice
+                        )}
+                      </Col>
                       <Col md={2}></Col>
                       <Col md={2}>
                         <Button
+                          title={t('removeItem')}
                           type="button"
-                          variant="light"
+                          variant="primary"
                           onClick={() => removeFromWishListHandler(item._id)}
                         >
                           <FaTrash />
@@ -62,11 +79,12 @@ const WishListScreen = () => {
                       </Col>
                       <Col md={2}>
                         <Button
+                          title={t('addItemToCart')}
                           type="button"
                           variant="primary"
                           onClick={() => addToCartHandler(item)}
                         >
-                          Add to cart
+                          {t('addToCart')}
                         </Button>
                       </Col>
                     </Row>

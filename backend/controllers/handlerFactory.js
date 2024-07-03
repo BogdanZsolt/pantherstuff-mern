@@ -36,8 +36,6 @@ const getAll = (Model, popOption) =>
       count = doc.length;
     }
 
-    console.log(count);
-
     // SEND RESPONSE
     res.json({ data: doc, pages, page, count });
   });
@@ -66,8 +64,6 @@ const createOne = (Model) =>
 
 const updateOne = (Model) =>
   asyncHandler(async (req, res) => {
-    console.log(req.body);
-
     const doc = await Model.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true,

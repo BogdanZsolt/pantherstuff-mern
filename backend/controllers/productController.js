@@ -10,6 +10,7 @@ const productsPopOption = [
 const productPopOption = [
   { path: 'user', select: ['name'] },
   { path: 'category', select: ['title', 'translations'] },
+  { path: 'sizes', select: ['title'] },
 ];
 const productCreateInit = (req, res, next) => {
   req.body.user = req.user._id;

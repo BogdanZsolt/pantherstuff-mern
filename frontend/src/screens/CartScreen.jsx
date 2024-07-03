@@ -1,4 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Row,
@@ -10,12 +11,11 @@ import {
   Card,
   Container,
 } from 'react-bootstrap';
+import { toCurrency } from '../utils/converter';
 import { FaTrash } from 'react-icons/fa';
 import Message from '../components/Message';
 import Banner from '../components/Banner';
 import { addToCart, removeFromCart } from '../slices/cartSlice';
-import { useTranslation } from 'react-i18next';
-import { toCurrency } from '../utils/converter';
 
 const CartScreen = () => {
   const navigate = useNavigate();
@@ -29,13 +29,15 @@ const CartScreen = () => {
     dispatch(addToCart({ ...product, qty }));
   };
 
-  const removeFromCartHandler = async (id) => {
-    dispatch(removeFromCart(id));
+  const removeFromCartHandler = async (product) => {
+    dispatch(removeFromCart({ ...product }));
   };
 
   const checkoutHandler = () => {
     navigate('/login?redirect=/shipping');
   };
+
+  console.log(cartItems);
 
   return (
     <>
@@ -52,10 +54,10 @@ const CartScreen = () => {
               <ListGroup variant="flush">
                 {cartItems.map((item) => (
                   <ListGroup.Item key={item._id}>
-                    <Row>
+                    <Row className="align-items-center">
                       <Col md={2}>
                         <Image
-                          src={item.thumbnails[0]}
+                          src={item.thumbnail}
                           alt={item.name}
                           fluid
                           rounded
@@ -63,9 +65,7 @@ const CartScreen = () => {
                       </Col>
                       <Col md={3}>
                         <Link to={`/product/${item._id}`}>
-                          {i18n.language === 'en'
-                            ? item.name
-                            : item.translations?.hu?.name || item.name}
+                          {i18n.language === 'en' ? item.name : item.name_hu}
                         </Link>
                       </Col>
                       <Col md={2}>
@@ -73,8 +73,7 @@ const CartScreen = () => {
                           i18n.language,
                           i18n.language === 'en'
                             ? item.currentPrice
-                            : item.translations?.hu?.currentPrice ||
-                                item.currentPrice
+                            : item.currentPrice_hu
                         )}
                       </Col>
                       <Col md={2}>
@@ -92,11 +91,17 @@ const CartScreen = () => {
                           ))}
                         </Form.Control>
                       </Col>
+                      <Col md={1}>
+                        <div
+                          className="product-color"
+                          style={{ backgroundColor: item.color }}
+                        ></div>
+                      </Col>
                       <Col md={2}>
                         <Button
                           type="button"
                           variant="light"
-                          onClick={() => removeFromCartHandler(item._id)}
+                          onClick={() => removeFromCartHandler(item)}
                         >
                           <FaTrash />
                         </Button>
@@ -130,8 +135,7 @@ const CartScreen = () => {
                             (acc, item) =>
                               acc +
                               item.qty *
-                                (item.translations.hu.currentPrice ||
-                                  item.currentPrice),
+                                (item.currentPrice_hu || item.currentPrice),
                             0
                           )
                           .toFixed(0)
