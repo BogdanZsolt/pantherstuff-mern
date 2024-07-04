@@ -3,6 +3,7 @@ import { Accordion, Col, Container, Nav, Row } from 'react-bootstrap';
 import Banner from '../components/Banner';
 import Message from '../components/Message.jsx';
 import Loader from '../components/Loader.jsx';
+import Editor from '../components/Editor.jsx';
 import { useTranslation } from 'react-i18next';
 import { useGetFaqCategoriesQuery } from '../slices/faqCategoriesApiSlice.js';
 
@@ -14,7 +15,8 @@ const FaqsScreen = () => {
   const { t, i18n } = useTranslation();
 
   const setFixedSidebar = () => {
-    if (window.scrollY >= 75) {
+    console.log(window.screenY);
+    if (window.scrollY >= 380) {
       setFix(true);
     } else {
       setFix(false);
@@ -33,45 +35,76 @@ const FaqsScreen = () => {
         </Message>
       ) : (
         <>
-          <Banner title={t('faqs')} alt={t('faqs')} />
+          <Banner
+            title={t('faqs')}
+            alt={t('faqs')}
+            src="/images/ecoprint-06.webp"
+          />
           <Container>
             <Row>
-              <Col md={4} className={`faq-sidebar ${fix ? 'fixed' : ''}`}>
-                <h3 className="fs-1">{t('categories')}</h3>
-                {faqCats.data?.map((cat) => (
-                  <Nav key={cat._id} className="nav nav-pills flex-column">
-                    <Nav.Item>
-                      <Nav.Link href={`#${cat._id}`}>
-                        <span className="fs-4">
-                          {i18n.language === 'en'
-                            ? cat.title
-                            : cat.translations?.hu?.title || cat.title}
-                        </span>
-                      </Nav.Link>
-                    </Nav.Item>
-                  </Nav>
-                ))}
+              <Col md={4}>
+                <div className={`faq-sidebar ${fix ? 'fixed' : ''}`}>
+                  <h3 className="fs-1">{t('categories')}</h3>
+                  {faqCats.data?.map((cat) => (
+                    <Nav key={cat._id} className="nav flex-column">
+                      <Nav.Item>
+                        <Nav.Link
+                          href={`#${cat._id}`}
+                          onClick={() => {
+                            const elemet = document.getElementById(
+                              `${cat._id}`
+                            );
+                            elemet?.scrollIntoView({
+                              behavior: 'smooth',
+                              block: 'start',
+                            });
+                          }}
+                        >
+                          <span className="fs-4 text-secondary bg-primary">
+                            {i18n.language === 'en'
+                              ? cat.title
+                              : cat.translations?.hu?.title || cat.title}
+                          </span>
+                        </Nav.Link>
+                      </Nav.Item>
+                    </Nav>
+                  ))}
+                </div>
               </Col>
               <Col md={8}>
                 <Accordion flush>
                   {faqCats.data.map((item) => (
                     <>
-                      <h2 className="mt-3" key={item._id} id={item._id}>
-                        {i18n.language === 'en'
-                          ? item.title
-                          : item.translations?.hu?.title || item.title}
+                      <h2
+                        className="mt-3 fs-2 faq-category-title"
+                        key={item._id}
+                        id={item._id}
+                      >
+                        <strong>
+                          {i18n.language === 'en'
+                            ? item.title
+                            : item.translations?.hu?.title || item.title}
+                        </strong>
                       </h2>
                       {item.faqs.map((faq) => (
                         <Accordion.Item key={faq._id} eventKey={faq._id}>
                           <Accordion.Header>
-                            {i18n.language === 'en'
-                              ? faq.question
-                              : faq.translations?.hu?.question || faq.question}
+                            <span className="fs-4">
+                              {i18n.language === 'en'
+                                ? faq.question
+                                : faq.translations?.hu?.question ||
+                                  faq.question}
+                            </span>
                           </Accordion.Header>
                           <Accordion.Body>
-                            {i18n.language === 'en'
-                              ? faq.answer
-                              : faq.translations?.hu?.answer || faq.answer}
+                            <Editor
+                              content={
+                                i18n.language === 'en'
+                                  ? faq.answer
+                                  : faq.translations?.hu?.answer || faq.answer
+                              }
+                              editable={false}
+                            />
                           </Accordion.Body>
                         </Accordion.Item>
                       ))}

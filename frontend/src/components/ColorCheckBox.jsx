@@ -1,4 +1,4 @@
-const ColorCheckBox = ({ index, color }) => {
+const ColorCheckBox = ({ index, color, handler }) => {
   return (
     <label className="select-color-item">
       <input
@@ -6,6 +6,7 @@ const ColorCheckBox = ({ index, color }) => {
         type="checkbox"
         className="select-color-checkbox"
         value={color}
+        onChange={(e) => handler(e, index)}
       />
       <div
         title={color}

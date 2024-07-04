@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import {
   AdminScreen,
   AuthorScreen,
-  BaseMaterialsScreen,
+  RawMaterialsScreen,
   BlogScreen,
   CartScreen,
   CategoryPostScreen,
@@ -79,7 +79,7 @@ const App = () => {
             },
             {
               path: 'base_materials',
-              element: <BaseMaterialsScreen />,
+              element: <RawMaterialsScreen />,
             },
             {
               path: 'values',

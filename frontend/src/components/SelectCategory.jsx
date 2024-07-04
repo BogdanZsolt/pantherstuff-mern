@@ -10,7 +10,7 @@ import { useGetProductCategoriesQuery } from '../slices/productCategoriesApiSlic
 const SelectCategory = ({ category, setCategory, multi = false }) => {
   const { t, i18n } = useTranslation(['shop']);
   const animatedComponents = makeAnimated();
-  const [defaultCategory, setDefaultCategory] = useState('');
+  const [defaultCategory, setDefaultCategory] = useState(undefined);
 
   const selectStyles = {
     control: (baseStyle, state) => ({
@@ -100,6 +100,9 @@ const SelectCategory = ({ category, setCategory, multi = false }) => {
       // if (category === '') {
       //   setDefaultCategory(t('select'));
       // }
+      if (category === '') {
+        setDefaultCategory('');
+      }
       categories.data.map((item) => {
         if (item._id === category) {
           setDefaultCategory({
@@ -130,6 +133,8 @@ const SelectCategory = ({ category, setCategory, multi = false }) => {
     }
   };
 
+  console.log(defaultCategory);
+
   return (
     <div>
       {isLoading ? (
@@ -138,7 +143,7 @@ const SelectCategory = ({ category, setCategory, multi = false }) => {
         <Message variant="danger">{error.data.Message}</Message>
       ) : (
         categories.data &&
-        defaultCategory && (
+        defaultCategory !== undefined && (
           <Form.Group controlId="category" className="my-2">
             <Select
               name="categories"

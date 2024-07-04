@@ -27,7 +27,7 @@ const Menu = () => {
         },
         {
           id: 1.3,
-          text: t('baseMaterials'),
+          text: t('rawMaterials'),
           link: '/base_materials',
           image: '/images/ecoprint-04-200x200.webp',
         },

@@ -19,8 +19,8 @@ export const PaymentScreen = lazy(() => import('./screens/PaymentScreen.jsx'));
 export const HerStory = lazy(() => import('./screens/HerStoryScreen.jsx'));
 export const MePetraScreen = lazy(() => import('./screens/MePetraScreen.jsx'));
 export const ValuesScreen = lazy(() => import('./screens/ValuesScreen.jsx'));
-export const BaseMaterialsScreen = lazy(() =>
-  import('./screens/BaseMaterialsScreen.jsx')
+export const RawMaterialsScreen = lazy(() =>
+  import('./screens/RawMaterialsScreen.jsx')
 );
 export const FaqsScreen = lazy(() => import('./screens/FaqsScreen.jsx'));
 export const ContactScreen = lazy(() => import('./screens/ContactScreen.jsx'));

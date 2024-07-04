@@ -24,6 +24,8 @@ const FilterSidebar = ({
 }) => {
   const { t } = useTranslation(['shop']);
 
+  console.log(category);
+
   return (
     <>
       <h3>{t('filters')}</h3>

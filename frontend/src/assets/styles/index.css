@@ -1564,6 +1564,10 @@ table th {
   margin-top: 3rem;
 }
 
+.faq-category-title {
+  scroll-margin-top: 6%;
+}
+
 /* Media Querys */
 @media (min-width: 481px) {
   .product .image {

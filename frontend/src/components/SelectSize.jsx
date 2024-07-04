@@ -5,8 +5,6 @@ const SelectSize = ({ sizes, size, setSize }) => {
     setSize(e.target.value);
   };
 
-  console.log(size);
-
   return (
     <Row>
       <Col md={4}>
@@ -15,6 +13,7 @@ const SelectSize = ({ sizes, size, setSize }) => {
           className="mt-2"
           value={size}
           onChange={changeHandler}
+          disabled={sizes.length === 0}
         >
           {sizes.map((x) => (
             <option key={x._id} value={x._id}>
