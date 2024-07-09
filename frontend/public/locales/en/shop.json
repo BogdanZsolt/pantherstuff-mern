@@ -18,5 +18,6 @@
   "addToWishList": "Add to wish list",
   "addToCart": "Add to cart",
   "currentRange": "current range {{price}}",
+  "thereAreNoItemsToDisplay": "There are no items to display",
   "": ""
 }

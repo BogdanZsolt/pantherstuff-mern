@@ -42,6 +42,7 @@ import {
   RegisterScreen,
   ShippingScreen,
   ShopScreen,
+  SupplyStoreScreen,
   SubscriberListScreen,
   UserEditScreen,
   UserListScreen,
@@ -105,7 +106,27 @@ const App = () => {
                   path: 'search/:keyword/page/:pageNumber',
                   element: <ShopScreen />,
                 },
+                {
+                  path: 'category/:productCategory',
+                  element: <ShopScreen />,
+                },
+                {
+                  path: 'category/:productCategory/page/:pageNumber',
+                  element: <ShopScreen />,
+                },
+                {
+                  path: 'collection/:productCollection',
+                  element: <ShopScreen />,
+                },
+                {
+                  path: 'collection/:productCollection/page/:pageNumber',
+                  element: <ShopScreen />,
+                },
               ],
+            },
+            {
+              path: 'supplystore',
+              element: <SupplyStoreScreen />,
             },
             {
               path: 'product/:id',

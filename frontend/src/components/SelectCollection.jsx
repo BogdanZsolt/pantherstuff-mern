@@ -128,7 +128,7 @@ const SelectCollection = ({ collection, setCollection, multi = false }) => {
             <Select
               closeMenuOnSelect={false}
               components={animatedComponents}
-              defaultValue={defaultCollection}
+              value={defaultCollection}
               styles={selectStyles}
               isMulti={multi}
               isClearable

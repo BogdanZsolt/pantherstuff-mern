@@ -3522,8 +3522,8 @@ fieldset:disabled .btn {
   --bs-dropdown-link-color: var(--bs-body-color);
   --bs-dropdown-link-hover-color: var(--bs-body-color);
   --bs-dropdown-link-hover-bg: var(--bs-tertiary-bg);
-  --bs-dropdown-link-active-color: #fff;
-  --bs-dropdown-link-active-bg: #3c4c5d;
+  --bs-dropdown-link-active-color: var(--bs-primary);
+  --bs-dropdown-link-active-bg: var(--bs-secondary);
   --bs-dropdown-link-disabled-color: #7b8a8b;
   --bs-dropdown-item-padding-x: 1.2rem;
   --bs-dropdown-item-padding-y: 0.3rem;

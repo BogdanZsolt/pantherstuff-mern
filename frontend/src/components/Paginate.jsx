@@ -8,34 +8,38 @@ const Paginate = ({
   isAdmin = false,
   keyword = '',
   pageName = 'shop',
+  productCategory,
+  productCollection,
 }) => {
+  const createLink = () => {
+    let lnk;
+    if (!isAdmin) {
+      lnk = `/${pageName}`;
+      if (keyword !== '') {
+        lnk = `/search/${keyword}`;
+      }
+      if (productCategory !== '' && productCategory !== undefined) {
+        lnk = lnk + `/category/${productCategory}`;
+      }
+      if (productCollection !== '' && productCollection !== undefined) {
+        lnk = lnk + `/collection/${productCollection}`;
+      }
+    } else {
+      lnk = '/admin/productlist';
+    }
+    return lnk;
+  };
+
   return pages > 1 ? (
     <Pagination>
       {[...Array(pages).keys()].map((x) => (
-        <LinkContainer
-          key={x + 1}
-          to={
-            !isAdmin
-              ? keyword !== ''
-                ? `/${pageName}/search/${keyword}/page/${x + 1}`
-                : `/${pageName}/page/${x + 1}`
-              : `/admin/productlist/${x + 1}`
-          }
-        >
+        <LinkContainer key={x + 1} to={createLink() + `/page/${x + 1}`}>
           <Pagination.Item active={x + 1 === page}>{x + 1}</Pagination.Item>
         </LinkContainer>
       ))}
     </Pagination>
   ) : (
-    <Navigate
-      to={
-        !isAdmin
-          ? keyword !== ''
-            ? `/${pageName}/search/${keyword}`
-            : `/${pageName}/`
-          : `/admin/productlist/`
-      }
-    />
+    <Navigate to={createLink} />
   );
 };
 

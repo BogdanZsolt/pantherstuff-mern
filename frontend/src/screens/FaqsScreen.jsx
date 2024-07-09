@@ -42,7 +42,7 @@ const FaqsScreen = () => {
           />
           <Container>
             <Row>
-              <Col md={4}>
+              <Col md={4} className="pe-md-2">
                 <div className={`faq-sidebar ${fix ? 'fixed' : ''}`}>
                   <h3 className="fs-1">{t('categories')}</h3>
                   {faqCats.data?.map((cat) => (
@@ -74,7 +74,7 @@ const FaqsScreen = () => {
               <Col md={8}>
                 <Accordion flush>
                   {faqCats.data.map((item) => (
-                    <>
+                    <div key={item._id}>
                       <h2
                         className="mt-3 fs-2 faq-category-title"
                         key={item._id}
@@ -108,7 +108,7 @@ const FaqsScreen = () => {
                           </Accordion.Body>
                         </Accordion.Item>
                       ))}
-                    </>
+                    </div>
                   ))}
                 </Accordion>
               </Col>

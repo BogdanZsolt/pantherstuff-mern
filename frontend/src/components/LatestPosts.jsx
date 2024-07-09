@@ -27,8 +27,6 @@ const LatestPosts = () => {
     fields: '_id,user,bannerImage,title,description,createdAt, language',
   });
 
-  console.log(posts?.data);
-
   return (
     <Container className="mt-5">
       <h2>

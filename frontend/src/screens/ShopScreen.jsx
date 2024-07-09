@@ -29,7 +29,7 @@ import {
 import { useTranslation } from 'react-i18next';
 
 const ShopScreen = () => {
-  let { pageNumber, keyword } = useParams();
+  let { pageNumber, keyword, productCategory, productCollection } = useParams();
 
   if (!pageNumber) {
     pageNumber = 1;
@@ -38,7 +38,7 @@ const ShopScreen = () => {
   const { t, i18n } = useTranslation(['shop']);
 
   const [sort, setSort] = useState('-rating,-createdAt');
-  const [category, setCategory] = useState('');
+  const [category, setCategory] = useState(productCategory || '');
   const [collection, setCollection] = useState([]);
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(0);
@@ -99,10 +99,24 @@ const ShopScreen = () => {
     }
   }, [minmax, i18n.language]);
 
+  useEffect(() => {
+    if (productCategory === undefined) {
+      setCategory('');
+    } else {
+      setCategory(productCategory);
+    }
+  }, [productCategory]);
+
+  useEffect(() => {
+    if (productCollection === undefined) {
+      setCollection([]);
+    } else {
+      setCollection(productCollection);
+    }
+  }, [productCollection]);
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
-  console.log(colors);
 
   return (
     <>
@@ -212,15 +226,23 @@ const ShopScreen = () => {
                   </Col>
                 </Row>
                 <Row>
-                  {products.data.map((product) => (
-                    <Col sm={6} md={4} xl={3} key={product._id}>
-                      <Product product={product} />
-                    </Col>
-                  ))}
+                  {products.data.length > 0 ? (
+                    products.data.map((product) => (
+                      <Col sm={6} md={4} xl={3} key={product._id}>
+                        <Product product={product} />
+                      </Col>
+                    ))
+                  ) : (
+                    <p className="lead fw-semibold">
+                      {t('thereAreNoItemsToDisplay')}
+                    </p>
+                  )}
                 </Row>
                 <Paginate
                   pages={pages}
                   page={page}
+                  productCategory={productCategory}
+                  productCollection={productCollection}
                   keyword={keyword ? keyword : ''}
                 />
               </Col>
@@ -238,6 +260,7 @@ const ShopScreen = () => {
             onHide={handleClose}
             scroll={true}
             backdrop={false}
+            responsive="lg"
           >
             <Offcanvas.Header closeButton>
               <Offcanvas.Title>Offcanvas</Offcanvas.Title>

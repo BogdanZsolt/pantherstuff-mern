@@ -97,9 +97,6 @@ const SelectCategory = ({ category, setCategory, multi = false }) => {
 
   useEffect(() => {
     if (categories) {
-      // if (category === '') {
-      //   setDefaultCategory(t('select'));
-      // }
       if (category === '') {
         setDefaultCategory('');
       }
@@ -133,8 +130,6 @@ const SelectCategory = ({ category, setCategory, multi = false }) => {
     }
   };
 
-  console.log(defaultCategory);
-
   return (
     <div>
       {isLoading ? (
@@ -148,7 +143,7 @@ const SelectCategory = ({ category, setCategory, multi = false }) => {
             <Select
               name="categories"
               options={getOptions()}
-              defaultValue={defaultCategory}
+              value={defaultCategory}
               components={animatedComponents}
               styles={selectStyles}
               isClearable

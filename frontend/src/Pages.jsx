@@ -25,6 +25,9 @@ export const RawMaterialsScreen = lazy(() =>
 export const FaqsScreen = lazy(() => import('./screens/FaqsScreen.jsx'));
 export const ContactScreen = lazy(() => import('./screens/ContactScreen.jsx'));
 export const ShopScreen = lazy(() => import('./screens/ShopScreen.jsx'));
+export const SupplyStoreScreen = lazy(() =>
+  import('./screens/SupplyStoreScreen.jsx')
+);
 export const BlogScreen = lazy(() => import('./screens/BlogScreen.jsx'));
 export const PostScreen = lazy(() => import('./screens/PostScreen.jsx'));
 export const AuthorScreen = lazy(() => import('./screens/AuthorScreen.jsx'));

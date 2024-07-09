@@ -299,6 +299,28 @@ img.logo {
   width: 100%;
 }
 
+.mega-menu-wrapper .mega-item {
+  width: 100%;
+}
+
+.mega-menu-wrapper .mega-item a {
+  text-decoration: none;
+}
+
+.mega-menu-wrapper .mega-item h5 {
+  padding: 0.25rem 0.5rem;
+  color: var(--bs-secondary);
+  font-size: 1.25rem;
+  font-weight: 600;
+  border-radius: var(--bs-border-radius-lg);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.mega-menu-wrapper .mega-item:hover h5 {
+  background-color: var(--bs-secondary);
+  color: var(--bs-primary);
+}
+
 .mega-menu-wrapper .mega-item .image {
   display: none;
   position: relative;
@@ -315,6 +337,14 @@ img.logo {
   width: 100%;
   height: 100%;
   transition: var(--transition-transform);
+}
+
+.mega-parent .mega-menu .mega-menu-wrapper .mega-table-wrapper {
+  display: flex;
+  flex-direction: column;
+  padding-top: 0;
+  max-height: 65vh;
+  overflow-y: auto;
 }
 
 .mega-menu-wrapper .mega-item:hover .image img {
@@ -545,6 +575,7 @@ table th {
 .banner .title h3 {
   text-transform: capitalize;
   font-size: clamp(3rem, 2.85rem + 0.75vw, 3.75rem);
+  text-align: center !important;
 }
 
 .banner .title p {
@@ -1559,13 +1590,11 @@ table th {
 }
 
 .faq-sidebar.fixed {
-  position: fixed;
-  top: 6%;
-  margin-top: 3rem;
+  position: relative;
 }
 
 .faq-category-title {
-  scroll-margin-top: 6%;
+  scroll-margin-top: 4rem;
 }
 
 /* Media Querys */
@@ -1645,6 +1674,15 @@ table th {
   }
   .banner .title h3 {
     max-width: 45rem;
+  }
+  .faq-sidebar.fixed {
+    position: fixed;
+    top: 6%;
+    margin-top: 3rem;
+  }
+
+  .faq-category-title {
+    scroll-margin-top: 6rem;
   }
 }
 
@@ -1762,7 +1800,7 @@ table th {
   .mega-parent .mega-menu ul {
     flex-direction: row;
     justify-content: space-around;
-    align-items: center;
+    align-items: start;
     padding-top: 2rem;
     padding-bottom: 2rem;
     width: 100%;
