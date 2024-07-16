@@ -69,6 +69,24 @@ export const ProductSizeListScreen = lazy(() =>
 export const ProductSizeEditScreen = lazy(() =>
   import('./screens/admin/ProductSizeEditScreen.jsx')
 );
+export const SupplyListScreen = lazy(() =>
+  import('./screens/admin/SupplyListScreen.jsx')
+);
+export const SupplyEditScreen = lazy(() =>
+  import('./screens/admin/SupplyEditScreen.jsx')
+);
+export const SupplyCategoryListScreen = lazy(() =>
+  import('./screens/admin/SupplyCategoryListScreen.jsx')
+);
+export const SupplyCatEditScreen = lazy(() =>
+  import('./screens/admin/SupplyCatEditScreen.jsx')
+);
+export const SupplySizeListScreen = lazy(() =>
+  import('./screens/admin/SupplySizeListScreen.jsx')
+);
+export const SupplySizeEditScreen = lazy(() =>
+  import('./screens/admin/SupplySizeEditScreen.jsx')
+);
 export const PostListScreen = lazy(() =>
   import('./screens/admin/PostListScreen.jsx')
 );

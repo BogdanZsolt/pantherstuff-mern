@@ -37,6 +37,12 @@ import {
   ProductScreen,
   ProductSizeEditScreen,
   ProductSizeListScreen,
+  SupplyListScreen,
+  SupplyEditScreen,
+  SupplyCategoryListScreen,
+  SupplyCatEditScreen,
+  SupplySizeListScreen,
+  SupplySizeEditScreen,
   ProfileScreen,
   ProtectRoute,
   RegisterScreen,
@@ -223,7 +229,7 @@ const App = () => {
               element: <ProductListScreen />,
             },
             {
-              path: 'productlist/:pageNumber',
+              path: 'productlist/page/:pageNumber',
               element: <ProductListScreen />,
             },
             {
@@ -253,6 +259,34 @@ const App = () => {
             {
               path: 'productsize/:id/edit',
               element: <ProductSizeEditScreen />,
+            },
+            {
+              path: 'supplylist',
+              element: <SupplyListScreen />,
+            },
+            {
+              path: 'supplylist/page/:pageNumber',
+              element: <SupplyListScreen />,
+            },
+            {
+              path: 'supply/:id/edit',
+              element: <SupplyEditScreen />,
+            },
+            {
+              path: 'supplycategorylist',
+              element: <SupplyCategoryListScreen />,
+            },
+            {
+              path: 'supplycategory/:id/edit',
+              element: <SupplyCatEditScreen />,
+            },
+            {
+              path: 'supplysizelist',
+              element: <SupplySizeListScreen />,
+            },
+            {
+              path: 'supplysize/:id/edit',
+              element: <SupplySizeEditScreen />,
             },
             {
               path: 'postlist',

@@ -17,6 +17,7 @@ import {
   BsEnvelopePlus,
 } from 'react-icons/bs';
 import { AiOutlineProduct } from 'react-icons/ai';
+import { RxComponent1 } from 'react-icons/rx';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../slices/authSlice';
 import { useLogoutMutation } from '../../slices/usersApiSlice';
@@ -132,6 +133,69 @@ const Sidebar = () => {
                 <Dropdown.Item>
                   <Link to="/admin/productsizelist">
                     <span>Product Sizes</span>
+                  </Link>
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </div>
+          </Nav.Item>
+
+          <Nav.Item>
+            <Dropdown.Toggle
+              className="nav-link d-flex align-items-center text-primary"
+              onClick={() => setOpen(open === 'supplies' ? '' : 'supplies')}
+              aria-controls="supplies-collapse"
+              aria-expanded={open}
+              title="Supplies"
+            >
+              <RxComponent1 className="fs-4" />
+              <span className="ms-2 fs-4 d-none d-md-inline-flex">
+                Supplies
+              </span>
+            </Dropdown.Toggle>
+            <div className="d-none d-md-block">
+              <Collapse in={open === 'supplies'}>
+                <Nav id="supplies-collapse" className="flex-nowrap flex-column">
+                  <Nav.Item className="ms-4 p-2">
+                    <Link to="/admin/supplylist" className="text-primary my-2">
+                      <span>All Supplies</span>
+                    </Link>
+                  </Nav.Item>
+                  <Nav.Item className="ms-4 p-2">
+                    <Link
+                      to="/admin/supplycategorylist"
+                      className="text-primary my-2"
+                    >
+                      <span>Supply Categories</span>
+                    </Link>
+                  </Nav.Item>
+                  <Nav.Item className="ms-4 p-2">
+                    <Link
+                      to="/admin/supplysizelist"
+                      className="text-primary my-2"
+                    >
+                      <span>Supply Sizes</span>
+                    </Link>
+                  </Nav.Item>
+                </Nav>
+              </Collapse>
+            </div>
+            <div className="d-block d-md-none dropdown-menu__container">
+              <Dropdown.Menu show={open === 'supplies'}>
+                <Dropdown.Item>
+                  <Link to="/admin/supplylist">
+                    <span>All Supplies</span>
+                  </Link>
+                </Dropdown.Item>
+                <Dropdown.Item>
+                  <Link to="/admin/supplycategorylist">
+                    <span>
+                      <span>Supply Categories</span>
+                    </span>
+                  </Link>
+                </Dropdown.Item>
+                <Dropdown.Item>
+                  <Link to="/admin/supplysizelist">
+                    <span>Supply Sizes</span>
                   </Link>
                 </Dropdown.Item>
               </Dropdown.Menu>

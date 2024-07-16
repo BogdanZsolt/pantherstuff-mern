@@ -1,0 +1,13 @@
+{
+  "supplyStore": "Supply Store",
+  "supply": "Supply",
+  "supplies": "Supplies",
+  "showingOfResults": "Showing {{length}} of {{count}} results",
+  "defaultSorting": "Default Sorting",
+  "popular": "Popular",
+  "rating": "Rating",
+  "latest": "Latest",
+  "PriceLowToHigh": "Price low to high",
+  "priceHighToLow": "Price high to low",
+  "": ""
+}

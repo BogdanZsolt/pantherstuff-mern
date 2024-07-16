@@ -7,7 +7,7 @@ const Paginate = ({
   page,
   isAdmin = false,
   keyword = '',
-  pageName = 'shop',
+  pageName = !isAdmin ? 'shop' : 'productlist',
   productCategory,
   productCollection,
 }) => {
@@ -25,7 +25,7 @@ const Paginate = ({
         lnk = lnk + `/collection/${productCollection}`;
       }
     } else {
-      lnk = '/admin/productlist';
+      lnk = `/admin/${pageName}`;
     }
     return lnk;
   };
