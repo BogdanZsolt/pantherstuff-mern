@@ -38,6 +38,7 @@ const FilterSidebar = ({
           ]}
           flush
           alwaysOpen
+          style={{ '--bs-accordion-bg': 'transparent' }}
         >
           <Accordion.Item eventKey="size">
             <Accordion.Header>{t('size')}</Accordion.Header>

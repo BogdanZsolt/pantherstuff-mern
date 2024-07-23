@@ -272,10 +272,20 @@ const ShopScreen = () => {
                   setSize={setSizes}
                   category={category}
                   setCategory={setCategory}
-                  min={minmax[0].minPrice}
+                  collection={collection}
+                  setCollection={setCollection}
+                  min={
+                    i18n.language === 'en'
+                      ? minmax[0].minPrice
+                      : minmax[0].minPrice_hu
+                  }
                   minPrice={minPrice}
                   setMinPrice={setMinPrice}
-                  max={minmax[0].maxPrice}
+                  max={
+                    i18n.language === 'en'
+                      ? minmax[0].maxPrice
+                      : minmax[0].maxPrice_hu
+                  }
                   maxPrice={maxPrice}
                   setMaxPrice={setMaxPrice}
                   colors={colors}

@@ -53,9 +53,15 @@ const Header = () => {
       console.log(err);
     }
   };
+
   return (
     <>
-      <Navbar expand="md" className={`ps-navbar ${scrollClass}`} fixed="top">
+      <Navbar
+        collapseOnSelect
+        expand="lg"
+        className={`ps-navbar ${scrollClass}`}
+        fixed="top"
+      >
         <Container fluid>
           <LinkContainer to="/">
             <Navbar.Brand href="/">
@@ -64,7 +70,7 @@ const Header = () => {
           </LinkContainer>
           <Navbar.Toggle
             aria-controls="offcanvas-navbar-md"
-            className="d-flex d-md-none flex-column justify-content-around align-items-center"
+            className="d-flex d-lg-none flex-column justify-content-around align-items-center"
           >
             <span className="toggler-icon top-bar"></span>
             <span className="toggler-icon middle-bar"></span>
@@ -75,6 +81,7 @@ const Header = () => {
             aria-labelledby="offcanvas-navbar-label"
             placement="start"
             className="ps-navbar-offcanvas"
+            responsive="lg"
           >
             <Offcanvas.Header closeButton>
               <Offcanvas.Title id="offcanvas-navbar-label">
@@ -112,7 +119,7 @@ const Header = () => {
                     </Nav.Link>
                   </LinkContainer>
                 )}
-                <li className="d-flex justify-content-start justify-content-md-center align-items-center">
+                <li className="d-flex justify-content-start justify-content-lg-center align-items-center">
                   <LinkContainer to="/cart" title={t('cart')}>
                     <Nav.Link className="d-flex justify-content-center align-items-center">
                       <RiShoppingBagLine />
@@ -124,7 +131,7 @@ const Header = () => {
                     </Nav.Link>
                   </LinkContainer>
                 </li>
-                <li className="d-flex justify-content-start justify-content-md-center align-items-center">
+                <li className="d-flex justify-content-start justify-content-lg-center align-items-center">
                   <LinkContainer to="/wishlist" title={t('wishlist')}>
                     <Nav.Link className="d-flex justify-content-center align-items-center">
                       <RiHeartLine />
@@ -136,7 +143,7 @@ const Header = () => {
                     </Nav.Link>
                   </LinkContainer>
                 </li>
-                <li className="d-flex justify-content-start justify-content-md-center align-items-center">
+                <li className="d-flex justify-content-start justify-content-lg -center align-items-center">
                   <LanguageSelector />
                 </li>
               </Nav>

@@ -8,6 +8,9 @@ import {
   ButtonGroup,
   Button,
   Offcanvas,
+  // Navbar,
+  // Nav,
+  // NavDropdown,
 } from 'react-bootstrap';
 import {
   RiFilterLine,
@@ -229,29 +232,18 @@ const SupplyStoreScreen = () => {
           <Offcanvas
             show={show}
             onHide={handleClose}
-            scroll={true}
+            placement="start"
             backdrop={false}
+            scroll={true}
             responsive="lg"
           >
             <Offcanvas.Header closeButton>
-              <Offcanvas.Title>Offcanvas</Offcanvas.Title>
+              <Offcanvas.Title>Responsive offcanvas</Offcanvas.Title>
             </Offcanvas.Header>
             <Offcanvas.Body>
-              {minmax && (
-                <SupplyFilterSidebar
-                  size={sizes}
-                  setSize={setSizes}
-                  category={category}
-                  setCategory={setCategory}
-                  min={minmax[0].minPrice}
-                  minPrice={minPrice}
-                  setMinPrice={setMinPrice}
-                  max={minmax[0].maxPrice}
-                  maxPrice={maxPrice}
-                  setMaxPrice={setMaxPrice}
-                  className="d-lg-none"
-                />
-              )}
+              <p className="mb-0 d-lg-none">
+                This is content within an <code>.offcanvas-lg</code>.
+              </p>
             </Offcanvas.Body>
           </Offcanvas>
         </>

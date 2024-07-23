@@ -68,7 +68,7 @@ const Menu = () => {
       id: 1,
       text: t('about'),
       link: '',
-      megaCart: [
+      megaCard: [
         {
           id: 1.1,
           text: t('ourHerStory'),
@@ -127,7 +127,7 @@ const Menu = () => {
       id: 4,
       text: t('knowledge'),
       link: '',
-      megaCart: [
+      megaCard: [
         {
           id: 4.1,
           text: t('membership'),
@@ -181,12 +181,6 @@ const Menu = () => {
     }
   };
 
-  // console.log(
-  //   menus.map((item) => {
-  //     return item;
-  //   })
-  // );
-
   return (
     <>
       {collectionLoading ? (
@@ -206,7 +200,7 @@ const Menu = () => {
           as="ul"
         >
           {menus.map((item) =>
-            item?.megaCart?.length > 0 ? (
+            item?.megaCard?.length > 0 ? (
               <div key={item.id} className="mega-parent">
                 {item.link !== '' ? (
                   <LinkContainer to={item.link}>
@@ -234,7 +228,7 @@ const Menu = () => {
                 >
                   <Container>
                     <ul className="mega-menu-wrapper">
-                      {item.megaCart.map((mitem) => (
+                      {item.megaCard.map((mitem) => (
                         <li key={mitem.id} className="mega-item">
                           {mitem.link !== '' ? (
                             <LinkContainer to={mitem.link}>

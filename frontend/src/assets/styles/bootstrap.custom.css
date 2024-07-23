@@ -4298,7 +4298,8 @@ fieldset:disabled .btn {
   .navbar-expand-lg .navbar-toggler {
     display: none;
   }
-  .navbar-expand-lg .offcanvas {
+  .navbar-expand-lg .offcanvas,
+  .navbar-expand-lg .offcanvas-lg {
     position: static;
     z-index: auto;
     flex-grow: 1;
@@ -6541,7 +6542,7 @@ fieldset:disabled .btn {
   --bs-offcanvas-padding-x: 1.2rem;
   --bs-offcanvas-padding-y: 1.2rem;
   --bs-offcanvas-color: var(--bs-body-color);
-  --bs-offcanvas-bg: var(--bs-body);
+  --bs-offcanvas-bg: var(--bs-body-bg);
   --bs-offcanvas-border-width: var(--bs-border-width);
   --bs-offcanvas-border-color: var(--bs-border-color-translucent);
   --bs-offcanvas-box-shadow: 0 0.125rem 0.25rem
