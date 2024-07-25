@@ -21,7 +21,9 @@ const HomeScreens = () => {
 
       <Hero />
       <Container className="my-4">
-        <h1>{t('latestProducts')}</h1>
+        <h2 className="mt-5 fw-bolder">{t('dearVisitorsAndCuriousOnes')}</h2>
+        <p className="lead fw-semibold">{t('weWouldLikeToHaveSomePatience')}</p>
+        <h3 className="fs-1 mt-5">{t('latestProducts')}</h3>
         <ProductCarousel />
         <LatestPosts />
         <SubscribeForm />
