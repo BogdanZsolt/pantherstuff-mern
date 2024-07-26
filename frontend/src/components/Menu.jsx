@@ -68,7 +68,7 @@ const Menu = () => {
     {
       id: 1,
       text: t('about'),
-      link: '/shop',
+      link: '',
       megaCard: [
         {
           id: 1.1,
