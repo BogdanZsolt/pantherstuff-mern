@@ -251,7 +251,8 @@ const ShopScreen = () => {
           <Button
             variant="primary"
             onClick={handleShow}
-            className="d-lg-none position-fixed start-0 top-50 rounded-circle p-2 lh-1"
+            // className="d-lg-none position-fixed start-0 top-50 rounded-circle p-2 lh-1 filter-button"
+            className="d-lg-none filter-button"
           >
             <RiFilterLine />
           </Button>

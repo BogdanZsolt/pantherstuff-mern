@@ -70,11 +70,13 @@ const Header = () => {
           </LinkContainer>
           <Navbar.Toggle
             aria-controls="offcanvas-navbar-md"
-            className="d-flex d-lg-none flex-column justify-content-around align-items-center"
+            className="d-lg-none"
           >
-            <span className="toggler-icon top-bar"></span>
-            <span className="toggler-icon middle-bar"></span>
-            <span className="toggler-icon bottom-bar"></span>
+            <div className="mobile-menu-btn">
+              <span className="toggler-icon top-bar"></span>
+              <span className="toggler-icon middle-bar"></span>
+              <span className="toggler-icon bottom-bar"></span>
+            </div>
           </Navbar.Toggle>
           <Navbar.Offcanvas
             id="offcanvas-navbar"

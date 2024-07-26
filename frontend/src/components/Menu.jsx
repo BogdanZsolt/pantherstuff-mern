@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Nav, NavDropdown, Container, Image } from 'react-bootstrap';
+import { Nav, NavDropdown, Container, Image, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import { useTranslation } from 'react-i18next';
 import Message from './Message';
 import Loader from './Loader';
+import { BsFillCaretDownFill } from 'react-icons/bs';
 import { useGetProductCategoriesQuery } from '../slices/productCategoriesApiSlice';
 import { useGetProductCollectionsQuery } from '../slices/productCollectionsApiSlice';
 
@@ -67,7 +68,7 @@ const Menu = () => {
     {
       id: 1,
       text: t('about'),
-      link: '',
+      link: '/shop',
       megaCard: [
         {
           id: 1.1,
@@ -173,9 +174,9 @@ const Menu = () => {
   ];
 
   // const { menus } = mainMenus;
-  const mobileShowHandler = (e) => {
+  const mobileShowHandler = (val) => {
     if (window.innerWidth <= 991) {
-      show !== e.target.id ? setShow(e.target.id) : setShow('');
+      show !== val ? setShow(val) : setShow('');
     } else {
       setShow('');
     }
@@ -203,22 +204,30 @@ const Menu = () => {
             item?.megaCard?.length > 0 ? (
               <div key={item.id} className="mega-parent">
                 {item.link !== '' ? (
-                  <LinkContainer to={item.link}>
-                    <Nav.Link
+                  <div className="mega-dropdown">
+                    <LinkContainer to={item.link}>
+                      <Nav.Link>{item.text}</Nav.Link>
+                    </LinkContainer>
+                    <Button
+                      className="d-lg-none bg-transparent ms-2"
+                      onClick={() => mobileShowHandler(`mega-${item.id}`)}
                       id={`mega-${item.id}`}
-                      className="mega-dropdown valami"
-                      onClick={(e) => mobileShowHandler(e)}
                     >
-                      {item.text}
-                    </Nav.Link>
-                  </LinkContainer>
+                      <BsFillCaretDownFill id={`mega-${item.id}`} />
+                    </Button>
+                  </div>
                 ) : (
                   <Nav.Link
-                    id={`mega-${item.id}`}
                     className="mega-dropdown"
-                    onClick={(e) => mobileShowHandler(e)}
+                    onClick={() => mobileShowHandler(`mega-${item.id}`)}
                   >
-                    {item.text}
+                    <div
+                      id={`mega-${item.id}`}
+                      className="d-flex align-items-center"
+                    >
+                      {item.text}
+                      <BsFillCaretDownFill className="d-lg-none" />
+                    </div>
                   </Nav.Link>
                 )}
                 <div
@@ -256,22 +265,33 @@ const Menu = () => {
             ) : item.megaTable?.length > 0 ? (
               <div key={item.id} className="mega-parent">
                 {item.link !== '' ? (
-                  <LinkContainer to={item.link}>
-                    <Nav.Link
+                  <div className="mega-dropdown">
+                    <LinkContainer to={item.link}>
+                      <Nav.Link>{item.text}</Nav.Link>
+                    </LinkContainer>
+                    <Button
+                      className="d-lg-none bg-transparent ms-2"
+                      onClick={() => mobileShowHandler(`mega-${item.id}`)}
                       id={`mega-${item.id}`}
-                      className="mega-dropdown"
-                      onClick={(e) => mobileShowHandler(e)}
                     >
-                      {item.text}
-                    </Nav.Link>
-                  </LinkContainer>
+                      <BsFillCaretDownFill
+                        id={`mega-${item.id}`}
+                        className="d-block"
+                      />
+                    </Button>
+                  </div>
                 ) : (
                   <Nav.Link
-                    id={item.id}
                     className="mega-dropdown"
-                    onClick={(e) => mobileShowHandler(e)}
+                    onClick={() => mobileShowHandler(`mega-${item.id}`)}
                   >
-                    {item.text}
+                    <div
+                      id={`mega-${item.id}`}
+                      className="d-flex align-items-center"
+                    >
+                      {item.text}
+                      <BsFillCaretDownFill className="d-lg-none" />
+                    </div>
                   </Nav.Link>
                 )}
                 <div
