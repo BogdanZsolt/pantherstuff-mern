@@ -125,6 +125,7 @@ const Header = () => {
                   <LinkContainer to="/cart" title={t('cart')}>
                     <Nav.Link className="d-flex justify-content-center align-items-center">
                       <RiShoppingBagLine />
+                      <span className="d-lg-none">{t('cart')}</span>
                       {cartItems.length > 0 && (
                         <Badge pill bg="success" style={{ marginLeft: '5px' }}>
                           {cartItems.reduce((a, c) => a + c.qty, 0)}
@@ -137,6 +138,7 @@ const Header = () => {
                   <LinkContainer to="/wishlist" title={t('wishlist')}>
                     <Nav.Link className="d-flex justify-content-center align-items-center">
                       <RiHeartLine />
+                      <span className="d-lg-none">{t('wishlist')}</span>
                       {wishListItems.length > 0 && (
                         <Badge pill bg="success" style={{ marginLeft: '5px' }}>
                           {wishListItems.length}
