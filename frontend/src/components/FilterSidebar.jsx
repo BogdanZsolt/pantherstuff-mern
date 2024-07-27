@@ -21,11 +21,12 @@ const FilterSidebar = ({
   setMaxPrice,
   colors,
   setColors,
+  className,
 }) => {
   const { t } = useTranslation(['shop']);
 
   return (
-    <>
+    <div className={className}>
       <h3>{t('filters')}</h3>
       <Row>
         <Accordion
@@ -87,7 +88,7 @@ const FilterSidebar = ({
           </Accordion.Item>
         </Accordion>
       </Row>
-    </>
+    </div>
   );
 };
 

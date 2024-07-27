@@ -149,8 +149,6 @@ const ProductScreen = () => {
     dispatch(toggleWishList({ ...product }));
   };
 
-  console.log(product?.sizes);
-
   return (
     <>
       {isLoading ? (

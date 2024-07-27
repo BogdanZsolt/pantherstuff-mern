@@ -38,7 +38,7 @@ const ShopScreen = () => {
   const { t, i18n } = useTranslation(['shop']);
 
   const [sort, setSort] = useState('-rating,-createdAt');
-  const [category, setCategory] = useState(productCategory || '');
+  const [category, setCategory] = useState([]);
   const [collection, setCollection] = useState([]);
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(0);
@@ -57,7 +57,7 @@ const ShopScreen = () => {
     error,
   } = useGetProductsQuery({
     sort,
-    category: category === '' ? undefined : category,
+    category_in: category.length > 0 ? category : undefined,
     collections_in: collection.length > 0 ? collection : undefined,
     sizes_in: sizes.length > 0 ? sizes : undefined,
     colors_in: colors.length > 0 ? colors : undefined,
@@ -101,7 +101,7 @@ const ShopScreen = () => {
 
   useEffect(() => {
     if (productCategory === undefined) {
-      setCategory('');
+      setCategory([]);
     } else {
       setCategory(productCategory);
     }
@@ -117,6 +117,8 @@ const ShopScreen = () => {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  console.log(sizes);
 
   return (
     <>
@@ -136,34 +138,54 @@ const ShopScreen = () => {
           />
           <Container className="my-4" fluid>
             <h2 className="text-center">{t('products')}</h2>
+            <Button
+              variant="primary"
+              onClick={handleShow}
+              className="d-lg-none filter-button"
+            >
+              <RiFilterLine />
+            </Button>
             <Row>
-              <Col lg={3} xxl={2} className="d-none d-lg-block">
-                {minmax && (
-                  <FilterSidebar
-                    size={sizes}
-                    setSize={setSizes}
-                    category={category}
-                    setCategory={setCategory}
-                    collection={collection}
-                    setCollection={setCollection}
-                    min={
-                      i18n.language === 'en'
-                        ? minmax[0].minPrice
-                        : minmax[0].minPrice_hu
-                    }
-                    minPrice={minPrice}
-                    setMinPrice={setMinPrice}
-                    max={
-                      i18n.language === 'en'
-                        ? minmax[0].maxPrice
-                        : minmax[0].maxPrice_hu
-                    }
-                    maxPrice={maxPrice}
-                    setMaxPrice={setMaxPrice}
-                    colors={colors}
-                    setColors={setColors}
-                  />
-                )}
+              <Col lg={3} xxl={2}>
+                <Offcanvas
+                  show={show}
+                  onHide={handleClose}
+                  scroll={true}
+                  backdrop={false}
+                  responsive="lg"
+                >
+                  <Offcanvas.Header closeButton>
+                    <Offcanvas.Title></Offcanvas.Title>
+                  </Offcanvas.Header>
+                  <Offcanvas.Body>
+                    {minmax && (
+                      <FilterSidebar
+                        size={sizes}
+                        setSize={setSizes}
+                        category={category}
+                        setCategory={setCategory}
+                        collection={collection}
+                        setCollection={setCollection}
+                        min={
+                          i18n.language === 'en'
+                            ? minmax[0].minPrice
+                            : minmax[0].minPrice_hu
+                        }
+                        minPrice={minPrice}
+                        setMinPrice={setMinPrice}
+                        max={
+                          i18n.language === 'en'
+                            ? minmax[0].maxPrice
+                            : minmax[0].maxPrice_hu
+                        }
+                        maxPrice={maxPrice}
+                        setMaxPrice={setMaxPrice}
+                        colors={colors}
+                        setColors={setColors}
+                      />
+                    )}
+                  </Offcanvas.Body>
+                </Offcanvas>
               </Col>
               <Col xs={12} lg={9} xxl={10}>
                 <Row className="align-items-center justify-content-between">
@@ -248,53 +270,6 @@ const ShopScreen = () => {
               </Col>
             </Row>
           </Container>
-          <Button
-            variant="primary"
-            onClick={handleShow}
-            // className="d-lg-none position-fixed start-0 top-50 rounded-circle p-2 lh-1 filter-button"
-            className="d-lg-none filter-button"
-          >
-            <RiFilterLine />
-          </Button>
-          <Offcanvas
-            show={show}
-            onHide={handleClose}
-            scroll={true}
-            backdrop={false}
-            responsive="lg"
-          >
-            <Offcanvas.Header closeButton>
-              <Offcanvas.Title>Offcanvas</Offcanvas.Title>
-            </Offcanvas.Header>
-            <Offcanvas.Body>
-              {minmax && (
-                <FilterSidebar
-                  size={sizes}
-                  setSize={setSizes}
-                  category={category}
-                  setCategory={setCategory}
-                  collection={collection}
-                  setCollection={setCollection}
-                  min={
-                    i18n.language === 'en'
-                      ? minmax[0].minPrice
-                      : minmax[0].minPrice_hu
-                  }
-                  minPrice={minPrice}
-                  setMinPrice={setMinPrice}
-                  max={
-                    i18n.language === 'en'
-                      ? minmax[0].maxPrice
-                      : minmax[0].maxPrice_hu
-                  }
-                  maxPrice={maxPrice}
-                  setMaxPrice={setMaxPrice}
-                  colors={colors}
-                  setColors={setColors}
-                />
-              )}
-            </Offcanvas.Body>
-          </Offcanvas>
         </>
       )}
       ;

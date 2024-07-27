@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
+import { Form } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
-import { Form } from 'react-bootstrap';
 import Loader from './Loader';
 import Message from './Message';
 import { useGetProductCategoriesQuery } from '../slices/productCategoriesApiSlice';
@@ -10,6 +10,7 @@ import { useGetProductCategoriesQuery } from '../slices/productCategoriesApiSlic
 const SelectCategory = ({ category, setCategory, multi = false }) => {
   const { t, i18n } = useTranslation(['shop']);
   const animatedComponents = makeAnimated();
+  const [categoryOptions, setCategoryOptions] = useState(null);
   const [defaultCategory, setDefaultCategory] = useState(undefined);
 
   const selectStyles = {
@@ -28,42 +29,42 @@ const SelectCategory = ({ category, setCategory, multi = false }) => {
           : '1px solid var(--bs-secondary)',
       },
     }),
-    valueContainer: (baseStyle) => ({
-      ...baseStyle,
+    valueContainer: (baseStyles) => ({
+      ...baseStyles,
       flexWrap: 'nowrap',
     }),
-    multiValue: (baseStyle) => ({
-      ...baseStyle,
+    multiValue: (baseStyles) => ({
+      ...baseStyles,
       color: 'var(--bs-secondary)',
       backgroundColor: 'rgba(var(--bs-secondary-rgb), 0.15)',
     }),
-    indicatorSeparator: (baseStyle) => ({
-      ...baseStyle,
+    indicatorSeparator: (baseStyles) => ({
+      ...baseStyles,
       color: 'var(--bs-secondary)',
       backgroundColor: 'var(--bs-secondary)',
     }),
-    indicatorContainer: (baseStyle) => ({
-      ...baseStyle,
+    indicatorContainer: (baseStyles) => ({
+      ...baseStyles,
       color: 'var(--bs-secondary)',
     }),
-    option: (baseStyle, state) => ({
-      ...baseStyle,
+    option: (baseStyles, state) => ({
+      ...baseStyles,
       color: state.isSelected ? 'var(--bs-primary)' : 'var(--bs-secondary)',
       backgroundColor: state.isSelected
         ? 'var(--bs-secondary)'
         : 'var(--bs-primary)',
       width: 'auto',
     }),
-    menu: (baseStyle) => ({
-      ...baseStyle,
+    menu: (baseStyles) => ({
+      ...baseStyles,
       width: 'max-content',
       minWidth: '100%',
       zIndex: 5,
       border: '1px solid var(--bs-secondary)',
       boxShadow: '0 10px 20px -10px var(--bs-secondary)',
     }),
-    Placeholder: (baseStyle) => ({
-      ...baseStyle,
+    Placeholder: (baseStyles) => ({
+      ...baseStyles,
       fontSize: '1.15rem',
       color: 'var(--bs-secondary)',
       fontWeight: '500',
@@ -76,57 +77,48 @@ const SelectCategory = ({ category, setCategory, multi = false }) => {
     error,
   } = useGetProductCategoriesQuery({ sort: 'title' });
 
-  const getOptions = () => {
-    let options = [];
-    if (!categories.data) return;
-
-    categories.data.map((cat) => {
-      options = [
-        ...options,
-        {
-          value: cat._id,
-          label:
-            i18n.language === 'en'
-              ? cat.title
-              : cat.translations?.hu?.title || cat.title,
-        },
-      ];
-    });
-    return options;
-  };
-
   useEffect(() => {
-    if (categories) {
-      if (category === '') {
-        setDefaultCategory('');
-      }
+    if (categories && category) {
+      let cat = [];
+      let defCat = [];
       categories.data.map((item) => {
-        if (item._id === category) {
-          setDefaultCategory({
+        cat = [
+          ...cat,
+          {
             value: item._id,
             label:
               i18n.language === 'en'
                 ? item.title
                 : item.translations?.hu?.title || item.title,
-          });
+          },
+        ];
+        if (category.includes(item._id)) {
+          defCat = [
+            ...defCat,
+            {
+              value: item._id,
+              label:
+                i18n.language === 'en'
+                  ? item.title
+                  : item.translations?.hu?.title || item.title,
+            },
+          ];
         }
       });
+      setCategoryOptions(cat);
+      setDefaultCategory(defCat);
     }
   }, [categories, category, i18n.language]);
 
   const selectCategoryHandler = (choice) => {
     if (multi) {
-      if (choice.length === 0) {
-        setCategory(undefined);
-      } else {
-        let cat = [];
-        choice.map((x) => {
-          cat = [...cat, x.value];
-        });
-        setCategory(cat);
-      }
+      let cat = [];
+      choice.map((x) => {
+        cat = [...cat, x.value];
+      });
+      setCategory(cat);
     } else {
-      !choice ? setCategory(undefined) : setCategory(choice.value);
+      choice ? setCategory(undefined) : setCategory(choice.value);
     }
   };
 
@@ -137,18 +129,18 @@ const SelectCategory = ({ category, setCategory, multi = false }) => {
       ) : error ? (
         <Message variant="danger">{error.data.Message}</Message>
       ) : (
-        categories.data &&
-        defaultCategory !== undefined && (
+        categoryOptions && (
           <Form.Group controlId="category" className="my-2">
             <Select
-              name="categories"
-              options={getOptions()}
-              value={defaultCategory}
+              closeMenuOnSelect={false}
               components={animatedComponents}
+              value={defaultCategory}
               styles={selectStyles}
+              isMulti={multi}
               isClearable
               isSearchable
-              isMulti={multi}
+              name="categories"
+              options={categoryOptions}
               onChange={selectCategoryHandler}
               placeholder={t('select')}
             />

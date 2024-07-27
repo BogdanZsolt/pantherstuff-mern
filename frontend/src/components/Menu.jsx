@@ -245,7 +245,7 @@ const Menu = () => {
                                 <div className="image">
                                   <Image src={mitem.image} />
                                 </div>
-                                <h5>{mitem.text}</h5>
+                                <h5 title={mitem.text}>{mitem.text}</h5>
                               </Link>
                             </LinkContainer>
                           ) : (
@@ -253,7 +253,7 @@ const Menu = () => {
                               <div className="image">
                                 <Image src={mitem.image} />
                               </div>
-                              <h5>{mitem.text}</h5>
+                              <h5 title={mitem.text}>{mitem.text}</h5>
                             </>
                           )}
                         </li>
@@ -312,11 +312,13 @@ const Menu = () => {
                                 {itm.link !== '' ? (
                                   <LinkContainer to={itm.link}>
                                     <Link>
-                                      <h5 className="mb-2">{itm.text}</h5>
+                                      <h5 className="mb-2" title={itm.text}>
+                                        {itm.text}
+                                      </h5>
                                     </Link>
                                   </LinkContainer>
                                 ) : (
-                                  <h5>{itm.text}</h5>
+                                  <h5 title={itm.text}>{itm.text}</h5>
                                 )}
                               </li>
                             ))}

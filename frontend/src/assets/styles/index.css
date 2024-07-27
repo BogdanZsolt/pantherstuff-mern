@@ -227,12 +227,27 @@ img.logo {
   height: 3.5rem;
   position: relative;
   border-radius: var(--bs-border-radius-pill);
-  background-color: rgba(var(--bs-primary-rgb), 0.5);
+  background-color: rgba(var(--bs-primary-rgb), 0.4);
   transition: background-color 0.3s ease;
+}
+
+.navbar-toggler::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  backdrop-filter: blur(4px);
+  z-index: -1;
 }
 
 .navbar.scroll-nav .navbar-toggler {
   background-color: transparent;
+}
+
+.navbar.scroll-nav .navbar-toggler::before {
+  content: unset;
 }
 
 .navbar-toggler,
@@ -1766,6 +1781,14 @@ table th {
 }
 
 @media (min-width: 992px) {
+  .mega-menu-wrapper .mega-item h5 {
+    text-align: center;
+    max-width: 9.375rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
   .slider .ls-cover {
     height: 100vh;
   }
