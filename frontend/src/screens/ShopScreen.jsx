@@ -118,7 +118,7 @@ const ShopScreen = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  console.log(sizes);
+  console.log(colors);
 
   return (
     <>

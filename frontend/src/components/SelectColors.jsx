@@ -16,6 +16,8 @@ const SelectColors = ({ colors, setColors }) => {
     }
   };
 
+  console.log(colors);
+
   const colorResetHandler = () => {
     if (colors.length > 0) {
       colors.map((item) => {
@@ -42,6 +44,7 @@ const SelectColors = ({ colors, setColors }) => {
                 index={color}
                 color={color}
                 handler={colorHandler}
+                checked={colors.includes(color)}
               />
             ))}
           </div>

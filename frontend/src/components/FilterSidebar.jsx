@@ -25,6 +25,8 @@ const FilterSidebar = ({
 }) => {
   const { t } = useTranslation(['shop']);
 
+  console.log(colors);
+
   return (
     <div className={className}>
       <h3>{t('filters')}</h3>
