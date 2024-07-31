@@ -16,7 +16,8 @@ import {
 } from '../../slices/productsApiSlice';
 import InputColors from '../../components/InputColors.jsx';
 import LangSelectEditor from '../../components/LangSelectEditor.jsx';
-// const Editor = lazy(() => import('../../components/Editor.jsx'));
+import { useGetProductCategoriesQuery } from '../../slices/productCategoriesApiSlice';
+import { useGetProductCollectionsQuery } from '../../slices/productCollectionsApiSlice';
 
 const ProductEditScreen = () => {
   const { id: productId } = useParams();
@@ -25,7 +26,7 @@ const ProductEditScreen = () => {
   const [thumbnails, setThumbnails] = useState([]);
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState(null);
-  const [collections, setCollections] = useState(null);
+  const [collection, setCollection] = useState(null);
   const [beforePrice, setBeforePrice] = useState(0);
   const [currentPrice, setCurrentPrice] = useState(0);
   const [countInStock, setCountInStock] = useState(0);
@@ -47,6 +48,18 @@ const ProductEditScreen = () => {
   const [updateProduct, { isLoading: loadingUpdate }] =
     useUpdateProductMutation();
 
+  const {
+    data: categories,
+    isLoading: isCatLoading,
+    error: catError,
+  } = useGetProductCategoriesQuery({ sort: 'title' });
+
+  const {
+    data: collections,
+    isLoading: isCollLoading,
+    error: collError,
+  } = useGetProductCollectionsQuery({ sort: 'title' });
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -55,7 +68,7 @@ const ProductEditScreen = () => {
       setThumbnails(product.thumbnails);
       setDescription(product.description);
       setCategory(product?.category?._id || '');
-      setCollections(product?.collections || []);
+      setCollection(product?.collections || []);
       setBeforePrice(product.beforePrice || 0);
       setCurrentPrice(product.currentPrice || 0);
       setCountInStock(product.countInStock);
@@ -83,7 +96,7 @@ const ProductEditScreen = () => {
         thumbnails,
         description,
         category,
-        collections,
+        collections: collection,
         beforePrice,
         currentPrice,
         countInStock,
@@ -109,6 +122,24 @@ const ProductEditScreen = () => {
   return (
     <>
       {loadingUpdate && <Loader />}
+      {isCatLoading ? (
+        <Loader />
+      ) : (
+        catError && (
+          <Message variant="danger">
+            {catError?.data?.message || catError.error}
+          </Message>
+        )
+      )}
+      {isCollLoading ? (
+        <Loader />
+      ) : (
+        collError && (
+          <Message variant="danger">
+            {collError?.data?.message || collError.error}
+          </Message>
+        )
+      )}
       {isLoading ? (
         <Loader />
       ) : error ? (
@@ -139,21 +170,12 @@ const ProductEditScreen = () => {
                 setActiveImage={setActive}
               />
 
-              {/* <Form.Group controlId="description" className="my-2">
-                <Form.Label>Description</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter description"
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                ></Form.Control>
-              </Form.Group> */}
-
               <div className="row">
                 <div className="col-md-6">
                   <Form.Group controlId="category" className="my-2">
                     <Form.Label>Category</Form.Label>
                     <SelectCategory
+                      categories={categories}
                       category={category}
                       setCategory={setCategory}
                     />
@@ -164,8 +186,9 @@ const ProductEditScreen = () => {
                   <Form.Group controlId="collection" className="my-2">
                     <Form.Label>Collection</Form.Label>
                     <SelectCollection
-                      collection={collections}
-                      setCollection={setCollections}
+                      collections={collections}
+                      collection={collection}
+                      setCollection={setCollection}
                       multi
                     />
                   </Form.Group>
@@ -182,32 +205,6 @@ const ProductEditScreen = () => {
                 <Form.Label>Colors</Form.Label>
                 <InputColors colors={colors} setColors={setColors} />
               </Form.Group>
-
-              <div className="row">
-                <div className="col-md-6">
-                  <Form.Group controlId="beforePrice" className="my-2">
-                    <Form.Label>Before Price</Form.Label>
-                    <Form.Control
-                      type="number"
-                      placeholder="Before price"
-                      value={beforePrice}
-                      onChange={(e) => setBeforePrice(e.target.value)}
-                    ></Form.Control>
-                  </Form.Group>
-                </div>
-
-                <div className="col-md-6">
-                  <Form.Group controlId="currentPrice" className="my-2">
-                    <Form.Label>Current Price</Form.Label>
-                    <Form.Control
-                      type="number"
-                      placeholder="Current price"
-                      value={currentPrice}
-                      onChange={(e) => setCurrentPrice(e.target.value)}
-                    ></Form.Control>
-                  </Form.Group>
-                </div>
-              </div>
 
               <div className="row">
                 <div className="col-md-6">

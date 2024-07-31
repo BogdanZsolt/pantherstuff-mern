@@ -1,16 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
-  Col,
   Container,
   Row,
+  Col,
+  Offcanvas,
+  Button,
   Form,
   ButtonGroup,
-  Button,
-  Offcanvas,
-  // Navbar,
-  // Nav,
-  // NavDropdown,
 } from 'react-bootstrap';
 import {
   RiFilterLine,
@@ -19,24 +17,24 @@ import {
   RiLayoutGridLine,
   RiLayoutMasonryLine,
 } from 'react-icons/ri';
+import Supply from '../components/Supply.jsx';
 import Banner from '../components/Banner';
-import { useTranslation } from 'react-i18next';
-import SupplyFilterSidebar from '../components/SupplyFilterSidebar';
 import Loader from '../components/Loader.jsx';
 import Message from '../components/Message.jsx';
 import Paginate from '../components/Paginate.jsx';
-import Supply from '../components/Supply.jsx';
+import SupplyFilterSidebar from '../components/SupplyFilterSidebar';
 import {
-  useGetSuppliesMinMaxPriceQuery,
   useGetSuppliesQuery,
+  useGetSuppliesMinMaxPriceQuery,
 } from '../slices/suppliesApiSlice.js';
+import { useGetSupplyCategoriesQuery } from '../slices/supplyCategoriesApiSlice.js';
 
 const SupplyStoreScreen = () => {
   const { pageNumber, keyword, supplyCategory } = useParams;
   const { t, i18n } = useTranslation(['supply']);
 
   const [sort, setSort] = useState('-rating,-createdAt');
-  const [category, setCategory] = useState(supplyCategory || '');
+  const [category, setCategory] = useState([]);
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(0);
   const [show, setShow] = useState(false);
@@ -53,7 +51,7 @@ const SupplyStoreScreen = () => {
     error,
   } = useGetSuppliesQuery({
     sort,
-    category: category === '' ? undefined : category,
+    category_in: category.length > 0 ? category : undefined,
     sizes_in: sizes.length > 0 ? sizes : undefined,
     page,
     limit: 8,
@@ -75,6 +73,12 @@ const SupplyStoreScreen = () => {
       i18n.language === 'en' ? undefined : maxPrice,
   });
 
+  const {
+    data: categories,
+    isLoading: isCatLoading,
+    error: catError,
+  } = useGetSupplyCategoriesQuery({ sort: 'title' });
+
   useEffect(() => {
     if (supplies) {
       supplies.pages < 1 ? setPages(1) : setPages(supplies.pages);
@@ -93,12 +97,29 @@ const SupplyStoreScreen = () => {
     }
   }, [minmax, i18n.language]);
 
+  useEffect(() => {
+    if (supplyCategory === undefined) {
+      setCategory([]);
+    } else {
+      setCategory(supplyCategory);
+    }
+  }, [supplyCategory]);
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   return (
     <>
       {isMinMaxLoading && <Loader />}
+      {isCatLoading ? (
+        <Loader />
+      ) : (
+        catError && (
+          <Message variant="danger">
+            {catError?.data?.message || catError.error}
+          </Message>
+        )
+      )}
       {isLoading ? (
         <Loader />
       ) : error ? (
@@ -114,30 +135,51 @@ const SupplyStoreScreen = () => {
           />
           <Container className="my-4" fluid>
             <h2 className="text-center">{t('supplies')}</h2>
+            <Button
+              variant="primary"
+              onClick={handleShow}
+              className="d-lg-none filter-button"
+            >
+              <RiFilterLine />
+            </Button>
             <Row>
-              <Col lg={3} xxl={2} className="d-none d-lg-block">
-                {minmax && (
-                  <SupplyFilterSidebar
-                    size={sizes}
-                    setSize={setSizes}
-                    category={category}
-                    setCategory={setCategory}
-                    min={
-                      i18n.language === 'en'
-                        ? minmax[0].minPrice
-                        : minmax[0].minPrice_hu
-                    }
-                    minPrice={minPrice}
-                    setMinPrice={setMinPrice}
-                    max={
-                      i18n.language === 'en'
-                        ? minmax[0].maxPrice
-                        : minmax[0].maxPrice_hu
-                    }
-                    maxPrice={maxPrice}
-                    setMaxPrice={setMaxPrice}
-                  />
-                )}
+              <Col lg={3} xxl={2}>
+                <Offcanvas
+                  show={show}
+                  onHide={handleClose}
+                  scroll={true}
+                  backdrop={true}
+                  responsive="lg"
+                >
+                  <Offcanvas.Header closeButton>
+                    <Offcanvas.Title></Offcanvas.Title>
+                  </Offcanvas.Header>
+                  <Offcanvas.Body>
+                    {minmax && (
+                      <SupplyFilterSidebar
+                        size={sizes}
+                        setSize={setSizes}
+                        categories={categories}
+                        category={category}
+                        setCategory={setCategory}
+                        min={
+                          i18n.language === 'en'
+                            ? minmax[0].minPrice
+                            : minmax[0].minPrice_hu
+                        }
+                        minPrice={minPrice}
+                        setMinPrice={setMinPrice}
+                        max={
+                          i18n.language === 'en'
+                            ? minmax[0].maxPrice
+                            : minmax[0].maxPrice_hu
+                        }
+                        maxPrice={maxPrice}
+                        setMaxPrice={setMaxPrice}
+                      />
+                    )}
+                  </Offcanvas.Body>
+                </Offcanvas>
               </Col>
               <Col xs={12} lg={9} xxl={10}>
                 <Row className="align-items-center justify-content-between">
@@ -222,30 +264,6 @@ const SupplyStoreScreen = () => {
               </Col>
             </Row>
           </Container>
-          <Button
-            variant="primary"
-            onClick={handleShow}
-            className="d-lg-none position-fixed start-0 top-50 rounded-circle p-2 lh-1"
-          >
-            <RiFilterLine />
-          </Button>
-          <Offcanvas
-            show={show}
-            onHide={handleClose}
-            placement="start"
-            backdrop={false}
-            scroll={true}
-            responsive="lg"
-          >
-            <Offcanvas.Header closeButton>
-              <Offcanvas.Title>Responsive offcanvas</Offcanvas.Title>
-            </Offcanvas.Header>
-            <Offcanvas.Body>
-              <p className="mb-0 d-lg-none">
-                This is content within an <code>.offcanvas-lg</code>.
-              </p>
-            </Offcanvas.Body>
-          </Offcanvas>
         </>
       )}
     </>

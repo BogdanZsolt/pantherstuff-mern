@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 const SupplyFilterSidebar = ({
   size,
   setSize,
+  categories,
   category,
   setCategory,
   min,
@@ -19,6 +20,8 @@ const SupplyFilterSidebar = ({
 }) => {
   const { t } = useTranslation(['shop']);
 
+  console.log(category);
+
   return (
     <div className={className}>
       <h3>{t('filters')}</h3>
@@ -27,6 +30,7 @@ const SupplyFilterSidebar = ({
           defaultActiveKey={['size', 'categories', 'price']}
           flush
           alwaysOpen
+          style={{ '--bs-accordion-bg': 'transparent' }}
         >
           <Accordion.Item eventKey="size">
             <Accordion.Header>{t('size')}</Accordion.Header>
@@ -38,6 +42,7 @@ const SupplyFilterSidebar = ({
             <Accordion.Header>{t('categories')}</Accordion.Header>
             <Accordion.Body>
               <SelectCategory
+                categories={categories}
                 category={category}
                 setCategory={setCategory}
                 multi

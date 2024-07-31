@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
   Container,
   Row,
@@ -26,7 +27,8 @@ import {
   useGetProductsQuery,
   useGetProductsMinMaxPriceQuery,
 } from '../slices/productsApiSlice.js';
-import { useTranslation } from 'react-i18next';
+import { useGetProductCategoriesQuery } from '../slices/productCategoriesApiSlice';
+import { useGetProductCollectionsQuery } from '../slices/productCollectionsApiSlice';
 
 const ShopScreen = () => {
   let { pageNumber, keyword, productCategory, productCollection } = useParams();
@@ -81,6 +83,18 @@ const ShopScreen = () => {
       i18n.language === 'en' ? undefined : maxPrice,
   });
 
+  const {
+    data: categories,
+    isLoading: isCatLoading,
+    error: catError,
+  } = useGetProductCategoriesQuery({ sort: 'title' });
+
+  const {
+    data: collections,
+    isLoading: isCollLoading,
+    error: collError,
+  } = useGetProductCollectionsQuery({ sort: 'title' });
+
   useEffect(() => {
     if (products) {
       products.pages < 1 ? setPages(1) : setPages(products.pages);
@@ -118,11 +132,27 @@ const ShopScreen = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  console.log(colors);
-
   return (
     <>
       {isMinMaxLoading && <Loader />}
+      {isCatLoading ? (
+        <Loader />
+      ) : (
+        catError && (
+          <Message variant="danger">
+            {catError?.data?.message || catError.error}
+          </Message>
+        )
+      )}
+      {isCollLoading ? (
+        <Loader />
+      ) : (
+        collError && (
+          <Message variant="danger">
+            {collError?.data?.message || collError.error}
+          </Message>
+        )
+      )}
       {isLoading ? (
         <Loader />
       ) : error ? (
@@ -162,8 +192,10 @@ const ShopScreen = () => {
                       <FilterSidebar
                         size={sizes}
                         setSize={setSizes}
+                        categories={categories}
                         category={category}
                         setCategory={setCategory}
+                        collections={collections}
                         collection={collection}
                         setCollection={setCollection}
                         min={

@@ -3,11 +3,13 @@ import { Form } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
-import Loader from './Loader';
-import Message from './Message';
-import { useGetProductCategoriesQuery } from '../slices/productCategoriesApiSlice';
 
-const SelectCategory = ({ category, setCategory, multi = false }) => {
+const SelectCategory = ({
+  categories,
+  category,
+  setCategory,
+  multi = false,
+}) => {
   const { t, i18n } = useTranslation(['shop']);
   const animatedComponents = makeAnimated();
   const [categoryOptions, setCategoryOptions] = useState(null);
@@ -71,30 +73,15 @@ const SelectCategory = ({ category, setCategory, multi = false }) => {
     }),
   };
 
-  const {
-    data: categories,
-    isLoading,
-    error,
-  } = useGetProductCategoriesQuery({ sort: 'title' });
-
   useEffect(() => {
-    if (categories && category) {
-      let cat = [];
-      let defCat = [];
-      categories.data.map((item) => {
-        cat = [
-          ...cat,
-          {
-            value: item._id,
-            label:
-              i18n.language === 'en'
-                ? item.title
-                : item.translations?.hu?.title || item.title,
-          },
-        ];
-        if (category.includes(item._id)) {
-          defCat = [
-            ...defCat,
+    console.log(categories && category ? 'true' : 'false');
+    if (multi) {
+      if (categories) {
+        let cat = [];
+        let defCat = [];
+        categories.data.map((item) => {
+          cat = [
+            ...cat,
             {
               value: item._id,
               label:
@@ -103,14 +90,58 @@ const SelectCategory = ({ category, setCategory, multi = false }) => {
                   : item.translations?.hu?.title || item.title,
             },
           ];
-        }
-      });
-      setCategoryOptions(cat);
-      setDefaultCategory(defCat);
+          if (category) {
+            if (category.includes(item._id)) {
+              defCat = [
+                ...defCat,
+                {
+                  value: item._id,
+                  label:
+                    i18n.language === 'en'
+                      ? item.title
+                      : item.translations?.hu?.title || item.title,
+                },
+              ];
+            }
+          }
+        });
+        setCategoryOptions(cat);
+        setDefaultCategory(defCat);
+      }
+    } else {
+      console.log(category);
+      if (categories) {
+        let cat = [];
+        let defCat = { value: '' };
+        categories.data.map((item) => {
+          cat = [
+            ...cat,
+            {
+              value: item._id,
+              label:
+                i18n.language === 'en'
+                  ? item.title
+                  : item.translations?.hu?.title || item.title,
+            },
+          ];
+          if (category) {
+            if (category === item._id) {
+              defCat.value = item._id;
+              defCat.label =
+                i18n.language === 'en'
+                  ? item.title
+                  : item.translations?.hu?.title || item.title;
+            }
+          }
+        });
+        setCategoryOptions(cat);
+        setDefaultCategory(defCat);
+      }
     }
-  }, [categories, category, i18n.language]);
+  }, [categories, category, i18n.language, multi]);
 
   const selectCategoryHandler = (choice) => {
+    console.log(choice ? 'true' : 'false');
     if (multi) {
       let cat = [];
       choice.map((x) => {
@@ -118,34 +149,36 @@ const SelectCategory = ({ category, setCategory, multi = false }) => {
       });
       setCategory(cat);
     } else {
-      choice ? setCategory(undefined) : setCategory(choice.value);
+      choice ? setCategory(choice.value) : setCategory('');
     }
   };
 
+  console.log(category);
+
   return (
     <div>
-      {isLoading ? (
-        <Loader />
-      ) : error ? (
-        <Message variant="danger">{error.data.Message}</Message>
-      ) : (
-        categoryOptions && (
-          <Form.Group controlId="category" className="my-2">
-            <Select
-              closeMenuOnSelect={false}
-              components={animatedComponents}
-              value={defaultCategory}
-              styles={selectStyles}
-              isMulti={multi}
-              isClearable
-              isSearchable
-              name="categories"
-              options={categoryOptions}
-              onChange={selectCategoryHandler}
-              placeholder={t('select')}
-            />
-          </Form.Group>
-        )
+      {categoryOptions && (
+        <Form.Group controlId="category" className="my-2">
+          <Select
+            closeMenuOnSelect={false}
+            components={animatedComponents}
+            value={
+              multi
+                ? defaultCategory
+                : defaultCategory.value === ''
+                ? null
+                : defaultCategory
+            }
+            styles={selectStyles}
+            isMulti={multi}
+            isClearable
+            isSearchable
+            name="categories"
+            options={categoryOptions}
+            onChange={selectCategoryHandler}
+            placeholder={t('select')}
+          />
+        </Form.Group>
       )}
     </div>
   );

@@ -3,11 +3,13 @@ import { Form } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
-import Loader from './Loader';
-import Message from './Message';
-import { useGetProductCollectionsQuery } from '../slices/productCollectionsApiSlice';
 
-const SelectCollection = ({ collection, setCollection, multi = false }) => {
+const SelectCollection = ({
+  collections,
+  collection,
+  setCollection,
+  multi = false,
+}) => {
   const { t, i18n } = useTranslation(['shop']);
   const animatedComponents = makeAnimated();
   const [collectionOptions, setCollectionOptions] = useState(null);
@@ -65,12 +67,6 @@ const SelectCollection = ({ collection, setCollection, multi = false }) => {
     }),
   };
 
-  const {
-    data: collections,
-    isLoading,
-    error,
-  } = useGetProductCollectionsQuery({ sort: 'title' });
-
   useEffect(() => {
     if (collections && collection) {
       let coll = [];
@@ -118,27 +114,21 @@ const SelectCollection = ({ collection, setCollection, multi = false }) => {
 
   return (
     <div>
-      {isLoading ? (
-        <Loader />
-      ) : error ? (
-        <Message variant="danger">{error.data.Message}</Message>
-      ) : (
-        collectionOptions && (
-          <Form.Group controlId="category" className="my-2">
-            <Select
-              closeMenuOnSelect={false}
-              components={animatedComponents}
-              value={defaultCollection}
-              styles={selectStyles}
-              isMulti={multi}
-              isClearable
-              isSearchable
-              options={collectionOptions}
-              onChange={selectCollectionHandler}
-              placeholder={t('select')}
-            />
-          </Form.Group>
-        )
+      {collectionOptions && (
+        <Form.Group controlId="category" className="my-2">
+          <Select
+            closeMenuOnSelect={false}
+            components={animatedComponents}
+            value={defaultCollection}
+            styles={selectStyles}
+            isMulti={multi}
+            isClearable
+            isSearchable
+            options={collectionOptions}
+            onChange={selectCollectionHandler}
+            placeholder={t('select')}
+          />
+        </Form.Group>
       )}
     </div>
   );

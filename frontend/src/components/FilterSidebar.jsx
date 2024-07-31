@@ -9,8 +9,10 @@ import { useTranslation } from 'react-i18next';
 const FilterSidebar = ({
   size,
   setSize,
+  categories,
   category,
   setCategory,
+  collections,
   collection,
   setCollection,
   min,
@@ -24,8 +26,6 @@ const FilterSidebar = ({
   className,
 }) => {
   const { t } = useTranslation(['shop']);
-
-  console.log(colors);
 
   return (
     <div className={className}>
@@ -59,6 +59,7 @@ const FilterSidebar = ({
             <Accordion.Header>{t('categories')}</Accordion.Header>
             <Accordion.Body>
               <SelectCategory
+                categories={categories}
                 category={category}
                 setCategory={setCategory}
                 multi
@@ -69,6 +70,7 @@ const FilterSidebar = ({
             <Accordion.Header>{t('collections')}</Accordion.Header>
             <Accordion.Body>
               <SelectCollection
+                collections={collections}
                 collection={collection}
                 setCollection={setCollection}
                 multi

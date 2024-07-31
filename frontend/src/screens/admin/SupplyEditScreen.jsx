@@ -6,12 +6,14 @@ import Loader from '../../components/Loader';
 import FormContainer from '../../components/FormContainer';
 import ImageList from '../../components/ImageList';
 import { toast } from 'react-toastify';
+import SelectCategory from '../../components/SelectCategory';
 import LangSelectInput from '../../components/LangSelectInput';
-import LangSelectEditor from '../../components/LangSelectEditor.jsx';
 import {
   useGetSupplyDetailsQuery,
   useUpdateSupplyMutation,
-} from '../../slices/suppliesApiSlice.js';
+} from '../../slices/suppliesApiSlice';
+import LangSelectEditor from '../../components/LangSelectEditor.jsx';
+import { useGetSupplyCategoriesQuery } from '../../slices/supplyCategoriesApiSlice';
 
 const SupplyEditScreen = () => {
   const { id: supplyId } = useParams();
@@ -23,7 +25,6 @@ const SupplyEditScreen = () => {
   const [beforePrice, setBeforePrice] = useState(0);
   const [currentPrice, setCurrentPrice] = useState(0);
   const [countInStock, setCountInStock] = useState(0);
-  const [sizes, setSizes] = useState([]);
   const [active, setActive] = useState('');
   const [transNameHu, setTransNameHu] = useState('');
   const [transDescHu, setTransDescHu] = useState('');
@@ -40,6 +41,12 @@ const SupplyEditScreen = () => {
   const [updateSupply, { isLoading: loadingUpdate }] =
     useUpdateSupplyMutation();
 
+  const {
+    data: categories,
+    isLoading: isCatLoading,
+    error: catError,
+  } = useGetSupplyCategoriesQuery({ sort: 'title' });
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -51,7 +58,6 @@ const SupplyEditScreen = () => {
       setBeforePrice(supply.beforePrice || 0);
       setCurrentPrice(supply.currentPrice || 0);
       setCountInStock(supply.countInStock);
-      setSizes(supply.sizes);
       setTransNameHu(supply.translations?.hu?.name || supply.name);
       setTransDescHu(
         supply.translations?.hu?.description || supply.description
@@ -67,17 +73,17 @@ const SupplyEditScreen = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    console.log(category === '');
     try {
       await updateSupply({
         supplyId,
         name,
         thumbnails,
         description,
-        category,
+        category: category === '' ? null : category,
         beforePrice,
         currentPrice,
         countInStock,
-        sizes,
         translations: {
           hu: {
             name: transNameHu,
@@ -95,20 +101,31 @@ const SupplyEditScreen = () => {
     }
   };
 
+  console.log(category);
+
   return (
     <>
       {loadingUpdate && <Loader />}
+      {isCatLoading ? (
+        <Loader />
+      ) : (
+        catError && (
+          <Message variant="danger">
+            {catError?.data?.message || catError.error}
+          </Message>
+        )
+      )}
       {isLoading ? (
         <Loader />
       ) : error ? (
         <Message variant="danger">{error.data.message}</Message>
       ) : (
         <Container className="mt-5">
-          <Link to="/admin/supplylist" className="btn btn-primary my-3">
+          <Link to="/admin/productlist" className="btn btn-primary my-3">
             Go Back
           </Link>
           <Row>
-            <h2 className="text-center fs-1 fw-bold">Edit Supply</h2>
+            <h2 className="text-center fs-1 fw-bold">Edit Product</h2>
           </Row>
           <FormContainer>
             <Form onSubmit={submitHandler}>
@@ -128,11 +145,14 @@ const SupplyEditScreen = () => {
                 setActiveImage={setActive}
               />
 
-              <div className="col-md-6">
-                <Form.Group controlId="category" className="my-2">
-                  <Form.Label>Category</Form.Label>
-                </Form.Group>
-              </div>
+              <Form.Group controlId="category" className="my-2">
+                <Form.Label>Category</Form.Label>
+                <SelectCategory
+                  categories={categories}
+                  category={category}
+                  setCategory={setCategory}
+                />
+              </Form.Group>
 
               <Form.Group controlId="sizes" className="my-2">
                 <Form.Label>Sizes</Form.Label>
@@ -175,15 +195,6 @@ const SupplyEditScreen = () => {
                   onChange={(e) => setCountInStock(e.target.value)}
                 ></Form.Control>
               </Form.Group>
-
-              {/* <Form.Group controlId="body" className="my-2">
-                <Form.Label>Description</Form.Label>
-                <Editor
-                  content={description}
-                  onDataChange={(data) => setDescription(data)}
-                  editable
-                />
-              </Form.Group> */}
 
               <LangSelectEditor
                 label="Description"
