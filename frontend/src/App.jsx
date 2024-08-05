@@ -61,6 +61,7 @@ import {
   FaqCategoryEditScreen,
 } from './Pages';
 import Root from './components/Root';
+import SupplyScreen from './screens/SupplyScreen';
 
 const App = () => {
   let router = createBrowserRouter([
@@ -131,12 +132,46 @@ const App = () => {
               ],
             },
             {
-              path: 'supplystore',
-              element: <SupplyStoreScreen />,
-            },
-            {
               path: 'product/:id',
               element: <ProductScreen />,
+            },
+            {
+              path: 'supplystore',
+              element: <SupplyStoreScreen />,
+              children: [
+                {
+                  path: 'search/:keyword',
+                  element: <SupplyStoreScreen />,
+                },
+                {
+                  path: 'page/:pageNumber',
+                  element: <SupplyStoreScreen />,
+                },
+                {
+                  path: 'search/:keyword/page/:pageNumber',
+                  element: <SupplyStoreScreen />,
+                },
+                {
+                  path: 'category/:supplyCategory',
+                  element: <SupplyStoreScreen />,
+                },
+                {
+                  path: 'category/:supplyCategory/page/:pageNumber',
+                  element: <SupplyStoreScreen />,
+                },
+                {
+                  path: 'collection/:supplyCollection',
+                  element: <SupplyStoreScreen />,
+                },
+                {
+                  path: 'collection/:supplyCollection/page/:pageNumber',
+                  element: <SupplyStoreScreen />,
+                },
+              ],
+            },
+            {
+              path: 'supply/:id',
+              element: <SupplyScreen />,
             },
             {
               path: 'blog',

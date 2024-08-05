@@ -30,7 +30,7 @@ import {
 import { useGetSupplyCategoriesQuery } from '../slices/supplyCategoriesApiSlice.js';
 
 const SupplyStoreScreen = () => {
-  const { pageNumber, keyword, supplyCategory } = useParams;
+  const { pageNumber, keyword, supplyCategory } = useParams();
   const { t, i18n } = useTranslation(['supply']);
 
   const [sort, setSort] = useState('-rating,-createdAt');

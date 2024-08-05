@@ -64,7 +64,7 @@ const CartScreen = () => {
                         />
                       </Col>
                       <Col md={3}>
-                        <Link to={`/product/${item._id}`}>
+                        <Link to={`/${item.type}/${item._id}`}>
                           {i18n.language === 'en' ? item.name : item.name_hu}
                         </Link>
                       </Col>

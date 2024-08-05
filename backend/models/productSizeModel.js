@@ -12,6 +12,13 @@ const productSizeSchema = new mongoose.Schema({
   },
   description: { type: String },
   info: { type: String },
+  translations: {
+    hu: {
+      title: { type: String },
+      description: { type: String },
+      info: { type: String },
+    },
+  },
 });
 
 productSizeSchema.virtual('products', {

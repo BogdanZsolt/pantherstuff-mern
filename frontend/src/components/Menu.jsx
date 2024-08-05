@@ -8,6 +8,7 @@ import Loader from './Loader';
 import { BsFillCaretDownFill } from 'react-icons/bs';
 import { useGetProductCategoriesQuery } from '../slices/productCategoriesApiSlice';
 import { useGetProductCollectionsQuery } from '../slices/productCollectionsApiSlice';
+import { useGetSupplyCategoriesQuery } from '../slices/supplyCategoriesApiSlice';
 
 // import mainMenus from './menus.json';
 
@@ -26,9 +27,16 @@ const Menu = () => {
     error: collectionError,
   } = useGetProductCollectionsQuery({ sort: 'title' });
 
+  const {
+    data: supplyCategories,
+    isLoading: isSupplyCatLoading,
+    error: supplyCategoryError,
+  } = useGetSupplyCategoriesQuery({ sort: 'title' });
+
   const [show, setShow] = useState('');
   const [categoriesSubMenu, setCategoriesSubMenu] = useState([]);
   const [collectionsSubMenu, setCollectionsSubMenu] = useState([]);
+  const [supplyCategoriesMenu, setSupplyCategoriesMenu] = useState([]);
 
   useEffect(() => {
     if (categories) {
@@ -46,6 +54,23 @@ const Menu = () => {
       setCategoriesSubMenu(catMenu);
     }
   }, [categories, i18n.language]);
+
+  useEffect(() => {
+    if (supplyCategories) {
+      let supplyCatMenu = [];
+      supplyCategories.data.map((supplyCategory, index) => {
+        let item = {};
+        item.id = `3.1.${++index}`;
+        item.text =
+          i18n.language === 'en'
+            ? supplyCategory.title
+            : supplyCategory.translations?.hu?.title || supplyCategory.title;
+        item.link = `/supplystore/category/${supplyCategory._id}`;
+        supplyCatMenu = [...supplyCatMenu, item];
+      });
+      setSupplyCategoriesMenu(supplyCatMenu);
+    }
+  }, [supplyCategories, i18n.language]);
 
   useEffect(() => {
     if (collections) {
@@ -123,6 +148,13 @@ const Menu = () => {
       id: 3,
       text: t('supplyStore'),
       link: '/supplystore',
+      megaTable: [
+        {
+          id: 3.1,
+          text: t('categories'),
+          column: supplyCategoriesMenu,
+        },
+      ],
     },
     {
       id: 4,
@@ -189,6 +221,13 @@ const Menu = () => {
       ) : (
         collectionError && (
           <Message variant="danger">{collectionError.data.Message}</Message>
+        )
+      )}
+      {isSupplyCatLoading ? (
+        <Loader />
+      ) : (
+        supplyCategoryError && (
+          <Message variant="danger">{supplyCategoryError.data.Message}</Message>
         )
       )}
       {isLoading ? (

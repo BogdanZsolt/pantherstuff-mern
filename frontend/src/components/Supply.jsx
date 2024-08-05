@@ -13,7 +13,7 @@ import Rating from './Rating';
 import { addToCart } from '../slices/cartSlice';
 import { toggleWishList } from '../slices/wishListSlice';
 import { useTranslation } from 'react-i18next';
-import { toCurrency } from '../utils/converter.js';
+import { toCurrency, uuid } from '../utils/converter.js';
 
 const Supply = ({ supply }) => {
   const { t, i18n } = useTranslation(['supply']);
@@ -31,14 +31,18 @@ const Supply = ({ supply }) => {
   const addToCartHandler = (e) => {
     e.preventDefault();
     const { _id, name, currentPrice, thumbnails, countInStock } = supply;
+    const cartId = uuid();
     const name_hu = supply.translations?.hu?.name || supply.name;
     const currentPrice_hu =
       supply.translations?.hu?.currentPrice || supply.currentPrice;
     const qty = 1;
     const thumbnail = thumbnails[0];
+    const type = 'supply';
     dispatch(
       addToCart({
+        cartId,
         _id,
+        type,
         name,
         name_hu,
         currentPrice,
@@ -52,7 +56,7 @@ const Supply = ({ supply }) => {
 
   const addToWishListHandler = (e) => {
     e.preventDefault();
-    dispatch(toggleWishList({ ...supply }));
+    dispatch(toggleWishList({ ...supply, type: 'supply' }));
   };
 
   return (

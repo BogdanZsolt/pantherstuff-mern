@@ -51,9 +51,9 @@ export const suppliesApiSlice = apiSlice.injectEndpoints({
         method: 'DELETE',
       }),
     }),
-    createReview: builder.mutation({
+    supplyCreateReview: builder.mutation({
       query: (data) => ({
-        url: `${SUPPLIES_URL}/${data.productId}/reviews`,
+        url: `${SUPPLIES_URL}/${data.supplyId}/reviews`,
         method: 'POST',
         body: data,
       }),
@@ -76,6 +76,6 @@ export const {
   useUpdateSupplyMutation,
   useUploadSupplyImageMutation,
   useDeleteSupplyMutation,
-  useCreateReviewMutation,
+  useSupplyCreateReviewMutation,
   useGetTopSuppliesQuery,
 } = suppliesApiSlice;

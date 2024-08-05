@@ -4,6 +4,7 @@ export const App = lazy(() => import('./App.jsx'));
 export const MainScreen = lazy(() => import('./screens/MainScreen.jsx'));
 export const HomeScreen = lazy(() => import('./screens/HomeScreen.jsx'));
 export const ProductScreen = lazy(() => import('./screens/ProductScreen.jsx'));
+export const SupplyScreen = lazy(() => import('./screens/SupplyScreen.jsx'));
 export const LoginScreen = lazy(() => import('./screens/LoginScreen.jsx'));
 export const RegisterScreen = lazy(() =>
   import('./screens/RegisterScreen.jsx')

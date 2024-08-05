@@ -13,5 +13,22 @@
   "productDetails": "Product Details",
   "custom": "Custom",
   "reviewsTab": "Reviews",
-  "shipping": "Shipping"
+  "shipping": "Shipping",
+  "ratingAndViews": "Rating & Views",
+  "noReviews": "No Reviews",
+  "pleaseSignInToWriteReview": "Please <1>sign in</1> to write a review",
+  "numReviews": "{{numReviews}} reviews",
+  "writeACustomerReview": "Write a Customer Review",
+  "rating": "Rating",
+  "select": "Select",
+  "poor": "Poor",
+  "fair": "Fair",
+  "good": "Good",
+  "veryGood": "Very Good",
+  "excelent": "Excelent",
+  "comment": "Comment",
+  "writeAReview": "Write a review",
+  "submit": "Submit",
+  "reviewSubmitted": "Review Submitted",
+  "": ""
 }

@@ -74,7 +74,6 @@ const SelectCategory = ({
   };
 
   useEffect(() => {
-    console.log(categories && category ? 'true' : 'false');
     if (multi) {
       if (categories) {
         let cat = [];
@@ -109,7 +108,6 @@ const SelectCategory = ({
         setDefaultCategory(defCat);
       }
     } else {
-      console.log(category);
       if (categories) {
         let cat = [];
         let defCat = { value: '' };
@@ -141,7 +139,6 @@ const SelectCategory = ({
   }, [categories, category, i18n.language, multi]);
 
   const selectCategoryHandler = (choice) => {
-    console.log(choice ? 'true' : 'false');
     if (multi) {
       let cat = [];
       choice.map((x) => {
@@ -152,8 +149,6 @@ const SelectCategory = ({
       choice ? setCategory(choice.value) : setCategory('');
     }
   };
-
-  console.log(category);
 
   return (
     <div>

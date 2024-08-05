@@ -20,8 +20,6 @@ const SupplyFilterSidebar = ({
 }) => {
   const { t } = useTranslation(['shop']);
 
-  console.log(category);
-
   return (
     <div className={className}>
       <h3>{t('filters')}</h3>

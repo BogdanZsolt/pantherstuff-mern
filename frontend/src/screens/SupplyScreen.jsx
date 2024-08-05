@@ -1,89 +1,109 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 import {
-  Row,
-  Col,
-  ListGroup,
-  Button,
-  Form,
-  Container,
-  Tabs,
-  Tab,
   Badge,
+  Button,
+  Col,
+  Container,
+  Form,
+  ListGroup,
   Modal,
+  Row,
+  Tab,
+  Tabs,
 } from 'react-bootstrap';
+import { Link, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { FaStar } from 'react-icons/fa';
-import {
-  RiCheckboxCircleLine,
-  RiHeartLine,
-  RiShareForwardLine,
-  RiQuestionLine,
-  RiGiftLine,
-  RiTruckLine,
-  RiHeartFill,
-} from 'react-icons/ri';
-import { toast } from 'react-toastify';
-import Rating from '../components/Rating';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
 import Meta from '../components/Meta';
 import Banner from '../components/Banner';
 import ThumbsGallery from '../components/ThumbsGallery';
 import { Trans, useTranslation } from 'react-i18next';
-import SelectColor from '../components/SelectColor';
-import SelectSize from '../components/SelectSize';
 import { toCurrency, uuid } from '../utils/converter';
-import Editor from '../components/Editor.jsx';
+import { FaStar } from 'react-icons/fa';
 import {
-  useGetProductDetailsQuery,
-  useCreateReviewMutation,
-} from '../slices/productsApiSlice';
-import { addToCart } from '../slices/cartSlice';
+  RiCheckboxCircleLine,
+  RiGiftLine,
+  RiHeartFill,
+  RiHeartLine,
+  RiQuestionLine,
+  RiShareForwardLine,
+  RiTruckLine,
+} from 'react-icons/ri';
+import SelectSize from '../components/SelectSize';
+import Editor from '../components/Editor.jsx';
+import Rating from '../components/Rating';
+import { toast } from 'react-toastify';
+import {
+  useGetSupplyDetailsQuery,
+  useSupplyCreateReviewMutation,
+} from '../slices/suppliesApiSlice.js';
 import { toggleWishList } from '../slices/wishListSlice';
+import { addToCart } from '../slices/cartSlice.js';
 
-const ProductScreen = () => {
-  const { id: productId } = useParams();
+const SupplyScreen = () => {
+  const { id: supplyId } = useParams();
 
-  const { t, i18n } = useTranslation(['product']);
+  const { i18n, t } = useTranslation('supply');
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  const [qty, setQty] = useState(1);
-  const [rating, setRating] = useState(0);
-  const [comment, setComment] = useState('');
-  const [showReview, setShowReview] = useState(false);
-  const { userInfo } = useSelector((state) => state.auth);
-  const { wishListItems } = useSelector((state) => state.wishList);
-  const [productName, setProductName] = useState('');
+  const [supplyName, setSupplyName] = useState('');
   const [beforePrice, setBeforePrice] = useState(0);
   const [currentPrice, setCurrentPrice] = useState(0);
   const [shippingPrice, setShippingPrice] = useState(0);
-  const [color, setColor] = useState('');
   const [size, setSize] = useState('');
+  const [qty, setQty] = useState(1);
+  const [showReview, setShowReview] = useState(false);
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState('');
+
+  const { userInfo } = useSelector((state) => state.auth);
+  const { wishListItems } = useSelector((state) => state.wishList);
 
   const [activeTab, setActiveTab] = useState('description');
 
   const {
-    data: product,
+    data: supply,
     isLoading,
     refetch,
     error,
-  } = useGetProductDetailsQuery(productId);
+  } = useGetSupplyDetailsQuery(supplyId);
 
   const [createReview, { isLoading: loadingProductReview }] =
-    useCreateReviewMutation();
+    useSupplyCreateReviewMutation();
+
+  useEffect(() => {
+    if (supply) {
+      setSupplyName(
+        i18n.language === 'en'
+          ? supply.name
+          : supply.translations?.hu?.name || supply.name
+      );
+      setBeforePrice(
+        i18n.language === 'en'
+          ? supply.beforePrice
+          : supply.translations?.hu?.beforePrice || supply.beforePrice
+      );
+      setCurrentPrice(
+        i18n.language === 'en'
+          ? supply.currentPrice
+          : supply.translations?.hu?.currentPrice || supply.currentPrice
+      );
+      setShippingPrice(i18n.language === 'en' ? 100 : 20000);
+      setSize(supply.sizes[0]?._id);
+    }
+  }, [supply, i18n.language]);
 
   const addToCartHandler = () => {
-    const { _id, name, currentPrice, thumbnails, countInStock } = product;
+    const { _id, name, currentPrice, thumbnails, countInStock } = supply;
     const cartId = uuid();
-    const name_hu = product.translations?.hu?.name || product.name;
+    const name_hu = supply.translations?.hu?.name || supply.name;
     const currentPrice_hu =
-      product.translations?.hu?.currentPrice || product.currentPrice;
+      supply.translations?.hu?.currentPrice || supply.currentPrice;
     const thumbnail = thumbnails[0];
-    const type = 'product';
+    const type = 'supply';
     dispatch(
       addToCart({
         cartId,
@@ -94,48 +114,17 @@ const ProductScreen = () => {
         currentPrice,
         currentPrice_hu,
         thumbnail,
-        color,
         qty,
         countInStock,
       })
     );
-    navigate('/cart');
   };
-
-  const isWishListed = () => {
-    const content = wishListItems.find((x) => x._id === productId);
-
-    return content?._id === productId ? true : false;
-  };
-
-  useEffect(() => {
-    if (product) {
-      setProductName(
-        i18n.language === 'en'
-          ? product.name
-          : product.translations?.hu?.name || product.name
-      );
-      setBeforePrice(
-        i18n.language === 'en'
-          ? product.beforePrice
-          : product.translations?.hu?.beforePrice || product.beforePrice
-      );
-      setCurrentPrice(
-        i18n.language === 'en'
-          ? product.currentPrice
-          : product.translations?.hu?.currentPrice || product.currentPrice
-      );
-      setShippingPrice(i18n.language === 'en' ? 100 : 20000);
-      setColor(product.colors[0]);
-      setSize(product.sizes[0]?._id);
-    }
-  }, [product, i18n.language]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
       await createReview({
-        productId,
+        supplyId,
         rating,
         comment,
       }).unwrap();
@@ -150,19 +139,25 @@ const ProductScreen = () => {
   };
 
   const addToWishListHandler = () => {
-    dispatch(toggleWishList({ ...product, type: 'product' }));
+    dispatch(toggleWishList({ ...supply, type: 'supply' }));
+  };
+
+  const isWishListed = () => {
+    const content = wishListItems.find((x) => x._id === supplyId);
+
+    return content?._id === supplyId ? true : false;
   };
 
   const hasReview = () => {
-    const isUserReview = product?.reviews.find(
+    const isUserRview = supply?.reviews.find(
       (review) => review.user === userInfo._id
     );
 
-    return isUserReview ? true : false;
+    return isUserRview ? true : false;
   };
 
   return (
-    <>
+    <div>
       {isLoading ? (
         <Loader />
       ) : error ? (
@@ -171,21 +166,21 @@ const ProductScreen = () => {
         </Message>
       ) : (
         <>
-          <Banner src="/images/ecoprint-06.webp" title={productName} />
-          <Meta title={productName} />
+          <Banner src="/images/ecoprint-06.webp" title={supplyName} />
+          <Meta title={supplyName} />
           <Container>
-            <div className="product">
-              <Link className="btn btn-primary my-3" to="/shop">
+            <div className="supply">
+              <Link className="btn btn-primary my-3" to="/supplystore">
                 Go Back
               </Link>
               <Row className="mb-5">
                 <Col md={6}>
-                  <ThumbsGallery images={product.thumbnails} />
+                  <ThumbsGallery images={supply.thumbnails} />
                 </Col>
                 <Col md={6}>
                   <ListGroup>
                     <ListGroup.Item>
-                      <h3>{productName}</h3>
+                      <h3>{supplyName}</h3>
                     </ListGroup.Item>
                     <ListGroup.Item>
                       <Row className="align-items-center justify-content-between">
@@ -211,35 +206,27 @@ const ProductScreen = () => {
                         <Col className="text-end">
                           <FaStar />
                           {t('reviews', {
-                            rating: product.rating,
-                            count: product.numReviews,
+                            rating: supply.rating,
+                            count: supply.numReviews,
                           })}
                         </Col>
                       </Row>
                     </ListGroup.Item>
                     <ListGroup.Item>
-                      <Row>{t('colors')}</Row>
-                      <SelectColor
-                        colors={product.colors}
-                        color={color}
-                        setColor={setColor}
-                      />
-                    </ListGroup.Item>
-                    <ListGroup.Item>
                       <Row>{t('size')}</Row>
                       <SelectSize
-                        sizes={product.sizes}
+                        sizes={supply.sizes}
                         size={size}
                         setSize={setSize}
                       />
                     </ListGroup.Item>
                     <ListGroup.Item>
-                      <Trans values={{ count: product.countInStock }}>
+                      <Trans values={{ count: supply.countInStock }}>
                         {t('instock')}{' '}
                       </Trans>
                       <RiCheckboxCircleLine
                         style={
-                          product.countInStock > 0
+                          supply.countInStock > 0
                             ? { backgroundColor: '#00ff00' }
                             : { backgroundColor: '#ff0000' }
                         }
@@ -247,7 +234,7 @@ const ProductScreen = () => {
                     </ListGroup.Item>
                     <ListGroup.Item>
                       <Row>
-                        {product.countInStock > 0 && (
+                        {supply.countInStock > 0 && (
                           <>
                             <Col xs={4} sm={4} md={6} lg={4}>
                               {t('qty')}
@@ -258,7 +245,7 @@ const ProductScreen = () => {
                                 value={qty}
                                 onChange={(e) => setQty(Number(e.target.value))}
                               >
-                                {[...Array(product.countInStock).keys()].map(
+                                {[...Array(supply.countInStock).keys()].map(
                                   (x) => (
                                     <option key={x + 1} value={x + 1}>
                                       {x + 1}
@@ -271,7 +258,7 @@ const ProductScreen = () => {
                               <Button
                                 className="btn btn-success btn-lasaphire"
                                 type="button"
-                                disabled={product.countInStock === 0}
+                                disabled={supply.countInStock === 0}
                                 onClick={addToCartHandler}
                               >
                                 {t('addToCart')}
@@ -323,14 +310,14 @@ const ProductScreen = () => {
                 </Col>
               </Row>
               <Tabs
-                id="product-tab"
+                id="supply-tab"
                 activeKey={activeTab}
                 onSelect={(k) => setActiveTab(k)}
-                className="mb-3 product-tab scrollto"
+                className="mb-3 supply-tab scrollto"
                 justify
               >
-                <Tab eventKey="description" title={t('productDetails')}>
-                  <Editor content={product.description} editable={false} />
+                <Tab eventKey="description" title={t('supplyDetails')}>
+                  <Editor content={supply.description} editable={false} />
                 </Tab>
                 <Tab eventKey="custom" title={t('custom')}>
                   Tab content for Profile
@@ -347,7 +334,7 @@ const ProductScreen = () => {
                           text="primary"
                           pill
                         >
-                          {product.numReviews}
+                          {supply.numReviews}
                         </Badge>
                       </span>
                     </React.Fragment>
@@ -357,13 +344,13 @@ const ProductScreen = () => {
                     <h3>{t('ratingAndViews')}</h3>
                     <Row className="header">
                       <Col>
-                        {product.reviews.length > 0 && (
+                        {supply.reviews.length > 0 && (
                           <div className="d-flex align-items-center">
-                            <span className="rating">{product.rating}</span>
+                            <span className="rating">{supply.rating}</span>
                             <div className="wrap">
                               <span className="reviews">
                                 {t('numReviews', {
-                                  numReviews: product.numReviews,
+                                  numReviews: supply.numReviews,
                                 })}
                               </span>
                             </div>
@@ -371,18 +358,18 @@ const ProductScreen = () => {
                         )}
                       </Col>
                       {userInfo && !hasReview() && (
-                        <Col className="text-end my-3">
+                        <Col className="text-end mb-3">
                           <Button onClick={() => setShowReview(true)}>
                             {t('writeAReview')}
                           </Button>
                         </Col>
                       )}
                     </Row>
-                    {product.reviews.length === 0 && (
+                    {supply.reviews.length === 0 && (
                       <Message>{t('noReviews')}</Message>
                     )}
                     <ListGroup variant="flush">
-                      {product.reviews.map((review) => (
+                      {supply.reviews.map((review) => (
                         <ListGroup.Item key={review._id}>
                           <strong>{review.name}</strong>
                           <Rating value={review.rating} />
@@ -456,8 +443,8 @@ const ProductScreen = () => {
           </Modal>
         </>
       )}
-    </>
+    </div>
   );
 };
 
-export default ProductScreen;
+export default SupplyScreen;

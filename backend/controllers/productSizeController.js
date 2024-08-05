@@ -15,8 +15,15 @@ const productSizePopOption = [
 
 const createInit = (req, res, next) => {
   req.body.user = req.user._id;
-  req.body.title = 'Simple Size';
-  req.body.description = 'Simple description';
+  req.body.title = 'Simple Product Size';
+  req.body.description = 'Simple product size description';
+  req.body.translations = {
+    hu: {
+      title: 'Egyszerű termék méret',
+      description: 'Egyszerű termék méret leírás',
+      info: 'Egyszerű termék méret info',
+    },
+  };
   next();
 };
 

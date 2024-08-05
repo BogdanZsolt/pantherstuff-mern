@@ -4,6 +4,7 @@ import { Container, Row, Form, Button } from 'react-bootstrap';
 import FormContainer from '../../components/FormContainer';
 import Loader from '../../components/Loader';
 import Message from '../../components/Message';
+import LangSelectInput from '../../components/LangSelectInput';
 import {
   useGetProductSizeDetailsQuery,
   useUpdateProductSizeMutation,
@@ -15,6 +16,8 @@ const ProductSizeEditScreen = () => {
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [transTitleHu, setTransTitleHu] = useState('');
+  const [transDescHu, setTransDescHu] = useState('');
 
   const {
     data: size,
@@ -32,6 +35,8 @@ const ProductSizeEditScreen = () => {
     if (size) {
       setTitle(size.title);
       setDescription(size.description);
+      setTransTitleHu(size.translations?.hu?.title || size.title);
+      setTransDescHu(size.translations?.hu?.description || size.description);
     }
   }, [size]);
 
@@ -42,6 +47,7 @@ const ProductSizeEditScreen = () => {
         productSizeId,
         title,
         description,
+        translations: { hu: { title: transTitleHu, description: transDescHu } },
       }).unwrap();
       toast.success('Category updated');
       refetch();
@@ -68,22 +74,22 @@ const ProductSizeEditScreen = () => {
         ) : (
           <Form onSubmit={submitHandler}>
             <Form.Group controlId="title">
-              <Form.Label>Title</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-              ></Form.Control>
+              <LangSelectInput
+                label="Title"
+                defLang={title}
+                setDefLang={setTitle}
+                secLang={transTitleHu}
+                setSecLang={setTransTitleHu}
+              />
             </Form.Group>
             <Form.Group controlId="description" className="my-2">
-              <Form.Label>Description</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter description"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              ></Form.Control>
+              <LangSelectInput
+                label="Description"
+                defLang={description}
+                setDefLang={setDescription}
+                secLang={transDescHu}
+                setSecLang={setTransDescHu}
+              />
             </Form.Group>
             <Button type="submit" variant="primary" className="my-2">
               Update

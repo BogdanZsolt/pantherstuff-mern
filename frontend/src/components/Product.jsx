@@ -13,7 +13,7 @@ import Rating from './Rating';
 import { addToCart } from '../slices/cartSlice';
 import { toggleWishList } from '../slices/wishListSlice';
 import { useTranslation } from 'react-i18next';
-import { toCurrency } from '../utils/converter.js';
+import { toCurrency, uuid } from '../utils/converter.js';
 
 const Product = ({ product }) => {
   const { t, i18n } = useTranslation(['shop']);
@@ -32,14 +32,18 @@ const Product = ({ product }) => {
     e.preventDefault();
     const { _id, name, currentPrice, thumbnails, colors, countInStock } =
       product;
+    const cartId = uuid();
     const name_hu = product.translations?.hu?.name || product.name;
     const currentPrice_hu =
       product.translations?.hu?.currentPrice || product.currentPrice;
     const qty = 1;
     const thumbnail = thumbnails[0];
+    const type = 'product';
     dispatch(
       addToCart({
+        cartId,
         _id,
+        type,
         name,
         name_hu,
         currentPrice,
@@ -54,7 +58,7 @@ const Product = ({ product }) => {
 
   const addToWishListHandler = (e) => {
     e.preventDefault();
-    dispatch(toggleWishList({ ...product }));
+    dispatch(toggleWishList({ ...product, type: 'product' }));
   };
 
   return (

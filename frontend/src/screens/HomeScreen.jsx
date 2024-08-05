@@ -2,6 +2,7 @@ import { Container } from 'react-bootstrap';
 import { useParams, Link } from 'react-router-dom';
 import Hero from '../components/Hero.jsx';
 import ProductCarousel from '../components/ProductCarousel.jsx';
+import SupplyCarousel from '../components/SupplyCarousel.jsx';
 import PhotoGallery from '../components/PhotoGallery.jsx';
 import SubscribeForm from '../components/SubscribeForm.jsx';
 import LatestPosts from '../components/LatestPosts.jsx';
@@ -27,6 +28,10 @@ const HomeScreens = () => {
           <h3 className="text-secondary fs-1 mt-5">{t('products')}</h3>
         </Link>
         <ProductCarousel />
+        <Link to="/supplystore">
+          <h3 className="text-secondary fs-1 mt-5">{t('supplies')}</h3>
+        </Link>
+        <SupplyCarousel />
         <LatestPosts />
         <SubscribeForm />
         <PhotoGallery />
