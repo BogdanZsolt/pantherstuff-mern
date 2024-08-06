@@ -64,11 +64,15 @@ const Product = ({ product }) => {
   return (
     <Card className="my-3 rounded" border="secondary">
       <Link to={`/product/${product._id}`}>
-        <Card.Img src={product.thumbnails[0]} variant="top" />
+        <Card.Img
+          src={product.thumbnails[0]}
+          variant="top"
+          className="product-img"
+        />
         <Card.Img
           src={product.thumbnails[1]}
           variant="top"
-          className="hover-img"
+          className="hover-img product-img"
         />
         <div className="actions">
           <ul>

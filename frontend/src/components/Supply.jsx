@@ -62,11 +62,15 @@ const Supply = ({ supply }) => {
   return (
     <Card className="my-3 rounded" border="secondary">
       <Link to={`/supply/${supply._id}`}>
-        <Card.Img src={supply.thumbnails[0]} variant="top" />
+        <Card.Img
+          src={supply.thumbnails[0]}
+          variant="top"
+          className="supply-img"
+        />
         <Card.Img
           src={supply.thumbnails[1]}
           variant="top"
-          className="hover-img"
+          className="hover-img supply-img"
         />
         <div className="actions">
           <ul>

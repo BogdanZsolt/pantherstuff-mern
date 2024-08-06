@@ -674,6 +674,19 @@ table th {
   z-index: -1;
 }
 
+.card-img-top {
+  width: 100%;
+  object-fit: cover;
+}
+
+.card-img-top.supply-img {
+  aspect-ratio: 1/1;
+}
+
+.card-img-top.product-img {
+  aspect-ratio: 2/3;
+}
+
 /* Products Carousel */
 .card-img-top.hover-img {
   position: absolute;
