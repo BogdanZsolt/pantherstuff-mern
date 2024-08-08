@@ -164,7 +164,7 @@ const Menu = () => {
         {
           id: 4.1,
           text: t('membership'),
-          link: '',
+          link: '/membership',
           image: '/images/pepsz-yogaban-200x200.webp',
         },
         {
@@ -181,8 +181,8 @@ const Menu = () => {
         },
         {
           id: '4.4',
-          text: t('pantherStuffBlog'),
-          link: '',
+          text: t('blog'),
+          link: '/blog',
           image: '/images/ecoprint-05-200x200.webp',
         },
         {

@@ -1,0 +1,22 @@
+{
+  "membership": "Tagság",
+  "free": "Ingyenes",
+  "price": "{{price}}/<1>hó</1>",
+  "priceYr": "{{priceYr}}/<1>év</1> ({{price}}/<1>hó</1>)",
+  "monthly": "Havi",
+  "annual": "Éves",
+  "buying": "vásárlás",
+  "newsletter": "Hírlevél",
+  "monthlyNewsletter": "Havi hírlevél",
+  "newsletterWith": "Hírlevél oktatási anyagokkal, hírekkel az ecoprint világából és eseményekről",
+  "accessToClosedFree": "Hozzáférés zárt, ingyenes oktatási anyagokhoz",
+  "freePlanPlus": "Megegyezik az ingyenes csomaggal és...",
+  "monthlyPlanPlus": "Megegyezik a havi csomaggal és...",
+  "discountOnThePrice": "{{discount}} kedvezmény az oktatási anyagok és rendezvények árából",
+  "monthlyNewsletterWith": "Havi hírlevél oktatási anyagokkal, hírekkel, összefoglalókkal és eseményekkel az ecoprint világából",
+  "monthsDiscount": "{{count}} hónap kedvezmény a tagsági árából",
+  "discountMembershipPrice": "Kedvezmény a tagsági árából",
+  "comparePlans": "Tervek összehasonlítása",
+  "accessToClosedPro": "Hozzáférés zárt, pro oktatási anyagokhoz",
+  "": ""
+}

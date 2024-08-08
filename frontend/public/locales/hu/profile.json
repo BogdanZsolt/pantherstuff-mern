@@ -1,0 +1,22 @@
+{
+  "profile": "{{name}} Profil",
+  "userProfile": "Felhasználói profil",
+  "passwordDoNotMatch": "A jelszó nem egyezik",
+  "profileUpdatedSuccsessfully": "A profil sikeresen frissítve",
+  "name": "Név",
+  "enterName": "Add meg a neved",
+  "emailAddress": "Email cím",
+  "enterEmail": "Írd be az email címed",
+  "password": "Jelszó",
+  "enterPassword": "Írd be a jelszót",
+  "confirmPassword": "Jelszó megerősítése",
+  "update": "Frissítés",
+  "myOrders": "Rendeléseim",
+  "id": "ID",
+  "date": "DÁTUM",
+  "total": "VÉGÖSSZEG",
+  "paid": "FIZETVE",
+  "delivered": "LESZÁLLÍTOTT",
+  "details": "Részletek",
+  "": ""
+}

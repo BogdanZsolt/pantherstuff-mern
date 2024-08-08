@@ -5,11 +5,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import Banner from '../components/Banner.jsx';
 import FormContainer from '../components/FormContainer.jsx';
 import Loader from '../components/Loader.jsx';
+import { Trans, useTranslation } from 'react-i18next';
 import { useRegisterMutation } from '../slices/usersApiSlice.js';
 import { setCredentials } from '../slices/authSlice.js';
 import { toast } from 'react-toastify';
 
 const RegisterScreen = () => {
+  const { t } = useTranslation(['login']);
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -49,47 +52,47 @@ const RegisterScreen = () => {
 
   return (
     <>
-      <Banner title="Sign Up" />
+      <Banner title={t('signUp')} />
       <Container>
         <FormContainer>
-          <h1>Sign Up</h1>
+          <h1>{t('signUp')}</h1>
 
           <Form onSubmit={submitHandler}>
             <Form.Group controlId="name" className="my-3">
-              <Form.Label>Name</Form.Label>
+              <Form.Label>{t('name')}</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Enter Name"
+                placeholder={t('enterName')}
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               ></Form.Control>
             </Form.Group>
 
             <Form.Group controlId="email" className="my-3">
-              <Form.Label>Email Address</Form.Label>
+              <Form.Label>{t('emailAddress')}</Form.Label>
               <Form.Control
                 type="email"
-                placeholder="Enter Email"
+                placeholder={t('enterEmail')}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               ></Form.Control>
             </Form.Group>
 
             <Form.Group controlId="password" className="my-3">
-              <Form.Label>Password</Form.Label>
+              <Form.Label>{t('password')}</Form.Label>
               <Form.Control
                 type="password"
-                placeholder="Enter Password"
+                placeholder={t('enterPassword')}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               ></Form.Control>
             </Form.Group>
 
             <Form.Group controlId="confirmPassword" className="my-3">
-              <Form.Label>Confirm Password</Form.Label>
+              <Form.Label>{t('confirmPassword')}</Form.Label>
               <Form.Control
                 type="password"
-                placeholder="Confirm Password"
+                placeholder={t('confirmPassword')}
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
               ></Form.Control>
@@ -101,17 +104,23 @@ const RegisterScreen = () => {
               className="mt-2"
               disabled={isLoading}
             >
-              Register
+              {t('register')}
             </Button>
 
             {isLoading && <Loader />}
           </Form>
           <Row className="py-3">
             <Col>
-              Already have an account?{' '}
-              <Link to={redirect ? `/login?redirect=${redirect}` : '/login'}>
-                Login
-              </Link>
+              <Trans
+                i18nKey={t('haveAnAccount')}
+                components={{
+                  1: (
+                    <Link
+                      to={redirect ? `/login?redirect=${redirect}` : '/login'}
+                    ></Link>
+                  ),
+                }}
+              />
             </Col>
           </Row>
         </FormContainer>

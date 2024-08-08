@@ -14,12 +14,15 @@ import { toast } from 'react-toastify';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { FaTimes } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
 import { useProfileMutation } from '../slices/usersApiSlice';
 import { setCredentials } from '../slices/authSlice';
 import { useGetMyOrdersQuery } from '../slices/ordersApiSlice';
 import Banner from '../components/Banner';
 
 const ProfileScreen = () => {
+  const { t } = useTranslation(['profile']);
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -45,7 +48,7 @@ const ProfileScreen = () => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      toast.error('Password do not match');
+      toast.error(t('passwordDoNotMatch'));
     } else {
       try {
         const res = await updateProfile({
@@ -55,7 +58,7 @@ const ProfileScreen = () => {
           password,
         }).unwrap();
         dispatch(setCredentials(res));
-        toast.success('Profile updated succsessfully');
+        toast.success(t('profileUpdatedSuccsessfully'));
       } catch (err) {
         toast.error(err?.data?.message || err.error);
       }
@@ -67,62 +70,62 @@ const ProfileScreen = () => {
       <Banner
         src="/images/ecoprint-02.webp"
         alt="ecoprint"
-        title={`${name} profile`}
+        title={t('profile', { name: name })}
       />
       <Container>
         <Row className="mt-5">
           <Col md={3}>
-            <h2>User Profile</h2>
+            <h2>{t('userProfile')}</h2>
 
             <Form onSubmit={submitHandler}>
               <FormGroup controlId="name" className="my-2">
-                <Form.Label>Name</Form.Label>
+                <Form.Label>{t('name')}</Form.Label>
                 <Form.Control
                   type="name"
-                  placeholder="Enter name"
+                  placeholder={t('enterName')}
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                 ></Form.Control>
               </FormGroup>
 
               <FormGroup controlId="email" className="my-2">
-                <Form.Label>Email Address</Form.Label>
+                <Form.Label>{t('emailAddress')}</Form.Label>
                 <Form.Control
                   type="email"
-                  placeholder="Enter email"
+                  placeholder={t('enterEmail')}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 ></Form.Control>
               </FormGroup>
 
               <FormGroup controlId="password" className="my-2">
-                <Form.Label>Password</Form.Label>
+                <Form.Label>{t('password')}</Form.Label>
                 <Form.Control
                   type="password"
-                  placeholder="Enter password"
+                  placeholder={t('enterPassword')}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 ></Form.Control>
               </FormGroup>
 
               <FormGroup controlId="confirmPassword" className="my-2">
-                <Form.Label>Confirm Password</Form.Label>
+                <Form.Label>{t('confirmPassword')}</Form.Label>
                 <Form.Control
                   type="password"
-                  placeholder="Confirm password"
+                  placeholder={t('confirmPassword')}
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                 ></Form.Control>
               </FormGroup>
 
               <Button type="submit" variant="primary" className="my-2">
-                Update
+                {t('update')}
               </Button>
               {loadingUpdateProfile && <Loader />}
             </Form>
           </Col>
           <Col md={9}>
-            <h2>My Orders</h2>
+            <h2>{t('myOrders')}</h2>
             {isLoading ? (
               <Loader />
             ) : error ? (
@@ -133,11 +136,11 @@ const ProfileScreen = () => {
               <Table striped hover responsive className="table-sm">
                 <thead>
                   <tr>
-                    <th>ID</th>
-                    <th>DATE</th>
-                    <th>TOTAL</th>
-                    <th>PAID</th>
-                    <th>DELIVERED</th>
+                    <th>{t('id')}</th>
+                    <th>{t('date')}</th>
+                    <th>{t('total')}</th>
+                    <th>{t('paid')}</th>
+                    <th>{t('delivered')}</th>
                     <th></th>
                   </tr>
                 </thead>
@@ -164,7 +167,7 @@ const ProfileScreen = () => {
                       <td>
                         <LinkContainer to={`/order/${order._id}`}>
                           <Button className="btn-sm" variant="light">
-                            Details
+                            {t('details')}
                           </Button>
                         </LinkContainer>
                       </td>

@@ -1,0 +1,15 @@
+{
+  "signIn": "Bejelentkezés",
+  "emailAddress": "Email cím",
+  "password": "Jelszó",
+  "enterEmail": "Írd be az email címed",
+  "enterPassword": "Írd be a jelszót",
+  "newCustomer": "Új vevő? <1>Regisztráció</1>",
+  "haveAnAccount": "Már van fiókja? <1>Bejelentkezés</1>",
+  "signUp": "Regisztráció",
+  "name": "Név",
+  "enterName": "Add meg a neved",
+  "confirmPassword": "Jelszó megerősítése",
+  "register": "Regisztráció",
+  "": ""
+}

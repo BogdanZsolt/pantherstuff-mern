@@ -29,6 +29,9 @@ export const ShopScreen = lazy(() => import('./screens/ShopScreen.jsx'));
 export const SupplyStoreScreen = lazy(() =>
   import('./screens/SupplyStoreScreen.jsx')
 );
+export const MembershipScreen = lazy(() =>
+  import('./screens/MembershipScreen.jsx')
+);
 export const BlogScreen = lazy(() => import('./screens/BlogScreen.jsx'));
 export const PostScreen = lazy(() => import('./screens/PostScreen.jsx'));
 export const AuthorScreen = lazy(() => import('./screens/AuthorScreen.jsx'));

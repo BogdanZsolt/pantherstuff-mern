@@ -1,0 +1,15 @@
+{
+  "signIn": "Sign In",
+  "emailAddress": "Email Address",
+  "password": "Password",
+  "enterEmail": "Enter email",
+  "enterPassword": "Enter password",
+  "newCustomer": "New Customer? <1>Register</1>",
+  "haveAnAccount": "Already have an account? <1>Login</1>",
+  "signUp": "Sign Up",
+  "name": "Name",
+  "enterName": "Enter Name",
+  "confirmPassword": "Confirm Password",
+  "Register": "Register",
+  "": ""
+}

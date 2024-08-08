@@ -5,11 +5,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import Banner from '../components/Banner.jsx';
 import FormContainer from '../components/FormContainer.jsx';
 import Loader from '../components/Loader.jsx';
+import { Trans, useTranslation } from 'react-i18next';
 import { useLoginMutation } from '../slices/usersApiSlice.js';
 import { setCredentials } from '../slices/authSlice.js';
 import { toast } from 'react-toastify';
 
 const LoginScreen = () => {
+  const { t } = useTranslation(['login']);
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -42,26 +45,26 @@ const LoginScreen = () => {
 
   return (
     <>
-      <Banner title="Sign in" />
+      <Banner title={t('signIn')} />
       <Container>
         <FormContainer>
-          <h1>Sign In</h1>
+          <h1>{t('signIn')}</h1>
 
           <Form onSubmit={submitHandler}>
             <Form.Group controlId="email" className="my-3">
-              <Form.Label>Email Address</Form.Label>
+              <Form.Label>{t('emailAddress')}</Form.Label>
               <Form.Control
                 type="email"
-                placeholder="Enter Email"
+                placeholder={t('enterEmail')}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               ></Form.Control>
             </Form.Group>
             <Form.Group controlId="password" className="my-3">
-              <Form.Label>Password</Form.Label>
+              <Form.Label>{t('password')}</Form.Label>
               <Form.Control
                 type="password"
-                placeholder="Enter Password"
+                placeholder={t('enterPassword')}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               ></Form.Control>
@@ -72,19 +75,27 @@ const LoginScreen = () => {
               className="mt-2"
               disabled={isLoading}
             >
-              Sign In
+              {t('signIn')}
             </Button>
 
             {isLoading && <Loader />}
           </Form>
           <Row className="py-3">
             <Col>
-              New Customer?{' '}
-              <Link
-                to={redirect ? `/register?redirect=${redirect}` : '/register'}
-              >
-                Register
-              </Link>
+              <Trans
+                i18nKey={t('newCustomer')}
+                components={{
+                  1: (
+                    <Link
+                      to={
+                        redirect
+                          ? `/register?redirect=${redirect}`
+                          : '/register'
+                      }
+                    ></Link>
+                  ),
+                }}
+              />
             </Col>
           </Row>
         </FormContainer>

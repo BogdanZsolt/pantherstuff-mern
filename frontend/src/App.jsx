@@ -49,6 +49,7 @@ import {
   ShippingScreen,
   ShopScreen,
   SupplyStoreScreen,
+  MembershipScreen,
   SubscriberListScreen,
   UserEditScreen,
   UserListScreen,
@@ -172,6 +173,10 @@ const App = () => {
             {
               path: 'supply/:id',
               element: <SupplyScreen />,
+            },
+            {
+              path: 'membership',
+              element: <MembershipScreen />,
             },
             {
               path: 'blog',

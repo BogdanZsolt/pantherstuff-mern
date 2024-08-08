@@ -1,0 +1,22 @@
+{
+  "profile": "{{name}} Profile",
+  "userProfile": "User Profile",
+  "passwordDoNotMatch": "Password do not match",
+  "profileUpdatedSuccsessfully": "Profile updated succsessfully",
+  "name": "Name",
+  "enterName": "Enter name",
+  "emailAddress": "Email Address",
+  "enterEmail": "Enter Email",
+  "password": "Jelszó",
+  "enterPassword": "Írd be a jelszót",
+  "confirmPassword": "Jelszó megerősítése",
+  "update": "Update",
+  "myOrders": "My Orders",
+  "id": "ID",
+  "date": "DATE",
+  "total": "TOTAL",
+  "paid": "PAID",
+  "delivered": "DELIVERED",
+  "details": "Details",
+  "": ""
+}

@@ -1,0 +1,22 @@
+{
+  "membership": "Membership",
+  "free": "Free",
+  "price": "{{price}}/<1>Mo</1>",
+  "priceYr": "{{priceYr}}/<1>Yr</1> ({{price}}/<1>Mo</1>)",
+  "monthly": "Monthly",
+  "annual": "Annual",
+  "buying": "buying",
+  "newsletter": "Newletter",
+  "monthlyNewsletter": "Monthly newsletter",
+  "newsletterWith": "Newsletter with educational materials, news from the world of ecoprint, and events",
+  "accessToClosedFree": "Access to closed, free educational materials",
+  "freePlanPlus": "They are the same as the free package and...",
+  "monthlyPlanPlus": "It is the same as the monthly package and...",
+  "discountOnThePrice": "{{discount}} discount on the price of educational materials and events",
+  "monthlyNewsletterWith": "Monthly newsletter with educational materials, news, summaries, and events from the world of ecoprint.",
+  "monthsDiscount": "{{count}} months discount on your membership price",
+  "discountMembershipPrice": "Discount on your membership price",
+  "comparePlans": "Compare plans",
+  "accessToClosedPro": "Access to closed, pro educational materials",
+  "": ""
+}
