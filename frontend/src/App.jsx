@@ -60,9 +60,10 @@ import {
   FaqEditScreen,
   FaqCategoryListScreen,
   FaqCategoryEditScreen,
+  SupplyScreen,
 } from './Pages';
 import Root from './components/Root';
-import SupplyScreen from './screens/SupplyScreen';
+// import SupplyScreen from './screens/SupplyScreen';
 
 const App = () => {
   let router = createBrowserRouter([

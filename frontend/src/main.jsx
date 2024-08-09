@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import store from './store.js';
 import './assets/styles/bootstrap.custom.css';
 import './assets/styles/index.css';
-import App from './App.jsx';
+import { App } from './Pages.jsx';
 import Loader from './components/Loader.jsx';
 import './i18n.js';
 
