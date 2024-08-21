@@ -170,7 +170,7 @@ const Menu = () => {
         {
           id: '4.2',
           text: t('onlineCourses'),
-          link: '',
+          link: '/onlinecourses',
           image: '/images/ecoprint-04-200x200.webp',
         },
         {
@@ -233,7 +233,9 @@ const Menu = () => {
       {isLoading ? (
         <Loader />
       ) : error ? (
-        <Message variant="danger">{error.data.Message}</Message>
+        <Message variant="danger">
+          {error?.data?.Message || error.error}
+        </Message>
       ) : (
         <Nav
           className="justify-content-start flex-grow-1 pe-3 left-menu"

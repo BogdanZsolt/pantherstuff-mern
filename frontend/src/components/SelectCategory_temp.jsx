@@ -127,7 +127,9 @@ const SelectCategory = ({ category, setCategory, multi = false }) => {
       {isLoading ? (
         <Loader />
       ) : error ? (
-        <Message variant="danger">{error.data.Message}</Message>
+        <Message variant="danger">
+          {error?.data?.Message || error.error}
+        </Message>
       ) : (
         categoryOptions && (
           <Form.Group controlId="category" className="my-2">

@@ -3,9 +3,19 @@ import Banner from '../components/Banner';
 import { Trans, useTranslation } from 'react-i18next';
 import { toCurrency } from '../utils/converter';
 import { RiCheckLine } from 'react-icons/ri';
+import { useGetPlansQuery } from '../slices/plansApiSlice';
+import Loader from '../components/Loader';
+import Message from '../components/Message';
 
 const MembershipScreen = () => {
   const { t, i18n } = useTranslation(['knowledge']);
+
+  const {
+    data: plans,
+    isLoading,
+    error,
+  } = useGetPlansQuery({ sort: 'createdAt' });
+
   return (
     <>
       <Banner
@@ -21,109 +31,84 @@ const MembershipScreen = () => {
           eos ex expedita facilis quos magni placeat adipisci non omnis
           inventore, soluta id!
         </p>
-        <CardGroup className="text-center" style={{ gap: '1rem' }}>
-          <Card className="mb-4 rounded-3 shadow">
-            <Card.Header as="h4" className="py-3 my-0 fw-normal">
-              {t('free')}
-            </Card.Header>
-            <Card.Body>
-              <Card.Title as="h3" className="pricing-card-title">
-                <Trans
-                  values={{ price: toCurrency(i18n.language, 0) }}
-                  components={{ 1: <small /> }}
+        {isLoading ? (
+          <Loader />
+        ) : error ? (
+          <Message></Message>
+        ) : (
+          <CardGroup className="text-center" style={{ gap: '1rem' }}>
+            {plans.data.map((plan) => (
+              <Card
+                key={plan._id}
+                className="mb-4 rounded-3 shadow"
+                style={
+                  plan.recommended
+                    ? { border: '5px solid rgba(var(--bs-success-rgb), 0.4)' }
+                    : {}
+                }
+              >
+                <Card.Header
+                  as="h4"
+                  className="py-3 my-0 fw-normal"
+                  style={
+                    plan.recommended
+                      ? {
+                          backgroundColor: 'rgba(var(--bs-success-rgb), 0.2)',
+                        }
+                      : {}
+                  }
                 >
-                  {t('price')}
-                </Trans>
-              </Card.Title>
-              <Card.Text>
-                <ul className="list-unstyled mt-3 mb-4">
-                  <li>{t('buying')}</li>
-                  <li>{t('newsletterWith')}</li>
-                  <li>{t('accessToClosedFree')}</li>
-                </ul>
-              </Card.Text>
-            </Card.Body>
-            <Card.Footer>
-              <Button className="btn btn-lasaphire">Add to cart</Button>
-            </Card.Footer>
-          </Card>
-          <Card className="mb-4 rounded-3 shadow">
-            <Card.Header as="h4" className="py-3 my-0 fw-normal">
-              {t('monthly')}
-            </Card.Header>
-            <Card.Body>
-              <Card.Title as="h3" className="pricing-card-title">
-                <Trans
-                  values={{
-                    price: toCurrency(
-                      i18n.language,
-                      i18n.language === 'en' ? '12.99' : '4990'
-                    ),
-                  }}
-                  components={{ 1: <small /> }}
+                  {i18n.language === 'en'
+                    ? plan.name
+                    : plan.translations?.hu?.name || plan.name}
+                </Card.Header>
+                <Card.Body>
+                  <Card.Title as="h3" className="pricing-card-title">
+                    <Trans
+                      values={{
+                        price: toCurrency(
+                          i18n.language,
+                          i18n.language === 'en'
+                            ? plan.price
+                            : plan.translations?.hu?.price || plan.price
+                        ),
+                      }}
+                      components={{ 1: <small /> }}
+                    >
+                      {t('price')}
+                    </Trans>
+                  </Card.Title>
+                  <Card.Text as="div">
+                    <ul className="list-unstyled mt-3 mb-4">
+                      {plan.features.map((feature, i) => (
+                        <li key={i}>
+                          {i18n.language === 'en'
+                            ? feature
+                            : plan.translations?.hu?.features[i]}
+                        </li>
+                      ))}
+                    </ul>
+                  </Card.Text>
+                </Card.Body>
+                <Card.Footer
+                  style={
+                    plan.recommended
+                      ? { backgroundColor: 'rgba(var(--bs-success-rgb), 0.2)' }
+                      : {}
+                  }
                 >
-                  {t('price')}
-                </Trans>
-              </Card.Title>
-              <Card.Text>
-                <ul className="list-unstyled mt-3 mb-4">
-                  <li>{t('freePlanPlus')}</li>
-                  <li></li>
-                  <li>{t('discountOnThePrice', { discount: '6%' })}</li>
-                  <li>{t('monthlyNewsletterWith')}</li>
-                  <li>{t('accessToClosedPro')}</li>
-                </ul>
-              </Card.Text>
-            </Card.Body>
-            <Card.Footer>
-              <Button className="btn btn-lasaphire">Add to cart</Button>
-            </Card.Footer>
-          </Card>
-          <Card
-            className="mb-4 rounded-3 shadow"
-            style={{ border: '5px solid rgba(var(--bs-success-rgb), 0.4)' }}
-          >
-            <Card.Header
-              as="h4"
-              className="py-3 my-0 fw-normal"
-              style={{ backgroundColor: 'rgba(var(--bs-success-rgb), 0.2)' }}
-            >
-              {t('annual')}
-            </Card.Header>
-            <Card.Body>
-              <Card.Title as="h3" className="pricing-card-title">
-                <Trans
-                  values={{
-                    price: toCurrency(
-                      i18n.language,
-                      i18n.language === 'en' ? '10.83' : '4159'
-                    ),
-                    priceYr: toCurrency(
-                      i18n.language,
-                      i18n.language === 'en' ? '129.9' : '49900'
-                    ),
-                  }}
-                  components={{ 1: <small /> }}
-                >
-                  {t('priceYr')}
-                </Trans>
-              </Card.Title>
-              <Card.Text>
-                <ul className="list-unstyled mt-3 mb-4">
-                  <li>{t('monthlyPlanPlus')}</li>
-                  <li>{t('monthsDiscount', { count: '2' })}</li>
-                </ul>
-              </Card.Text>
-            </Card.Body>
-            <Card.Footer
-              style={{ backgroundColor: 'rgba(var(--bs-success-rgb), 0.2)' }}
-            >
-              <Button className="btn btn-success btn-lasaphire">
-                Add to cart
-              </Button>
-            </Card.Footer>
-          </Card>
-        </CardGroup>
+                  <Button
+                    className={`btn btn-lasaphire ${
+                      plan.recommended && 'btn-success'
+                    }`}
+                  >
+                    Add to cart
+                  </Button>
+                </Card.Footer>
+              </Card>
+            ))}
+          </CardGroup>
+        )}
 
         <h2 className="display-6 text-center my-4">{t('comparePlans')}</h2>
         <Table responsive striped className="text-center">

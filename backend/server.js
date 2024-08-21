@@ -5,6 +5,7 @@ dotenv.config();
 import cookieParser from 'cookie-parser';
 import connectDB from './config/db.js';
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
+import passport from './utils/passportConfig.js';
 import productRoutes from './routes/productRoutes.js';
 import productCategoryRoutes from './routes/productCategoryRoutes.js';
 import productCollectionRoutes from './routes/productCollectionRoutes.js';
@@ -22,6 +23,7 @@ import groupRoutes from './routes/groupRoutes.js';
 import subscriberRoutes from './routes/subscriberRoutes.js';
 import faqRoutes from './routes/faqRoutes.js';
 import faqCategoryRoutes from './routes/faqCategoryRoutes.js';
+import planRoutes from './routes/planRoutes.js';
 
 // import { fileURLToPath } from 'url';
 // const __filename = fileURLToPath(import.meta.url);
@@ -38,6 +40,9 @@ app.use(express.urlencoded({ extended: true }));
 
 // Cookie parser middleware
 app.use(cookieParser());
+
+// Passport middleware
+app.use(passport.initialize());
 
 app.use('/api/products', productRoutes);
 app.use('/api/productcategories', productCategoryRoutes);
@@ -56,6 +61,7 @@ app.use('/api/groups', groupRoutes);
 app.use('/api/subscribers', subscriberRoutes);
 app.use('/api/faqs', faqRoutes);
 app.use('/api/faqCategories', faqCategoryRoutes);
+app.use('/api/plans', planRoutes);
 
 const __dirname = path.resolve();
 // app.use(express.static('public'));

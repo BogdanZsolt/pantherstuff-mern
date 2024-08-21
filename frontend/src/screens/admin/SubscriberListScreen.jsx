@@ -44,7 +44,9 @@ const SubscriberListScreen = () => {
       {isLoading ? (
         <Loader />
       ) : error ? (
-        <Message></Message>
+        <Message variant="danger">
+          {error?.data?.message || error.error}
+        </Message>
       ) : (
         <Row className="justify-content-center align-items-center my-3">
           <Col md={6}>

@@ -5,27 +5,20 @@ import Loader from '../../components/Loader.jsx';
 import Message from '../../components/Message';
 import { toast } from 'react-toastify';
 import {
-  useGetFaqCategoriesQuery,
-  useCreateFaqCategoryMutation,
-  useDeleteFaqCategoryMutation,
-} from '../../slices/faqCategoriesApiSlice.js';
+  useGetPlansQuery,
+  useCreatePlanMutation,
+  useDeletePlanMutation,
+} from '../../slices/plansApiSlice.js';
 
-const FaqCategoryListScreen = () => {
-  const {
-    data: faqCats,
-    isLoading,
-    refetch,
-    error,
-  } = useGetFaqCategoriesQuery();
-  const [createFaqCategory, { isLoading: loadingCreate }] =
-    useCreateFaqCategoryMutation();
-  const [deleteFaqCategory, { isLoading: loadingDelete }] =
-    useDeleteFaqCategoryMutation();
+const MembershipPlanListScreen = () => {
+  const { data: plans, isLoading, refetch, error } = useGetPlansQuery();
+  const [createPlan, { isLoading: loadingCreate }] = useCreatePlanMutation();
+  const [deletePlan, { isLoading: loadingDelete }] = useDeletePlanMutation();
 
   const createHandler = async () => {
-    if (window.confirm('Are you sure you want to create a new Faq Category?')) {
+    if (window.confirm('Are you sure you want to create a new plan?')) {
       try {
-        await createFaqCategory();
+        await createPlan();
         toast.success('Category created');
         refetch();
       } catch (err) {
@@ -37,7 +30,7 @@ const FaqCategoryListScreen = () => {
   const deleteHandler = async (id) => {
     if (window.confirm('Are you sure?')) {
       try {
-        await deleteFaqCategory(id);
+        await deletePlan(id);
         toast.success('Category deleted');
         refetch();
       } catch (err) {
@@ -50,13 +43,13 @@ const FaqCategoryListScreen = () => {
     <>
       <Container className="mt-5">
         <Row className="text-center">
-          <h2 className="fs-1 fw-semibold">Faq Categories</h2>
+          <h2 className="fs-1 fw-semibold">Member Plans</h2>
         </Row>
         <Row className="align-items-center">
           <Col className="text-end">
             <Button className="btn-sm m-3" onClick={createHandler}>
               <div className="d-flex align-items-center gap-1">
-                <FaEdit /> Create Category
+                <FaEdit /> Create Plan
               </div>
             </Button>
           </Col>
@@ -73,18 +66,38 @@ const FaqCategoryListScreen = () => {
           <Table striped hover responsive className="table-sm">
             <thead>
               <tr>
-                <th>ID</th>
-                <th>TITLE</th>
+                <th>NAME</th>
+                <th>PRICE</th>
                 <th></th>
               </tr>
             </thead>
             <tbody>
-              {faqCats.data.map((cat) => (
-                <tr key={cat._id}>
-                  <td>{cat._id}</td>
-                  <td>{cat.title}</td>
+              {plans.data.map((plan) => (
+                <tr key={plan._id}>
+                  <td className="text-start" title={`id: ${plan._id}`}>
+                    <p className="my-0 py-0">
+                      <b>en: </b>
+                      {plan.name}
+                    </p>
+                    <p className="my-0 py-0">
+                      <b>hu: </b>
+                      {plan.translations?.hu?.name}
+                    </p>
+                  </td>
                   <td>
-                    <LinkContainer to={`/admin/faqcategory/${cat._id}/edit`}>
+                    <p className="my-0 py-0">
+                      <b>en: </b>
+                      {plan.price}
+                    </p>
+                    <p className="my-0 py-0">
+                      <b>hu: </b>
+                      {plan.translations?.hu?.price}
+                    </p>
+                  </td>
+                  <td>
+                    <LinkContainer
+                      to={`/admin/membershipplan/${plan._id}/edit`}
+                    >
                       <Button variant="primary" className="btn-sm mx-2">
                         <span className="d-flex align-items-center justify-content-center py">
                           <FaEdit />
@@ -94,7 +107,7 @@ const FaqCategoryListScreen = () => {
                     <Button
                       variant="danger"
                       className="btn-sm"
-                      onClick={() => deleteHandler(cat._id)}
+                      onClick={() => deleteHandler(plan._id)}
                     >
                       <span className="d-flex align-items-center justify-content-center">
                         <FaTrash className="text-primary" />
@@ -111,4 +124,4 @@ const FaqCategoryListScreen = () => {
   );
 };
 
-export default FaqCategoryListScreen;
+export default MembershipPlanListScreen;

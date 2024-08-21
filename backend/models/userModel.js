@@ -9,12 +9,12 @@ const userSchema = new mongoose.Schema(
     },
     email: {
       type: String,
-      required: true,
+      required: false,
       unique: true,
     },
     password: {
       type: String,
-      required: true,
+      required: false,
     },
     isAdmin: {
       type: Boolean,
@@ -25,6 +25,16 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       required: true,
       default: false,
+    },
+    googleId: {
+      type: String,
+      required: false,
+    },
+    authMethod: {
+      type: String,
+      enum: ['google', 'local'],
+      required: true,
+      default: 'local',
     },
   },
   {

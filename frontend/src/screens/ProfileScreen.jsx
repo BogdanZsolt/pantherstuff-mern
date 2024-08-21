@@ -16,7 +16,7 @@ import Loader from '../components/Loader';
 import { FaTimes } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 import { useProfileMutation } from '../slices/usersApiSlice';
-import { setCredentials } from '../slices/authSlice';
+import { isAuthenticated } from '../slices/authSlice';
 import { useGetMyOrdersQuery } from '../slices/ordersApiSlice';
 import Banner from '../components/Banner';
 
@@ -30,7 +30,7 @@ const ProfileScreen = () => {
 
   const dispatch = useDispatch();
 
-  const { userInfo } = useSelector((state) => state.auth);
+  const { userAuth } = useSelector((state) => state.auth);
 
   const [updateProfile, { isLoading: loadingUpdateProfile }] =
     useProfileMutation();
@@ -38,11 +38,11 @@ const ProfileScreen = () => {
   const { data: orders, isLoading, error } = useGetMyOrdersQuery();
 
   useEffect(() => {
-    if (userInfo) {
-      setName(userInfo.name);
-      setEmail(userInfo.email);
+    if (userAuth) {
+      setName(userAuth.name);
+      setEmail(userAuth.email);
     }
-  }, [userInfo]);
+  }, [userAuth]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -52,12 +52,12 @@ const ProfileScreen = () => {
     } else {
       try {
         const res = await updateProfile({
-          _id: userInfo._id,
+          _id: userAuth._id,
           name,
           email,
           password,
         }).unwrap();
-        dispatch(setCredentials(res));
+        dispatch(isAuthenticated(res));
         toast.success(t('profileUpdatedSuccsessfully'));
       } catch (err) {
         toast.error(err?.data?.message || err.error);

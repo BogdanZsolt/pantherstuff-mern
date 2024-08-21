@@ -1,27 +1,145 @@
+import passport from 'passport';
 import asyncHandler from '../middleware/asyncHandler.js';
 import User from '../models/userModel.js';
 import generateToken from '../utils/generateToken.js';
+import jwt from 'jsonwebtoken';
 
 // @desc    Auth user & get token
 // @route   POST /api/users/login
 // @access  Public
-const authUser = asyncHandler(async (req, res) => {
-  const { email, password } = req.body;
+const authUser = asyncHandler(async (req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
+    if (err) return next(err);
 
-  const user = await User.findOne({ email });
-
-  if (user && (await user.matchPassword(password))) {
+    // Check if user not found
+    if (!user) {
+      res.status(401);
+      throw new Error(info.message);
+    }
+    // generate token
     generateToken(res, user._id);
 
+    // response user info
     res.status(200).json({
       _id: user._id,
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
     });
-  } else {
-    res.status(401);
-    throw new Error('Invalid email or password');
+  })(req, res, next);
+});
+
+// @desc    Google Auth user & get token
+// @route   GET /api/users/auth/google
+// @access  Public
+const googleAuthUser = passport.authenticate('google', { scope: ['profile'] });
+
+// @desc    Google Auth callback
+// @route   GET /api/users/auth/google/callback
+// @access  Public
+const googleAuthUserCallback = asyncHandler(async (req, res, next) => {
+  passport.authenticate(
+    'google',
+    {
+      failureRedirect: 'login',
+      session: false,
+    },
+    (err, user, info) => {
+      if (err) return next(err);
+      if (!user) {
+        return res.redirect('http://localhost:3000/google-login-error');
+      }
+      // generate token
+      generateToken(res, user?._id);
+      // redirekt user
+      res.redirect('http://localhost:3000/');
+    }
+  )(req, res, next);
+});
+
+// @desc    Check user authenticated
+// @route   GET /api/users/checkauthenticated
+// @access  Public
+const checkAuthenticated = asyncHandler(async (req, res) => {
+  const token = req.cookies['jwt'];
+  if (!token) {
+    console.log(token);
+    return res.status(200).json({ isAuthenticated: false });
+  }
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    // find the user
+    const user = await User.findById(decoded.userId);
+    if (!user) {
+      return res.status(200).json({ isAuthenticated: false });
+    } else {
+      res.status(200).json({
+        isAuthenticated: true,
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+      });
+    }
+  } catch (err) {
+    return res.status(401).json({ isAuthenticated: false, err });
+  }
+});
+
+// @desc    Check if the user is an Admin
+// @route   GET /api/users/checkadmin
+// @access  Public
+const checkIsAdmin = asyncHandler(async (req, res) => {
+  const token = req.cookies['jwt'];
+  if (!token) {
+    console.log(token);
+    return res.status(200).json({ isAdmin: false });
+  }
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    // find the user
+    const user = await User.findById(decoded.userId);
+    if (!user) {
+      return res.status(200).json({ isAdmin: false });
+    } else {
+      let isAdmin = false;
+      if (user.isAdmin) {
+        isAdmin = user.isAdmin;
+      }
+      res.status(200).json({
+        isAdmin: isAdmin,
+      });
+    }
+  } catch (err) {
+    return res.status(401).json({ isAdmin: false, err });
+  }
+});
+
+// @desc    Check if the user's plan is premium
+// @route   GET /api/users/checkpremium
+// @access  Public
+const checkIsPremium = asyncHandler(async (req, res) => {
+  const token = req.cookies['jwt'];
+  if (!token) {
+    console.log(token);
+    return res.status(200).json({ isPremium: false });
+  }
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    // find the user
+    const user = await User.findById(decoded.userId);
+    if (!user) {
+      return res.status(200).json({ isPremium: false });
+    } else {
+      let isPremium = false;
+      if (user.isPremium || user.isAdmin) {
+        isPremium = true;
+      }
+      res.status(200).json({
+        isPremium: isPremium,
+      });
+    }
+  } catch (err) {
+    return res.status(401).json({ isPremium: false, err });
   }
 });
 
@@ -31,6 +149,7 @@ const authUser = asyncHandler(async (req, res) => {
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
 
+  // Check if email already exist
   const userExists = await User.findOne({ email });
 
   if (userExists) {
@@ -38,6 +157,7 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new Error('User already exists');
   }
 
+  // Register the user
   const user = await User.create({
     name,
     email,
@@ -45,7 +165,7 @@ const registerUser = asyncHandler(async (req, res) => {
   });
 
   if (user) {
-    generateToken(res, user._id);
+    // generateToken(res, user._id);
     res.status(201).json({
       _id: user._id,
       name: user.name,
@@ -64,7 +184,8 @@ const registerUser = asyncHandler(async (req, res) => {
 const logoutUser = asyncHandler(async (req, res) => {
   res.cookie('jwt', '', {
     httpOnly: true,
-    expires: new Date(0),
+    // expires: new Date(0),
+    maxAge: 1,
   });
 
   res.status(200).json({ message: 'Logged out successfully' });
@@ -201,7 +322,12 @@ const getAuthor = asyncHandler(async (req, res) => {
 });
 
 export {
+  checkAuthenticated,
+  checkIsAdmin,
+  checkIsPremium,
   authUser,
+  googleAuthUser,
+  googleAuthUserCallback,
   registerUser,
   logoutUser,
   getUserProfile,

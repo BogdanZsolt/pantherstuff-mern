@@ -79,7 +79,9 @@ const FaqEditScreen = () => {
       {isLoading ? (
         <Loader />
       ) : error ? (
-        <Message variant="danger">{error.data.message}</Message>
+        <Message variant="danger">
+          {error?.data?.Message || error.error}
+        </Message>
       ) : (
         <Container className="mt-5">
           <Link to="/admin/faqlist" className="btn btn-primary my-3">
@@ -112,7 +114,9 @@ const FaqEditScreen = () => {
               {isCatLoading ? (
                 <Loader />
               ) : catError ? (
-                <Message variant="danger">{error.data.message}</Message>
+                <Message variant="danger">
+                  {error?.data?.Message || error.error}
+                </Message>
               ) : (
                 <div className="row">
                   <Form.Group controlId="category" className="my-2">

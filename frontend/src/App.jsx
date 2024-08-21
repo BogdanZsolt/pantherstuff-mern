@@ -1,6 +1,7 @@
 // https://youtu.be/dltHi9GWMIo?si=5dEcZZagXPhZKsra
-
+import { useEffect } from 'react';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {
@@ -50,9 +51,12 @@ import {
   ShopScreen,
   SupplyStoreScreen,
   MembershipScreen,
+  OnlineCoursesScreen,
   SubscriberListScreen,
   UserEditScreen,
   UserListScreen,
+  MembershipPlanListScreen,
+  MembershipPlanEditScreen,
   ValuesScreen,
   WishListScreen,
   AdminOrderScreen,
@@ -61,9 +65,13 @@ import {
   FaqCategoryListScreen,
   FaqCategoryEditScreen,
   SupplyScreen,
+  PremiumRoute,
 } from './Pages';
 import Root from './components/Root';
-// import SupplyScreen from './screens/SupplyScreen';
+import { useCheckAuthStatusQuery } from './slices/usersApiSlice';
+import { isAuthenticated } from './slices/authSlice';
+import Loader from './components/Loader';
+import Message from './components/Message';
 
 const App = () => {
   let router = createBrowserRouter([
@@ -222,6 +230,11 @@ const App = () => {
               element: <RegisterScreen />,
             },
             {
+              path: 'profile',
+              element: <ProfileScreen />,
+            },
+
+            {
               path: '',
               element: <ProtectRoute />,
               children: [
@@ -250,8 +263,14 @@ const App = () => {
                   element: <WishListScreen />,
                 },
                 {
-                  path: 'profile',
-                  element: <ProfileScreen />,
+                  path: '',
+                  element: <PremiumRoute />,
+                  children: [
+                    {
+                      path: 'onlinecourses',
+                      element: <OnlineCoursesScreen />,
+                    },
+                  ],
                 },
               ],
             },
@@ -378,6 +397,14 @@ const App = () => {
               element: <UserEditScreen />,
             },
             {
+              path: 'membershipplan',
+              element: <MembershipPlanListScreen />,
+            },
+            {
+              path: 'membershipplan/:id/edit',
+              element: <MembershipPlanEditScreen />,
+            },
+            {
               path: 'orderlist',
               element: <OrderListScreen />,
             },
@@ -395,10 +422,28 @@ const App = () => {
     },
   ]);
 
+  const { data, isLoading, error } = useCheckAuthStatusQuery();
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(isAuthenticated(data));
+  }, [data, dispatch]);
+
   return (
     <>
-      <RouterProvider router={router} />
-      <ToastContainer />
+      {isLoading ? (
+        <Loader />
+      ) : error ? (
+        <Message variant="danger">
+          {error?.data?.message || error.error}
+        </Message>
+      ) : (
+        <>
+          <RouterProvider router={router} />
+          <ToastContainer />
+        </>
+      )}
     </>
   );
 };

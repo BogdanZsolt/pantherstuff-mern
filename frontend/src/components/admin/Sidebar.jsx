@@ -24,7 +24,7 @@ import { useLogoutMutation } from '../../slices/usersApiSlice';
 import { LinkContainer } from 'react-router-bootstrap';
 
 const Sidebar = () => {
-  const { userInfo } = useSelector((state) => state.auth);
+  const { userAuth } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -337,6 +337,29 @@ const Sidebar = () => {
                 </Dropdown.Item>
               </Dropdown.Menu>
             </div>
+            <div className="d-none d-md-block">
+              <Collapse in={open === 'users'}>
+                <Nav id="users-collapse" className="flex-nowrap flex-column">
+                  <Nav.Item className="ms-4 p-2">
+                    <Link
+                      className="text-primary my-2"
+                      to="/admin/membershipplan"
+                    >
+                      <span>membership plans</span>
+                    </Link>
+                  </Nav.Item>
+                </Nav>
+              </Collapse>
+            </div>
+            <div className="d-block d-md-none dropdown-menu__container">
+              <Dropdown.Menu show={open === 'users'}>
+                <Dropdown.Item>
+                  <Link to="/admin/membershipplan">
+                    <span>membership plans</span>
+                  </Link>
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </div>
           </Nav.Item>
 
           <Nav.Item>
@@ -422,7 +445,7 @@ const Sidebar = () => {
           id="triggerId"
         >
           <BsPeople className="fs-4" />
-          <span className="fs-4 ms-3 d-none d-md-inline">{userInfo.name}</span>
+          <span className="fs-4 ms-3 d-none d-md-inline">{userAuth?.name}</span>
         </Dropdown.Toggle>
         <Dropdown.Menu>
           <LinkContainer to="/admin">

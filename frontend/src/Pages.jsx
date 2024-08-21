@@ -32,6 +32,9 @@ export const SupplyStoreScreen = lazy(() =>
 export const MembershipScreen = lazy(() =>
   import('./screens/MembershipScreen.jsx')
 );
+export const OnlineCoursesScreen = lazy(() =>
+  import('./screens/OnlineCoursesScreen.jsx')
+);
 export const BlogScreen = lazy(() => import('./screens/BlogScreen.jsx'));
 export const PostScreen = lazy(() => import('./screens/PostScreen.jsx'));
 export const AuthorScreen = lazy(() => import('./screens/AuthorScreen.jsx'));
@@ -127,6 +130,12 @@ export const UserListScreen = lazy(() =>
 export const UserEditScreen = lazy(() =>
   import('./screens/admin/UserEditScreen.jsx')
 );
+export const MembershipPlanListScreen = lazy(() =>
+  import('./screens/admin/MembershipPlanListScreen.jsx')
+);
+export const MembershipPlanEditScreen = lazy(() =>
+  import('./screens/admin/MembershipPlanEditScreen.jsx')
+);
 export const OrderListScreen = lazy(() =>
   import('./screens/admin/OrderListScreen.jsx')
 );
@@ -137,3 +146,4 @@ export const SubscriberListScreen = lazy(() =>
   import('./screens/admin/SubscriberListScreen.jsx')
 );
 export const ProtectRoute = lazy(() => import('./components/ProtectRoute.jsx'));
+export const PremiumRoute = lazy(() => import('./components/PremiumRoute.jsx'));

@@ -63,6 +63,24 @@ export const usersApiSlice = apiSlice.injectEndpoints({
       }),
       keepUnusedDataFor: 5,
     }),
+    checkAuthStatus: builder.query({
+      query: () => ({
+        url: `${USERS_URL}/checkauthenticated`,
+      }),
+      keepUnusedDataFor: 5,
+    }),
+    checkIsAdmin: builder.query({
+      query: () => ({
+        url: `${USERS_URL}/checkadmin`,
+      }),
+      keepUnusedDataFor: 5,
+    }),
+    checkIsPremium: builder.query({
+      query: () => ({
+        url: `${USERS_URL}/checkpremium`,
+      }),
+      keepUnusedDataFor: 5,
+    }),
   }),
 });
 
@@ -76,4 +94,7 @@ export const {
   useGetUserDetailsQuery,
   useUpdateUserMutation,
   useGetAuthorQuery,
+  useCheckAuthStatusQuery,
+  useCheckIsAdminQuery,
+  useCheckIsPremiumQuery,
 } = usersApiSlice;

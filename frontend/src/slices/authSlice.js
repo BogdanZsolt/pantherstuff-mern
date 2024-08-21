@@ -1,27 +1,20 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
-  userInfo: localStorage.getItem('userInfo')
-    ? JSON.parse(localStorage.getItem('userInfo'))
-    : null,
-};
-
 const authSlice = createSlice({
   name: 'auth',
-  initialState,
+  initialState: {
+    userAuth: null,
+  },
   reducers: {
-    setCredentials: (state, action) => {
-      state.userInfo = action.payload;
-      localStorage.setItem('userInfo', JSON.stringify(action.payload));
+    isAuthenticated: (state, action) => {
+      state.userAuth = action.payload;
     },
-    // eslint-disable-next-line no-unused-vars
-    logout: (state, action) => {
-      state.userInfo = null;
-      localStorage.removeItem('userInfo');
+    logout: (state) => {
+      state.userAuth = null;
     },
   },
 });
 
-export const { setCredentials, logout } = authSlice.actions;
+export const { isAuthenticated, logout } = authSlice.actions;
 
 export default authSlice.reducer;

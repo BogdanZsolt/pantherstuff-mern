@@ -1,6 +1,22 @@
 import jwt from 'jsonwebtoken';
 import asyncHandler from './asyncHandler.js';
 import User from '../models/userModel.js';
+import passport from 'passport';
+
+const isAuthenticated = (req, res, next) => {
+  passport.authenticate('jwt', { session: false }, (error, user, info) => {
+    if (error || !user) {
+      return res.status(401).json({
+        message: info ? info?.message : 'Login required, no token found',
+        error: error ? error?.message : undefined,
+      });
+    }
+    // place the user in the req obj
+    req.user = user?._id;
+    // call next
+    return next();
+  })(req, res, next);
+};
 
 // Protect routes
 const protect = asyncHandler(async (req, res, next) => {
@@ -45,4 +61,4 @@ const premium = asyncHandler(async (req, res, next) => {
   }
 });
 
-export { protect, admin };
+export { isAuthenticated, protect, admin, premium };
