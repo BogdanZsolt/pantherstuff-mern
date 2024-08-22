@@ -47,12 +47,20 @@ const googleAuthUserCallback = asyncHandler(async (req, res, next) => {
     (err, user, info) => {
       if (err) return next(err);
       if (!user) {
-        return res.redirect('http://localhost:3000/google-login-error');
+        if (process.env.NODE_ENV === 'development') {
+          return res.redirect('http://localhost:3000/google-login-error');
+        } else {
+          return res.redirect('https://pantherstuff.com/google-login-error');
+        }
       }
       // generate token
       generateToken(res, user?._id);
       // redirekt user
-      res.redirect('http://localhost:3000/');
+      if (process.env.NODE_ENV === 'development') {
+        res.redirect('http://localhost:3000/');
+      } else {
+        res.redirect('https://pantherstuff.com/');
+      }
     }
   )(req, res, next);
 });
