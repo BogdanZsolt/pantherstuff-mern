@@ -55,7 +55,7 @@ const RegisterScreen = () => {
 
   return (
     <>
-      <Banner title={t('signUp')} />
+      <Banner src="uploads/image-1724509650005.jpg" title={t('signUp')} />
       <Container>
         <FormContainer>
           <h1>{t('signUp')}</h1>

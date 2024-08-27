@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Form, Button, Row, Col, Container, InputGroup } from 'react-bootstrap';
 import Banner from '../components/Banner.jsx';
@@ -23,9 +23,17 @@ const LoginScreen = () => {
 
   const [login, { isLoading }] = useLoginMutation();
 
+  const { userAuth } = useSelector((state) => state.auth);
+
   const { search } = useLocation();
   const sp = new URLSearchParams(search);
   const redirect = sp.get('redirect') || '/';
+
+  useEffect(() => {
+    if (userAuth && userAuth.isAuthenticated) {
+      navigate(redirect);
+    }
+  }, [userAuth, redirect, navigate]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -47,9 +55,11 @@ const LoginScreen = () => {
     }
   };
 
+  console.log(userAuth);
+
   return (
     <>
-      <Banner title={t('signIn')} />
+      <Banner title={t('signIn')} src="uploads/image-1724508536083.jpg" />
       <Container>
         <FormContainer>
           <h1>{t('signIn')}</h1>
@@ -113,8 +123,12 @@ const LoginScreen = () => {
             </Col>
             {/* Google login button */}
             <Col className="d-flex justify-content-end align-items-center">
-              <Link
-                to="http://localhost:5000/api/users/auth/google"
+              <a
+                href={
+                  import.meta.env.VITE_ENV === 'developer'
+                    ? 'http://localhost:5000/api/users/auth/google'
+                    : 'https://pantherstuff.com/api/users/auth/google'
+                }
                 className="btn btn-secondary d-flex justify-content-center align-items-center"
               >
                 <div>
@@ -146,7 +160,7 @@ const LoginScreen = () => {
                   </svg>
                 </div>
                 <span>{t('signInWithGoogle')}</span>
-              </Link>
+              </a>
             </Col>
           </Row>
         </FormContainer>

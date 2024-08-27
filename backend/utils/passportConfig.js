@@ -75,7 +75,6 @@ passport.use(
       callbackURL: process.env.GOOGLE_CALLBACKURL,
     },
     async (accessToken, refreshtoken, profile, done) => {
-      console.log(profile);
       try {
         // check if user found
         let user = await User.findOne({

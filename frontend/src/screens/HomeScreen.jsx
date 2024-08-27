@@ -5,6 +5,7 @@ import ProductCarousel from '../components/ProductCarousel.jsx';
 import SupplyCarousel from '../components/SupplyCarousel.jsx';
 import PhotoGallery from '../components/PhotoGallery.jsx';
 import SubscribeForm from '../components/SubscribeForm.jsx';
+import MembershipTable from '../components/MembershipTable.jsx';
 import LatestPosts from '../components/LatestPosts.jsx';
 import { useTranslation } from 'react-i18next';
 
@@ -32,6 +33,10 @@ const HomeScreens = () => {
           <h3 className="text-secondary fs-1 mt-5">{t('supplies')}</h3>
         </Link>
         <SupplyCarousel />
+        <Link to="/membership">
+          <h3 className="text-secondary fs-1 mt-5">{t('membership')}</h3>
+        </Link>
+        <MembershipTable />
         <LatestPosts />
         <SubscribeForm />
         <PhotoGallery />

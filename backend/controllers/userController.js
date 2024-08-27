@@ -71,7 +71,6 @@ const googleAuthUserCallback = asyncHandler(async (req, res, next) => {
 const checkAuthenticated = asyncHandler(async (req, res) => {
   const token = req.cookies['jwt'];
   if (!token) {
-    console.log(token);
     return res.status(200).json({ isAuthenticated: false });
   }
   try {
@@ -99,7 +98,6 @@ const checkAuthenticated = asyncHandler(async (req, res) => {
 const checkIsAdmin = asyncHandler(async (req, res) => {
   const token = req.cookies['jwt'];
   if (!token) {
-    console.log(token);
     return res.status(200).json({ isAdmin: false });
   }
   try {
@@ -128,7 +126,6 @@ const checkIsAdmin = asyncHandler(async (req, res) => {
 const checkIsPremium = asyncHandler(async (req, res) => {
   const token = req.cookies['jwt'];
   if (!token) {
-    console.log(token);
     return res.status(200).json({ isPremium: false });
   }
   try {

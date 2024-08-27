@@ -188,6 +188,10 @@ const App = () => {
               element: <MembershipScreen />,
             },
             {
+              path: 'membership/:id',
+              element: <MembershipScreen />,
+            },
+            {
               path: 'blog',
               element: <BlogScreen />,
               children: [

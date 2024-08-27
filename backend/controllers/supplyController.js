@@ -138,8 +138,6 @@ const updateSupply = asyncHandler(async (req, res) => {
 
   const supply = await Supply.findById(req.params.id);
 
-  console.log(supply);
-
   if (supply) {
     supply.name = name || supply.name;
     supply.thumbnails = thumbnails || supply.thumbnails;

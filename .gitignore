@@ -24,5 +24,6 @@ dist-ssr
 *.sln
 *.sw?
 *_temp.js
+*_temp.env
 *_temp.jsx
 .env

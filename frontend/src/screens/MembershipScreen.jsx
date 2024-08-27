@@ -1,20 +1,11 @@
-import { Button, Card, CardGroup, Container, Table } from 'react-bootstrap';
+import { Container, Table } from 'react-bootstrap';
 import Banner from '../components/Banner';
-import { Trans, useTranslation } from 'react-i18next';
-import { toCurrency } from '../utils/converter';
+import { useTranslation } from 'react-i18next';
 import { RiCheckLine } from 'react-icons/ri';
-import { useGetPlansQuery } from '../slices/plansApiSlice';
-import Loader from '../components/Loader';
-import Message from '../components/Message';
+import MembershipTable from '../components/MembershipTable';
 
 const MembershipScreen = () => {
-  const { t, i18n } = useTranslation(['knowledge']);
-
-  const {
-    data: plans,
-    isLoading,
-    error,
-  } = useGetPlansQuery({ sort: 'createdAt' });
+  const { t } = useTranslation(['knowledge']);
 
   return (
     <>
@@ -31,84 +22,7 @@ const MembershipScreen = () => {
           eos ex expedita facilis quos magni placeat adipisci non omnis
           inventore, soluta id!
         </p>
-        {isLoading ? (
-          <Loader />
-        ) : error ? (
-          <Message></Message>
-        ) : (
-          <CardGroup className="text-center" style={{ gap: '1rem' }}>
-            {plans.data.map((plan) => (
-              <Card
-                key={plan._id}
-                className="mb-4 rounded-3 shadow"
-                style={
-                  plan.recommended
-                    ? { border: '5px solid rgba(var(--bs-success-rgb), 0.4)' }
-                    : {}
-                }
-              >
-                <Card.Header
-                  as="h4"
-                  className="py-3 my-0 fw-normal"
-                  style={
-                    plan.recommended
-                      ? {
-                          backgroundColor: 'rgba(var(--bs-success-rgb), 0.2)',
-                        }
-                      : {}
-                  }
-                >
-                  {i18n.language === 'en'
-                    ? plan.name
-                    : plan.translations?.hu?.name || plan.name}
-                </Card.Header>
-                <Card.Body>
-                  <Card.Title as="h3" className="pricing-card-title">
-                    <Trans
-                      values={{
-                        price: toCurrency(
-                          i18n.language,
-                          i18n.language === 'en'
-                            ? plan.price
-                            : plan.translations?.hu?.price || plan.price
-                        ),
-                      }}
-                      components={{ 1: <small /> }}
-                    >
-                      {t('price')}
-                    </Trans>
-                  </Card.Title>
-                  <Card.Text as="div">
-                    <ul className="list-unstyled mt-3 mb-4">
-                      {plan.features.map((feature, i) => (
-                        <li key={i}>
-                          {i18n.language === 'en'
-                            ? feature
-                            : plan.translations?.hu?.features[i]}
-                        </li>
-                      ))}
-                    </ul>
-                  </Card.Text>
-                </Card.Body>
-                <Card.Footer
-                  style={
-                    plan.recommended
-                      ? { backgroundColor: 'rgba(var(--bs-success-rgb), 0.2)' }
-                      : {}
-                  }
-                >
-                  <Button
-                    className={`btn btn-lasaphire ${
-                      plan.recommended && 'btn-success'
-                    }`}
-                  >
-                    Add to cart
-                  </Button>
-                </Card.Footer>
-              </Card>
-            ))}
-          </CardGroup>
-        )}
+        <MembershipTable />
 
         <h2 className="display-6 text-center my-4">{t('comparePlans')}</h2>
         <Table responsive striped className="text-center">
