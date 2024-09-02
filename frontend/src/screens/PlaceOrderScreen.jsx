@@ -41,6 +41,7 @@ const PlaceOrderScreen = () => {
     items.map((item) => {
       let newItem = {};
       newItem._id = item._id;
+      newItem.type = item.type;
       newItem.name = i18n.language === 'en' ? item.name : item.name_hu;
       newItem.qty = item.qty;
       newItem.thumbnail = item.thumbnail;
@@ -121,7 +122,7 @@ const PlaceOrderScreen = () => {
                             />
                           </Col>
                           <Col>
-                            <Link to={`/product/${item._id}`}>
+                            <Link to={`/${item.type}/${item._id}`}>
                               {i18n.language === 'en'
                                 ? item.name
                                 : item.name_hu}

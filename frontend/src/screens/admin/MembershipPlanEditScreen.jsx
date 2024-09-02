@@ -17,7 +17,7 @@ const MembershipPlanEditScreen = () => {
 
   const [name, setName] = useState('');
   const [features, setFeatures] = useState([]);
-  const [price, setPrice] = useState(0);
+  const [currentPrice, setCurrentPrice] = useState(0);
   const [recommended, setRecommended] = useState(false);
   const [transNameHu, setTransNameHu] = useState('');
   const [transFeaturesHu, setTransFeaturesHu] = useState([]);
@@ -38,11 +38,11 @@ const MembershipPlanEditScreen = () => {
     if (plan) {
       setName(plan.name);
       setFeatures(plan.features);
-      setPrice(plan.price);
+      setCurrentPrice(plan.currentPrice);
       setRecommended(plan.recommended);
       setTransNameHu(plan.translations?.hu?.name || plan.name);
       setTransFeaturesHu(plan.translations?.hu?.features || plan.features);
-      setTransPriceHu(plan.translations?.hu?.price || plan.price);
+      setTransPriceHu(plan.translations?.hu?.currentPrice || plan.currentPrice);
     }
   }, [plan]);
 
@@ -53,7 +53,7 @@ const MembershipPlanEditScreen = () => {
         planId,
         name,
         features,
-        price,
+        currentPrice,
         recommended,
         translations: {
           hu: {
@@ -106,8 +106,8 @@ const MembershipPlanEditScreen = () => {
             <LangSelectInput
               label="Price"
               type="number"
-              defLang={price}
-              setDefLang={setPrice}
+              defLang={currentPrice}
+              setDefLang={setCurrentPrice}
               secLang={transPriceHu}
               setSecLang={setTransPriceHu}
             />

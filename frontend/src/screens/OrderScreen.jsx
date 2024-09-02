@@ -104,7 +104,13 @@ const OrderScreen = () => {
                           />
                         </Col>
                         <Col>
-                          <Link to={`/product/${item.product}`}>
+                          <Link
+                            to={`/${
+                              item.model_type === 'Plan'
+                                ? 'membership'
+                                : item.model_type.toLowerCase()
+                            }/${item.product}`}
+                          >
                             {item.name}
                           </Link>
                         </Col>

@@ -20,13 +20,13 @@ const MembershipTable = () => {
   const dispatch = useDispatch();
 
   const addToCartHandler = (plan) => {
-    const { _id, name, price, recommended } = plan;
+    const { _id, name, currentPrice, recommended, thumbnail } = plan;
     const cartId = uuid();
     const name_hu = plan.translations?.hu?.name || name;
-    const currentPrice_hu = plan.translations?.hu?.price || price;
+    const currentPrice_hu = plan.translations?.hu?.currentPrice || currentPrice;
     const qty = 1;
     const type = 'membership';
-    if (price === 0) {
+    if (currentPrice === 0) {
       return navigate('/register');
     }
     console.log(_id);
@@ -37,7 +37,8 @@ const MembershipTable = () => {
         type,
         name,
         name_hu,
-        currentPrice: price,
+        thumbnail,
+        currentPrice,
         currentPrice_hu,
         recommended,
         qty,
@@ -86,8 +87,9 @@ const MembershipTable = () => {
                       price: toCurrency(
                         i18n.language,
                         i18n.language === 'en'
-                          ? plan.price
-                          : plan.translations?.hu?.price || plan.price
+                          ? plan.currentPrice
+                          : plan.translations?.hu?.currentPrice ||
+                              plan.currentPrice
                       ),
                     }}
                     components={{ 1: <small /> }}
@@ -120,7 +122,7 @@ const MembershipTable = () => {
                   }`}
                   onClick={() => addToCartHandler(plan)}
                 >
-                  {plan.price === 0 ? t('register') : t('addToCart')}
+                  {plan.currentPrice === 0 ? t('register') : t('addToCart')}
                 </Button>
               </Card.Footer>
             </Card>

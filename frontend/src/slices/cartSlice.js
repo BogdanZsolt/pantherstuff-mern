@@ -13,7 +13,8 @@ const cartSlice = createSlice({
       const item = action.payload;
 
       const existItem = state.cartItems.find(
-        (x) => x._id === item._id && x.color === item.color
+        (x) =>
+          x._id === item._id && x.color === item.color && x.size === item.size
       );
 
       if (existItem) {
@@ -31,9 +32,7 @@ const cartSlice = createSlice({
 
       console.log(item);
 
-      state.cartItems = state.cartItems.filter(
-        (x) => x._id !== item.id && x.color !== item.color
-      );
+      state.cartItems = state.cartItems.filter((x) => x.cartId !== item.cartId);
 
       return updateCart(state);
     },

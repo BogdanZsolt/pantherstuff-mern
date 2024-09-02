@@ -37,8 +37,6 @@ const CartScreen = () => {
     navigate('/login?redirect=/shipping');
   };
 
-  console.log(cartItems);
-
   return (
     <>
       <Banner src="/images/ecoprint-01.webp" title={t('shoppingCart')} />
@@ -55,22 +53,20 @@ const CartScreen = () => {
                 {cartItems.map((item) => (
                   <ListGroup.Item key={item._id}>
                     <Row className="align-items-center">
-                      <Col md={2}>
-                        {item.type !== 'membership' && (
-                          <Image
-                            src={item.thumbnail}
-                            alt={item.name}
-                            fluid
-                            rounded
-                          />
-                        )}
+                      <Col sm={2}>
+                        <Image
+                          src={item.thumbnail}
+                          alt={item.name}
+                          fluid
+                          rounded
+                        />
                       </Col>
-                      <Col md={3}>
+                      <Col className="my-2 my-md-0">
                         <Link to={`/${item.type}/${item._id}`}>
                           {i18n.language === 'en' ? item.name : item.name_hu}
                         </Link>
                       </Col>
-                      <Col md={2}>
+                      <Col className="my-2 my-md-0">
                         {toCurrency(
                           i18n.language,
                           i18n.language === 'en'
@@ -78,7 +74,7 @@ const CartScreen = () => {
                             : item.currentPrice_hu
                         )}
                       </Col>
-                      <Col md={2}>
+                      <Col className="my-2 my-md-0">
                         <Form.Control
                           as="select"
                           value={item.qty}
@@ -93,13 +89,16 @@ const CartScreen = () => {
                           ))}
                         </Form.Control>
                       </Col>
-                      <Col md={1}>
+                      <Col className="my-2 my-md-0">
                         <div
                           className="product-color"
                           style={{ backgroundColor: item.color }}
                         ></div>
                       </Col>
-                      <Col md={2}>
+                      <Col className="my-2 my-md-0">
+                        <div className="product-size">{item.size?.title}</div>
+                      </Col>
+                      <Col className="mt-2 my-mt-0">
                         <Button
                           type="button"
                           variant="light"

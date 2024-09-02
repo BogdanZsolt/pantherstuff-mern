@@ -59,7 +59,7 @@ const googleAuthUserCallback = asyncHandler(async (req, res, next) => {
       if (process.env.NODE_ENV === 'development') {
         res.redirect('http://localhost:3000/');
       } else {
-        res.redirect('https://pantherstuff.com/');
+        res.redirect('/');
       }
     }
   )(req, res, next);

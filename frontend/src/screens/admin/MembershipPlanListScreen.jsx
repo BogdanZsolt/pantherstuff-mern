@@ -87,11 +87,11 @@ const MembershipPlanListScreen = () => {
                   <td>
                     <p className="my-0 py-0">
                       <b>en: </b>
-                      {plan.price}
+                      {plan.currentPrice}
                     </p>
                     <p className="my-0 py-0">
                       <b>hu: </b>
-                      {plan.translations?.hu?.price}
+                      {plan.translations?.hu?.currentPrice}
                     </p>
                   </td>
                   <td>

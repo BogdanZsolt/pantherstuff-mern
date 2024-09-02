@@ -14,13 +14,14 @@ const orderSchema = new mongoose.Schema(
         qty: { type: Number, required: true },
         thumbnail: { type: String, required: true },
         currentPrice: { type: Number, required: true },
-        // size: { type: String, required: true },
-        // color: { type: String, required: true },
+        size: { type: String, required: false },
+        color: { type: String, required: false },
         product: {
           type: mongoose.Schema.Types.ObjectId,
           required: true,
-          ref: 'Product',
+          refPath: 'model_type',
         },
+        model_type: { type: String, enum: ['Product', 'Supply', 'Plan'] },
       },
     ],
     shippingAddress: {

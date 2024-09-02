@@ -95,6 +95,7 @@ const ProductScreen = () => {
         currentPrice_hu,
         thumbnail,
         color,
+        size,
         qty,
         countInStock,
       })
@@ -127,7 +128,7 @@ const ProductScreen = () => {
       );
       setShippingPrice(i18n.language === 'en' ? 100 : 20000);
       setColor(product.colors[0]);
-      setSize(product.sizes[0]?._id);
+      // setSize(product.sizes[0]);
     }
   }, [product, i18n.language]);
 

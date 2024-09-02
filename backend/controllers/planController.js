@@ -8,6 +8,7 @@ const planPopOption = [{ path: 'user', select: ['name'] }];
 const planCreateInit = (req, res, next) => {
   req.body.user = req.user._id;
   req.body.name = 'Simple plan';
+  req.body.thumbnail = '/images/member.png';
   req.body.features = ['Simple feature 1'];
   req.body.limitation = '';
   req.body.price = 0;

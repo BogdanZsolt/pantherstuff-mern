@@ -1770,6 +1770,12 @@ table th {
   }
 }
 
+/* LOGIN */
+.google-btn__icon svg {
+  vertical-align: unset;
+  margin-right: 0.25rem;
+}
+
 @media (min-width: 600px) {
   .wide {
     grid-column: span 2;
