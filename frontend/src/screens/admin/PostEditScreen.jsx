@@ -23,14 +23,16 @@ const PostEditScreen = () => {
   const { id: postId } = useParams();
   const navigate = useNavigate();
 
-  const { userInfo } = useSelector((state) => state.auth);
+  const { userAuth } = useSelector((state) => state.auth);
+
   const [lang, setLang] = useState('');
   const [title, setTitle] = useState('');
   const [bannerImage, setBannerImage] = useState('');
   const [body, setBody] = useState('');
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState('');
-  const [author, setAuthor] = useState(userInfo._id);
+  const [author, setAuthor] = useState(userAuth._id);
+  const [isPremium, setIsPremium] = useState(false);
 
   const {
     data: post,
@@ -67,6 +69,7 @@ const PostEditScreen = () => {
         description,
         category: category === '' ? undefined : category,
         user: author,
+        isPremium,
       }).unwrap();
       toast.success('Post updated');
       refetch();
@@ -85,10 +88,11 @@ const PostEditScreen = () => {
       setDescription(post.description);
       setCategory(post?.category?._id || '');
       setAuthor(post.user._id);
+      setIsPremium(post.isPremium);
     }
   }, [post]);
 
-  console.log(post);
+  console.log(isPremium);
 
   return (
     <Container className="mt-5" fluid>
@@ -223,6 +227,15 @@ const PostEditScreen = () => {
                 value={body}
                 onChange={(e) => setBody(e.target.value)}
               /> */}
+            </Form.Group>
+
+            <Form.Group controlId="premium" className="my-2">
+              <Form.Check
+                type="switch"
+                label="Is premium content"
+                chacked={isPremium}
+                onChange={(e) => setIsPremium(e.target.checked)}
+              />
             </Form.Group>
 
             <Button type="submit" variant="primary" className="my-2">

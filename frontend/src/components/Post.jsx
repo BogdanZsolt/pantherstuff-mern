@@ -35,8 +35,8 @@ const Post = ({ postId, src, category, author, title, description, date }) => {
           })}
         </span>
         <span className="mx-1">by</span>
-        <Link to={`/author/${author._id}`} className="fw-bold">
-          {author.name}
+        <Link to={`/author/${author?._id}`} className="fw-bold">
+          {author?.name}
         </Link>
       </p>
       <p className="lead">{description}</p>

@@ -14,6 +14,7 @@ const postSchema = new mongoose.Schema(
     bannerImage: { type: String, required: false },
     tags: { type: [String] },
     category: { type: mongoose.Schema.Types.ObjectId, ref: 'PostCategory' },
+    isPremium: { type: Boolean, required: true, default: false },
   },
   {
     timestamps: true,
