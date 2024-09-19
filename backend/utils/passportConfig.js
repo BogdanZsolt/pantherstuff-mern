@@ -99,6 +99,8 @@ passport.use(
             googleId: id,
             authMethod: 'google',
             email,
+            isEmailVerified: true,
+            isPremium: true,
           });
         }
         done(null, user);

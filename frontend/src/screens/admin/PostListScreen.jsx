@@ -81,7 +81,7 @@ const PostListScreen = () => {
                 <tr key={post._id}>
                   <td>{post._id}</td>
                   <td>{post.title}</td>
-                  <td>{post.user.name}</td>
+                  <td>{post?.user?.name}</td>
                   <td>{post?.category?.title}</td>
                   <td>
                     <LinkContainer to={`/admin/post/${post._id}/edit`}>

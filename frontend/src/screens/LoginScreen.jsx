@@ -39,6 +39,7 @@ const LoginScreen = () => {
     e.preventDefault();
     try {
       const res = await login({ email, password }).unwrap();
+      console.log(res);
       if (res) {
         dispatch(
           isAuthenticated({
@@ -46,6 +47,7 @@ const LoginScreen = () => {
             _id: res._id,
             name: res.name,
             email: res.email,
+            isAdmin: res.isAdmin,
           })
         );
         navigate('/');

@@ -11,7 +11,9 @@ const PremiumRoute = () => {
       {isLoading ? (
         <Loader />
       ) : error ? (
-        <Message>{error?.data?.Message || error.error}</Message>
+        <Message variant="danger">
+          {error?.data?.Message || error.error}
+        </Message>
       ) : data?.isPremium ? (
         <Outlet />
       ) : (

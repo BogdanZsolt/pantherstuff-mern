@@ -1,180 +1,212 @@
+import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import {
-  Row,
-  Col,
-  ListGroup,
-  Image,
-  Card,
-  Button,
-  Container,
-} from 'react-bootstrap';
+import { Row, Col, ListGroup, Image, Card, Container } from 'react-bootstrap';
+import { Elements } from '@stripe/react-stripe-js';
+import CheckoutPay from '../components/CheckoutPay';
 import Banner from '../components/Banner';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import { toast } from 'react-toastify';
+// import { toast } from 'react-toastify';
+import { toCurrency, toLocalDate } from '../utils/converter';
 import { useTranslation } from 'react-i18next';
+import { loadStripe } from '@stripe/stripe-js';
 import {
   useGetOrderDetailsQuery,
   usePayOrderMutation,
 } from '../slices/ordersApiSlice';
-import { toCurrency } from '../utils/converter';
+
+// configure stripe
+const stripePromise = loadStripe(
+  'pk_test_51IIw2VJ5jIC6YVu6WBMEmLBznwOn8wKSFIPA7kmN5oCoNKf24qrMB8g8uTYG3psM9uy9aXOGG6BFIl4MeqSjX6pQ004F0MOEcp'
+);
 
 const OrderScreen = () => {
   const { id: orderId } = useParams();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
-  const {
-    data: order,
-    refetch,
-    isLoading,
-    error,
-  } = useGetOrderDetailsQuery(orderId);
+  const [clientSecret, setClientSecret] = useState(null);
+
+  const { data: order, isLoading, error } = useGetOrderDetailsQuery(orderId);
 
   const [payOrder, { isLoading: loadingPay }] = usePayOrderMutation();
 
-  // TESTING ONLY! REMOVE BEFORE PRODUCTION
-  async function onApproveTest() {
-    await payOrder({ orderId, details: { payer: {} } });
-    refetch();
+  useEffect(() => {
+    const asyncPayOrder = async () => {
+      const { data } = await payOrder({ orderId });
+      if (data) {
+        setClientSecret(data.clientSecret);
+      }
+    };
+    asyncPayOrder();
+  }, [orderId, payOrder]);
 
-    toast.success(t('orderIsPaid'));
-  }
+  // stripe options
+  const options = {
+    clientSecret,
+    locale: i18n.language,
+  };
 
-  return isLoading ? (
-    <Loader />
-  ) : error ? (
-    <Message variant="danger">{error?.data?.Message || error.error}</Message>
-  ) : (
+  return (
     <>
-      <>
-        <Banner title={t('order')} />
-        <Container>
-          <h1>{t('orderid', { id: order._id })}</h1>
-          <Row>
-            <Col md={8}>
-              <ListGroup variant="flush">
-                <ListGroup.Item>
-                  <h2>{t('shipping')}</h2>
-                  <p>
-                    <strong>{t('name')}: </strong> {order.user.name}
-                  </p>
-                  <p>
-                    <strong>{t('email')}: </strong> {order.user.email}
-                  </p>
-                  <p>
-                    <strong>{t('address')}: </strong>
-                    {order.shippingAddress.address},{' '}
-                    {order.shippingAddress.city}{' '}
-                    {order.shippingAddress.postalCode},{' '}
-                    {order.shippingAddress.country}
-                  </p>
-                  {order.isDelivered ? (
-                    <Message variant="success">
-                      Delivered on{order.deliveredAt}
-                    </Message>
-                  ) : (
-                    <Message variant="danger">{t('notDelivered')}</Message>
-                  )}
-                </ListGroup.Item>
-
-                <ListGroup.Item>
-                  <h2>{t('paymentMethod')}</h2>
-                  <p>
-                    <strong>{t('method')}: </strong>
-                    {order.paymentMethod}
-                  </p>
-                  {order.isPaid ? (
-                    <Message variant="success">Paid on{order.paidAt}</Message>
-                  ) : (
-                    <Message variant="danger">{t('notPaid')}</Message>
-                  )}
-                </ListGroup.Item>
-
-                <ListGroup.Item>
-                  <h2>{t('orderItems')}</h2>
-                  {order.orderItems.map((item, index) => (
-                    <ListGroup.Item key={index}>
-                      <Row>
-                        <Col md={1}>
-                          <Image
-                            src={item.thumbnail}
-                            alt={item.name}
-                            fluid
-                            rounded
-                          />
-                        </Col>
-                        <Col>
-                          <Link
-                            to={`/${
-                              item.model_type === 'Plan'
-                                ? 'membership'
-                                : item.model_type.toLowerCase()
-                            }/${item.product}`}
-                          >
-                            {item.name}
-                          </Link>
-                        </Col>
-                        <Col md={4}>
-                          {item.qty} x{' '}
-                          {toCurrency(order.language, item.currentPrice)} =
-                          {toCurrency(
-                            order.language,
-                            item.qty * item.currentPrice
-                          )}
-                        </Col>
-                      </Row>
-                    </ListGroup.Item>
-                  ))}
-                </ListGroup.Item>
-              </ListGroup>
-            </Col>
-            <Col md={4}>
-              <Card>
-                <ListGroup variant="flush">
-                  <ListGroup.Item>
-                    <h2>{t('orderSummary')}</h2>
-                  </ListGroup.Item>
-                  <ListGroup.Item>
-                    <Row>
-                      <Col>{t('items')}</Col>
-                      <Col>{toCurrency(order.language, order.itemsPrice)}</Col>
-                    </Row>
-                    <Row>
-                      <Col>{t('shipping')}</Col>
-                      <Col>
-                        {toCurrency(order.language, order.shippingPrice)}
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col>{t('tax')}</Col>
-                      <Col>{toCurrency(order.language, order.taxPrice)}</Col>
-                    </Row>
-                    <Row>
-                      <Col>{t('total')}</Col>
-                      <Col>{toCurrency(order.language, order.totalPrice)}</Col>
-                    </Row>
-                  </ListGroup.Item>
-                  {/* PAY ORDER PLACEHOLDER */}
-                  {!order.isPaid && (
+      {isLoading ? (
+        <Loader />
+      ) : error ? (
+        <Message variant="danger">
+          {error?.data?.Message || error.error}
+        </Message>
+      ) : (
+        <>
+          <>
+            <Banner title={t('order')} />
+            <Container>
+              <h1>{t('orderid', { id: order._id })}</h1>
+              <Row className="flex-wrap-reverse">
+                <Col md={8}>
+                  <ListGroup variant="flush">
                     <ListGroup.Item>
-                      {loadingPay ? (
-                        <Loader />
+                      <h2>{t('shipping')}</h2>
+                      <p>
+                        <strong>{t('name')}: </strong> {order.user.name}
+                      </p>
+                      <p>
+                        <strong>{t('email')}: </strong> {order.user.email}
+                      </p>
+                      <p>
+                        <strong>{t('address')}: </strong>
+                        {order.shippingAddress.address},{' '}
+                        {order.shippingAddress.city}{' '}
+                        {order.shippingAddress.postalCode},{' '}
+                        {order.shippingAddress.country}
+                      </p>
+                      {order.isDelivered ? (
+                        <Message variant="success">
+                          Delivered on{order.deliveredAt}
+                        </Message>
                       ) : (
-                        <Button
-                          style={{ marginBottom: '10px' }}
-                          onClick={onApproveTest}
-                        >
-                          Test Pay Order
-                        </Button>
+                        <Message variant="danger">{t('notDelivered')}</Message>
                       )}
                     </ListGroup.Item>
-                  )}
-                </ListGroup>
-              </Card>
-            </Col>
-          </Row>
-        </Container>
-      </>
+
+                    <ListGroup.Item>
+                      <h2>{t('paymentMethod')}</h2>
+                      <p>
+                        <strong>{t('method')}: </strong>
+                        {order.paymentMethod}
+                      </p>
+                      {order.isPaid ? (
+                        <Message variant="success">
+                          {t('paidOn')}{' '}
+                          {toLocalDate(i18n.language, order.paidAt)}
+                        </Message>
+                      ) : (
+                        <Message variant="danger">{t('notPaid')}</Message>
+                      )}
+                    </ListGroup.Item>
+
+                    <ListGroup.Item>
+                      <h2>{t('orderItems')}</h2>
+                      {order.orderItems.map((item, index) => (
+                        <ListGroup.Item key={index}>
+                          <Row>
+                            <Col md={1}>
+                              <Image
+                                src={item.thumbnail}
+                                alt={item.name}
+                                fluid
+                                rounded
+                              />
+                            </Col>
+                            <Col>
+                              <Link
+                                to={`/${
+                                  item.model_type === 'Plan'
+                                    ? 'membership'
+                                    : item?.model_type
+                                    ? item?.model_type?.toLowerCase()
+                                    : 'product'
+                                }/${item.product}`}
+                              >
+                                {item.name}
+                              </Link>
+                            </Col>
+                            <Col md={4}>
+                              {item.qty} x{' '}
+                              {toCurrency(order.language, item.currentPrice)} =
+                              {toCurrency(
+                                order.language,
+                                item.qty * item.currentPrice
+                              )}
+                            </Col>
+                          </Row>
+                        </ListGroup.Item>
+                      ))}
+                    </ListGroup.Item>
+                  </ListGroup>
+                </Col>
+                <Col md={4}>
+                  <Card>
+                    <ListGroup variant="flush">
+                      <ListGroup.Item>
+                        <h2>{t('orderSummary')}</h2>
+                      </ListGroup.Item>
+                      <ListGroup.Item>
+                        <Row>
+                          <Col>{t('items')}</Col>
+                          <Col>
+                            {toCurrency(order.language, order.itemsPrice)}
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col>{t('shipping')}</Col>
+                          <Col>
+                            {toCurrency(order.language, order.shippingPrice)}
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col>{t('tax')}</Col>
+                          <Col>
+                            {toCurrency(order.language, order.taxPrice)}
+                          </Col>
+                        </Row>
+                      </ListGroup.Item>
+                      <ListGroup.Item>
+                        <Row>
+                          <Col>{t('total')}</Col>
+                          <Col>
+                            <span className="fw-bold fs-5">
+                              {toCurrency(order.language, order.totalPrice)}
+                            </span>
+                          </Col>
+                        </Row>
+                      </ListGroup.Item>
+                      {/* PAY ORDER PLACEHOLDER */}
+                      {!order.isPaid && (
+                        <>
+                          {loadingPay ? (
+                            <Loader />
+                          ) : (
+                            clientSecret && (
+                              <ListGroup.Item>
+                                <Elements
+                                  stripe={stripePromise}
+                                  options={options}
+                                >
+                                  <CheckoutPay />
+                                </Elements>
+                              </ListGroup.Item>
+                            )
+                          )}
+                        </>
+                      )}
+                    </ListGroup>
+                  </Card>
+                </Col>
+              </Row>
+            </Container>
+          </>
+        </>
+      )}
+      ;
     </>
   );
 };

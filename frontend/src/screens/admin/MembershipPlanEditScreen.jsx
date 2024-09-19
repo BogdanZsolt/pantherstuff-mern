@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { Container, Row, Form, Button } from 'react-bootstrap';
+import { Container, Row, Form, Button, Col } from 'react-bootstrap';
 import FormContainer from '../../components/FormContainer';
 import Loader from '../../components/Loader';
 import Message from '../../components/Message';
@@ -16,6 +16,8 @@ const MembershipPlanEditScreen = () => {
   const { id: planId } = useParams();
 
   const [name, setName] = useState('');
+  const [measure, setMeasure] = useState('');
+  const [qty, setQty] = useState(0);
   const [features, setFeatures] = useState([]);
   const [currentPrice, setCurrentPrice] = useState(0);
   const [recommended, setRecommended] = useState(false);
@@ -37,6 +39,8 @@ const MembershipPlanEditScreen = () => {
   useEffect(() => {
     if (plan) {
       setName(plan.name);
+      setMeasure(plan.timeLimitMeasure);
+      setQty(plan.timeLimitQty);
       setFeatures(plan.features);
       setCurrentPrice(plan.currentPrice);
       setRecommended(plan.recommended);
@@ -52,6 +56,8 @@ const MembershipPlanEditScreen = () => {
       await updatePlan({
         planId,
         name,
+        timeLimitMeasure: measure === '' ? null : measure,
+        timeLimitQty: qty <= 0 ? 0 : qty,
         features,
         currentPrice,
         recommended,
@@ -96,6 +102,36 @@ const MembershipPlanEditScreen = () => {
               secLang={transNameHu}
               setSecLang={setTransNameHu}
             />
+            <Row>
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Time limit measure</Form.Label>
+                  <Form.Select
+                    value={measure}
+                    onChange={(e) => setMeasure(e.target.value)}
+                  >
+                    <option value="">unlimited</option>
+                    <option value="year">Year</option>
+                    <option value="month">Month</option>
+                    <option value="week">Week</option>
+                    <option value="day">Day</option>
+                    <option value="hour">Hour</option>
+                    <option value="min">Minute</option>
+                  </Form.Select>
+                </Form.Group>
+              </Col>
+
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label>Time limit quantity</Form.Label>
+                  <Form.Control
+                    type="number"
+                    value={qty}
+                    onChange={(e) => setQty(e.target.value)}
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
             <LangSelectInputArray
               label="Features"
               defLang={features}

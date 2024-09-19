@@ -22,6 +22,7 @@ import {
   MePetraScreen,
   OrderListScreen,
   OrderScreen,
+  PaymentCompleteScreen,
   PaymentScreen,
   PlaceOrderScreen,
   PostCatEditScreen,
@@ -68,10 +69,10 @@ import {
   PremiumRoute,
 } from './Pages';
 import Root from './components/Root';
-import { useCheckAuthStatusQuery } from './slices/usersApiSlice';
-import { isAuthenticated } from './slices/authSlice';
 import Loader from './components/Loader';
 import Message from './components/Message';
+import { useCheckAuthStatusQuery } from './slices/usersApiSlice';
+import { isAuthenticated } from './slices/authSlice';
 
 const App = () => {
   let router = createBrowserRouter([
@@ -234,17 +235,16 @@ const App = () => {
               element: <RegisterScreen />,
             },
             {
-              path: 'profile',
-              element: <ProfileScreen />,
-            },
-
-            {
               path: '',
               element: <ProtectRoute />,
               children: [
                 {
                   path: 'cart',
                   element: <CartScreen />,
+                },
+                {
+                  path: 'profile',
+                  element: <ProfileScreen />,
                 },
                 {
                   path: 'shipping',
@@ -261,6 +261,10 @@ const App = () => {
                 {
                   path: 'order/:id',
                   element: <OrderScreen />,
+                },
+                {
+                  path: 'order/complete',
+                  element: <PaymentCompleteScreen />,
                 },
                 {
                   path: 'wishlist',

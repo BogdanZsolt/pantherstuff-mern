@@ -14,7 +14,8 @@ const planSchema = new mongoose.Schema(
       default: '/images/member.png',
     },
     features: [String],
-    limitation: [String],
+    timeLimitMeasure: { type: String },
+    timeLimitQty: { type: Number, default: 0 },
     currentPrice: { type: Number, required: true, default: 0 },
     recommended: { type: Boolean, default: false },
     translations: {

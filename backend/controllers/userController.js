@@ -32,7 +32,9 @@ const authUser = asyncHandler(async (req, res, next) => {
 // @desc    Google Auth user & get token
 // @route   GET /api/users/auth/google
 // @access  Public
-const googleAuthUser = passport.authenticate('google', { scope: ['profile'] });
+const googleAuthUser = passport.authenticate('google', {
+  scope: ['profile', 'email'],
+});
 
 // @desc    Google Auth callback
 // @route   GET /api/users/auth/google/callback
@@ -85,6 +87,10 @@ const checkAuthenticated = asyncHandler(async (req, res) => {
         _id: user._id,
         name: user.name,
         email: user.email,
+        isEmailVerified: user.isEmailVerified,
+        isAdmin: user.isAdmin,
+        isPremium: user.isPremium,
+        premiumExpiresAt: user.premiumExpiresAt,
       });
     }
   } catch (err) {
@@ -102,6 +108,7 @@ const checkIsAdmin = asyncHandler(async (req, res) => {
   }
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    console.log(decoded);
     // find the user
     const user = await User.findById(decoded.userId);
     if (!user) {
@@ -166,6 +173,9 @@ const registerUser = asyncHandler(async (req, res) => {
   const user = await User.create({
     name,
     email,
+    isEmailVerified: false,
+    isPremium: true,
+    premiumExpiresAt: null,
     password,
   });
 
@@ -207,7 +217,11 @@ const getUserProfile = asyncHandler(async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
+      isEmailVerified: user.isEmailVerified,
+      authMethod: user.authMethod,
       isAdmin: user.isAdmin,
+      isPremium: user.isPremium,
+      premiumExpiresAt: user.premiumExpiresAt,
     });
   } else {
     res.status(404);
@@ -235,7 +249,11 @@ const updateUserProfile = asyncHandler(async (req, res) => {
       _id: updatedUser._id,
       name: updatedUser.name,
       email: updatedUser.email,
+      isEmailVerified: updateUser.isEmailVerified,
       isAdmin: updatedUser.isAdmin,
+      isPremium: updateUser.isPremium,
+      premiumExpiresAt: updateUser.premiumExpiresAt,
+      authMethod: updateUser.authMethod,
     });
   } else {
     res.status(404);

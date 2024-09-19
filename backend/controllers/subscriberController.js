@@ -68,6 +68,15 @@ const getSubscribers = asyncHandler(async (req, res) => {
     });
 });
 
+const getSubscriber = asyncHandler(async (req, res) => {
+  await mailerlite.subscribers
+    .find(req.params.email)
+    .then((response) => {
+      res.status(200).json(response.data);
+    })
+    .catch((err) => res.status(err.response.status));
+});
+
 const createSubscriber = asyncHandler(async (req, res) => {
   let params = {
     email: req.body.email,
@@ -118,6 +127,7 @@ export {
   checkemail,
   getGroups,
   getSubscribers,
+  getSubscriber,
   getCountSubscribers,
   createSubscriber,
   getGroupSubscribers,

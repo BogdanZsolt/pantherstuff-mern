@@ -3,7 +3,17 @@ import Order from '../models/orderModel.js';
 import Plan from '../models/planModel.js';
 import Product from '../models/productModel.js';
 import Supply from '../models/supplyModel.js';
+import User from '../models/userModel.js';
 import { calcPrices } from '../utils/calcPrices.js';
+import Stripe from 'stripe';
+import { addTimeToDate } from '../utils/dateTools.js';
+import {
+  assignSubscriberGroup,
+  getSubscriber,
+  createSubscriber,
+} from '../utils/mailerTools.js';
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 // @desc    Create new order
 // @route   POST /api/orders
@@ -115,28 +125,164 @@ const getOrderById = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc    Update order to paid
-// @route   PUT /api/orders/:id/pay
+// @desc    stripe payment for the order
+// @route   POST /api/orders/:id/stripe
 // @access  Private
-const updateOrderToPaid = asyncHandler(async (req, res) => {
+const stripePayment = asyncHandler(async (req, res) => {
+  // find the order
   const order = await Order.findById(req.params.id);
+  // console.log(order);
+  // const { origin } = req.headers;
 
-  if (order) {
-    order.isPaid = true;
-    order.paidAt = Date.now();
-    order.paymentResult = {
-      id: req.body.id,
-      status: req.body.status,
-      update_time: req.body.update_time,
-      email_address: req.body.payer.email_address,
-    };
+  // console.log(origin);
 
-    const updatedOrder = await order.save();
-
-    res.json(updatedOrder);
-  } else {
+  if (!order) {
     res.status(404);
     throw new Error('Order not found');
+  }
+
+  // get the user
+  const user = req.user;
+
+  // Create payment intent/making the payment
+  try {
+    const amount = parseInt(order.totalPrice * 100);
+    // console.log(amount);
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: amount,
+      currency: order.language === 'hu' ? 'huf' : 'eur',
+      statement_descriptor_suffix: 'Payment using Stripe',
+      payment_method_types: ['card'],
+      // automatic_payment_methods: {
+      //   enabled: true,
+      // },
+      // add somme metadata
+      metadata: {
+        userId: user?._id.toString(),
+        orderId: order._id.toString(),
+      },
+    });
+    // Send the respons
+    res.json({
+      clientSecret: paymentIntent.client_secret,
+      // paymentIntent,
+      userEmail: user?.email,
+      orderId: order._id,
+    });
+  } catch (err) {
+    res.json(err);
+  }
+});
+
+// @desc    stripe payment verify
+// @route   GET /api/orders/:paymentId/verify
+// @access  Private
+const stripeVerify = asyncHandler(async (req, res) => {
+  // Get the paymentId
+  const { paymentId } = req.params;
+  const paymentIntent = await stripe.paymentIntents.retrieve(paymentId);
+
+  // Confirm the payment status
+  if (paymentIntent.status === 'succeeded') {
+    // get the data from the metadata
+    const metadata = paymentIntent?.metadata;
+    const orderId = metadata?.orderId;
+    const userId = metadata?.userId;
+
+    // Find the user
+    const userFound = await User.findById(userId);
+    if (!userFound) {
+      res.status(404);
+      throw new Error('User not found');
+    }
+    // Find the order
+    const order = await Order.findById(orderId);
+    if (!order) {
+      res.status(404);
+      throw new Error('Order not found');
+    }
+    // Checking the payment of the order
+    if (order.isPaid) {
+      return res.status(200).json(order);
+    }
+    // get the payment details
+    const amount = paymentIntent?.amount / 100;
+    const currency = paymentIntent.currency;
+    order.isPaid = true;
+    order.paidAt = Date.now();
+
+    // Create payment history
+    order.paymentResult = {
+      id: paymentIntent.id,
+      payingUser: userFound?._id,
+      paymentMethod: 'stripe',
+      status: 'success',
+      amount,
+      currency,
+    };
+
+    //There is a membership subscription between the orders
+    const membership = order.orderItems.find(
+      (item) => item.model_type === 'Plan'
+    );
+    if (membership) {
+      const plan = await Plan.findById(membership.product);
+      if (!userFound.premiumExpiresAt) {
+        console.log('előfizet');
+        userFound.premiumExpiresAt = addTimeToDate(
+          new Date(),
+          plan.timeLimitMeasure,
+          plan.timeLimitQty
+        );
+      } else {
+        if (userFound.premiumExpiresAt <= Date.now()) {
+          console.log('lejárt hosszabbít');
+          userFound.premiumExpiresAt = addTimeToDate(
+            new Date(),
+            plan.timeLimitMeasure,
+            plan.timeLimitQty
+          );
+        } else {
+          console.log('hosszabbít');
+          userFound.premiumExpiresAt = addTimeToDate(
+            new Date(userFound.premiumExpiresAt),
+            plan.timeLimitMeasure,
+            plan.timeLimitQty
+          );
+        }
+      }
+      // checks if the user is a MeilerLite subscriber
+      // await unAssignSubscriberGroup(userFound.email, process.env.PREMIUM_GROUP);
+      const subscriber = await getSubscriber(userFound.email);
+      if (subscriber) {
+        // Is the user a member of the PANTHERSTUFF_PREMIUM group
+        const group = subscriber.data.groups.find(
+          (item) => item.id === process.env.PREMIUM_GROUP
+        );
+        if (!group) {
+          // Add user to PANTHERSTUFF_PREMIUM group
+          await assignSubscriberGroup(
+            userFound.email,
+            process.env.PREMIUM_GROUP
+          );
+        }
+      } else {
+        // Register user on Pantherstuff MailerLite and add to PANTHERSTUFF_PREMIUM group?
+        const groups = [process.env.SUBSCRIBE_GROUP, process.env.PREMIUM_GROUP];
+        await createSubscriber(userFound.email, userFound.name, groups);
+      }
+
+      // Update the user profile
+      userFound.isPremium = true;
+      await userFound.save();
+    }
+
+    // send the response
+    const updatedOrder = await order.save();
+    if (updatedOrder) {
+      // res.status(200).json('Payment verified, user updated');
+      res.status(200).json(updatedOrder);
+    }
   }
 });
 
@@ -171,7 +317,8 @@ export {
   addOrderItems,
   getMyOrders,
   getOrderById,
-  updateOrderToPaid,
+  stripePayment,
+  stripeVerify,
   updateOrderToDelivered,
   getOrders,
 };

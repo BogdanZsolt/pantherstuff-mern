@@ -46,6 +46,9 @@ export const PlaceOrderScreen = lazy(() =>
   import('./screens/PlaceOrderScreen.jsx')
 );
 export const OrderScreen = lazy(() => import('./screens/OrderScreen.jsx'));
+export const PaymentCompleteScreen = lazy(() =>
+  import('./screens/PaymentCompleteScreen.jsx')
+);
 export const ProfileScreen = lazy(() => import('./screens/ProfileScreen.jsx'));
 
 // Admin Pages

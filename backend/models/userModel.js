@@ -16,6 +16,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: false,
     },
+    isEmailVerified: {
+      type: Boolean,
+      default: false,
+    },
     isAdmin: {
       type: Boolean,
       required: true,
@@ -25,6 +29,9 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       required: true,
       default: false,
+    },
+    premiumExpiresAt: {
+      type: Date,
     },
     googleId: {
       type: String,

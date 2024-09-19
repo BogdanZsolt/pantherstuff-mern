@@ -7664,15 +7664,15 @@ fieldset:disabled .btn {
 }
 
 .shadow {
-  box-shadow: 0 0.5rem 1rem rgba(var(--bs-body-color-rgb), 0.15) !important;
+  box-shadow: 0 0.5rem 1rem rgba(var(--bs-secondary-rgb), 0.75) !important;
 }
 
 .shadow-sm {
-  box-shadow: 0 0.125rem 0.25rem rgba(var(--bs-body-color-rgb), 0.075) !important;
+  box-shadow: 0 0.125rem 0.25rem rgba(var(--bs-secondary-rgb), 0.75) !important;
 }
 
 .shadow-lg {
-  box-shadow: 0 1rem 3rem rgba(var(--bs-body-color-rgb), 0.175) !important;
+  box-shadow: 0 1rem 3rem rgba(var(--bs-secondary-rgb), 0.75) !important;
 }
 
 .shadow-none {

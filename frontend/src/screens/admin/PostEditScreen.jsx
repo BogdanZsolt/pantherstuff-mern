@@ -1,5 +1,5 @@
 import { useState, useEffect, lazy } from 'react';
-import { Container, Row, Form, Button, Image } from 'react-bootstrap';
+import { Container, Row, Form, Button, Image, Col } from 'react-bootstrap';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import FormContainer from '../../components/FormContainer';
@@ -87,7 +87,7 @@ const PostEditScreen = () => {
       setBody(post.body);
       setDescription(post.description);
       setCategory(post?.category?._id || '');
-      setAuthor(post.user._id);
+      setAuthor(post?.user?._id);
       setIsPremium(post.isPremium);
     }
   }, [post]);
@@ -143,76 +143,102 @@ const PostEditScreen = () => {
               />
             )}
 
-            {/* Author Select from users */}
-            {loadingUsers ? (
-              <Loader />
-            ) : errorUsers ? (
-              <Message variant="danger">{errorUsers.data.message}</Message>
-            ) : (
-              users &&
-              users.length > 0 && (
-                <Form.Group controlId="user" className="mb-2">
-                  <Form.Label>Author</Form.Label>
-                  <Form.Select
-                    value={author}
-                    onChange={(e) => setAuthor(e.target.value)}
-                  >
-                    <option>Select author</option>
-                    {users.map((user) => (
-                      <option key={user._id} value={user._id}>
-                        {user.name}
-                      </option>
-                    ))}
-                  </Form.Select>
+            <Row>
+              <Col>
+                {/* Author Select from users */}
+                {loadingUsers ? (
+                  <Loader />
+                ) : errorUsers ? (
+                  <Message variant="danger">{errorUsers.data.message}</Message>
+                ) : (
+                  users &&
+                  users.length > 0 && (
+                    <Form.Group controlId="user" className="mb-2">
+                      <Form.Label>Author</Form.Label>
+                      <Form.Select
+                        value={author}
+                        onChange={(e) => setAuthor(e.target.value)}
+                      >
+                        <option>Select author</option>
+                        {users.map((user) => (
+                          <option key={user._id} value={user._id}>
+                            {user.name}
+                          </option>
+                        ))}
+                      </Form.Select>
+                    </Form.Group>
+                  )
+                )}
+              </Col>
+
+              <Col md={6}>
+                <SelectLanguage lang={lang} setLang={setLang} />
+              </Col>
+            </Row>
+
+            <Row>
+              <Col md={6}>
+                {/* Category Select from post category  */}
+                {loadingGetCats ? (
+                  <Loader />
+                ) : errGetCats ? (
+                  <Message variant="danger">{errGetCats.data.message}</Message>
+                ) : (
+                  cats.data && (
+                    <Form.Group controlId="category" className="mb-2">
+                      <Form.Label>Category</Form.Label>
+                      <Form.Select
+                        value={category}
+                        onChange={(e) => setCategory(e.target.value)}
+                      >
+                        <option>Uncategorized</option>
+                        {cats.data.map((cat) => (
+                          <option key={cat._id} value={cat._id}>
+                            {cat.title}
+                          </option>
+                        ))}
+                      </Form.Select>
+                    </Form.Group>
+                  )
+                )}
+              </Col>
+
+              <Col md={6}>
+                <Form.Group controlId="premium" className="my-2">
+                  <Form.Label>Is premium content</Form.Label>
+                  <Form.Check
+                    type="switch"
+                    checked={isPremium}
+                    onChange={(e) => setIsPremium(e.target.checked)}
+                  />
                 </Form.Group>
-              )
-            )}
-
-            <SelectLanguage lang={lang} setLang={setLang} />
-
-            {/* Category Select from post category  */}
-            {loadingGetCats ? (
-              <Loader />
-            ) : errGetCats ? (
-              <Message variant="danger">{errGetCats.data.message}</Message>
-            ) : (
-              cats.data && (
-                <Form.Group controlId="category" className="mb-2">
-                  <Form.Label>Category</Form.Label>
-                  <Form.Select
-                    value={category}
-                    onChange={(e) => setCategory(e.target.value)}
-                  >
-                    <option>Uncategorized</option>
-                    {cats.data.map((cat) => (
-                      <option key={cat._id} value={cat._id}>
-                        {cat.title}
-                      </option>
-                    ))}
-                  </Form.Select>
+              </Col>
+            </Row>
+            <Row>
+              <Col md={6}>
+                <Form.Group controlId="title">
+                  <Form.Label>Title</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter title"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                  ></Form.Control>
                 </Form.Group>
-              )
-            )}
+              </Col>
 
-            <Form.Group controlId="title">
-              <Form.Label>Title</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
-
-            <Form.Group controlId="description" className="my-2">
-              <Form.Label>Description</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter description"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+              <Col md={6}>
+                <Form.Group controlId="description" className="my-2">
+                  <Form.Label>Description</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter description"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                  ></Form.Control>
+                </Form.Group>
+              </Col>
+            </Row>
 
             <Form.Group controlId="body" className="my-2">
               <Form.Label>Content</Form.Label>
@@ -227,15 +253,6 @@ const PostEditScreen = () => {
                 value={body}
                 onChange={(e) => setBody(e.target.value)}
               /> */}
-            </Form.Group>
-
-            <Form.Group controlId="premium" className="my-2">
-              <Form.Check
-                type="switch"
-                label="Is premium content"
-                chacked={isPremium}
-                onChange={(e) => setIsPremium(e.target.checked)}
-              />
             </Form.Group>
 
             <Button type="submit" variant="primary" className="my-2">

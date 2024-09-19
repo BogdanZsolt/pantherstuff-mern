@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 
 const PaymentScreen = () => {
   const { t } = useTranslation();
-  const [paymentMethod, setPaymentMethod] = useState('PayPal');
+  const [paymentMethod, setPaymentMethod] = useState('Stripe');
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -44,8 +44,8 @@ const PaymentScreen = () => {
                 <Form.Check
                   type="radio"
                   className="my-2"
-                  label={t('payPalOrCreditCard')}
-                  id="PayPal"
+                  label={t('stripeCreditCard')}
+                  id="Stripe"
                   name="paymentMethod"
                   value={paymentMethod}
                   checked

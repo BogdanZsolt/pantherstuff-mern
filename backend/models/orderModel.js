@@ -36,9 +36,10 @@ const orderSchema = new mongoose.Schema(
     },
     paymentResult: {
       id: { type: String },
+      payingUser: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
       status: { type: String },
-      update_time: { type: String },
-      email_address: { type: String },
+      amount: { type: Number, default: 0.0 },
+      currency: { type: String },
     },
     itemsPrice: {
       type: Number,

@@ -12,6 +12,20 @@ const toCurrency = (lang, num) => {
   }
 };
 
+const toLocalDate = (lang, date, option = 'medium') => {
+  if (lang === 'en') {
+    return new Intl.DateTimeFormat('en-EN', {
+      dateStyle: option,
+      timeStyle: option,
+    }).format(new Date(date));
+  } else if (lang === 'hu') {
+    return new Intl.DateTimeFormat('hu-HU', {
+      dateStyle: option,
+      timeStyle: option,
+    }).format(new Date(date));
+  }
+};
+
 const uuid = () => {
   return String(Date.now().toString(32) + Math.random().toString(16)).replace(
     /\./g,
@@ -19,4 +33,4 @@ const uuid = () => {
   );
 };
 
-export { toCurrency, uuid };
+export { toCurrency, toLocalDate, uuid };

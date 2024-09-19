@@ -52,7 +52,9 @@ const MembershipTable = () => {
       {isLoading ? (
         <Loader />
       ) : error ? (
-        <Message></Message>
+        <Message variant="danger">
+          {error?.data?.message || error.error}
+        </Message>
       ) : (
         <CardGroup className="text-center" style={{ gap: '1rem' }}>
           {plans.data.map((plan) => (

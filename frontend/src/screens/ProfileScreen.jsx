@@ -19,6 +19,7 @@ import { useProfileMutation } from '../slices/usersApiSlice';
 import { isAuthenticated } from '../slices/authSlice';
 import { useGetMyOrdersQuery } from '../slices/ordersApiSlice';
 import Banner from '../components/Banner';
+import { toCurrency } from '../utils/converter';
 
 const ProfileScreen = () => {
   const { t } = useTranslation(['profile']);
@@ -64,6 +65,8 @@ const ProfileScreen = () => {
       }
     }
   };
+
+  console.log(orders);
 
   return (
     <>
@@ -149,7 +152,7 @@ const ProfileScreen = () => {
                     <tr key={order._id}>
                       <td>{order._id}</td>
                       <td>{order.createdAt.substring(0, 10)}</td>
-                      <td>${order.totalPrice}</td>
+                      <td>{toCurrency(order.language, order.totalPrice)}</td>
                       <td>
                         {order.isPaid ? (
                           order.paidAt.substring(0, 10)
@@ -166,7 +169,7 @@ const ProfileScreen = () => {
                       </td>
                       <td>
                         <LinkContainer to={`/order/${order._id}`}>
-                          <Button className="btn-sm" variant="light">
+                          <Button className="btn-sm" variant="primary">
                             {t('details')}
                           </Button>
                         </LinkContainer>

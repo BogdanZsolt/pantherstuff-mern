@@ -55,7 +55,7 @@ const ProductScreen = () => {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
   const [showReview, setShowReview] = useState(false);
-  const { userInfo } = useSelector((state) => state.auth);
+  const { userAuth } = useSelector((state) => state.auth);
   const { wishListItems } = useSelector((state) => state.wishList);
   const [productName, setProductName] = useState('');
   const [beforePrice, setBeforePrice] = useState(0);
@@ -156,7 +156,7 @@ const ProductScreen = () => {
 
   const hasReview = () => {
     const isUserReview = product?.reviews.find(
-      (review) => review.user === userInfo._id
+      (review) => review.user === userAuth._id
     );
 
     return isUserReview ? true : false;
@@ -371,7 +371,7 @@ const ProductScreen = () => {
                           </div>
                         )}
                       </Col>
-                      {userInfo && !hasReview() && (
+                      {userAuth && !hasReview() && (
                         <Col className="text-end my-3">
                           <Button onClick={() => setShowReview(true)}>
                             {t('writeAReview')}
@@ -394,7 +394,7 @@ const ProductScreen = () => {
                       <ListGroup.Item>
                         {loadingProductReview && <Loader />}
 
-                        {!userInfo && (
+                        {!userAuth && (
                           <Message>
                             <Trans
                               i18nKey={t('pleaseSignInToWriteReview')}
@@ -417,7 +417,7 @@ const ProductScreen = () => {
               <Modal.Title>{t('writeACustomerReview')}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              {userInfo && (
+              {userAuth && (
                 <Form onSubmit={submitHandler}>
                   <Form.Group controlId="rating" className="my-2">
                     <Form.Label>{t('rating')}</Form.Label>

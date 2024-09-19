@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { LinkContainer } from 'react-router-bootstrap';
 import {
   Collapse,
   Container,
@@ -18,10 +20,8 @@ import {
 } from 'react-icons/bs';
 import { AiOutlineProduct } from 'react-icons/ai';
 import { RxComponent1 } from 'react-icons/rx';
-import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../slices/authSlice';
 import { useLogoutMutation } from '../../slices/usersApiSlice';
-import { LinkContainer } from 'react-router-bootstrap';
 
 const Sidebar = () => {
   const { userAuth } = useSelector((state) => state.auth);

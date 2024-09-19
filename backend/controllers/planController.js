@@ -10,7 +10,8 @@ const planCreateInit = (req, res, next) => {
   req.body.name = 'Simple plan';
   req.body.thumbnail = '/images/member.png';
   req.body.features = ['Simple feature 1'];
-  req.body.limitation = '';
+  req.body.timeLimitMeasure = null;
+  req.body.timeLimitQty = 0;
   req.body.price = 0;
   req.body.translations = {
     hu: {

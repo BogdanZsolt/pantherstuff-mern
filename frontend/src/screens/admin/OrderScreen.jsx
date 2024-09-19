@@ -1,3 +1,5 @@
+// https://www.youtube.com/watch?v=C16xwIjzzu8&list=PLFwqDjxup1l2dN53NoPhBvLSJWtN6pZ3o&index=89
+
 import { Link, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import {
@@ -12,12 +14,12 @@ import {
 import Message from '../../components/Message';
 import Loader from '../../components/Loader';
 import { toast } from 'react-toastify';
+import { toCurrency, toLocalDate } from '../../utils/converter';
 import { useTranslation } from 'react-i18next';
 import {
   useGetOrderDetailsQuery,
   useDeliverOrderMutation,
 } from '../../slices/ordersApiSlice';
-import { toCurrency } from '../../utils/converter';
 
 const OrderScreen = () => {
   const { id: orderId } = useParams();
@@ -33,7 +35,7 @@ const OrderScreen = () => {
   const [deliverOrder, { isLoading: loadingDeliver }] =
     useDeliverOrderMutation();
 
-  const { userInfo } = useSelector((state) => state.auth);
+  const { userAuth } = useSelector((state) => state.auth);
 
   const deliverOrderHandler = async () => {
     try {
@@ -93,7 +95,9 @@ const OrderScreen = () => {
                     {order.paymentMethod}
                   </p>
                   {order.isPaid ? (
-                    <Message variant="success">Paid on{order.paidAt}</Message>
+                    <Message variant="success">
+                      Paid on {toLocalDate('en', order.paidAt)}
+                    </Message>
                   ) : (
                     <Message variant="danger">Not Paid</Message>
                   )}
@@ -113,7 +117,15 @@ const OrderScreen = () => {
                           />
                         </Col>
                         <Col>
-                          <Link to={`/product/${item.product}`}>
+                          <Link
+                            to={`/${
+                              item.model_type === 'Plan'
+                                ? 'membership'
+                                : item.model_type
+                                ? item.model_type.toLowerCase()
+                                : 'product'
+                            }/${item.product}`}
+                          >
                             {item.name}
                           </Link>
                         </Col>
@@ -160,8 +172,8 @@ const OrderScreen = () => {
                   {/* PAY ORDER PLACEHOLDER */}
 
                   {loadingDeliver && <Loader />}
-                  {userInfo &&
-                    userInfo.isAdmin &&
+                  {userAuth &&
+                    userAuth.isAdmin &&
                     order.isPaid &&
                     !order.isDelivered && (
                       <ListGroup.Item>

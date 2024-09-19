@@ -15,7 +15,7 @@ import { RiUserLine } from 'react-icons/ri';
 import { logout } from '../../slices/authSlice';
 
 const NavBar = ({ show }) => {
-  const { userInfo } = useSelector((state) => state.auth);
+  const { userAuth } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -39,9 +39,9 @@ const NavBar = ({ show }) => {
         </Navbar.Brand>
         <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
           <Nav>
-            {userInfo ? (
-              <NavDropdown title={userInfo.name} id="admin-nav-dropdown">
-                {userInfo.isAdmin && (
+            {userAuth ? (
+              <NavDropdown title={userAuth.name} id="admin-nav-dropdown">
+                {userAuth.isAdmin && (
                   <LinkContainer to="/admin">
                     <NavDropdown.Item>Admin Dashboard</NavDropdown.Item>
                   </LinkContainer>

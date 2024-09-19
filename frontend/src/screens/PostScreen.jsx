@@ -24,7 +24,7 @@ const PostScreen = () => {
     error,
   } = useGetPostDetailsQuery(postId);
 
-  const { userInfo } = useSelector((state) => state.auth);
+  const { userAuth } = useSelector((state) => state.auth);
 
   return (
     <>
@@ -84,7 +84,7 @@ const PostScreen = () => {
                       className="mt-4"
                       comments={post.comments}
                       postId={postId}
-                      logginedUserId={userInfo?._id}
+                      logginedUserId={userAuth?._id}
                       refetch={refetch}
                     />
                   </article>

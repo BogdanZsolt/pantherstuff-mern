@@ -59,7 +59,7 @@ const SupplyScreen = () => {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
 
-  const { userInfo } = useSelector((state) => state.auth);
+  const { userAuth } = useSelector((state) => state.auth);
   const { wishListItems } = useSelector((state) => state.wishList);
 
   const [activeTab, setActiveTab] = useState('description');
@@ -150,7 +150,7 @@ const SupplyScreen = () => {
 
   const hasReview = () => {
     const isUserRview = supply?.reviews.find(
-      (review) => review.user === userInfo._id
+      (review) => review.user === userAuth._id
     );
 
     return isUserRview ? true : false;
@@ -357,7 +357,7 @@ const SupplyScreen = () => {
                           </div>
                         )}
                       </Col>
-                      {userInfo && !hasReview() && (
+                      {userAuth && !hasReview() && (
                         <Col className="text-end mb-3">
                           <Button onClick={() => setShowReview(true)}>
                             {t('writeAReview')}
@@ -380,7 +380,7 @@ const SupplyScreen = () => {
                       <ListGroup.Item>
                         {loadingProductReview && <Loader />}
 
-                        {!userInfo && (
+                        {!userAuth && (
                           <Message>
                             <Trans
                               i18nKey={t('pleaseSignInToWriteReview')}
@@ -403,7 +403,7 @@ const SupplyScreen = () => {
               <Modal.Title>{t('writeACustomerReview')}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              {userInfo && (
+              {userAuth && (
                 <Form onSubmit={submitHandler}>
                   <Form.Group controlId="rating" className="my-2">
                     <Form.Label>{t('rating')}</Form.Label>
