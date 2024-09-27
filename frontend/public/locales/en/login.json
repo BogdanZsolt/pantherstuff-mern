@@ -12,5 +12,14 @@
   "confirmPassword": "Confirm Password",
   "Register": "Register",
   "signInWithGoogle": "Sign in with Google",
+  "forgotPassword": "Forgot Password?",
+  "passwordResetRequest": "Password reset request",
+  "passwordReset": "Password reset",
+  "send": "Send",
+  "emailSendingIsSuccessful": "Email sending is successful",
+  "passwordResetEmail": "We have sent a password reset email to the email address you provided. Please check it out. The token will expire in 10 minutes.",
+  "goingOn": "Going on",
+  "passwordDoNotMatch": "Password and confirm password do not match",
+  "theSpecifiedPassword": "The specified password has been set successfully",
   "": ""
 }

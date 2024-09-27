@@ -81,6 +81,34 @@ export const usersApiSlice = apiSlice.injectEndpoints({
       }),
       keepUnusedDataFor: 5,
     }),
+    sendEmailVerificationToken: builder.mutation({
+      query: () => ({
+        url: `${USERS_URL}/account-verification-email`,
+        method: 'PUT',
+      }),
+      invalidatesTags: ['User'],
+    }),
+    verifyUserAccount: builder.mutation({
+      query: (verifyToken) => ({
+        url: `${USERS_URL}/verify-account/${verifyToken}`,
+        method: 'PUT',
+      }),
+      invalidatesTags: ['User'],
+    }),
+    passwordResetRequest: builder.mutation({
+      query: (data) => ({
+        url: `${USERS_URL}/forgot-password`,
+        method: 'POST',
+        body: data,
+      }),
+    }),
+    passwordReset: builder.mutation({
+      query: (data) => ({
+        url: `${USERS_URL}/password-reset/${data.resetToken}`,
+        method: 'POST',
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -97,4 +125,8 @@ export const {
   useCheckAuthStatusQuery,
   useCheckIsAdminQuery,
   useCheckIsPremiumQuery,
+  useSendEmailVerificationTokenMutation,
+  useVerifyUserAccountMutation,
+  usePasswordResetRequestMutation,
+  usePasswordResetMutation,
 } = usersApiSlice;

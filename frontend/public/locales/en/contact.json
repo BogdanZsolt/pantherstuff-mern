@@ -23,5 +23,7 @@
   "formPhoneNumber": "Phone Number",
   "formEnterPhoneNumber": "Enter phone number",
   "formMessage": "Message",
-  "formSend": "Send"
+  "formSend": "Send",
+  "yourMessageHasBeenForwarded": "Thank you for your interest. Your message has been forwarded.",
+  "": ""
 }

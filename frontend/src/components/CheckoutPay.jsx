@@ -27,10 +27,10 @@ const CheckoutPay = () => {
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url:
-          import.meta.env.VITE_ENV === 'developer'
-            ? 'http://localhost:3000/order/complete'
-            : 'https://pantherstuff.com/order/complete',
+        return_url: `${import.meta.env.VITE_URL}/order/complete`,
+        // import.meta.env.VITE_ENV === 'developer'
+        //   ? 'http://localhost:3000/order/complete'
+        //   : 'https://pantherstuff.com/order/complete',
       },
     });
     console.log(error);

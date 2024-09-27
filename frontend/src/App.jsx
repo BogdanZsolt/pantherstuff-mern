@@ -18,6 +18,8 @@ import {
   HerStory,
   HomeScreen,
   LoginScreen,
+  ResetPasswordRequestScreen,
+  ResetPasswordScreen,
   MainScreen,
   MePetraScreen,
   OrderListScreen,
@@ -46,6 +48,7 @@ import {
   SupplySizeListScreen,
   SupplySizeEditScreen,
   ProfileScreen,
+  AccountVerification,
   ProtectRoute,
   RegisterScreen,
   ShippingScreen,
@@ -235,6 +238,14 @@ const App = () => {
               element: <RegisterScreen />,
             },
             {
+              path: 'forgot-password',
+              element: <ResetPasswordRequestScreen />,
+            },
+            {
+              path: 'reset-password/:token',
+              element: <ResetPasswordScreen />,
+            },
+            {
               path: '',
               element: <ProtectRoute />,
               children: [
@@ -246,6 +257,11 @@ const App = () => {
                   path: 'profile',
                   element: <ProfileScreen />,
                 },
+                {
+                  path: 'account-verification/:verifyToken',
+                  element: <AccountVerification />,
+                },
+
                 {
                   path: 'shipping',
                   element: <ShippingScreen />,

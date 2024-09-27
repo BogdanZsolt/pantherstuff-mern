@@ -18,5 +18,8 @@
   "paid": "PAID",
   "delivered": "DELIVERED",
   "details": "Details",
+  "missingEmail": "Your email address is missing. Please enter it in the field on the sidebar!",
+  "missingAccountVerify": "<1>Account verification needed.</1><1>Your account is not verified. Please <2>verify your account</2> for full access!</1>",
+  "accountIsVerified": "Your account is verified.",
   "": ""
 }

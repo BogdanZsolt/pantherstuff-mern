@@ -7,7 +7,7 @@ import Message from '../components/Message';
 import { removeFromWishList } from '../slices/wishListSlice';
 import { addToCart } from '../slices/cartSlice';
 import { useTranslation } from 'react-i18next';
-import { toCurrency } from '../utils/converter';
+import { toCurrency, uuid } from '../utils/converter';
 
 const WishListScreen = () => {
   const dispatch = useDispatch();
@@ -21,11 +21,14 @@ const WishListScreen = () => {
     dispatch(removeFromWishList(id));
   };
 
-  const addToCartHandler = async (product) => {
+  const addToCartHandler = async (item) => {
     const qty = 1;
-    dispatch(addToCart({ ...product, qty }));
-    removeFromWishListHandler(product._id);
+    const cartId = uuid();
+    dispatch(addToCart({ ...item, cartId, qty }));
+    removeFromWishListHandler(item._id);
   };
+
+  console.log(wishList);
 
   return (
     <>
@@ -44,7 +47,7 @@ const WishListScreen = () => {
                     <Row className="align-items-center gap-2 gap-md-0">
                       <Col md={1}>
                         <Image
-                          src={item.thumbnails[0]}
+                          src={item.thumbnail}
                           alt={item.name}
                           fluid
                           rounded

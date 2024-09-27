@@ -5,9 +5,7 @@ const MainScreen = () => {
   return (
     <>
       <MainLayout>
-        <main>
-          <Outlet />
-        </main>
+        <Outlet />
       </MainLayout>
     </>
   );

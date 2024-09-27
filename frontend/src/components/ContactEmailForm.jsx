@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   Container,
   Row,
@@ -7,6 +8,8 @@ import {
   Button,
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import ReCAPTCHA from 'react-google-recaptcha';
+import Loader from './Loader';
 
 const ContactEmailForm = ({
   name,
@@ -18,10 +21,15 @@ const ContactEmailForm = ({
   message,
   setMessage,
   messageHandler,
+  loader,
 }) => {
-  const { t } = useTranslation(['contact']);
+  const { t, i18n } = useTranslation(['contact']);
+  const [capVal, setCapVal] = useState(null);
 
-  console.log(telephone);
+  window.recaptchaOptions = {
+    lang: 'hu',
+  };
+
   return (
     <Container fluid>
       <Row>
@@ -69,19 +77,30 @@ const ContactEmailForm = ({
               />
             </FloatingLabel>
           </Form.Group>
-          <Col
-            lg={2}
-            xl={1}
-            className="d-flex justify-content-lg-center align-items-center mt-lg-0"
-          >
-            <Button
-              type="submit"
-              variant="success"
-              className="text-primary btn-lasaphire"
+          <div className="d-flex justify-content-between flex-wrap-reverse">
+            <Col
+              lg={2}
+              xl={1}
+              className="d-flex justify-content-lg-center align-items-center mt-lg-0"
             >
-              {t('formSend')}
-            </Button>
-          </Col>
+              <Button
+                type="submit"
+                variant="success"
+                className="text-primary btn-lasaphire"
+                disabled={!capVal}
+              >
+                {t('formSend')}
+              </Button>
+            </Col>
+            <div>
+              <ReCAPTCHA
+                hl={i18n.language}
+                onChange={(val) => setCapVal(val)}
+                sitekey={import.meta.env.VITE_GOOGLE_RECAPTCHA}
+              />
+            </div>
+          </div>
+          {loader && <Loader />}
         </Form>
       </Row>
     </Container>

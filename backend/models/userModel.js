@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
+import crypto from 'crypto';
 
 const userSchema = new mongoose.Schema(
   {
@@ -16,14 +17,30 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: false,
     },
-    isEmailVerified: {
-      type: Boolean,
-      default: false,
-    },
     isAdmin: {
       type: Boolean,
       required: true,
       default: false,
+    },
+    accountVerificationToken: {
+      type: String,
+      default: null,
+    },
+    accountVerificationExpires: {
+      type: Date,
+      default: null,
+    },
+    isEmailVerified: {
+      type: Boolean,
+      default: false,
+    },
+    passwordResetToken: {
+      type: String,
+      default: null,
+    },
+    passwordResetExpires: {
+      type: Date,
+      default: null,
     },
     isPremium: {
       type: Boolean,
@@ -53,6 +70,24 @@ const userSchema = new mongoose.Schema(
 
 userSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
+};
+
+// Generate token for account verification
+userSchema.methods.generateAccVerificationToken = async function () {
+  const buf = crypto.randomBytes(20).toString('hex');
+  const emailToken = crypto.createHash('sha256').update(buf).digest('hex');
+  this.accountVerificationToken = emailToken;
+  this.accountVerificationExpires = Date.now() + 10 * 60 * 1000; // 10 minutes
+  return emailToken;
+};
+
+// Generate token for password reset
+userSchema.methods.generatePasswordResetToken = async function () {
+  const buf = crypto.randomBytes(20).toString('hex');
+  const emailToken = crypto.createHash('sha256').update(buf).digest('hex');
+  this.passwordResetToken = emailToken;
+  this.passwordResetExpires = Date.now() + 10 * 60 * 1000; // 10 minutes
+  return emailToken;
 };
 
 userSchema.pre('save', async function (next) {

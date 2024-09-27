@@ -16,6 +16,10 @@ import {
   deletetUser,
   updateUser,
   getAuthor,
+  verifyEmailAccount,
+  verifyEmailAcc,
+  forgotPasswordEmailToken,
+  resetPassword,
 } from '../controllers/userController.js';
 import { protect, admin } from '../middleware/authMiddleware.js';
 
@@ -25,6 +29,10 @@ router.get('/auth/google/callback', googleAuthUserCallback);
 router.get('/checkauthenticated', checkAuthenticated);
 router.get('/checkadmin', checkIsAdmin);
 router.get('/checkpremium', checkIsPremium);
+router.put('/account-verification-email', protect, verifyEmailAccount);
+router.put('/verify-account/:verifyToken', protect, verifyEmailAcc);
+router.post('/forgot-password', forgotPasswordEmailToken);
+router.post('/password-reset/:resetToken', resetPassword);
 router.route('/').post(registerUser).get(protect, admin, getUsers);
 router.post('/logout', protect, logoutUser);
 router

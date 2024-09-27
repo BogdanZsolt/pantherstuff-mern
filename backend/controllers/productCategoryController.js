@@ -55,23 +55,6 @@ const getProductCategoryById = getOne(
 // @route   POST /api/productcategories
 // @access  Private/Admin
 const createProductCategory = createOne(ProductCategory);
-// const createProductCategory = asyncHandler(async (req, res) => {
-//   let cat = {};
-//   cat.user = req.user._id;
-//   cat.title = 'Simple category';
-//   cat.description = 'Simple description';
-//   cat.translations = {
-//     hu: {
-//       title: 'Egyszerű kategória',
-//       description: 'Egyszerű leírás',
-//     },
-//   };
-//   console.log(cat);
-//   const create = new ProductCategory(cat);
-
-//   const doc = await create.save();
-//   res.status(201).json(doc);
-// });
 
 // @desc    delete productCategory by ID
 // @route   DELETE /api/productcategories/:id

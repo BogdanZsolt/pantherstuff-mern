@@ -23,5 +23,7 @@
   "formPhoneNumber": "telefon szám",
   "formEnterPhoneNumber": "Írja be a telefonszámot",
   "formMessage": "Üzenet",
-  "formSend": "Elküld"
+  "formSend": "Elküld",
+  "yourMessageHasBeenForwarded": "Köszönjük érdeklődését. Üzenetét továbbítottuk.",
+  "": ""
 }

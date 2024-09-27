@@ -15,7 +15,7 @@ const SuggestedPosts = ({ className, header, tags = [] }) => {
     fields: '_id,user,bannerImage,title,createdAt',
   });
   return (
-    <div className={`w-100 shadow rounded rounded-2 ${className}`}>
+    <div className={`w-100 shadow-sm rounded rounded-2 p-2 ${className}`}>
       <h2>{header}</h2>
       {isLoading ? (
         <Loader />
@@ -38,7 +38,7 @@ const SuggestedPosts = ({ className, header, tags = [] }) => {
                 xs={8}
                 className="d-flex flex-column align-items-start justify-content-center"
               >
-                <span>{item.user.name}</span>
+                <span>{item?.user?.name}</span>
                 <Link to={`/post/${item._id}`}>
                   <span className="fw-semibold" style={{ fontSize: '1rem' }}>
                     {item.title}

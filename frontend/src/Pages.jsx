@@ -9,6 +9,12 @@ export const LoginScreen = lazy(() => import('./screens/LoginScreen.jsx'));
 export const RegisterScreen = lazy(() =>
   import('./screens/RegisterScreen.jsx')
 );
+export const ResetPasswordRequestScreen = lazy(() =>
+  import('./screens/ResetPasswordRequestScreen.jsx')
+);
+export const ResetPasswordScreen = lazy(() =>
+  import('./screens/ResetPasswordScreen.jsx')
+);
 export const CartScreen = lazy(() => import('./screens/CartScreen.jsx'));
 export const WishListScreen = lazy(() =>
   import('./screens/WishListScreen.jsx')
@@ -50,6 +56,9 @@ export const PaymentCompleteScreen = lazy(() =>
   import('./screens/PaymentCompleteScreen.jsx')
 );
 export const ProfileScreen = lazy(() => import('./screens/ProfileScreen.jsx'));
+export const AccountVerification = lazy(() =>
+  import('./components/AccountVerification.jsx')
+);
 
 // Admin Pages
 export const AdminScreen = lazy(() =>

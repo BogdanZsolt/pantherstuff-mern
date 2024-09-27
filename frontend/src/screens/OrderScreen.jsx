@@ -16,9 +16,7 @@ import {
 } from '../slices/ordersApiSlice';
 
 // configure stripe
-const stripePromise = loadStripe(
-  'pk_test_51IIw2VJ5jIC6YVu6WBMEmLBznwOn8wKSFIPA7kmN5oCoNKf24qrMB8g8uTYG3psM9uy9aXOGG6BFIl4MeqSjX6pQ004F0MOEcp'
-);
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
 const OrderScreen = () => {
   const { id: orderId } = useParams();

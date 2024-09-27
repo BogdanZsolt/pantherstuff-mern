@@ -7,19 +7,24 @@ import {
   Col,
   FormGroup,
   Container,
+  Tabs,
+  Tab,
 } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
+import { Trans, useTranslation } from 'react-i18next';
+import Banner from '../components/Banner';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
+import { toast } from 'react-toastify';
 import { FaTimes } from 'react-icons/fa';
-import { useTranslation } from 'react-i18next';
-import { useProfileMutation } from '../slices/usersApiSlice';
+import { toCurrency } from '../utils/converter';
+import {
+  useProfileMutation,
+  useSendEmailVerificationTokenMutation,
+} from '../slices/usersApiSlice';
 import { isAuthenticated } from '../slices/authSlice';
 import { useGetMyOrdersQuery } from '../slices/ordersApiSlice';
-import Banner from '../components/Banner';
-import { toCurrency } from '../utils/converter';
 
 const ProfileScreen = () => {
   const { t } = useTranslation(['profile']);
@@ -28,6 +33,9 @@ const ProfileScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [activeTab, setActiveTab] = useState('info');
+  const [hasEmail, setHasEmail] = useState(false);
+  const [isEmailVerified, setIsEmailVerified] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -36,12 +44,24 @@ const ProfileScreen = () => {
   const [updateProfile, { isLoading: loadingUpdateProfile }] =
     useProfileMutation();
 
+  const [
+    sendEmailVerificationToken,
+    {
+      data: sendVerifyEmailData,
+      isLoading: sendVerifyEmailIsLoading,
+      isError: sendVerifyEmailIsError,
+      isSuccess: sendVerifyEmailIsSuccess,
+    },
+  ] = useSendEmailVerificationTokenMutation();
+
   const { data: orders, isLoading, error } = useGetMyOrdersQuery();
 
   useEffect(() => {
     if (userAuth) {
       setName(userAuth.name);
       setEmail(userAuth.email);
+      setHasEmail(userAuth.email ? true : false);
+      setIsEmailVerified(userAuth.isEmailVerified);
     }
   }, [userAuth]);
 
@@ -66,7 +86,9 @@ const ProfileScreen = () => {
     }
   };
 
-  console.log(orders);
+  const handleSendVerificationEmail = async () => {
+    await sendEmailVerificationToken();
+  };
 
   return (
     <>
@@ -128,57 +150,103 @@ const ProfileScreen = () => {
             </Form>
           </Col>
           <Col md={9}>
-            <h2>{t('myOrders')}</h2>
-            {isLoading ? (
-              <Loader />
-            ) : error ? (
-              <Message variant="danger">
-                {error?.data?.message || error.error}
-              </Message>
-            ) : (
-              <Table striped hover responsive className="table-sm">
-                <thead>
-                  <tr>
-                    <th>{t('id')}</th>
-                    <th>{t('date')}</th>
-                    <th>{t('total')}</th>
-                    <th>{t('paid')}</th>
-                    <th>{t('delivered')}</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {orders.map((order) => (
-                    <tr key={order._id}>
-                      <td>{order._id}</td>
-                      <td>{order.createdAt.substring(0, 10)}</td>
-                      <td>{toCurrency(order.language, order.totalPrice)}</td>
-                      <td>
-                        {order.isPaid ? (
-                          order.paidAt.substring(0, 10)
-                        ) : (
-                          <FaTimes style={{ color: 'red' }} />
-                        )}
-                      </td>
-                      <td>
-                        {order.isDelivered ? (
-                          order.deliveredAt.substring(0, 10)
-                        ) : (
-                          <FaTimes style={{ color: 'red' }} />
-                        )}
-                      </td>
-                      <td>
-                        <LinkContainer to={`/order/${order._id}`}>
-                          <Button className="btn-sm" variant="primary">
-                            {t('details')}
-                          </Button>
-                        </LinkContainer>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
-            )}
+            <Tabs
+              id="profile-tab"
+              activeKey={activeTab}
+              onSelect={(k) => setActiveTab(k)}
+              className="mb-3 profile-tab scrollto"
+              justify
+            >
+              <Tab eventKey="info" title="Info">
+                {sendVerifyEmailIsLoading ? (
+                  <Message variant="danger">Email sending loading...</Message>
+                ) : sendVerifyEmailIsError ? (
+                  <Message variant="danger">{sendVerifyEmailData}</Message>
+                ) : (
+                  sendVerifyEmailIsSuccess && (
+                    <Message variant="success">
+                      {sendVerifyEmailData.message}
+                    </Message>
+                  )
+                )}
+                {!hasEmail && (
+                  <Message variant="danger">{t('missingEmail')}</Message>
+                )}
+                {!isEmailVerified ? (
+                  <Message variant="danger">
+                    <Trans
+                      i18nKey={t('missingAccountVerify')}
+                      components={{
+                        1: <p className="text-center" />,
+                        2: (
+                          <a
+                            className="text-danger fw-bold"
+                            style={{ cursor: 'pointer' }}
+                            onClick={handleSendVerificationEmail}
+                          />
+                        ),
+                      }}
+                    />
+                  </Message>
+                ) : (
+                  <Message>{t('accountIsVerified')}</Message>
+                )}
+              </Tab>
+              <Tab eventKey="orders" title={t('myOrders')}>
+                {isLoading ? (
+                  <Loader />
+                ) : error ? (
+                  <Message variant="danger">
+                    {error?.data?.message || error.error}
+                  </Message>
+                ) : (
+                  <Table striped hover responsive className="table-sm">
+                    <thead>
+                      <tr>
+                        <th>{t('id')}</th>
+                        <th>{t('date')}</th>
+                        <th>{t('total')}</th>
+                        <th>{t('paid')}</th>
+                        <th>{t('delivered')}</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {orders.map((order) => (
+                        <tr key={order._id}>
+                          <td>{order._id}</td>
+                          <td>{order.createdAt.substring(0, 10)}</td>
+                          <td>
+                            {toCurrency(order.language, order.totalPrice)}
+                          </td>
+                          <td>
+                            {order.isPaid ? (
+                              order.paidAt.substring(0, 10)
+                            ) : (
+                              <FaTimes style={{ color: 'red' }} />
+                            )}
+                          </td>
+                          <td>
+                            {order.isDelivered ? (
+                              order.deliveredAt.substring(0, 10)
+                            ) : (
+                              <FaTimes style={{ color: 'red' }} />
+                            )}
+                          </td>
+                          <td>
+                            <LinkContainer to={`/order/${order._id}`}>
+                              <Button className="btn-sm" variant="primary">
+                                {t('details')}
+                              </Button>
+                            </LinkContainer>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </Table>
+                )}
+              </Tab>
+            </Tabs>
           </Col>
         </Row>
       </Container>

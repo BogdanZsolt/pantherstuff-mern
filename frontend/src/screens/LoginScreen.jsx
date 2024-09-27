@@ -47,7 +47,10 @@ const LoginScreen = () => {
             _id: res._id,
             name: res.name,
             email: res.email,
+            isEmailVerified: res.isEmailVerified,
             isAdmin: res.isAdmin,
+            isPremium: res.isPremium,
+            premiumExpiresAt: res.premiumExpiresAt,
           })
         );
         navigate('/');
@@ -93,14 +96,26 @@ const LoginScreen = () => {
                 </button>
               </InputGroup>
             </Form.Group>
-            <Button
-              type="submit"
-              variant="primary"
-              className="mt-2"
-              disabled={isLoading}
-            >
-              {t('signIn')}
-            </Button>
+            <Row>
+              <Col>
+                <Button
+                  type="submit"
+                  variant="primary"
+                  className="mt-2"
+                  disabled={isLoading}
+                >
+                  {t('signIn')}
+                </Button>
+              </Col>
+              <Col className="d-flex justify-content-end align-items-center">
+                <Link
+                  className="fw-semibold text-secondary"
+                  to="/forgot-password"
+                >
+                  {t('forgotPassword')}
+                </Link>
+              </Col>
+            </Row>
 
             {isLoading && <Loader />}
           </Form>

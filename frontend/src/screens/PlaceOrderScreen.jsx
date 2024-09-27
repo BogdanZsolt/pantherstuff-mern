@@ -74,8 +74,6 @@ const PlaceOrderScreen = () => {
     }
   };
 
-  console.log(createItems(cart.cartItems));
-
   return (
     <>
       <Banner title={t('order')} />
@@ -219,10 +217,14 @@ const PlaceOrderScreen = () => {
                 </ListGroup.Item>
 
                 <ListGroup.Item>
-                  {error && (
-                    <Message variant="danger">
-                      {error?.data?.Message || error.error}
-                    </Message>
+                  {isLoading ? (
+                    <Loader />
+                  ) : (
+                    error && (
+                      <Message variant="danger">
+                        {error?.data?.message || error.error}
+                      </Message>
+                    )
                   )}
                 </ListGroup.Item>
 
@@ -235,8 +237,6 @@ const PlaceOrderScreen = () => {
                   >
                     {t('placeOrder')}
                   </Button>
-
-                  {isLoading && <Loader />}
                 </ListGroup.Item>
               </ListGroup>
             </Card>

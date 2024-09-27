@@ -31,7 +31,6 @@ const protect = asyncHandler(async (req, res, next) => {
       req.user = await User.findById(decoded.userId).select('-password');
       next();
     } catch (error) {
-      console.log(error);
       res.status(401);
       throw new Error('Not authorized, token failed.');
     }
@@ -61,4 +60,14 @@ const premium = asyncHandler(async (req, res, next) => {
   }
 });
 
-export { isAuthenticated, protect, admin, premium };
+const isAccountVerified = asyncHandler(async (req, res, next) => {
+  // check user
+  if (req.user && req.user.isEmailVerified) {
+    next();
+  } else {
+    res.status(401);
+    throw new Error('Action denied, email not verified');
+  }
+});
+
+export { isAuthenticated, isAccountVerified, protect, admin, premium };

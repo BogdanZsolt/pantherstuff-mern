@@ -3,9 +3,11 @@ import asyncHandler from '../middleware/asyncHandler.js';
 import User from '../models/userModel.js';
 import generateToken from '../utils/generateToken.js';
 import jwt from 'jsonwebtoken';
+import sendAccVerificationEmail from '../utils/sendAccVerificationEmail.js';
+import sendPasswordResetEmail from '../utils/sendPasswordResetEmail.js';
 
 // @desc    Auth user & get token
-// @route   POST /api/users/login
+// @route   POST /api/users/auth
 // @access  Public
 const authUser = asyncHandler(async (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
@@ -24,7 +26,10 @@ const authUser = asyncHandler(async (req, res, next) => {
       _id: user._id,
       name: user.name,
       email: user.email,
+      isEmailVerified: user.isEmailVerified,
       isAdmin: user.isAdmin,
+      isPremium: user.isPremium,
+      premiumExpiresAt: user.premiumExpiresAt,
     });
   })(req, res, next);
 });
@@ -49,17 +54,13 @@ const googleAuthUserCallback = asyncHandler(async (req, res, next) => {
     (err, user, info) => {
       if (err) return next(err);
       if (!user) {
-        if (process.env.NODE_ENV === 'development') {
-          return res.redirect('http://localhost:3000/google-login-error');
-        } else {
-          return res.redirect('https://pantherstuff.com/google-login-error');
-        }
+        return res.redirect(`${process.env.FRONTEND_URL}/google-login-error`);
       }
       // generate token
       generateToken(res, user?._id);
       // redirekt user
       if (process.env.NODE_ENV === 'development') {
-        res.redirect('http://localhost:3000/');
+        res.redirect(`process.env.FRONTEND_URL`);
       } else {
         res.redirect('/');
       }
@@ -108,7 +109,6 @@ const checkIsAdmin = asyncHandler(async (req, res) => {
   }
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    console.log(decoded);
     // find the user
     const user = await User.findById(decoded.userId);
     if (!user) {
@@ -344,6 +344,149 @@ const getAuthor = asyncHandler(async (req, res) => {
   res.status(200).json(author);
 });
 
+// @desc    verify email account send token
+// @route   PUT /api/users/account-verification-email
+// @access  Private
+const verifyEmailAccount = asyncHandler(async (req, res) => {
+  // find the login user
+  const user = await User.findById(req.user);
+  // const { origin: originUrl } = req.headers;
+
+  if (user) {
+    // Check if user email exists
+    if (user?.email) {
+      // use the method from the model
+      const token = await user.generateAccVerificationToken();
+      // resave the user
+      await user.save();
+      // send the email
+      const info = await sendAccVerificationEmail(
+        user?.email,
+        token,
+        process.env.FRONTEND_URL
+      );
+      if (!info) {
+        res.status(401).json({
+          status: 401,
+          message: 'Sending the letter failed',
+        });
+      } else {
+        res.status(200).json({
+          status: 200,
+          message: `Account verification email sent to your your email. Token expires in 10 minutes.`,
+        });
+      }
+    } else {
+      res.status(404);
+      throw new Error('Email not found');
+    }
+  } else {
+    res.status(404);
+    throw new Error('User not found');
+  }
+});
+
+// @desc    verify email account
+// @route   PUT /api/users/verify-account/:token
+// @access  Public
+// https://youtu.be/1KDV3VGAkYw?si=0jTpVxXsJlX6UFF4
+const verifyEmailAcc = asyncHandler(async (req, res) => {
+  // Get the token
+  const { verifyToken } = req.params;
+
+  // Find the user
+  const userFound = await User.findOne({
+    accountVerificationToken: verifyToken,
+    accountVerificationExpires: { $gt: Date.now() },
+  });
+  if (userFound) {
+    // Update the user field
+    userFound.isEmailVerified = true;
+    userFound.accountVerificationToken = null;
+    userFound.accountVerificationExpires = null;
+    await userFound.save();
+    res.status(200).json({ message: 'Account successfully verified' });
+  } else {
+    res.status(404);
+    throw new Error('Account verification token expires');
+  }
+});
+
+// @desc    forgot password (sending email token)
+// @route   POST /api/users/forgot-password
+// @access  Public
+const forgotPasswordEmailToken = asyncHandler(async (req, res) => {
+  // find the user email
+  const { email } = req.body;
+  // find the user
+  const user = await User.findOne({ email });
+  // const { origin: originUrl } = req.headers;
+
+  if (user) {
+    // Check if user email exists
+    if (user?.authMethod === 'local') {
+      // use the method from the model
+      const token = await user.generatePasswordResetToken();
+      // resave the user
+      await user.save();
+      // send the email
+      const info = await sendPasswordResetEmail(
+        user?.email,
+        token,
+        process.env.FRONTEND_URL
+      );
+      if (!info) {
+        res.status(401).json({
+          status: 401,
+          message: 'Sending the letter failed',
+        });
+      } else {
+        res.status(200).json({
+          status: 200,
+          message: `Password reset email sent ${email}. Token expires in 10 minutes.`,
+        });
+      }
+    } else {
+      res.status(404);
+      throw new Error('Please login with your social account');
+    }
+  } else {
+    res.status(404);
+    throw new Error(`User with email ${email} is not found in our database`);
+  }
+});
+
+// @desc    Reset password
+// @route   PUT /api/users/reset-password/:token
+// @access  Public
+const resetPassword = asyncHandler(async (req, res) => {
+  // Get the token
+  const { resetToken } = req.params;
+  // Verify new password
+  const { password } = req.body;
+
+  // Find the user
+  const userFound = await User.findOne({
+    passwordResetToken: resetToken,
+    passwordResetExpires: { $gt: Date.now() },
+  });
+  if (userFound) {
+    // Update the user field
+    if (password) {
+      userFound.password = password;
+    }
+    userFound.passwordResetToken = null;
+    userFound.passwordResetExpires = null;
+    await userFound.save();
+    res
+      .status(200)
+      .json({ status: 200, message: 'Password successfully reset' });
+  } else {
+    res.status(404);
+    throw new Error('Password reset token expires');
+  }
+});
+
 export {
   checkAuthenticated,
   checkIsAdmin,
@@ -360,4 +503,8 @@ export {
   deletetUser,
   updateUser,
   getAuthor,
+  verifyEmailAccount,
+  verifyEmailAcc,
+  forgotPasswordEmailToken,
+  resetPassword,
 };

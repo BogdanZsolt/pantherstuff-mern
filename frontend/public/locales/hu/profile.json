@@ -18,5 +18,8 @@
   "paid": "FIZETVE",
   "delivered": "LESZÁLLÍTOTT",
   "details": "Részletek",
+  "missingEmail": "Az e-mail címed hiányzik. Kérjük, add meg az oldalsávban lévő mezőben!",
+  "missingAccountVerify": "<1>Fiók ellenőrzés szükséges.</1><1>Fiókja nincs igazolva Kérjük <2>igazolja fiókját</2> a teljes hozzáféréshez!</1>",
+  "accountIsVerified": "Fiókod ellenőrzése megtörtént.",
   "": ""
 }

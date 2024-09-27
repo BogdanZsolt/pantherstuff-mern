@@ -131,10 +131,7 @@ const getOrderById = asyncHandler(async (req, res) => {
 const stripePayment = asyncHandler(async (req, res) => {
   // find the order
   const order = await Order.findById(req.params.id);
-  // console.log(order);
   // const { origin } = req.headers;
-
-  // console.log(origin);
 
   if (!order) {
     res.status(404);
@@ -147,7 +144,6 @@ const stripePayment = asyncHandler(async (req, res) => {
   // Create payment intent/making the payment
   try {
     const amount = parseInt(order.totalPrice * 100);
-    // console.log(amount);
     const paymentIntent = await stripe.paymentIntents.create({
       amount: amount,
       currency: order.language === 'hu' ? 'huf' : 'eur',
@@ -228,7 +224,6 @@ const stripeVerify = asyncHandler(async (req, res) => {
     if (membership) {
       const plan = await Plan.findById(membership.product);
       if (!userFound.premiumExpiresAt) {
-        console.log('előfizet');
         userFound.premiumExpiresAt = addTimeToDate(
           new Date(),
           plan.timeLimitMeasure,
@@ -236,14 +231,12 @@ const stripeVerify = asyncHandler(async (req, res) => {
         );
       } else {
         if (userFound.premiumExpiresAt <= Date.now()) {
-          console.log('lejárt hosszabbít');
           userFound.premiumExpiresAt = addTimeToDate(
             new Date(),
             plan.timeLimitMeasure,
             plan.timeLimitQty
           );
         } else {
-          console.log('hosszabbít');
           userFound.premiumExpiresAt = addTimeToDate(
             new Date(userFound.premiumExpiresAt),
             plan.timeLimitMeasure,

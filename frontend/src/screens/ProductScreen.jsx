@@ -151,7 +151,23 @@ const ProductScreen = () => {
   };
 
   const addToWishListHandler = () => {
-    dispatch(toggleWishList({ ...product, type: 'product' }));
+    const { _id, name, currentPrice, thumbnails } = product;
+    const name_hu = product.translations?.hu?.name || product.name;
+    const currentPrice_hu =
+      product.translations?.hu?.currentPrice || product.currentPrice;
+    const thumbnail = thumbnails[0];
+    const type = 'product';
+    dispatch(
+      toggleWishList({
+        _id,
+        type,
+        name,
+        name_hu,
+        currentPrice,
+        currentPrice_hu,
+        thumbnail,
+      })
+    );
   };
 
   const hasReview = () => {

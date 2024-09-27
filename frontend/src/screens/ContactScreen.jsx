@@ -10,6 +10,8 @@ import {
 import SocialMenu from '../components/SocialMenu';
 import ContactEmailForm from '../components/ContactEmailForm';
 import { useTranslation } from 'react-i18next';
+import { useCreateContactMessageMutation } from '../slices/contactMessageApiSlice.js';
+import { toast } from 'react-toastify';
 
 const ContactScreen = () => {
   const { t } = useTranslation(['contact']);
@@ -19,8 +21,29 @@ const ContactScreen = () => {
   const [telephone, setTelephone] = useState('');
   const [message, setMessage] = useState('');
 
-  const messageHandler = (e) => {
+  const [createContactMessage, { isLoading }] =
+    useCreateContactMessageMutation();
+
+  const messageHandler = async (e) => {
     e.preventDefault();
+    try {
+      const contactMess = await createContactMessage({
+        name,
+        email,
+        telephone,
+        message,
+        to: import.meta.env.VITE_OWNER_EMAIL,
+      }).unwrap();
+      if (contactMess) {
+        setName('');
+        setEmail('');
+        setTelephone('');
+        setMessage('');
+        toast.success(t('yourMessageHasBeenForwarded'));
+      }
+    } catch (err) {
+      toast.error(err?.data?.message || err.message);
+    }
   };
 
   return (
@@ -92,6 +115,7 @@ const ContactScreen = () => {
               message={message}
               setMessage={setMessage}
               messageHandler={messageHandler}
+              loader={isLoading}
             />
           </Col>
         </Row>

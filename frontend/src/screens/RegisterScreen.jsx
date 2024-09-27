@@ -29,7 +29,7 @@ const RegisterScreen = () => {
   const redirect = sp.get('redirect') || '/';
 
   useEffect(() => {
-    if (userAuth) {
+    if (userAuth && userAuth.isAuthenticated) {
       navigate(redirect);
     }
   }, [userAuth, redirect, navigate]);

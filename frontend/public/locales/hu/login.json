@@ -11,6 +11,15 @@
   "enterName": "Add meg a neved",
   "confirmPassword": "Jelszó megerősítése",
   "register": "Regisztráció",
-  "signInWithGoogle": "Bejelentkezés Google-lal",
+  "signInWithGoogle": "Google Bejelentkezés",
+  "forgotPassword": "Elfelejtett jelszó?",
+  "passwordResetRequest": "Jelszó-visszaállítási kérés",
+  "passwordReset": "Jelszó visszaállítása",
+  "send": "Elküld",
+  "emailSendingIsSuccessful": "Email küldés sikeres",
+  "passwordResetEmail": "Jelszó-visszaállítási e-mailt küldtünk a megadott email címedre. Kérjük nézd meg. A token 10 percen belül lejár.",
+  "goingOn": "Tovább",
+  "passwordDoNotMatch": "A jelszó és a megerősítő jelszó nem egyezik",
+  "theSpecifiedPassword": "A megadott jelszó beállítása sikeresen megtörtént",
   "": ""
 }

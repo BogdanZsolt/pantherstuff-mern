@@ -550,7 +550,23 @@ table th {
   object-fit: cover;
 }
 
-.slider .title-info {
+.account-verify,
+.password-reset-req,
+.password-reset {
+  position: relative;
+}
+
+.password-reset-req,
+.password-reset {
+  /* margin-top: 3rem; */
+  /* height: 25rem; */
+  height: 20rem;
+}
+
+.slider .title-info,
+.account-verify .title-info,
+.password-reset-req .title-info,
+.password-reset-req {
   background-color: var(--bs-primary);
 }
 
@@ -560,7 +576,10 @@ table th {
   max-width: var(--mx-width, 75rem);
 }
 
-.slider .title-info .title-wrap {
+.slider .title-info .title-wrap,
+.account-verify .title-info .title-wrap,
+.password-reset-req .title-info .title-wrap,
+.password-reset .title-info .title-wrap {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -572,6 +591,13 @@ table th {
   text-align: center;
   overflow: hidden;
   border-radius: var(--bs-border-radius-lg);
+}
+
+.account-verify .title-info .title-wrap,
+.password-reset-req .title-info .title-wrap,
+.password-reset .title-info .title-wrap {
+  margin-bottom: 0;
+  gap: 0;
 }
 
 .slider .custom-pagination {
@@ -990,12 +1016,14 @@ table th {
 }
 
 .product-tab .nav-link,
-.supply-tab .nav-link {
+.supply-tab .nav-link,
+.profile-tab .nav-link {
   --bs-nav-link-color: var(--bs-secondary);
 }
 
 .product-tab.nav-tabs .nav-link,
-.supply-tab.nav-tabs .nav-link {
+.supply-tab.nav-tabs .nav-link,
+.profile-tab.nav-tabs .nav-link {
   margin-bottom: 0;
   border: none;
   border-bottom: 3px solid transparent;
@@ -1003,7 +1031,8 @@ table th {
 }
 
 .product-tab.nav-tabs .nav-link.active,
-.supply-tab.nav-tabs .nav-link.active {
+.supply-tab.nav-tabs .nav-link.active,
+.profile-tab.nav-tabs .nav-link.active {
   border-color: var(--bs-secondary);
 }
 
@@ -1862,7 +1891,10 @@ table th {
     height: 100vh;
   }
 
-  .slider .title-info {
+  .slider .title-info,
+  .account-verify .title-info,
+  .password-reset-req .title-info,
+  .password-reset .title-info {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -1870,14 +1902,20 @@ table th {
     background-color: transparent;
   }
 
-  .slider .title-info .title-wrap {
+  .slider .title-info .title-wrap,
+  .account-verify .title-info .title-wrap,
+  .password-reset-req .title-info .title-wrap,
+  .password-reset .title-info .title-wrap {
     position: relative;
     background-color: rgba(var(--bs-primary-rgb), 0.1);
     backdrop-filter: blur(10px);
     border: 2px solid rgba(var(--bs-primary-rgb), 0.6);
   }
 
-  .slider .title-info .title-wrap::after {
+  .slider .title-info .title-wrap::after,
+  .account-verify .title-info .title-wrap::after,
+  .password-reset-req .title-info .title-wrap::after,
+  .password-reset .title-info .title-wrap::after {
     content: '';
     position: absolute;
     top: 0;
@@ -1901,7 +1939,10 @@ table th {
     font-size: 1.75rem;
   }
 
-  .slider .title-info {
+  .slider .title-info,
+  .account-verify .title-info,
+  .password-reset-req .title-info,
+  .password-reset .title-info {
     z-index: 2;
   }
 

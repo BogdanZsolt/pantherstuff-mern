@@ -29,7 +29,7 @@ export const faqCategoriesApiSlice = apiSlice.injectEndpoints({
         method: 'PUT',
         body: data,
       }),
-      invalidatesTags: ['FaqCategories'],
+      invalidatesTags: ['FaqCategory'],
     }),
     deleteFaqCategory: builder.mutation({
       query: (faqId) => ({

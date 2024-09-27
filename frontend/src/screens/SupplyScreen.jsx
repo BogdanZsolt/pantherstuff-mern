@@ -139,7 +139,23 @@ const SupplyScreen = () => {
   };
 
   const addToWishListHandler = () => {
-    dispatch(toggleWishList({ ...supply, type: 'supply' }));
+    const { _id, name, currentPrice, thumbnails } = supply;
+    const name_hu = supply.translations?.hu?.name || supply.name;
+    const currentPrice_hu =
+      supply.translations?.hu?.currentPrice || supply.currentPrice;
+    const thumbnail = thumbnails[0];
+    const type = 'supply';
+    dispatch(
+      toggleWishList({
+        _id,
+        type,
+        name,
+        name_hu,
+        currentPrice,
+        currentPrice_hu,
+        thumbnail,
+      })
+    );
   };
 
   const isWishListed = () => {
