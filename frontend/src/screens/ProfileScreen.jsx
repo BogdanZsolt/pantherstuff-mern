@@ -47,9 +47,9 @@ const ProfileScreen = () => {
   const [
     sendEmailVerificationToken,
     {
-      data: sendVerifyEmailData,
       isLoading: sendVerifyEmailIsLoading,
       isError: sendVerifyEmailIsError,
+      error: sendVerifyEmailError,
       isSuccess: sendVerifyEmailIsSuccess,
     },
   ] = useSendEmailVerificationTokenMutation();
@@ -161,11 +161,13 @@ const ProfileScreen = () => {
                 {sendVerifyEmailIsLoading ? (
                   <Message variant="danger">Email sending loading...</Message>
                 ) : sendVerifyEmailIsError ? (
-                  <Message variant="danger">{sendVerifyEmailData}</Message>
+                  <Message variant="danger">
+                    {sendVerifyEmailError.data.message}
+                  </Message>
                 ) : (
                   sendVerifyEmailIsSuccess && (
                     <Message variant="success">
-                      {sendVerifyEmailData.message}
+                      {t('accountVerificationEmailSuccess')}
                     </Message>
                   )
                 )}

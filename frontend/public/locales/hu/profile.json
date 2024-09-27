@@ -20,6 +20,10 @@
   "details": "Részletek",
   "missingEmail": "Az e-mail címed hiányzik. Kérjük, add meg az oldalsávban lévő mezőben!",
   "missingAccountVerify": "<1>Fiók ellenőrzés szükséges.</1><1>Fiókja nincs igazolva Kérjük <2>igazolja fiókját</2> a teljes hozzáféréshez!</1>",
+  "accountVerificationEmailSuccess": "Fiókellenőrző e-mailt küldtünk az Ön e-mail címére. A token 10 percen belül lejár.",
+  "accountVerified": "Fiók ellenőrizve",
+  "yourAccountHasBeenSuccessfullyVerified": "Fiókod sikeresen ellenőrízve lett!",
+  "goToProfile": "Ugrás a profilra",
   "accountIsVerified": "Fiókod ellenőrzése megtörtént.",
   "": ""
 }

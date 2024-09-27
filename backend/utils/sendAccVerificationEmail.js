@@ -25,6 +25,7 @@ const sendAccVerificationEmail = async (to, token, url) => {
     };
     // send the email
     const info = await transporter.sendMail(message);
+    return info;
   } catch (err) {
     throw new Error(err.message);
   }

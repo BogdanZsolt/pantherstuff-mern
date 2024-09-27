@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-// import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { Button, Container } from 'react-bootstrap';
 import Message from './Message';
 import Banner from './Banner';
@@ -14,6 +14,7 @@ import {
 import { isAuthenticated } from '../slices/authSlice';
 
 const AccountVerification = () => {
+  const { t } = useTranslation(['profile']);
   const [isVisible, setIsVisible] = useState(false);
   const { verifyToken } = useParams();
 
@@ -70,7 +71,7 @@ const AccountVerification = () => {
                         variant="success"
                         className="text-primary btn-lasaphire"
                       >
-                        Go to profile
+                        {t('goToProfile')}
                       </Button>
                     </>
                   ) : (
@@ -78,17 +79,17 @@ const AccountVerification = () => {
                       <>
                         <div className="d-flex align-items-stretch">
                           <FaCheckCircle className="fs-2 me-1 pt-0 text-success-emphasis" />
-                          <h3 className="fw-bold">Account Verified</h3>
+                          <h3 className="fw-bold">{t('accountVerified')}</h3>
                         </div>
                         <p className="lead">
-                          Your account has been successfully verified!
+                          {t('yourAccountHasBeenSuccessfullyVerified')}
                         </p>
                         <Button
                           onClick={gotoHandler}
                           variant="success"
                           className="text-primary btn-lasaphire"
                         >
-                          Go to profile
+                          {t('goToProfile')}
                         </Button>
                       </>
                     )
