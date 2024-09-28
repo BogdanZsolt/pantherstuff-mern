@@ -7,8 +7,6 @@ import { Outlet, Navigate } from 'react-router-dom';
 const AdminScreen = () => {
   const { userAuth } = useSelector((state) => state.auth);
 
-  console.log(userAuth);
-
   return (
     <Container fluid>
       {userAuth &&

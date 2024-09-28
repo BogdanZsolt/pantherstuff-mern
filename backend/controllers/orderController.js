@@ -4,6 +4,7 @@ import Plan from '../models/planModel.js';
 import Product from '../models/productModel.js';
 import Supply from '../models/supplyModel.js';
 import User from '../models/userModel.js';
+import { getAll } from './handlerFactory.js';
 import { calcPrices } from '../utils/calcPrices.js';
 import Stripe from 'stripe';
 import { addTimeToDate } from '../utils/dateTools.js';
@@ -12,6 +13,8 @@ import {
   getSubscriber,
   createSubscriber,
 } from '../utils/mailerTools.js';
+
+const productsPopOption = [{ path: 'user', select: ['id name'] }];
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -301,10 +304,11 @@ const updateOrderToDelivered = asyncHandler(async (req, res) => {
 // @desc    Get all orders
 // @route   GET /api/orders
 // @access  Private/Admin
-const getOrders = asyncHandler(async (req, res) => {
-  const orders = await Order.find({}).populate('user', 'id name');
-  res.status(200).json(orders);
-});
+const getOrders = getAll(Order, productsPopOption);
+// const getOrders = asyncHandler(async (req, res) => {
+//   const orders = await Order.find({}).populate('user', 'id name');
+//   res.status(200).json(orders);
+// });
 
 export {
   addOrderItems,

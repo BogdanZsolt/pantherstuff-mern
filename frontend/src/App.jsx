@@ -24,6 +24,8 @@ import {
   MePetraScreen,
   OrderListScreen,
   OrderScreen,
+  MessageListScreen,
+  MessageScreen,
   PaymentCompleteScreen,
   PaymentScreen,
   PlaceOrderScreen,
@@ -433,8 +435,24 @@ const App = () => {
               element: <OrderListScreen />,
             },
             {
+              path: 'orderlist/page/:pageNumber',
+              element: <OrderListScreen />,
+            },
+            {
               path: 'order/:id',
               element: <AdminOrderScreen />,
+            },
+            {
+              path: 'messagelist',
+              element: <MessageListScreen />,
+            },
+            {
+              path: 'messagelist/page/:pageNumber',
+              element: <MessageListScreen />,
+            },
+            {
+              path: 'message/:id',
+              element: <MessageScreen />,
             },
             {
               path: 'subscriberlist',

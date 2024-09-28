@@ -154,6 +154,12 @@ export const OrderListScreen = lazy(() =>
 export const AdminOrderScreen = lazy(() =>
   import('./screens/admin/OrderScreen.jsx')
 );
+export const MessageListScreen = lazy(() =>
+  import('./screens/admin/MessageListScreen.jsx')
+);
+export const MessageScreen = lazy(() =>
+  import('./screens/admin/MessageScreen.jsx')
+);
 export const SubscriberListScreen = lazy(() =>
   import('./screens/admin/SubscriberListScreen.jsx')
 );

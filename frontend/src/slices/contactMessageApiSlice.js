@@ -11,8 +11,8 @@ export const contactMessageApiSlice = apiSlice.injectEndpoints({
       keepUnusedDataFor: 5,
     }),
     getContactMessageDetails: builder.query({
-      query: (id) => ({
-        url: `${CONTACTMESSAGES_URL}/${id}`,
+      query: (messageId) => ({
+        url: `${CONTACTMESSAGES_URL}/${messageId}`,
       }),
       keepUnusedDataFor: 5,
     }),

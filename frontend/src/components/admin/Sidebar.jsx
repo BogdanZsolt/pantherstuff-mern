@@ -397,6 +397,40 @@ const Sidebar = () => {
           <Nav.Item>
             <Dropdown.Toggle
               className="nav-link d-flex align-items-center text-primary"
+              onClick={() => setOpen(open === 'messages' ? '' : 'messages')}
+              aria-controls="messages-collapse"
+              aria-expanded={open}
+            >
+              <BsTable className="fs-4" />
+              <span className="ms-2 fs-4 d-none d-md-inline-flex">
+                Messages
+              </span>
+            </Dropdown.Toggle>
+            <div className="d-none d-md-block">
+              <Collapse in={open === 'messages'}>
+                <Nav id="messages-collapse" className="flex-nowrap flex-column">
+                  <Nav.Item className="ms-4 p-2">
+                    <Link className="text-primary my-2" to="/admin/messagelist">
+                      <span>All messages</span>
+                    </Link>
+                  </Nav.Item>
+                </Nav>
+              </Collapse>
+            </div>
+            <div className="d-block d-md-none dropdown-menu__container">
+              <Dropdown.Menu show={open === 'messages'}>
+                <Dropdown.Item>
+                  <Link to="/admin/messagelist">
+                    <span>All messages</span>
+                  </Link>
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </div>
+          </Nav.Item>
+
+          <Nav.Item>
+            <Dropdown.Toggle
+              className="nav-link d-flex align-items-center text-primary"
               onClick={() =>
                 setOpen(open === 'subscribers' ? '' : 'subscribers')
               }
