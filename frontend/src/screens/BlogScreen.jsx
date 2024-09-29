@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, CardGroup } from 'react-bootstrap';
 import Loader from '../components/Loader';
 import Banner from '../components/Banner';
 import Meta from '../components/Meta';
@@ -60,23 +60,22 @@ const BlogScreen = () => {
           <Banner src="/images/ecoprint-03-1280x360.webp" title={t('blog')} />
           <Meta title={t('blog')} />
           <Container>
-            <Row style={{ '--bs-gutter-y': '1.5rem' }}>
+            <CardGroup className="blog text-center" style={{ gap: '1rem' }}>
               {posts.data.map((post) => (
-                <Col lg={6} xxl={4} key={post._id}>
-                  <Post
-                    src={
-                      post.bannerImage ? post.bannerImage : '/images/sample.jpg'
-                    }
-                    postId={post._id}
-                    title={post.title}
-                    description={post.description}
-                    author={post.user}
-                    date={post.createdAt}
-                    category={post?.category}
-                  />
-                </Col>
+                <Post
+                  key={post._id}
+                  src={
+                    post.bannerImage ? post.bannerImage : '/images/sample.jpg'
+                  }
+                  postId={post._id}
+                  title={post.title}
+                  description={post.description}
+                  author={post.user}
+                  date={post.createdAt}
+                  category={post?.category}
+                />
               ))}
-            </Row>
+            </CardGroup>
             <Paginate pages={pages} page={page} pageName="blog" />
           </Container>
         </>

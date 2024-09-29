@@ -1,51 +1,57 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Image } from 'react-bootstrap';
+import { Card, Image } from 'react-bootstrap';
+import { toLocalDate } from '../utils/converter';
 // import { RiArrowRightSLine } from 'react-icons/ri';
 
 const Post = ({ postId, src, category, author, title, description, date }) => {
   const { t, i18n } = useTranslation(['blog']);
 
   return (
-    <article className="blog-post">
-      <strong
-        className="d-inline-block mb-2 text-primary-emphasis"
-        style={{ fontSize: '1.25rem' }}
+    <Card>
+      <Card.Header
+        as="strong"
+        className="text-primary-emphasis text-start lead d-inline-block"
       >
         <Link to={category?._id ? `/category/${category?._id}` : ''}>
-          {i18n.language === 'en'
-            ? category?.title
+          <b>
+            {i18n.language === 'en'
               ? category?.title
-              : 'Uncategorized'
-            : category?.translations?.hu?.title
-            ? category?.translations?.hu?.title
-            : t('uncategorized')}
+                ? category?.title
+                : 'Uncategorized'
+              : category?.translations?.hu?.title
+              ? category?.translations?.hu?.title
+              : t('uncategorized')}
+          </b>
         </Link>
-      </strong>
+      </Card.Header>
       <div className="post-image-wrapper">
         <Image src={src} className="post-image" />
-        <h2 className="title display-5 link-body-emphasis mb-2">{title}</h2>
+        <h3 className="title fs-2 link-body-emphasis mb-2">{title}</h3>
       </div>
-      <p className="blog-post-meta">
-        <span className="fw-bold">
-          {new Date(date).toLocaleDateString('hu-HU', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-          })}
-        </span>
-        <span className="mx-1">by</span>
-        <Link to={`/author/${author?._id}`} className="fw-bold">
-          {author?.name}
-        </Link>
-      </p>
-      <p className="lead">{description}</p>
-      <p className="lead mb-0">
-        <Link to={`/post/${postId}`} className="text-body-emphasis fw-bold">
+      <Card.Body>
+        <p className="blog-post-meta">
+          <span className="fw-bold">{toLocalDate(i18n.language, date)}</span>
+          <span className="mx-1">by</span>
+          <Link to={`/author/${author?._id}`} className="fw-bold">
+            {author?.name}
+          </Link>
+        </p>
+        <Card.Text as="p" className="lead text-start">
+          {description}
+        </Card.Text>
+      </Card.Body>
+      <Card.Footer>
+        <Link
+          to={`/post/${postId}`}
+          className="lead text-body-emphasis fw-bold text-start"
+        >
           {t('continueReading')}...
         </Link>
-      </p>
-    </article>
+      </Card.Footer>
+
+      {/* <p className="lead mb-0"></p> */}
+    </Card>
   );
 };
 

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, CardGroup } from 'react-bootstrap';
 import Post from './Post';
 import Message from './Message';
 import Loader from './Loader';
@@ -43,22 +43,21 @@ const LatestPosts = () => {
           {error?.data?.message || error.error}
         </Message>
       ) : (
-        <Row>
+        <CardGroup className="home-blog text-center" style={{ gap: '1rem' }}>
           {posts.data.map((post) => (
-            <Col md={6} xl={4} key={post._id}>
-              <Post
-                className="post-card"
-                src={post.bannerImage ? post.bannerImage : '/images/sample.jpg'}
-                postId={post._id}
-                title={post.title}
-                description={post.description}
-                author={post.user}
-                date={post.createdAt}
-                category={post?.category}
-              />
-            </Col>
+            <Post
+              key={post._id}
+              className="post-card"
+              src={post.bannerImage ? post.bannerImage : '/images/sample.jpg'}
+              postId={post._id}
+              title={post.title}
+              description={post.description}
+              author={post.user}
+              date={post.createdAt}
+              category={post?.category}
+            />
           ))}
-        </Row>
+        </CardGroup>
       )}
     </Container>
   );

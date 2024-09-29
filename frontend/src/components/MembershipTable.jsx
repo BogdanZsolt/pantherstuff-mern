@@ -56,7 +56,7 @@ const MembershipTable = () => {
           {error?.data?.message || error.error}
         </Message>
       ) : (
-        <CardGroup className="text-center" style={{ gap: '1rem' }}>
+        <CardGroup className="home-blog text-center" style={{ gap: '1rem' }}>
           {plans.data.map((plan) => (
             <Card
               key={plan._id}

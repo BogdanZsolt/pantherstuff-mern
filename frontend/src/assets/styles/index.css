@@ -1101,6 +1101,7 @@ table th {
 
 .blog-post-meta {
   margin-bottom: 1.25rem;
+  text-align: left;
 }
 
 .post-image-wrapper {
@@ -1812,6 +1813,16 @@ table th {
 .google-btn__icon svg {
   vertical-align: unset;
   margin-right: 0.25rem;
+}
+
+@media (min-width: 576px) {
+  .blog.card-group > .card {
+    flex: 1 0 25rem;
+  }
+
+  .home-blog.card-group > .card {
+    flex: 1 0 15.625rem;
+  }
 }
 
 @media (min-width: 600px) {
