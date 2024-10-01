@@ -20,12 +20,29 @@ const ContactScreen = () => {
   const [email, setEmail] = useState('');
   const [telephone, setTelephone] = useState('');
   const [message, setMessage] = useState('');
+  const [captchaInput, setCaptchaInput] = useState('');
+  const [captchaValue, setCaptchaValue] = useState(null);
 
   const [createContactMessage, { isLoading }] =
     useCreateContactMessageMutation();
 
+  const removeSpan = (val) => {
+    // const capt = val.indexOf('">') + 1;
+    return val
+      .split('</span>')
+      .map((item) => item[item.length - 1])
+      .join('');
+  };
+
   const messageHandler = async (e) => {
     e.preventDefault();
+    const cap = removeSpan(captchaValue);
+    if (cap !== captchaInput) {
+      setCaptchaValue(null);
+      setCaptchaInput('');
+      toast.error('Entered captch is not correct');
+      return;
+    }
     try {
       const contactMess = await createContactMessage({
         name,
@@ -39,6 +56,7 @@ const ContactScreen = () => {
         setEmail('');
         setTelephone('');
         setMessage('');
+        setCaptchaInput('');
         toast.success(t('yourMessageHasBeenForwarded'));
       }
     } catch (err) {
@@ -115,6 +133,10 @@ const ContactScreen = () => {
               message={message}
               setMessage={setMessage}
               messageHandler={messageHandler}
+              captchaInput={captchaInput}
+              setCaptchaInput={setCaptchaInput}
+              captchaValue={captchaValue}
+              setCaptchaValue={setCaptchaValue}
               loader={isLoading}
             />
           </Col>

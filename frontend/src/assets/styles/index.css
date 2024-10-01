@@ -1815,6 +1815,23 @@ table th {
   margin-right: 0.25rem;
 }
 
+.captcha .preview {
+  display: flex;
+  color: var(--bs-secondary);
+  margin-bottom: 0.5rem;
+  justify-content: center;
+  align-items: center;
+  height: 2.5rem;
+  padding-inline: 0.5rem;
+  letter-spacing: 0.5rem;
+  border: 1px solid var(--bs-secondary);
+}
+
+.captcha .preview span {
+  display: inline-block;
+  user-select: none;
+}
+
 @media (min-width: 576px) {
   .blog.card-group > .card {
     flex: 1 0 25rem;

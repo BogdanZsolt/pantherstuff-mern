@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import {
   Container,
   Row,
@@ -6,10 +5,12 @@ import {
   Form,
   FloatingLabel,
   Button,
+  // FormControl,
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import ReCAPTCHA from 'react-google-recaptcha';
+// import ReCAPTCHA from 'react-google-recaptcha';
 import Loader from './Loader';
+import PantherCaptcha from './PantherCaptcha';
 
 const ContactEmailForm = ({
   name,
@@ -21,14 +22,17 @@ const ContactEmailForm = ({
   message,
   setMessage,
   messageHandler,
+  captchaInput,
+  setCaptchaInput,
+  captchaValue,
+  setCaptchaValue,
   loader,
 }) => {
-  const { t, i18n } = useTranslation(['contact']);
-  const [capVal, setCapVal] = useState(null);
+  const { t } = useTranslation(['contact']);
 
-  window.recaptchaOptions = {
-    lang: 'hu',
-  };
+  // window.recaptchaOptions = {
+  //   lang: 'hu',
+  // };
 
   return (
     <Container fluid>
@@ -87,18 +91,25 @@ const ContactEmailForm = ({
                 type="submit"
                 variant="success"
                 className="text-primary btn-lasaphire"
-                disabled={!capVal}
+                disabled={captchaInput === ''}
               >
                 {t('formSend')}
               </Button>
             </Col>
-            <div>
+            <PantherCaptcha
+              captchaValue={captchaValue}
+              setCaptchaValue={setCaptchaValue}
+              captchaInput={captchaInput}
+              setCaptchaInput={setCaptchaInput}
+            />
+            {/* <div>
               <ReCAPTCHA
                 hl={i18n.language}
                 onChange={(val) => setCapVal(val)}
                 sitekey={import.meta.env.VITE_GOOGLE_RECAPTCHA}
-              />
-            </div>
+              />import { InputGroup } from 'react-bootstrap';
+
+            </div> */}
           </div>
           {loader && <Loader />}
         </Form>
