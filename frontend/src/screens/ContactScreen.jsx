@@ -26,18 +26,17 @@ const ContactScreen = () => {
   const [createContactMessage, { isLoading }] =
     useCreateContactMessageMutation();
 
-  const removeSpan = (val) => {
-    // const capt = val.indexOf('">') + 1;
-    return val
-      .split('</span>')
-      .map((item) => item[item.length - 1])
-      .join('');
-  };
+  // const removeSpan = (val) => {
+  //   // const capt = val.indexOf('">') + 1;
+  //   return val
+  //     .split('</span>')
+  //     .map((item) => item[item.length - 1])
+  //     .join('');
+  // };
 
   const messageHandler = async (e) => {
     e.preventDefault();
-    const cap = removeSpan(captchaValue);
-    if (cap !== captchaInput) {
+    if (captchaValue !== captchaInput) {
       setCaptchaValue(null);
       setCaptchaInput('');
       toast.error('Entered captch is not correct');
@@ -57,6 +56,7 @@ const ContactScreen = () => {
         setTelephone('');
         setMessage('');
         setCaptchaInput('');
+        setCaptchaValue(null);
         toast.success(t('yourMessageHasBeenForwarded'));
       }
     } catch (err) {

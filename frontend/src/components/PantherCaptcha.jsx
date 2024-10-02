@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, Form, InputGroup } from 'react-bootstrap';
 import { MdRefresh } from 'react-icons/md';
 import parse from 'html-react-parser';
@@ -9,6 +9,8 @@ const PantherCaptcha = ({
   captchaInput,
   setCaptchaInput,
 }) => {
+  const [captchaHtml, setCaptchaHtml] = useState(null);
+
   const generateCaptcha = () => {
     let value = btoa(Math.random() * 1000000000);
     value = value.substring(0, 5 + Math.random() * 5);
@@ -17,6 +19,7 @@ const PantherCaptcha = ({
 
   const setCaptcha = (val) => {
     const fonts = ['cursive', 'sans-serif', 'serif', 'monospace'];
+    console.log(val);
     let html = val
       .split('')
       .map((char) => {
@@ -32,16 +35,18 @@ const PantherCaptcha = ({
   useEffect(() => {
     if (!captchaValue) {
       const val = generateCaptcha();
+      setCaptchaValue(val);
       const cap = setCaptcha(val);
-      setCaptchaValue(cap);
+      setCaptchaHtml(cap);
     }
-  }, [captchaValue, setCaptchaValue]);
+  }, [captchaValue, setCaptchaValue, setCaptchaHtml]);
 
   const refreshHandler = () => {
     const val = generateCaptcha();
-    const cap = setCaptcha(val);
-    setCaptchaValue(cap);
+    setCaptchaValue(val);
     setCaptchaInput('');
+    const cap = setCaptcha(val);
+    setCaptchaHtml(cap);
   };
 
   const captchaInputHandler = (e) => {
@@ -55,7 +60,7 @@ const PantherCaptcha = ({
   return (
     <div className="captcha">
       <Form.Label>Enter captcha</Form.Label>
-      <div className="preview">{captchaValue && parse(captchaValue)}</div>
+      <div className="preview">{captchaValue && parse(captchaHtml)}</div>
       <InputGroup className="captcha-form">
         <Form.Control
           type="text"

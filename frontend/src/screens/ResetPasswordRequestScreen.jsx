@@ -36,6 +36,32 @@ const ResetPasswordRequestScreen = () => {
     }
   };
 
+  // useEffect(() => {
+  //   const elements = document.getElementsByTagName('INPUT');
+  //   console.log(elements);
+  //   for (var i = 0; i < elements.length; i++) {
+  //     elements[i].addEventListener('DOMContentLoaded', (e) => {
+  //       console.log(e);
+  //     });
+  //   }
+  // }, []);
+  // useEffect(() => {
+  //   document.addEventListener('DOMContentLoaded', function () {
+  //     var elements = document.getElementsByTagName('INPUT');
+  //     for (var i = 0; i < elements.length; i++) {
+  //       elements[i].oninvalid = function (e) {
+  //         e.target.setCustomValidity('');
+  //         if (!e.target.validity.valid) {
+  //           e.target.setCustomValidity('الرجاء ملء هذا الحقل');
+  //         }
+  //       };
+  //       elements[i].oninput = function (e) {
+  //         e.target.setCustomValidity('');
+  //       };
+  //     }
+  //   });
+  // }, []);
+
   return (
     <>
       <Banner

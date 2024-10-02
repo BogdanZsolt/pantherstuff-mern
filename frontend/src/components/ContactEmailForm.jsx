@@ -91,8 +91,11 @@ const ContactEmailForm = ({
                 type="submit"
                 variant="success"
                 className="text-primary btn-lasaphire"
-                disabled={captchaInput === ''}
+                disabled={
+                  captchaValue && captchaInput.length !== captchaValue.length
+                }
               >
+                {captchaInput.length}
                 {t('formSend')}
               </Button>
             </Col>
