@@ -60,7 +60,7 @@ const googleAuthUserCallback = asyncHandler(async (req, res, next) => {
       generateToken(res, user?._id);
       // redirekt user
       if (process.env.NODE_ENV === 'development') {
-        res.redirect(`process.env.FRONTEND_URL`);
+        res.redirect(`${process.env.FRONTEND_URL}`);
       } else {
         res.redirect('/');
       }

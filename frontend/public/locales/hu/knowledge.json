@@ -1,7 +1,7 @@
 {
   "membership": "Tagság",
   "free": "Ingyenes",
-  "price": "{{price}}/<1>hó</1>",
+  "price": "{{price}}/<1>{{unit}}</1>",
   "priceYr": "{{priceYr}}/<1>év</1> ({{price}}/<1>hó</1>)",
   "monthly": "Havi",
   "annual": "Éves",
@@ -20,5 +20,11 @@
   "accessToClosedPro": "Hozzáférés zárt, pro oktatási anyagokhoz",
   "addToCart": "kosárba tesz",
   "register": "Regisztráció",
+  "year": "év",
+  "month": "hónap",
+  "weak": "hét",
+  "day": "nap",
+  "hour": "óra",
+  "minute": "perc",
   "": ""
 }

@@ -60,7 +60,7 @@ const MembershipTable = () => {
           {plans.data.map((plan) => (
             <Card
               key={plan._id}
-              className="mb-4 rounded-3 shadow"
+              className="mb-4 rounded-3 shadow card-glass-container"
               style={
                 plan.recommended
                   ? { border: '5px solid rgba(var(--bs-success-rgb), 0.4)' }
@@ -68,19 +68,21 @@ const MembershipTable = () => {
               }
             >
               <Card.Header
-                as="h4"
-                className="py-3 my-0 fw-normal"
+                as="div"
+                className="py-3 my-0 fw-normal card-glass"
                 style={
                   plan.recommended
                     ? {
-                        backgroundColor: 'rgba(var(--bs-success-rgb), 0.2)',
+                        '--glass-bg': 'var(--bs-success-rgb)',
                       }
                     : {}
                 }
               >
-                {i18n.language === 'en'
-                  ? plan.name
-                  : plan.translations?.hu?.name || plan.name}
+                <h4 className="m-0">
+                  {i18n.language === 'en'
+                    ? plan.name
+                    : plan.translations?.hu?.name || plan.name}
+                </h4>
               </Card.Header>
               <Card.Body>
                 <Card.Title as="h3" className="pricing-card-title">
@@ -93,6 +95,7 @@ const MembershipTable = () => {
                           : plan.translations?.hu?.currentPrice ||
                               plan.currentPrice
                       ),
+                      unit: t(plan.timeLimitMeasure),
                     }}
                     components={{ 1: <small /> }}
                   >
@@ -117,7 +120,9 @@ const MembershipTable = () => {
                     ? { backgroundColor: 'rgba(var(--bs-success-rgb), 0.2)' }
                     : {}
                 }
+                className="card-glass"
               >
+                <div className="card-overlay"></div>
                 <Button
                   className={`btn btn-lasaphire ${
                     plan.recommended && 'btn-success'

@@ -1,7 +1,7 @@
 {
   "membership": "Membership",
   "free": "Free",
-  "price": "{{price}}/<1>Mo</1>",
+  "price": "{{price}}/<1>{{unit}}</1>",
   "priceYr": "{{priceYr}}/<1>Yr</1> ({{price}}/<1>Mo</1>)",
   "monthly": "Monthly",
   "annual": "Annual",
@@ -20,5 +20,11 @@
   "accessToClosedPro": "Access to closed, pro educational materials",
   "addToCart": "Add to cart",
   "register": "Registration",
+  "year": "year",
+  "month": "month",
+  "weak": "weak",
+  "day": "day",
+  "hour": "hour",
+  "minute": "minute",
   "": ""
 }

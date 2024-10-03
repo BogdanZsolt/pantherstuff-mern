@@ -9,34 +9,40 @@ const Post = ({ postId, src, category, author, title, description, date }) => {
 
   return (
     <Card>
-      <Card.Header
+      {/* <Card.Header
         as="strong"
         className="text-primary-emphasis text-start lead d-inline-block"
-      >
-        <Link to={category?._id ? `/category/${category?._id}` : ''}>
-          <b>
-            {i18n.language === 'en'
-              ? category?.title
-                ? category?.title
-                : 'Uncategorized'
-              : category?.translations?.hu?.title
-              ? category?.translations?.hu?.title
-              : t('uncategorized')}
-          </b>
-        </Link>
-      </Card.Header>
+      ></Card.Header> */}
       <div className="post-image-wrapper">
         <Image src={src} className="post-image" />
         <h3 className="title fs-2 link-body-emphasis mb-2">{title}</h3>
       </div>
       <Card.Body>
-        <p className="blog-post-meta">
-          <span className="fw-bold">{toLocalDate(i18n.language, date)}</span>
-          <span className="mx-1">by</span>
-          <Link to={`/author/${author?._id}`} className="fw-bold">
-            {author?.name}
+        <div className="d-flex flex-column mb-3">
+          <div className="blog-post-meta">
+            <span className="fw-bold">{toLocalDate(i18n.language, date)}</span>
+            <span className="mx-1">by</span>
+            <Link to={`/author/${author?._id}`} className="fw-bold">
+              {author?.name}
+            </Link>
+          </div>
+          <Link
+            to={category?._id ? `/category/${category?._id}` : ''}
+            className="text-start"
+          >
+            <span>
+              <b>
+                {i18n.language === 'en'
+                  ? category?.title
+                    ? category?.title
+                    : 'Uncategorized'
+                  : category?.translations?.hu?.title
+                  ? category?.translations?.hu?.title
+                  : t('uncategorized')}
+              </b>
+            </span>
           </Link>
-        </p>
+        </div>
         <Card.Text as="p" className="lead text-start">
           {description}
         </Card.Text>
