@@ -3,8 +3,9 @@ import asyncHandler from '../middleware/asyncHandler.js';
 import User from '../models/userModel.js';
 import generateToken from '../utils/generateToken.js';
 import jwt from 'jsonwebtoken';
-import sendAccVerificationEmail from '../utils/sendAccVerificationEmail.js';
-import sendPasswordResetEmail from '../utils/sendPasswordResetEmail.js';
+// import sendAccVerificationEmail from '../utils/sendAccVerificationEmail.js';
+// import sendPasswordResetEmail from '../utils/sendPasswordResetEmail.js';
+import Email from '../utils/email.js';
 
 // @desc    Auth user & get token
 // @route   POST /api/users/auth
@@ -350,6 +351,7 @@ const getAuthor = asyncHandler(async (req, res) => {
 const verifyEmailAccount = asyncHandler(async (req, res) => {
   // find the login user
   const user = await User.findById(req.user);
+  const { language } = req.body;
   // const { origin: originUrl } = req.headers;
 
   if (user) {
@@ -360,11 +362,8 @@ const verifyEmailAccount = asyncHandler(async (req, res) => {
       // resave the user
       await user.save();
       // send the email
-      const info = await sendAccVerificationEmail(
-        user?.email,
-        token,
-        process.env.FRONTEND_URL
-      );
+      const url = `${process.env.FRONTEND_URL}/account-verification/${token}`;
+      const info = await new Email(user, language).accountVerify(url);
       if (!info) {
         res.status(401).json({
           status: 401,
@@ -417,7 +416,7 @@ const verifyEmailAcc = asyncHandler(async (req, res) => {
 // @access  Public
 const forgotPasswordEmailToken = asyncHandler(async (req, res) => {
   // find the user email
-  const { email } = req.body;
+  const { email, language } = req.body;
   // find the user
   const user = await User.findOne({ email });
   // const { origin: originUrl } = req.headers;
@@ -430,11 +429,8 @@ const forgotPasswordEmailToken = asyncHandler(async (req, res) => {
       // resave the user
       await user.save();
       // send the email
-      const info = await sendPasswordResetEmail(
-        user?.email,
-        token,
-        process.env.FRONTEND_URL
-      );
+      const url = `${process.env.FRONTEND_URL}/reset-password/${token}`;
+      const info = await new Email(user, language).sendPasswordReset(url);
       if (!info) {
         res.status(401).json({
           status: 401,

@@ -22,6 +22,7 @@ export const WishListScreen = lazy(() =>
 export const ShippingScreen = lazy(() =>
   import('./screens/ShippingScreen.jsx')
 );
+export const BillingScreen = lazy(() => import('./screens/BillingScreen.jsx'));
 export const PaymentScreen = lazy(() => import('./screens/PaymentScreen.jsx'));
 export const HerStory = lazy(() => import('./screens/HerStoryScreen.jsx'));
 export const MePetraScreen = lazy(() => import('./screens/MePetraScreen.jsx'));
@@ -41,6 +42,8 @@ export const MembershipScreen = lazy(() =>
 export const OnlineCoursesScreen = lazy(() =>
   import('./screens/OnlineCoursesScreen.jsx')
 );
+export const EventsScreen = lazy(() => import('./screens/EventsScreen.jsx'));
+export const EventScreen = lazy(() => import('./screens/EventScreen.jsx'));
 export const BlogScreen = lazy(() => import('./screens/BlogScreen.jsx'));
 export const PostScreen = lazy(() => import('./screens/PostScreen.jsx'));
 export const AuthorScreen = lazy(() => import('./screens/AuthorScreen.jsx'));
@@ -147,6 +150,18 @@ export const MembershipPlanListScreen = lazy(() =>
 );
 export const MembershipPlanEditScreen = lazy(() =>
   import('./screens/admin/MembershipPlanEditScreen.jsx')
+);
+export const EventListScreen = lazy(() =>
+  import('./screens/admin/EventListScreen.jsx')
+);
+export const EventEditScreen = lazy(() =>
+  import('./screens/admin/EventEditScreen.jsx')
+);
+export const EventCategoryListScreen = lazy(() =>
+  import('./screens/admin/EventCategoryListScreen.jsx')
+);
+export const EventCategoryEditScreen = lazy(() =>
+  import('./screens/admin/EventCategoryEditScreen.jsx')
 );
 export const OrderListScreen = lazy(() =>
   import('./screens/admin/OrderListScreen.jsx')

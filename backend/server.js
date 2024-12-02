@@ -25,6 +25,10 @@ import faqRoutes from './routes/faqRoutes.js';
 import faqCategoryRoutes from './routes/faqCategoryRoutes.js';
 import planRoutes from './routes/planRoutes.js';
 import contactMessageRoutes from './routes/contactMessageRoutes.js';
+import courseRoutes from './routes/courseRoutes.js';
+import courseCategoryRoutes from './routes/courseCategoryRoutes.js';
+import eventRoutes from './routes/eventRoutes.js';
+import eventCategoryRoutes from './routes/eventCategoryRoutes.js';
 
 // import { fileURLToPath } from 'url';
 // const __filename = fileURLToPath(import.meta.url);
@@ -64,6 +68,10 @@ app.use('/api/faqs', faqRoutes);
 app.use('/api/faqCategories', faqCategoryRoutes);
 app.use('/api/plans', planRoutes);
 app.use('/api/contact-messages', contactMessageRoutes);
+app.use('/api/courses', courseRoutes);
+app.use('/api/coursecategories', courseCategoryRoutes);
+app.use('/api/events', eventRoutes);
+app.use('/api/eventcategories', eventCategoryRoutes);
 
 const __dirname = path.resolve();
 // app.use(express.static('public'));

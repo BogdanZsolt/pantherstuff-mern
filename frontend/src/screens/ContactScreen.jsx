@@ -14,14 +14,12 @@ import { useCreateContactMessageMutation } from '../slices/contactMessageApiSlic
 import { toast } from 'react-toastify';
 
 const ContactScreen = () => {
-  const { t } = useTranslation(['contact']);
+  const { t, i18n } = useTranslation(['contact']);
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [telephone, setTelephone] = useState('');
   const [message, setMessage] = useState('');
-  const [captchaInput, setCaptchaInput] = useState('');
-  const [captchaValue, setCaptchaValue] = useState(null);
 
   const [createContactMessage, { isLoading }] =
     useCreateContactMessageMutation();
@@ -36,27 +34,21 @@ const ContactScreen = () => {
 
   const messageHandler = async (e) => {
     e.preventDefault();
-    if (captchaValue !== captchaInput) {
-      setCaptchaValue(null);
-      setCaptchaInput('');
-      toast.error('Entered captch is not correct');
-      return;
-    }
     try {
       const contactMess = await createContactMessage({
         name,
         email,
         telephone,
         message,
+        ownerName: import.meta.env.VITE_OWNER_NAME,
         to: import.meta.env.VITE_OWNER_EMAIL,
+        language: i18n.language,
       }).unwrap();
       if (contactMess) {
         setName('');
         setEmail('');
         setTelephone('');
         setMessage('');
-        setCaptchaInput('');
-        setCaptchaValue(null);
         toast.success(t('yourMessageHasBeenForwarded'));
       }
     } catch (err) {
@@ -133,10 +125,6 @@ const ContactScreen = () => {
               message={message}
               setMessage={setMessage}
               messageHandler={messageHandler}
-              captchaInput={captchaInput}
-              setCaptchaInput={setCaptchaInput}
-              captchaValue={captchaValue}
-              setCaptchaValue={setCaptchaValue}
               loader={isLoading}
             />
           </Col>

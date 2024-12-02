@@ -71,8 +71,6 @@ const FaqEditScreen = () => {
     setCategory(e.target.value);
   };
 
-  console.log(category);
-
   return (
     <>
       {loadingUpdate && <Loader />}
@@ -88,7 +86,7 @@ const FaqEditScreen = () => {
             Go Back
           </Link>
           <Row>
-            <h2 className="text-center fs-1 fw-bold">Edit Product</h2>
+            <h2 className="text-center fs-1 fw-bold">Edit FAQ</h2>
           </Row>
           <FormContainer>
             <Form onSubmit={submitHandler}>

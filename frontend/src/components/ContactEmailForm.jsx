@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   Container,
   Row,
@@ -22,22 +23,24 @@ const ContactEmailForm = ({
   message,
   setMessage,
   messageHandler,
-  captchaInput,
-  setCaptchaInput,
-  captchaValue,
-  setCaptchaValue,
   loader,
 }) => {
   const { t } = useTranslation(['contact']);
+  const [isCaptcha, setIsCaptcha] = useState(false);
 
   // window.recaptchaOptions = {
   //   lang: 'hu',
   // };
 
+  const setMessageHandler = (e) => {
+    setIsCaptcha(false);
+    messageHandler(e);
+  };
+
   return (
     <Container fluid>
       <Row>
-        <Form onSubmit={messageHandler}>
+        <Form onSubmit={setMessageHandler}>
           <Form.Group as={Col} className="mb-3" controlId="name">
             <FloatingLabel label={t('formName')}>
               <Form.Control
@@ -91,20 +94,12 @@ const ContactEmailForm = ({
                 type="submit"
                 variant="success"
                 className="text-primary btn-lasaphire"
-                disabled={
-                  captchaValue && captchaInput.length !== captchaValue.length
-                }
+                disabled={!isCaptcha}
               >
-                {captchaInput.length}
                 {t('formSend')}
               </Button>
             </Col>
-            <PantherCaptcha
-              captchaValue={captchaValue}
-              setCaptchaValue={setCaptchaValue}
-              captchaInput={captchaInput}
-              setCaptchaInput={setCaptchaInput}
-            />
+            <PantherCaptcha setIsCaptcha={setIsCaptcha} />
             {/* <div>
               <ReCAPTCHA
                 hl={i18n.language}

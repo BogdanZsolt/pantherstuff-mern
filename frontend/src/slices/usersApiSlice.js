@@ -82,9 +82,10 @@ export const usersApiSlice = apiSlice.injectEndpoints({
       keepUnusedDataFor: 5,
     }),
     sendEmailVerificationToken: builder.mutation({
-      query: () => ({
+      query: (data) => ({
         url: `${USERS_URL}/account-verification-email`,
         method: 'PUT',
+        body: data,
       }),
       invalidatesTags: ['User'],
     }),

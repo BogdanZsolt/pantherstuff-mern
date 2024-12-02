@@ -8,7 +8,7 @@
   "collections": "Collections",
   "price": "Price",
   "select": "Select",
-  "showingOfResults": "Showing {{length}} of {{count}} results",
+  "showingOfResults": "Showing <strong>{{length}}</strong> of <strong>{{count}}</strong> results",
   "defaultSorting": "Default Sorting",
   "popular": "Popular",
   "rating": "Rating",

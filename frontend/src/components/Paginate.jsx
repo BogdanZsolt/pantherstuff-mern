@@ -8,8 +8,8 @@ const Paginate = ({
   isAdmin = false,
   keyword = '',
   pageName = !isAdmin ? 'shop' : 'productlist',
-  productCategory,
-  productCollection,
+  category,
+  collection,
 }) => {
   const createLink = () => {
     let lnk;
@@ -18,11 +18,11 @@ const Paginate = ({
       if (keyword !== '') {
         lnk = `/search/${keyword}`;
       }
-      if (productCategory !== '' && productCategory !== undefined) {
-        lnk = lnk + `/category/${productCategory}`;
+      if (category !== '' && category !== undefined) {
+        lnk = lnk + `/category/${category}`;
       }
-      if (productCollection !== '' && productCollection !== undefined) {
-        lnk = lnk + `/collection/${productCollection}`;
+      if (collection !== '' && collection !== undefined) {
+        lnk = lnk + `/collection/${collection}`;
       }
     } else {
       lnk = `/admin/${pageName}`;
@@ -31,15 +31,18 @@ const Paginate = ({
   };
 
   return pages > 1 ? (
-    <Pagination>
-      {[...Array(pages).keys()].map((x) => (
-        <LinkContainer key={x + 1} to={createLink() + `/page/${x + 1}`}>
-          <Pagination.Item active={x + 1 === page}>{x + 1}</Pagination.Item>
-        </LinkContainer>
-      ))}
-    </Pagination>
+    <>
+      <Pagination>
+        {[...Array(pages).keys()].map((x) => (
+          <LinkContainer key={x + 1} to={createLink() + `/page/${x + 1}`}>
+            <Pagination.Item active={x + 1 === page}>{x + 1}</Pagination.Item>
+          </LinkContainer>
+        ))}
+      </Pagination>
+      <Navigate to={createLink() + `/page/${pages >= page ? page : pages}`} />
+    </>
   ) : (
-    <Navigate to={createLink} />
+    <Navigate to={createLink()} />
   );
 };
 

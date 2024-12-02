@@ -1,0 +1,33 @@
+extends base
+
+block content
+  // BODY
+  tr
+  td(style='padding: 50px; background-color: #faf0d1; border-radius: 5px')
+    table(width='100%' style='border-spacing: 0')
+      // Heading
+      tr
+        td(style='padding: 0; text-align: left')
+          h5(style='font-size: 20px; margin: 0') Hi #{firstName},
+      // Text 1
+      tr
+        td(style='padding: 15px 0 20px; text-align: left')
+          p(style='font-size: 16px; font-weight: 400; margin: 0')
+            | This message was sent from the form on the PantherStuff
+            | contact page by
+            |
+            span(style='font-weight: 600') #{senderName},
+            |
+            |  email:
+            |
+            span(style='font-weight: 600') #{senderEmail},
+            |
+            |                     phone:
+            |
+            span(style='font-weight: 600') #{senderPhone}
+      // Text 2
+      tr
+        td(style='padding: 15px 0 20px; text-align: left')
+          p(style='font-size: 18px; font-weight: 400; margin: 0')
+            | Message:
+          p(style='font-size: 16px') #{message}

@@ -30,7 +30,8 @@ const Supply = ({ supply }) => {
 
   const addToCartHandler = (e) => {
     e.preventDefault();
-    const { _id, name, currentPrice, thumbnails, countInStock } = supply;
+    const { _id, name, currentPrice, thumbnails, countInStock, toBeDelivered } =
+      supply;
     const cartId = uuid();
     const name_hu = supply.translations?.hu?.name || supply.name;
     const currentPrice_hu =
@@ -50,13 +51,14 @@ const Supply = ({ supply }) => {
         thumbnail,
         qty,
         countInStock,
+        toBeDelivered,
       })
     );
   };
 
   const addToWishListHandler = (e) => {
     e.preventDefault();
-    const { _id, name, currentPrice, thumbnails } = supply;
+    const { _id, name, currentPrice, thumbnails, toBeDelivered } = supply;
     const name_hu = supply.translations?.hu?.name || supply.name;
     const currentPrice_hu =
       supply.translations?.hu?.currentPrice || supply.currentPrice;
@@ -71,6 +73,7 @@ const Supply = ({ supply }) => {
         currentPrice,
         currentPrice_hu,
         thumbnail,
+        toBeDelivered,
       })
     );
   };

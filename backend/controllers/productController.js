@@ -23,6 +23,7 @@ const productCreateInit = (req, res, next) => {
   req.body.rating = 0;
   req.body.numReviews = 0;
   req.body.colors = ['#ffffff'];
+  req.body.toBeDelivered = false;
   req.body.translations = {
     hu: {
       name: 'Egyszerű termék',
@@ -38,31 +39,31 @@ const documentumCount = (docs) => {
   return docs.length;
 };
 
-const minPrice = (docs) => {
-  let min = 0;
-  docs.map((doc) => {
-    min =
-      min === 0
-        ? doc.currentPrice
-        : min > doc.currentPrice
-        ? doc.currentPrice
-        : min;
-  });
-  return min;
-};
+// const minPrice = (docs) => {
+//   let min = 0;
+//   docs.map((doc) => {
+//     min =
+//       min === 0
+//         ? doc.currentPrice
+//         : min > doc.currentPrice
+//         ? doc.currentPrice
+//         : min;
+//   });
+//   return min;
+// };
 
-const maxPrice = (docs) => {
-  let max = 0;
-  docs.map((doc) => {
-    max =
-      max === 0
-        ? doc.currentPrice
-        : max < doc.currentPrice
-        ? doc.currentPrice
-        : max;
-  });
-  return max;
-};
+// const maxPrice = (docs) => {
+//   let max = 0;
+//   docs.map((doc) => {
+//     max =
+//       max === 0
+//         ? doc.currentPrice
+//         : max < doc.currentPrice
+//         ? doc.currentPrice
+//         : max;
+//   });
+//   return max;
+// };
 
 // @desc    Fetch all products
 // @route   GET /api/products/all
@@ -85,8 +86,6 @@ const getProducts = asyncHandler(async (req, res) => {
   const doc = await features.query;
   let pages = 1;
   let count = 0;
-  let minCurrentPrice = 0;
-  let maxCurrentPrice = 0;
 
   if (req.query.page) {
     const counter = new APIFeatures(
@@ -97,18 +96,14 @@ const getProducts = asyncHandler(async (req, res) => {
 
     const docs = await counter.query;
     count = documentumCount(docs);
-    minCurrentPrice = minPrice(docs);
-    maxCurrentPrice = maxPrice(docs);
 
     pages = Math.ceil(count / Number(req.query.limit));
   } else {
     count = documentumCount(doc);
-    minCurrentPrice = minPrice(doc);
-    maxCurrentPrice = maxPrice(doc);
   }
 
   // SEND RESPONSE
-  res.json({ data: doc, pages, page, count, minCurrentPrice, maxCurrentPrice });
+  res.json({ data: doc, pages, page, count });
 });
 
 // @desc    Fetch a product
@@ -137,6 +132,7 @@ const updateProduct = asyncHandler(async (req, res) => {
     countInStock,
     colors,
     sizes,
+    toBeDelivered,
     translations,
   } = req.body;
 
@@ -153,6 +149,7 @@ const updateProduct = asyncHandler(async (req, res) => {
     product.countInStock = countInStock || product.countInStock;
     product.colors = colors || product.colors;
     product.sizes = sizes || product.sizes;
+    product.toBeDelivered = toBeDelivered;
     product.translations = translations || product.translations;
 
     const updatedProduct = await product.save();
@@ -255,6 +252,9 @@ const getProductStats = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc    Get  products min-max price
+// @route   GET /api/products/minmax
+// @access  Public
 const getProductsMinMaxPrice = asyncHandler(async (req, res) => {
   try {
     const minMaxPrice = await Product.aggregate([

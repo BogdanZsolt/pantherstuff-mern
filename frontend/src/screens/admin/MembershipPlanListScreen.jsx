@@ -1,6 +1,6 @@
 import { Table, Container, Row, Col, Button } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import { FaEdit, FaTrash } from 'react-icons/fa';
+import { FaCheck, FaEdit, FaTimes, FaTrash } from 'react-icons/fa';
 import Loader from '../../components/Loader.jsx';
 import Message from '../../components/Message';
 import { toast } from 'react-toastify';
@@ -68,6 +68,7 @@ const MembershipPlanListScreen = () => {
               <tr>
                 <th>NAME</th>
                 <th>PRICE</th>
+                <th>TO BE DELIVERED</th>
                 <th></th>
               </tr>
             </thead>
@@ -93,6 +94,13 @@ const MembershipPlanListScreen = () => {
                       <b>hu: </b>
                       {plan.translations?.hu?.currentPrice}
                     </p>
+                  </td>
+                  <td>
+                    {plan.toBeDelivered ? (
+                      <FaCheck className="text-success" />
+                    ) : (
+                      <FaTimes className="text-danger" />
+                    )}
                   </td>
                   <td>
                     <LinkContainer

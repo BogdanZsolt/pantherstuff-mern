@@ -6,8 +6,9 @@ import { useTranslation } from 'react-i18next';
 import Loader from '../components/Loader';
 import { toast } from 'react-toastify';
 import { FaCheckCircle } from 'react-icons/fa';
-import ReCAPTCHA from 'react-google-recaptcha';
+// import ReCAPTCHA from 'react-google-recaptcha';
 import { usePasswordResetRequestMutation } from '../slices/usersApiSlice';
+import PantherCaptcha from '../components/PantherCaptcha';
 
 const ResetPasswordRequestScreen = () => {
   const { t, i18n } = useTranslation(['login']);
@@ -15,7 +16,8 @@ const ResetPasswordRequestScreen = () => {
 
   const [email, setEmail] = useState('');
   const [isVisible, setIsVisible] = useState(false);
-  const [capVal, setCapVal] = useState(null);
+  const [isCaptcha, setIsCaptcha] = useState(false);
+  // const [capVal, setCapVal] = useState(null);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -30,7 +32,7 @@ const ResetPasswordRequestScreen = () => {
   const passRequestHandler = async (e) => {
     e.preventDefault();
     try {
-      await PasswordResetRequest({ email }).unwrap();
+      await PasswordResetRequest({ email, language: i18n.language }).unwrap();
     } catch (err) {
       toast.error(err?.data?.message || err.message);
     }
@@ -62,6 +64,8 @@ const ResetPasswordRequestScreen = () => {
   //   });
   // }, []);
 
+  console.log(isCaptcha);
+
   return (
     <>
       <Banner
@@ -86,18 +90,19 @@ const ResetPasswordRequestScreen = () => {
                           onChange={(e) => setEmail(e.target.value)}
                         ></Form.Control>
                       </Form.Group>
-                      <div className="d-flex justify-content-center">
+                      <PantherCaptcha setIsCaptcha={setIsCaptcha} />
+                      {/* <div className="d-flex justify-content-center">
                         <ReCAPTCHA
                           hl={i18n.language}
                           onChange={(val) => setCapVal(val)}
                           sitekey={import.meta.env.VITE_GOOGLE_RECAPTCHA}
                         />
-                      </div>
+                      </div> */}
                       <Button
                         type="submit"
                         variant="primary"
                         className="mt-3 "
-                        disabled={!capVal}
+                        disabled={!isCaptcha}
                       >
                         {t('send')}
                       </Button>

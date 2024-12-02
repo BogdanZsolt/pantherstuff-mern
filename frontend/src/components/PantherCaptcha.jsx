@@ -2,13 +2,13 @@ import { useEffect, useState } from 'react';
 import { Button, Form, InputGroup } from 'react-bootstrap';
 import { MdRefresh } from 'react-icons/md';
 import parse from 'html-react-parser';
+import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 
-const PantherCaptcha = ({
-  captchaValue,
-  setCaptchaValue,
-  captchaInput,
-  setCaptchaInput,
-}) => {
+const PantherCaptcha = ({ setIsCaptcha }) => {
+  const { t } = useTranslation(['captcha']);
+  const [captchaInput, setCaptchaInput] = useState('');
+  const [captchaValue, setCaptchaValue] = useState(null);
   const [captchaHtml, setCaptchaHtml] = useState(null);
 
   const generateCaptcha = () => {
@@ -19,7 +19,6 @@ const PantherCaptcha = ({
 
   const setCaptcha = (val) => {
     const fonts = ['cursive', 'sans-serif', 'serif', 'monospace'];
-    console.log(val);
     let html = val
       .split('')
       .map((char) => {
@@ -47,6 +46,7 @@ const PantherCaptcha = ({
     setCaptchaInput('');
     const cap = setCaptcha(val);
     setCaptchaHtml(cap);
+    setIsCaptcha(false);
   };
 
   const captchaInputHandler = (e) => {
@@ -54,24 +54,39 @@ const PantherCaptcha = ({
     e.preventDefault();
   };
 
-  {
-    /* https://youtu.be/3UZoVrc9A3o?si=QLrgW07yFQRWM3SK 5'53" */
-  }
+  useEffect(() => {
+    if (captchaValue) {
+      if (captchaInput.length === captchaValue.length) {
+        if (captchaValue !== captchaInput) {
+          setCaptchaValue(null);
+          setCaptchaInput('');
+          setIsCaptcha(false);
+          toast.error(t('enteredCaptchaIsNotCorrect'));
+        } else {
+          setIsCaptcha(true);
+          setCaptchaValue(null);
+          setCaptchaInput('');
+        }
+      }
+    }
+  }, [captchaValue, captchaInput, setIsCaptcha, t]);
+
   return (
     <div className="captcha">
-      <Form.Label>Enter captcha</Form.Label>
+      <Form.Label>{t('enterCaptcha')}</Form.Label>
       <div className="preview">{captchaValue && parse(captchaHtml)}</div>
       <InputGroup className="captcha-form">
         <Form.Control
           type="text"
           id="captcha-form"
           value={captchaInput}
-          placeholder="Enter captcha text"
+          placeholder={t('enterCaptchaText')}
           onChange={(e) => captchaInputHandler(e)}
         />
         <Button
           type="button"
           variant="primary"
+          title={t('newCaptcha')}
           className="btn"
           onClick={refreshHandler}
         >

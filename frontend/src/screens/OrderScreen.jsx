@@ -86,6 +86,17 @@ const OrderScreen = () => {
                     </ListGroup.Item>
 
                     <ListGroup.Item>
+                      <h2>{t('billingAddress')}</h2>
+                      <p>
+                        <strong>{t('address')}: </strong>
+                        {order?.billingAddress?.address},{' '}
+                        {order?.billingAddress?.city}{' '}
+                        {order?.billingAddress?.postalCode},{' '}
+                        {order?.billingAddress?.country}
+                      </p>
+                    </ListGroup.Item>
+
+                    <ListGroup.Item>
                       <h2>{t('paymentMethod')}</h2>
                       <p>
                         <strong>{t('method')}: </strong>

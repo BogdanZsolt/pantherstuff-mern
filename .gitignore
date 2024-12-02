@@ -27,3 +27,4 @@ dist-ssr
 *_temp.env
 *_temp.jsx
 .env
+package-lock.json

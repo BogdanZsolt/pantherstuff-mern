@@ -26,7 +26,7 @@
 
 .ps-navbar.scroll-nav {
   background-image: unset;
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--bs-shadow-md);
 }
 
 .ps-navbar.scroll-nav .navbar-brand {
@@ -36,7 +36,7 @@
 
 .ps-navbar.scroll-nav .navbar-brand {
   background-color: rgba(var(--bs-primary-rgb), 0.35);
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--bs-shadow-md);
 }
 
 .ps-navbar.scroll-nav .navbar-brand::before {
@@ -60,6 +60,7 @@
   background-image: url('/images/glass-bg-images.jpeg');
   background-repeat: no-repeat;
   background-size: cover;
+  border-radius: 5px;
   opacity: 0.4;
   z-index: -1;
 }
@@ -513,7 +514,6 @@ table th {
 }
 
 /* #HERO */
-
 .slider {
   position: relative;
 }
@@ -713,6 +713,10 @@ table th {
   aspect-ratio: 2/3;
 }
 
+.card-img-top.course-img {
+  aspect-ratio: 16/9;
+}
+
 /* Products Carousel */
 .card-img-top.hover-img {
   position: absolute;
@@ -819,7 +823,7 @@ table th {
   background-position: center center;
   background-repeat: no-repeat;
   background-color: var(--bs-secondary);
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--bs-shadow-sm);
   transition: var(--transition-filter), var(--transition-transform),
     var(--transition-shadow);
 }
@@ -831,7 +835,7 @@ table th {
 .photo-gallery .grid-item:hover {
   filter: blur(0);
   transform: scale(1.02);
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--bs-shadow-sm);
 }
 
 /* SINGLE PRODUCT */
@@ -874,7 +878,9 @@ table th {
 
 .product .outer-thumb .swiper-slide-thumb-active img,
 .supply .outer-thumb .swiper-slide-thumb-active img,
-.product .outer-thumb .item:hover img .supply .outer-thumb .item:hover img {
+.ovent .outer-thumb .swiper-slide-thumb-active img,
+.product .outer-thumb .item:hover img,
+.supply .outer-thumb .item:hover img {
   transform: scale3d(0.85, 0.85, 0.85);
 }
 
@@ -924,31 +930,36 @@ table th {
 }
 
 .product h3,
-.supply h3 {
+.supply h3,
+.event h3 {
   text-transform: capitalize;
   font-size: clamp(1.875rem, 1.7308rem + 0.641vw, var(--fs-max, 2.5rem));
 }
 
 .product .list-group-item,
-.supply .list-group-item {
+.supply .list-group-item,
+.event .list-group-item {
   border: none;
 }
 
 .product .price,
-.supply .price {
+.supply .price,
+.event .price {
   display: flex;
   align-items: center;
 }
 
 .product .price .current,
-.supply .price .current {
+.supply .price .current,
+.event .price .current {
   font-family: var(--bs-font-sans-serif);
   font-size: 1.875rem;
   font-weight: 500;
 }
 
 .product :where(.price, .review) .wrap,
-.supply :where(.price, .review) .wrap {
+.supply :where(.price, .review) .wrap,
+.event :where(.price, .review) .wrap {
   display: flex;
   flex-direction: column;
   position: relative;
@@ -956,7 +967,8 @@ table th {
 }
 
 .product :where(.price, .review) .wrap::before,
-.supply :where(.price, .review) .wrap::before {
+.supply :where(.price, .review) .wrap::before,
+.event :where(.price, .review) .wrap::before {
   content: '';
   position: absolute;
   top: 0;
@@ -976,7 +988,8 @@ table th {
 }
 
 .product .action,
-.supply .action {
+.supply .action,
+.event .action {
   list-style: none;
   display: flex;
   justify-content: flex-start;
@@ -986,19 +999,22 @@ table th {
 }
 
 .product .action li a,
-.supply .action li a {
+.supply .action li a,
+.event .action li a {
   text-decoration: none;
   transition: text-decoration 0.3s, font-weight 0.3s;
 }
 
 .product .action li:hover > a,
-.supply .action li:hover > a {
+.supply .action li:hover > a,
+.event .action li:hover > a {
   text-decoration: underline;
   font-weight: 600;
 }
 
 .product .action li a span,
-.supply .action li a span {
+.supply .action li a span,
+.event .action li a span {
   margin-left: 0.25rem;
 }
 
@@ -1237,10 +1253,6 @@ table th {
   max-width: 100%;
   height: auto;
 }
-
-/* .post .tiptap-editor {
-  border: 0;
-} */
 
 .tiptap-btn {
   text-decoration: none;
@@ -1738,6 +1750,7 @@ table th {
 
 .color-picker-container .react-colorful {
   box-shadow: 0 10px 20px -10px var(--bs-secondary);
+  z-index: 10;
 }
 
 .color-picker-container .color-picker-input {
@@ -1819,6 +1832,350 @@ table th {
   z-index: -1;
 }
 
+/* MULTI DATE PICKER */
+.dp-panther .rmdp-container {
+  width: 100%;
+}
+
+.dp-panther .rmdp-input {
+  border: var(--bs-border-width) solid var(--bs-border-color);
+  width: 100%;
+  padding: 20px 15px;
+  background-color: var(--bs-primary);
+}
+
+.bg-panther.rmdp-wrapper,
+.bg-panther .rmdp-month-picker,
+.bg-panther .rmdp-year-picker,
+.bg-panther .rmdp-time-picker div input,
+.rmdp-container .bg-panther.ep-arrow::after {
+  background-color: var(--bs-primary);
+  color: var(--bs-secondary);
+}
+
+.bg-panther .rmdp-day:not(.rmdp-deactive),
+.bg-panther .rmdp-time-picker div .rmdp-am,
+.bg-panther .rmdp-header-values,
+.bg-panther .rmdp-panel-header {
+  color: var(--bs-secondary);
+}
+
+.bg-panther .rmdp-day.rmdp-range {
+  color: white;
+}
+
+.bg-panther .rmdp-header {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.bg-panther .rmdp-day span {
+  color: var(--bs-secondary);
+  font-size: 1rem;
+}
+
+.bg-panther .rmdp-day.rmdp-today span {
+  background-color: rgba(var(--bs-success-rgb), 0.7);
+}
+
+.bg-panther .rmdp-week-day {
+  font-size: 15px;
+  color: var(--bs-success);
+}
+
+.bg-panther .rmdp-day.rmdp-selected span:not(.highlight) {
+  background-color: var(--bs-success);
+}
+
+.bg-panther .rmdp-day:not(.rmdp-disabled, .rmdp-day-hidden) span:hover {
+  background-color: var(--bs-success);
+}
+
+.bg-panther .rmdp-panel-body li {
+  color: #f5f5f5;
+}
+
+.bg-panther .rmdp-panel-body li .b-date {
+  padding: 2px;
+}
+
+.bg-panther .rmdp-panel li {
+  background-color: var(--bs-secondary);
+}
+
+.bg-panther .rmdp-panel-body li .b-deselect {
+  background-color: var(--bs-secondary);
+}
+
+.bg-panther .rmdp-day.rmdp-deactive span,
+.bg-panther .rmdp-day.rmdp-disabled span {
+  color: rgba(var(--bs-secondary-rgb), 0.5);
+}
+
+.rmdp-container .bg-panther.ep-arrow[direction='top'] {
+  border-bottom: 1px solid var(--bs-secondary);
+}
+
+.rmdp-container .bg-panther.ep-arrow[direction='left'] {
+  border-right: 1px solid var(--bs-secondary);
+}
+
+.rmdp-container .bg-panther.ep-arrow[direction='right'] {
+  border-left: 1px solid var(--bs-secondary);
+}
+
+.rmdp-container .bg-panther.ep-arrow[direction='bottom'] {
+  border-top: 1px solid var(--bs-secondary);
+}
+
+/* DATE PICKER */
+.date-panther .react-datepicker {
+  font-family: var(--bs-body-font-family);
+  font-size: 1rem;
+  background-color: var(--bs-primary);
+  color: var(--bs-secondary);
+  border: 1px solid var(--bs-secondary);
+  border-radius: 0.3125rem;
+  box-shadow: 0 0 10px 5px rgba(var(--bs-secondary-rgb), 0.6);
+}
+
+.date-panther
+  .react-datepicker__input-container
+  .react-datepicker__calendar-icon {
+  padding: 0.75rem 0.5rem;
+}
+
+.date-panther .react-datepicker__view-calendar-icon input {
+  background-color: var(--bs-form-control-bg);
+  display: block;
+  width: 100%;
+  padding: 0.675rem 0.75rem 0.675rem 1.5625rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  background-clip: padding-box;
+  border: var(--bs-border-width) solid var(--bs-border-color);
+  appearance: none;
+  border-radius: 0.375rem;
+  box-shadow: inset 0 1px 2px rgba(var(--bs-body-color-rgb), 0.075);
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.date-panther .react-datepicker__header {
+  background-color: rgba(var(--bs-secondary-rgb), 0.25);
+  border-bottom: 1px solid var(--bs-secondary);
+  border-top-left-radius: 0.3125rem;
+}
+
+.date-panther h2.react-datepicker__current-month {
+  padding: 0.25rem;
+  color: var(--bs-secondary);
+  font-size: 1rem;
+}
+
+.date-panther .react-datepicker__day--selected,
+.date-panther .react-datepicker__day--in-selecting-range,
+.date-panther .react-datepicker__day--in-range,
+.date-panther .react-datepicker__month-text--selected,
+.date-panther .react-datepicker__month-text--in-selecting-range,
+.date-panther .react-datepicker__month-text--in-range,
+.date-panther .react-datepicker__quarter-text--selected,
+.date-panther .react-datepicker__quarter-text--in-selecting-range,
+.date-panther .react-datepicker__quarter-text--in-range,
+.date-panther .react-datepicker__year-text--selected,
+.date-panther .react-datepicker__year-text--in-selecting-range,
+.date-panther .react-datepicker__year-text--in-range {
+  border-radius: 50%;
+  background-color: var(--bs-success);
+  color: var(--bs-primary) !important;
+}
+
+.date-panther .react-datepicker__close-icon::after {
+  background-color: var(--bs-secondary);
+  color: var(--bs-primary);
+  height: 1.25rem;
+  width: 1.25rem;
+  font-size: 1rem;
+}
+
+.date-panther .react-datepicker__day-name,
+.date-panther .react-datepicker__day,
+.date-panther .react-datepicker__time-name {
+  color: var(--bs-secondary);
+}
+
+.date-panther
+  .react-datepicker-popper[data-placement^='top']
+  .react-datepicker__triangle {
+  fill: var(--bs-primary);
+  color: var(--bs-primary);
+}
+
+.date-panther .react-datepicker__input-container input {
+  width: 100%;
+  padding: 0.5rem 0.3rem 0.5rem 0.2rem;
+  background-color: var(--bs-primary);
+  color: var(--bs-secondary);
+  border: 1px solid var(--bs-secondary);
+  border-radius: 0.25rem;
+}
+
+/* EVENT */
+.event-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  max-width: 31.25rem;
+  height: 21.25rem;
+  background-color: var(--bs-primary);
+  border-radius: var(--bs-border-radius-lg);
+  box-shadow: 0 0.9375rem 1.25rem -0.625rem rgba(var(--bs-secondary-rgb), 1);
+  transition: height 0.5s, right 0.5s;
+}
+
+.event-card:hover {
+  height: 510px;
+}
+
+.event-card .header-box {
+  position: absolute;
+  top: 20px;
+  width: 95%;
+  height: 230px;
+  box-shadow: 0 0.75rem 1.875rem -0.3125rem rgba(var(--bs-secondary-rgb), 1);
+  transition: top 0.5s, scale 0.5s;
+}
+
+.event-card:hover .header-box {
+  top: -100px;
+  scale: 0.7;
+}
+
+.event-card .header-box::before {
+  content: '';
+  position: relative;
+  display: block;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+}
+
+.event-card .date-box {
+  display: flex;
+  position: absolute;
+  width: 130px;
+  height: 130px;
+  top: -40px;
+  right: -40px;
+  background-color: var(--bs-success);
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  color: var(--bs-primary);
+  border-radius: var(--bs-border-radius-pill);
+  box-shadow: var(--bs-shadow-md);
+  flex-direction: column;
+  z-index: 1;
+}
+
+.event-card .date-box .date-box__year,
+.event-card .date-box .date-box__month,
+.event-card .date-box .date-box__day,
+.event-card .date-box .date-box__time {
+  font-size: 1rem;
+  font-weight: 300;
+  line-height: 1.2;
+}
+
+.event-card .date-box .date-box__year {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.event-card .img-box {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--bs-border-radius-lg);
+  overflow: hidden;
+}
+
+.event-card .img-box img {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.event-card .img-box img.hover-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.event-card .img-box:hover img.hover-image {
+  opacity: 1;
+}
+
+.event-card .info {
+  position: absolute;
+  top: 255px;
+  text-align: center;
+  height: 55px;
+  overflow: hidden;
+  color: var(--bs-secondary);
+  padding-inline: 1rem;
+  margin-top: 1.2rem;
+  transition: 0.5s;
+}
+
+.event-card .info h3 {
+  height: 3.5rem;
+}
+
+.event-card:hover .info {
+  height: 330px;
+  top: 140px;
+}
+
+.event-card .info .truncate {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.event-card .info .price {
+  font-size: 1.5rem;
+  line-height: 1.5;
+}
+
+.event-card .info .event-button {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s;
+}
+
+.event-card:hover .info .event-button {
+  visibility: visible;
+  opacity: 1;
+}
+
 /* Media Querys */
 @media (min-width: 481px) {
   .product .image,
@@ -1861,6 +2218,7 @@ table th {
 .captcha .preview {
   display: flex;
   color: var(--bs-secondary);
+  background-color: var(--bs-primary);
   margin-bottom: 0.5rem;
   justify-content: center;
   align-items: center;
@@ -2043,7 +2401,7 @@ table th {
     opacity: 0;
     visibility: hidden;
     margin-top: 1.25rem;
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--bs-shadow-md);
     transition: all 0.5s;
     z-index: 7;
   }
@@ -2120,6 +2478,18 @@ table th {
     box-shadow: none;
     transition: none;
   }
+
+  .event-card {
+    height: 22.25rem;
+  }
+
+  .event-card .info {
+    height: 4.6875rem;
+  }
+
+  .event-card .info h3 {
+    height: 3.5rem;
+  }
 }
 
 @media (min-width: 1200px) {
@@ -2144,9 +2514,11 @@ table th {
     left: -6.25rem;
     height: 100%;
   }
+
   .product .image {
     overflow: unset;
   }
+
   .banner .title h3 {
     max-width: 82.5rem;
   }

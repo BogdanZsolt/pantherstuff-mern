@@ -3,7 +3,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { useParams } from 'react-router-dom';
 import Message from '../../components/Message';
 import Loader from '../../components/Loader';
-import { FaEdit, FaTrash } from 'react-icons/fa';
+import { FaCheck, FaEdit, FaTimes, FaTrash } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import Paginate from '../../components/Paginate';
 import {
@@ -74,14 +74,14 @@ const SupplyListScreen = () => {
       {isLoading ? (
         <Loader />
       ) : error ? (
-        <Message variant="danger">{error}</Message>
+        <Message variant="danger">{error.data.message}</Message>
       ) : (
         <>
           <Table striped hover responsive className="table-sm">
             <thead>
               <tr>
-                <th>ID</th>
                 <th>NAME</th>
+                <th>TO BE DELIVERED</th>
                 <th>BEFORE PRICE</th>
                 <th>CURRENT PRICE</th>
                 <th>CATEGORY</th>
@@ -91,8 +91,14 @@ const SupplyListScreen = () => {
             <tbody>
               {supplies.data.map((supply) => (
                 <tr key={supply._id}>
-                  <td>{supply._id}</td>
-                  <td>{supply.name}</td>
+                  <td title={`id: ${supply._id}`}>{supply.name}</td>
+                  <td>
+                    {supply.toBeDelivered ? (
+                      <FaCheck className="text-success" />
+                    ) : (
+                      <FaTimes className="text-danger" />
+                    )}
+                  </td>
                   <td>{supply.beforePrice}</td>
                   <td>{supply.currentPrice}</td>
                   <td>{supply?.category?.title}</td>

@@ -18,6 +18,7 @@ const supplyCreateInit = (req, res, next) => {
   req.body.thumbnails = ['/images/sample.jpg'];
   req.body.description = 'Simple supply description';
   req.body.beforePrice = 0;
+  req.body.toBeDelivered = false;
   req.body.currentPrice = 0;
   req.body.countInStock = 0;
   req.body.rating = 0;
@@ -130,6 +131,7 @@ const updateSupply = asyncHandler(async (req, res) => {
     thumbnails,
     description,
     category,
+    toBeDelivered,
     beforePrice,
     currentPrice,
     countInStock,
@@ -143,6 +145,7 @@ const updateSupply = asyncHandler(async (req, res) => {
     supply.thumbnails = thumbnails || supply.thumbnails;
     supply.description = description || supply.description;
     supply.category = category || supply.category;
+    supply.toBeDelivered = toBeDelivered;
     supply.beforePrice = beforePrice || supply.beforePrice;
     supply.currentPrice = currentPrice || supply.currentPrice;
     supply.countInStock = countInStock || supply.countInStock;
@@ -186,7 +189,7 @@ const createSupplyReview = asyncHandler(async (req, res) => {
 
     if (alreadyReviewed) {
       res.status(400);
-      throw new Error('Product already reviewed');
+      throw new Error('Supply already reviewed');
     }
 
     const review = {
@@ -223,14 +226,14 @@ const getTopSupplies = asyncHandler(async (req, res) => {
 
 const getSupplyStats = asyncHandler(async (req, res) => {
   try {
-    const stats = await Product.aggregate([
+    const stats = await Supply.aggregate([
       // {
       //   $match: { rating: { $gte: 4.5 } },
       // },
       {
         $group: {
           _id: '$rating',
-          numProducts: { $sum: 1 },
+          numSupplies: { $sum: 1 },
           numRatings: { $sum: '$rating' },
           avgRating: { $avg: '$rating' },
           avgPrice: { $avg: '$currentPrice' },

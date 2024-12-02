@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import {
   Container,
   Row,
@@ -117,7 +117,7 @@ const ShopScreen = () => {
     if (productCategory === undefined) {
       setCategory([]);
     } else {
-      setCategory(productCategory);
+      setCategory(productCategory.split(','));
     }
   }, [productCategory]);
 
@@ -125,7 +125,7 @@ const ShopScreen = () => {
     if (productCollection === undefined) {
       setCollection([]);
     } else {
-      setCollection(productCollection);
+      setCollection(productCollection.split(','));
     }
   }, [productCollection]);
 
@@ -222,10 +222,14 @@ const ShopScreen = () => {
               <Col xs={12} lg={9} xxl={10}>
                 <Row className="align-items-center justify-content-between">
                   <Col>
-                    {t('showingOfResults', {
-                      length: products?.data?.length,
-                      count: products?.count,
-                    })}
+                    <Trans
+                      values={{
+                        length: products?.data?.length,
+                        count: products?.count,
+                      }}
+                    >
+                      {t('showingOfResults')}
+                    </Trans>
                   </Col>
                   <Col
                     sm={7}
@@ -295,8 +299,8 @@ const ShopScreen = () => {
                 <Paginate
                   pages={pages}
                   page={page}
-                  productCategory={productCategory}
-                  productCollection={productCollection}
+                  category={category.join(',')}
+                  collection={collection.join(',')}
                   keyword={keyword ? keyword : ''}
                 />
               </Col>

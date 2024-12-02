@@ -1,0 +1,13 @@
+{
+  "courses": "Courses",
+  "onlineCourses": "Online Courses",
+  "showingOfResults": "Showing {{length}} of {{count}} results",
+  "defaultSorting": "Default Sorting",
+  "popular": "Popular",
+  "rating": "Rating",
+  "latest": "Latest",
+  "PriceLowToHigh": "Price low to high",
+  "priceHighToLow": "Price high to low",
+  "thereAreNoItemsToDisplay": "There are no items to display",
+  "": ""
+}

@@ -30,8 +30,9 @@
   --bs-gray-800: #7b8a8b;
   --bs-gray-900: #7b8a8b;
   --bs-primary: #faf0d1;
-  --bs-secondary: #7c4f38;
+  /* --bs-secondary: #7c4f38; */
   /* --bs-secondary: #36241b; */
+  --bs-secondary: #664a33;
   --bs-success: #486629;
   --bs-info: #3498db;
   --bs-warning: #f39c12;
@@ -40,7 +41,8 @@
   --bs-dark: #7b8a8b;
   --bs-primary-rgb: 250, 240, 209;
   /* --bs-secondary-rgb: 54, 36, 27; */
-  --bs-secondary-rgb: 124, 79, 56;
+  /* --bs-secondary-rgb: 124, 79, 56; */
+  --bs-secondary-rgb: 102, 74, 51;
   --bs-success-rgb: 72, 102, 41;
   --bs-info-rgb: 52, 152, 219;
   --bs-warning-rgb: 243, 156, 18;
@@ -120,8 +122,13 @@
   --bs-border-radius-pill: 50rem;
   --bs-box-shadow: 0 0.5rem 1rem rgba(var(--bs-body-color-rgb), 0.15);
   --bs-box-shadow-sm: 0 0.125rem 0.25rem rgba(var(--bs-body-color-rgb), 0.075);
+  --bs-box-shadow-md: 0 0.75rem 1.875rem rgba(var(--bs-body-color-rgb), 0.5);
   --bs-box-shadow-lg: 0 1rem 3rem rgba(var(--bs-body-color-rgb), 0.175);
   --bs-box-shadow-inset: inset 0 1px 2px rgba(var(--bs-body-color-rgb), 0.075);
+  --bs-shadow-xs: 1px 1px 3px 0 var(--bs-secondary);
+  --bs-shadow-sm: 0 0.3125rem 0.5rem var(--bs-secondary);
+  --bs-shadow-md: 0 0.5rem 1rem -0.5rem var(--bs-secondary);
+  --bs-shadow-lg: 0 0.625rem 1.25rem -0.625rem var(--bs-secondary);
   --bs-emphasis-color: var(--bs-success);
   --bs-form-control-bg: var(--bs-body-bg);
   --bs-form-control-disabled-bg: var(--bs-secondary-bg);
@@ -132,10 +139,6 @@
   --bs-breakpoint-lg: 992px;
   --bs-breakpoint-xl: 1200px;
   --bs-breakpoint-xxl: 1400px;
-  --shadow-xs: 1px 1px 3px 0 var(--bs-secondary);
-  --shadow-sm: 0 0.3125rem 0.5rem var(--bs-secondary);
-  --shadow-md: 0 0.5rem 1rem -0.5rem var(--bs-secondary);
-  --shadow-lg: 0 0.625rem 1.25rem -0.625rem var(--bs-secondary);
   --transition-color: color 0.3s;
   --transition-background: background-color 0.3s;
   --transition-border: border 0.3s;
@@ -150,6 +153,8 @@
 }
 
 [data-bs-theme='dark'] {
+  --bs-primary: #faf0d1;
+  --bs-secondary: #664a33;
   --bs-body-color: #7b8a8b;
   --bs-body-color-rgb: 123, 138, 139;
   --bs-body-bg: #7b8a8b;
@@ -220,6 +225,7 @@ body {
   color: var(--bs-body-color);
   text-align: var(--bs-body-text-align);
   background-color: var(--bs-body-bg);
+  overflow-x: hidden;
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }

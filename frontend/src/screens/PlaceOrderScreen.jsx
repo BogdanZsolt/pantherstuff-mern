@@ -31,10 +31,17 @@ const PlaceOrderScreen = () => {
   useEffect(() => {
     if (!cart.shippingAddress.address) {
       navigate('/shipping');
+    } else if (!cart.billingAddress.address) {
+      navigate('/billing');
     } else if (!cart.paymentMethod) {
       navigate('/payment');
     }
-  }, [cart.paymentMethod, cart.shippingAddress.address, navigate]);
+  }, [
+    cart.paymentMethod,
+    cart.shippingAddress.address,
+    cart.billingAddress.address,
+    navigate,
+  ]);
 
   const createItems = (items) => {
     let newItems = [];
@@ -58,6 +65,7 @@ const PlaceOrderScreen = () => {
         language: i18n.language,
         orderItems: createItems(cart.cartItems),
         shippingAddress: cart.shippingAddress,
+        billingAddress: cart.billingAddress,
         paymentMethod: cart.paymentMethod,
         itemsPrice:
           i18n.language === 'en' ? cart.itemsPrice : cart.itemsPrice_hu,
@@ -78,7 +86,7 @@ const PlaceOrderScreen = () => {
     <>
       <Banner title={t('order')} />
       <Container>
-        <CheckoutSteps step1 step2 step3 step4 />
+        <CheckoutSteps step1 step2 step3 step4 step5 />
         <Row>
           <Col md={8}>
             <ListGroup variant="flush">
@@ -89,6 +97,16 @@ const PlaceOrderScreen = () => {
                   {cart.shippingAddress.address}, {cart.shippingAddress.city}{' '}
                   {cart.shippingAddress.postalCode},{' '}
                   {cart.shippingAddress.country}
+                </p>
+              </ListGroup.Item>
+
+              <ListGroup.Item>
+                <h2>{t('billing')}</h2>
+                <p>
+                  <strong>{t('address')}: </strong>
+                  {cart.billingAddress.address}, {cart.billingAddress.city}{' '}
+                  {cart.billingAddress.postalCode},{' '}
+                  {cart.billingAddress.country}
                 </p>
               </ListGroup.Item>
 

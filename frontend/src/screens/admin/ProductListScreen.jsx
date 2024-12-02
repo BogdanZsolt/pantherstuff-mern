@@ -1,6 +1,6 @@
 import { LinkContainer } from 'react-router-bootstrap';
 import { Table, Button, Row, Col, Container } from 'react-bootstrap';
-import { FaEdit, FaTrash } from 'react-icons/fa';
+import { FaCheck, FaEdit, FaTimes, FaTrash } from 'react-icons/fa';
 import { useParams } from 'react-router-dom';
 import Message from '../../components/Message';
 import Loader from '../../components/Loader';
@@ -79,8 +79,8 @@ const ProductListScreen = () => {
           <Table striped hover responsive className="table-sm">
             <thead>
               <tr>
-                <th>ID</th>
                 <th>NAME</th>
+                <th>TO BE DELIVERED</th>
                 <th>BEFORE PRICE</th>
                 <th>CURRENT PRICE</th>
                 <th>CATEGORY</th>
@@ -90,8 +90,14 @@ const ProductListScreen = () => {
             <tbody>
               {products.data.map((product) => (
                 <tr key={product._id}>
-                  <td>{product._id}</td>
-                  <td>{product.name}</td>
+                  <td title={`id: ${product._id}`}>{product.name}</td>
+                  <td>
+                    {product.toBeDelivered ? (
+                      <FaCheck className="text-success" />
+                    ) : (
+                      <FaTimes className="text-danger" />
+                    )}
+                  </td>
                   <td>{product.beforePrice}</td>
                   <td>{product.currentPrice}</td>
                   <td>{product?.category?.title}</td>

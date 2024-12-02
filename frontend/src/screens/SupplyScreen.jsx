@@ -17,7 +17,7 @@ import Loader from '../components/Loader';
 import Message from '../components/Message';
 import Meta from '../components/Meta';
 import Banner from '../components/Banner';
-import ThumbsGallery from '../components/ThumbsGallery';
+import ThumbsGallery from '../components/ThumbsGalery/index.jsx';
 import { Trans, useTranslation } from 'react-i18next';
 import { toCurrency, uuid } from '../utils/converter';
 import { FaStar } from 'react-icons/fa';
@@ -97,7 +97,8 @@ const SupplyScreen = () => {
   }, [supply, i18n.language]);
 
   const addToCartHandler = () => {
-    const { _id, name, currentPrice, thumbnails, countInStock } = supply;
+    const { _id, name, currentPrice, thumbnails, countInStock, toBeDelivered } =
+      supply;
     const cartId = uuid();
     const name_hu = supply.translations?.hu?.name || supply.name;
     const currentPrice_hu =
@@ -116,6 +117,7 @@ const SupplyScreen = () => {
         thumbnail,
         qty,
         countInStock,
+        toBeDelivered,
       })
     );
   };
@@ -139,7 +141,7 @@ const SupplyScreen = () => {
   };
 
   const addToWishListHandler = () => {
-    const { _id, name, currentPrice, thumbnails } = supply;
+    const { _id, name, currentPrice, thumbnails, toBeDelivered } = supply;
     const name_hu = supply.translations?.hu?.name || supply.name;
     const currentPrice_hu =
       supply.translations?.hu?.currentPrice || supply.currentPrice;
@@ -154,6 +156,7 @@ const SupplyScreen = () => {
         currentPrice,
         currentPrice_hu,
         thumbnail,
+        toBeDelivered,
       })
     );
   };
@@ -191,7 +194,11 @@ const SupplyScreen = () => {
               </Link>
               <Row className="mb-5">
                 <Col md={6}>
-                  <ThumbsGallery images={supply.thumbnails} />
+                  <ThumbsGallery
+                    images={supply.thumbnails}
+                    direction="vertical"
+                    aspectRatio={1 / 1}
+                  />
                 </Col>
                 <Col md={6}>
                   <ListGroup>

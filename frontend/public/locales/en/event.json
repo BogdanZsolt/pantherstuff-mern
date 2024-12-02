@@ -1,0 +1,21 @@
+{
+  "eventTitle": "Retreats & Workshop",
+  "events": "Events",
+  "showingOfResults": "Showing <strong>{{length}}</strong> of <strong>{{count}}</strong> results",
+  "defaultSorting": "Default Sorting",
+  "popular": "Popular",
+  "rating": "Rating",
+  "latest": "Latest",
+  "PriceLowToHigh": "Price low to high",
+  "priceHighToLow": "Price high to low",
+  "inOrderOfStartTime": "In order of start time",
+  "thereAreNoItemsToDisplay": "There are no items to display",
+  "more&Registration": "More & registration",
+  "goBack": "Go Back",
+  "maxGroupSize": "Maximum Group size: <strong>{{count}}</strong> people, available space: <strong>{{free}}</strong>",
+  "category": "Category",
+  "iWillBeThere": "I will be there",
+  "booking": "Booking",
+  "filters": "Filters",
+  "": ""
+}

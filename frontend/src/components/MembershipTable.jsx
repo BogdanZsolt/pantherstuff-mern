@@ -20,7 +20,8 @@ const MembershipTable = () => {
   const dispatch = useDispatch();
 
   const addToCartHandler = (plan) => {
-    const { _id, name, currentPrice, recommended, thumbnail } = plan;
+    const { _id, name, currentPrice, recommended, thumbnail, toBeDelivered } =
+      plan;
     const cartId = uuid();
     const name_hu = plan.translations?.hu?.name || name;
     const currentPrice_hu = plan.translations?.hu?.currentPrice || currentPrice;
@@ -42,6 +43,7 @@ const MembershipTable = () => {
         currentPrice_hu,
         recommended,
         qty,
+        toBeDelivered,
       })
     );
     // return navigate('/cart');

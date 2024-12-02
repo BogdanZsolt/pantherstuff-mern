@@ -2,7 +2,7 @@
   "supplyStore": "Supply Store",
   "supply": "Supply",
   "supplies": "Supplies",
-  "showingOfResults": "Showing {{length}} of {{count}} results",
+  "showingOfResults": "Showing <strong>{{length}}</strong> of <strong>{{count}}</strong> results",
   "defaultSorting": "Default Sorting",
   "popular": "Popular",
   "rating": "Rating",

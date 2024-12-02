@@ -1,0 +1,21 @@
+{
+  "eventTitle": "Elvonulások és műhelyek",
+  "events": "Események",
+  "showingOfResults": "<strong>{{count}}</strong> eredményből <strong>{{length}}</strong> megjelenítése",
+  "defaultSorting": "Alapértelmezett rendezés",
+  "popular": "Népszerű",
+  "rating": "Értékelés",
+  "latest": "Legújabb",
+  "priceLowToHigh": "Ár alacsonytól magasig",
+  "priceHighToLow": "Ár magastól alacsonyig",
+  "inOrderOfStartTime": "Kezdési időpont sorrendjében",
+  "thereAreNoItemsToDisplay": "Nincsenek megjeleníthető elemek",
+  "more&Registration": "Bővebben & regisztráció",
+  "goBack": "Vissza",
+  "maxGroupSize": "Maximális csoportlétszám: <strong>{{count}}</strong> fő, szabad hely: <strong>{{free}}</strong>",
+  "category": "Kategória",
+  "iWillBeThere": "Ott leszek",
+  "booking": "Foglalás",
+  "filters": "Szűrők",
+  "": ""
+}

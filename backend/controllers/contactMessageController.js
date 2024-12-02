@@ -2,7 +2,8 @@ import { getAll, deleteOne, updateOne } from './handlerFactory.js';
 import ContactMessage from '../models/contactMessageModel.js';
 import User from '../models/userModel.js';
 import asyncHandler from '../middleware/asyncHandler.js';
-import sendContactMessageEmail from '../utils/sendContactMessageEmail.js';
+// import sendContactMessageEmail from '../utils/sendContactMessageEmail.js';
+import Email from '../utils/email.js';
 
 const contactMessagesPopOption = [
   { path: 'user', select: ['name'] },
@@ -38,16 +39,18 @@ const getContactMessageById = asyncHandler(async (req, res) => {
 // @access  Public
 const createContactMessage = asyncHandler(async (req, res) => {
   // get data
-  const { name, email, message, telephone, to } = req.body;
+  const { name, email, message, telephone, to, ownerName, language } = req.body;
   // message sender is a user?
   const user = await User.findOne({ email });
-  const info = await sendContactMessageEmail(
+  const info = await new Email(
+    { name: ownerName, email: to },
+    language
+  ).contactMessage({
     email,
-    to,
     name,
     telephone,
-    message
-  );
+    message,
+  });
   if (!info) {
     res.status(401).json({
       status: 401,

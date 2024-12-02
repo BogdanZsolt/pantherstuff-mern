@@ -18,6 +18,11 @@ const planSchema = new mongoose.Schema(
     timeLimitQty: { type: Number, default: 0 },
     currentPrice: { type: Number, required: true, default: 0 },
     recommended: { type: Boolean, default: false },
+    toBeDelivered: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
     translations: {
       hu: {
         name: String,

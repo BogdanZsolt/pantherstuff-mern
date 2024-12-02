@@ -22,7 +22,13 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 // @route   POST /api/orders
 // @access  Private
 const addOrderItems = asyncHandler(async (req, res) => {
-  const { language, orderItems, shippingAddress, paymentMethod } = req.body;
+  const {
+    language,
+    orderItems,
+    shippingAddress,
+    billingAddress,
+    paymentMethod,
+  } = req.body;
 
   if (orderItems && orderItems.length === 0) {
     res.status(400);
@@ -90,6 +96,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
       user: req.user._id,
       language,
       shippingAddress,
+      billingAddress,
       paymentMethod,
       itemsPrice,
       taxPrice,

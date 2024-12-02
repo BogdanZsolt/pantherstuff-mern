@@ -8,6 +8,7 @@ import 'swiper/css/pagination';
 
 const ThumbsGalery = ({ images }) => {
   const [thumbs, setThumbs] = useState(null);
+  const slidesPerView = 3;
 
   return (
     <div className="image">
@@ -39,7 +40,7 @@ const ThumbsGalery = ({ images }) => {
             onSwiper={setThumbs}
             direction="vertical"
             spaceBetween={15}
-            slidesPerView={3}
+            slidesPerView={slidesPerView}
             freeMode={true}
             watchSlidesProgress={true}
             modules={[FreeMode]}

@@ -20,6 +20,7 @@ import {
 } from 'react-icons/bs';
 import { AiOutlineProduct } from 'react-icons/ai';
 import { RxComponent1 } from 'react-icons/rx';
+import { MdEvent } from 'react-icons/md';
 import { logout } from '../../slices/authSlice';
 import { useLogoutMutation } from '../../slices/usersApiSlice';
 
@@ -356,6 +357,51 @@ const Sidebar = () => {
                 <Dropdown.Item>
                   <Link to="/admin/membershipplan">
                     <span>membership plans</span>
+                  </Link>
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </div>
+          </Nav.Item>
+
+          <Nav.Item>
+            <Dropdown.Toggle
+              className="nav-link d-flex align-items-center text-primary"
+              onClick={() => setOpen(open === 'events' ? '' : 'events')}
+              aria-controls="events-collapse"
+              aria-expanded={open}
+            >
+              <MdEvent className="fs-4" />
+              <span className="ms-2 fs-4 d-none d-md-inline-flex">Events</span>
+            </Dropdown.Toggle>
+            <div className="d-none d-md-block">
+              <Collapse in={open === 'events'}>
+                <Nav id="events-collapse" className="flex-nowrap flex-column">
+                  <Nav.Item className="ms-4 p-2">
+                    <Link className="text-primary my-2" to="/admin/eventlist">
+                      <span>All events</span>
+                    </Link>
+                  </Nav.Item>
+                  <Nav.Item className="ms-4 p-2">
+                    <Link
+                      className="text-primary my-2"
+                      to="/admin/eventcategorylist"
+                    >
+                      <span>Event Categories</span>
+                    </Link>
+                  </Nav.Item>
+                </Nav>
+              </Collapse>
+            </div>
+            <div className="d-block d-md-none dropdown-menu__container">
+              <Dropdown.Menu show={open === 'events'}>
+                <Dropdown.Item>
+                  <Link to="/admin/eventlist">
+                    <span>All events</span>
+                  </Link>
+                </Dropdown.Item>
+                <Dropdown.Item>
+                  <Link to="/admin/eventcategorylist">
+                    <span>Event Categories</span>
                   </Link>
                 </Dropdown.Item>
               </Dropdown.Menu>

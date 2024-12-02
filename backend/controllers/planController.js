@@ -13,6 +13,7 @@ const planCreateInit = (req, res, next) => {
   req.body.timeLimitMeasure = null;
   req.body.timeLimitQty = 0;
   req.body.price = 0;
+  req.body.toBeDelivered = false;
   req.body.translations = {
     hu: {
       name: 'Egyszerű csomag',

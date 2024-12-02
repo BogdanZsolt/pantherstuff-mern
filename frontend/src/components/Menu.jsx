@@ -176,7 +176,7 @@ const Menu = () => {
         {
           id: '4.3',
           text: t('retreatsAndWorkshop'),
-          link: '',
+          link: '/event',
           image: '/images/ecoprint-01-200x200.webp',
         },
         {

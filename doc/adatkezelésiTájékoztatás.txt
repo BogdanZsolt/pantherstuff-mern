@@ -1,0 +1,271 @@
+Adatkezelési tájékoztató
+Utolsó módosítás dátuma: 2024.09.15.
+
+Kérdéssel, kéréssel panasszal kapcsolatban írj a info@1x1akademia.hu címre.
+Személyes adatok törlését kérvényezheti a info@1x1akdemia.hu címre írt e-maillel.
+
+
+Kik vagyunk?
+A weboldalaink címe: 1x1akdemia.hu, oktatas.1x1akdemia.hu
+Adatkezelő megnevezése:
+Cégnév: PROMOKIT GLOBAL Tanácsadó és Szolgáltató Korlátolt Felelősségű Társaság
+Székhely: 4025, Debrecen Simonffy utca 4-6. fszt. 41.
+Adószám: 32038114-2-09
+Telefon: 36 30 252 5396
+E-mail: info@1x1akdemia.hu
+Internet: 1x1akdemia.hu, oktatas.1x1akdemia.hu
+A céget bejegyző hatóság: Debreceni Cégbíróság
+Cégjegyzékszám: 50964068
+Kijelentjük, hogy a PROMOKIT GLOBAL KFT. birtokolja az oldalainkon látható információkat. A 1x1akdemia.hu és oktatas.1x1akdemia.hu oldalainak tartalmát és a kialakítását nemzetközi és magyar törvények védik.
+Aki egy termék vásárlása útján a weboldalra regisztrálja magát, az adatvédelmi nyilatkozatunkat elfogadottnak tekinti, azzal egyetért.
+1. AZ ADATKEZELÉSI TÁJÉKOZTATÓ CÉLJA
+PROMOKIT GLOBAL Tanácsadó és Szolgáltató Korlátolt Felelősségű Társaság (továbbiakban, szolgáltató, adatkezelő) mint adatkezelő, magára nézve kötelezőnek ismeri el jelen jogi közlemény tartalmát.
+Kötelezettséget vállal arra, hogy tevékenységével kapcsolatos minden adatkezelés megfelel a jelen szabályzatban és a hatályos nemzeti jogszabályokban, valamint az Európai Unió jogi aktusaiban meghatározott elvárásoknak.
+Adatkezelő adatkezeléseivel kapcsolatosan felmerülő adatvédelmi irányelvek folyamatosan elérhetők a https://1x1akdemia.hu/adat/ és a https://oktatas.1x1akdemia.hu/static/privacypolicy címeken.
+Adatkezelő fenntartja magának a jogot jelen tájékoztató bármikori megváltoztatására. Természetesen az esetleges változásokról kellő időben értesíti közönségét.
+Amennyiben kérdése lenne jelen közleményhez kapcsolódóan, kérjük, írja meg és megválaszoljuk kérdését.
+Adatkezelő elkötelezett ügyfelei és partnerei személyes adatainak védelmében, kiemelten fontosnak tartja ügyfelei információs önrendelkezési jogának tiszteletben tartását. Adatkezelő a személyes adatokat bizalmasan kezeli, és megtesz minden olyan biztonsági, technikai és szervezési intézkedést, mely az adatok biztonságát garantálja.
+Adatkezelő az alábbiakban ismerteti adatkezelési gyakorlatát.
+1. AZ ADATKEZELŐ ADATAI
+
+Amennyiben megkeresné a vállalkozást, a info@1x1akdemia.hu email címen léphet kapcsolatba az adatkezelővel.
+Cégnév: PROMOKIT GLOBAL Tanácsadó és Szolgáltató Korlátolt Felelősségű Társaság
+Székhely: 4025, Debrecen Simonffy utca 4-6. fszt. 41.
+Adószám: 32038114-2-09
+Telefon: 36 30 252 5396
+E-mail: info@1x1akdemia.hu
+Internet: 1x1akdemia.hu, oktatas.1x1akdemia.hu
+A céget bejegyző hatóság: Debreceni Cégbíróság
+Cégjegyzékszám: 50964068
+
+2.1 ADATVÉDELMI TISZTVISELŐ
+Adatkezelő nem végez olyan tevékenységet, mely indokolttá tenné adatvédelmi tisztviselő kijelölését.
+
+3.1. TECHNIKAI ADATOK
+Adatkezelő a személyes adatok kezeléséhez a szolgáltatás nyújtása során alkalmazott informatikai eszközöket úgy választja meg és üzemelteti, hogy a kezelt adat:
+• az arra feljogosítottak számára hozzáférhető (rendelkezésre állás);
+• hitelessége és hitelesítése biztosított (adatkezelés hitelessége);
+• változatlansága igazolható (adatintegritás);
+• a jogosulatlan hozzáférés ellen védett (adat bizalmassága) legyen.
+Adatkezelő az adatokat megfelelő intézkedésekkel védi a jogosulatlan hozzáférés, megváltoztatás, továbbítás, nyilvánosságra hozatal, törlés vagy megsemmisítés, valamint a véletlen megsemmisülés ellen.
+Adatkezelő olyan műszaki, szervezési és szervezeti intézkedésekkel gondoskodik az adatkezelés biztonságának védelméről, amely az adatkezeléssel kapcsolatban jelentkező kockázatoknak megfelelő védelmi szintet nyújt.
+Adatkezelő az adatkezelés során megőrzi a titkosságot: megvédi az információt, hogy csak az férhessen hozzá, aki erre jogosult; a sértetlenséget: megvédi az információnak és a feldolgozás módszerének a pontosságát és teljességét; a rendelkezésre állást: gondoskodik arról, hogy amikor a jogosult használónak szüksége van rá, valóban hozzá tudjon férni a kívánt információhoz, és rendelkezésre álljanak az ezzel kapcsolatos eszközök.
+3.2 COOKIE-K (SÜTIK)
+
+3.2.1 A SÜTIK FELADATA
+A sütik információkat gyűjtenek a látogatókról és eszközeikről; megjegyzik a látogatók egyéni beállításait, amelyek felhasználásra kerül(het)nek pl. online tranzakciók igénybevételekor, így nem kell újra begépelni őket; megkönnyítik a weboldal használatát; minőségi felhasználói élményt biztosítanak.
+A testre szabott kiszolgálás érdekében a felhasználó számítógépén kis adatcsomagot, ún. sütit (cookie) helyez el és a későbbi látogatás során olvas vissza. Ha a böngésző visszaküld egy korábban elmentett sütit, a sütit kezelő szolgáltatónak lehetősége van összekapcsolni a felhasználó aktuális látogatását a korábbiakkal, de kizárólag a saját tartalma tekintetében.
+
+3.2.2 FELTÉTLENÜL SZÜKSÉGES, MUNKAMENET (SESSION) COOKIE-K
+Ezen sütik célja, hogy a látogatók maradéktalanul és zökkenőmentesen böngészhessék a 1x1akdemia.hu és a oktatas.1x1akdemia.hu weboldalát, használhassák annak funkcióit, és az ott elérhető szolgáltatásokat. Az ilyen típusú sütik érvényességi ideje a munkamenet (böngészés) befejezéséig tart, a böngésző bezárásával a sütik e fajtája automatikusan törlődik a számítógépről, illetve a böngészésre használt más eszközről.
+
+3.2.3. HARMADIK FÉL ÁLTAL ELHELYEZETT COOKIE-K (ANALITIKA)
+A 1x1akdemia.hu és a oktatas.1x1akdemia.hu weboldalán alkalmazza a Google Analytics mint harmadik fél sütijeit is. A Google Analytics statisztikai célú szolgáltatás használatával a 1x1akdemia.hu és a oktatas.1x1akdemia.hu információkat gyűjt azzal kapcsolatban, hogy a látogatók hogyan használják a weboldalakat. Az adatot a honlap fejlesztésének és a felhasználói élmény javításának céljával használja fel. Ezen sütik szintén lejáratukig a látogató számítógépén vagy böngészésre használt más eszközén, annak böngészőjében maradnak, illetve amíg a látogató nem törli őket.
+
+3.2.4. AZ ADATKEZELŐ WEBOLDALAIN SZEREPLŐ COOKIE-K LISTÁJA
+Név Szolgáltató Részletes leírás Elévülés Jelleg
+1P_JAR Google.com és Gstatic.com A cookie-t webhelystatisztikák összegyűjtésére és a konverziós arány követésére használják. 2 év nem gyűjt személyes információkat
+CONSENT 1x1akdemia.hu, oktatas.1x1akdemia.hu A cookie a cookie-k elfogadásával összefüggő beállítások tárolására használják 1 év nem gyűjt személyes információkat
+viewedExitPopupWP 1x1akdemia.hu, oktatas.1x1akdemia.hu A cookie a weboldalak elhagyásakor közölt információk beállításainak tárolására használják 30 nap nem gyűjt személyes információkat
+NID Google.com Ezek a cookie-k lehetővé teszik, hogy webhelyeink megjegyezzék a webhely működési vagy megjelenítési módját, például az Ön által beállított nyelvet vagy az Ön tartózkodási régióját módosító információkat. 10 év nem gyűjt személyes információkat
+_ga Google.com A Google Analytics cookie-kat a webhelyünkön lévő forgalom mérésére használjuk. Egyetlen szöveges sáv kerül mentésre a böngésző, a kölcsönhatások időbélyegzőjének és a böngésző / forrásoldal azonosításához, amely a felhasználót a weboldalunkhoz vezette. 2 év nem gyűjt személyes információkat
+_gat Google.com A Google Analytics cookie-kat a webhelyünkön lévő forgalom mérésére használjuk. Egyetlen szöveges sáv kerül mentésre a böngésző, a kölcsönhatások időbélyegzőjének és a böngésző / forrásoldal azonosításához, amely a felhasználót a weboldalunkhoz vezette. 2 év nem gyűjt személyes információkat
+_gid Google.com A Google Analytics cookie-kat a webhelyünkön lévő forgalom mérésére használjuk. Egyetlen szöveges sáv kerül mentésre a böngésző, a kölcsönhatások időbélyegzőjének és a böngésző / forrásoldal azonosításához, amely a felhasználót a weboldalunkhoz vezette. 2 év nem gyűjt személyes információkat
+4 ÁLTALÁNOS ADATKEZELÉSI IRÁNYELVEK, ADATKEZELÉS NEVE, FELHASZNÁLÁSA, JOGALAP ÉS MEGŐRZÉSI IDŐ
+Adatkezelő tevékenységének adatkezelései önkéntes hozzájáruláson, illetve törvényi felhatalmazáson alapulnak. Az önkéntes hozzájáruláson alapuló adatkezelések esetében az érintettek e hozzájárulásukat az adatkezelés bármely szakában visszavonhatják.
+Bizonyos esetekben a megadott adatok egy körének kezelését, tárolását, továbbítását jogszabályok teszik kötelezővé, melyről külön értesítjük ügyfeleinket. Felhívjuk Adatkezelő részére adatközlők figyelmét, hogy amennyiben nem saját személyes adataikat adják meg, az adatközlő kötelessége az érintett hozzájárulásának beszerzése. Adatkezelési alapelvei összhangban vannak az adatvédelemmel kapcsolatos hatályos jogszabályokkal, így különösen az alábbiakkal: 2011. évi CXII. törvény – az információs önrendelkezési jogról és az információ-szabadságról (Infotv.);
+Az Európai Parlament és a Tanács (EU) 2016/679 rendelete (2016. április 27.) – a természetes személyeknek a személyes adatok kezelése tekintetében tör-ténő védelméről és az ilyen adatok szabad áramlásáról, valamint a 95/46/EK rendelet hatályon kívül helyezéséről (általános adatvédelmi rendelet, GDPR); 2013. évi V. törvény – a Polgári Törvénykönyvről (Ptk.); 2000. évi C. törvény – a számvitelről (Számv. tv.); 2017. évi LIII. törvény – a pénzmosás és terrorizmus finanszírozása megelőzéséről és megakadályozásáról (Pmt.); 2013. évi CCXXXVII. törvény – a hitelintézetekről és a pénzügyi vállalkozások-ról (Hpt.).
+Az adatkezelő adattérképek készített, ennek alapján meghatározásra került a kezelt adatok köre, azok felhasználása, jogalapja és megőrzési ideje.
+
+4.1 ONLINE RENDELÉSHEZ KAPCSOLÓDÓ ADATOK
+A weboldalon keresztül lehetőség van szolgáltatások megrendelésére, a megrendelés során elkért személyes adatok:
+Név (kötelező mező)
+Email cím (kötelező mező)
+Telefonszám (nem kötelező mező, opcionálisan kitölthető, visszahívás kezdeményezéséhez)
+Bizonyos szolgáltatások esetében, úgymint weboldal karbantartás, további személyes adatok is átadásra kerülhetnek.
+Az adatkezelés célja, a kezelt adatok tervezett felhasználása: Az adatok a megrendelés teljesítésére kerülnek felhasználásra.
+Az adatkezelés jogalapja szerződéses megbízás.
+Megőrzési idő: üzleti kapcsolat időtartama, vagy törlési kérelem.
+
+4.2 ONLINE ÜGYINTÉZÉSHEZ KAPCSOLÓDÓ ADATOK
+A kapcsolatfelvétel során elkért személyes adatok:
+Név (kötelező mező)
+Email cím (kötelező mező)
+Telefonszám (nem kötelező mező, opcionálisan kitölthető, visszahívás kezdeményezéséhez)
+Az adatkezelés célja, a kezelt adatok tervezett felhasználása: Az adatok kapcsolatfelvétel és a megrendelés teljesítésére kerülnek felhasználásra.
+Az adatkezelés jogalapja önkéntes hozzájárulás.
+Megőrzési idő: üzleti kapcsolat időtartama, vagy törlési kérelem.
+
+4.3 TELEFONOS ÜGYINTÉZÉSHEZ KAPCSOLÓDÓ ADATOK
+A kapcsolatfelvétel során elkért személyes adatok:
+Név (kötelező mező)
+Telefonszám (nem kötelező mező, opcionálisan kitölthető, visszahívás kezdeményezéséhez)
+A kezelt adatok tervezett felhasználása: Az adatok kapcsolatfelvétel és a megrendelés teljesítésére kerülnek felhasználásra.
+Az adatkezelés célja, a kezelt adatok tervezett felhasználása: Az adatok kapcsolatfelvétel és a megrendelés teljesítésére kerülnek felhasználásra.
+Az adatkezelés jogalapja önkéntes hozzájárulás.
+Megőrzési idő: üzleti kapcsolat időtartama, vagy törlési kérelem.
+
+4.4 HÍRLEVÉL / EDM-HEZ KAPCSOLÓDÓ ADATOK
+A hírlevél feliratkozás során elkért személyes adatok:
+Név (kötelező mező)
+Email cím (kötelező mező)
+A hírlevélre az adatkezelési szabályzat megismerését és elfogadását követően van lehetőség. Az adatkezelési szabályzat elfogadása előre ki nem töltött, kötelező jelölőnégyzet elfogadásával történik.
+A feliratkozást követően a feliratkozó egy email üzenetben tájékoztatást kap a feliratkozásról, melyet meg is kell erősítenie, a feliratkozása ezt követően lép hatályba.
+Minden ezzel kapcsolatos folyamat során az ügyfélnek továbbra is lehetősége van a leiratkozásra, a leiratkozás lehetőségét minden levél egy link formájában tartalmazza, az egy klikkeléssel könnyen elérhető.
+Mivel a hírlevél tartalmazza a vállalkozás nevét és weboldalának elérhetőségét, így reklámnak, eDM-nek minősül.
+Az adatkezelés célja, a kezelt adatok tervezett felhasználása: Az adatok reklámot is tartalmazó hírlevél kiküldésére kerülnek felhasználásra. A hírelvél tartalmazza a weboldal címét, így ezzel már reklámnak minősül.
+Az adatkezelés jogalapja önkéntes hozzájárulás.
+Megőrzési idő: leiratkozásig.
+
+4.5 ÜGYFÉL KAPCSOLATI ADATOK
+Az ügyfelek cégvezetőinek és kapcsolattartóinak alábbi személyes adatait és elérhetőségeit tárolom:
+Név
+Email cím
+Telefonszám
+Az adatkezelés célja, a kezelt adatok tervezett felhasználása: Az adatok kapcsolatfelvétel és kapcsolattartás céljából kerülnek felhasználásra.
+Az adatkezelés jogalapja jogos érdek.
+Megőrzési idő: üzleti kapcsolat időtartama, vagy törlési kérelem.
+4.6 SZÁMLÁZÁSHOZ KAPCSOLÓDÓ ADATOK
+Adatkezelő ügyfeleivel a megrendelt szolgáltatásokról szerződést köt, melynek során az alábbi adatokat tárolja:
+Név
+Email cím
+Cím
+Az adatkezelés célja, a kezelt adatok tervezett felhasználása: számlázás.
+Az adatkezelés jogalapja: jogszabályi előírás.
+Megőrzési idő: jogszabályi előírás alapján tárgyév + 5 év
+
+4.7 REGISZTRÁCIÓ SORÁN MEGADANDÓ SZEMÉLYES ADATOK
+A https://oktatas.1x1akdemia.hu oldalakon van regisztrációs lehetőség.
+A regisztráció során az alábbi személyes adatokat és elérhetőségeket tárolom:
+Név
+Email cím
+Telefonszám
+Az adatkezelés célja, a kezelt adatok tervezett felhasználása: Az adatok regisztrációhoz és a weboldal használatához elengedhetetlenek. Továbbá kapcsolatfelvétel és kapcsolattartás céljából kerülnek felhasználásra.
+Az adatkezelés jogalapja jogos érdek.
+Megőrzési idő: üzleti kapcsolat időtartama, vagy törlési kérelem.
+
+5 AZ ADATOK FIZIKAI TÁROLÁSI HELYEI
+Személyes adatai (vagyis azok az adatok, amelyek az Ön személyével kapcsolatba hozhatók) a következő módon kerülhetnek a kezelésünkbe:
+• egyfelől az internetes kapcsolat fenntartásával összefüggésben az Ön által használt számítógéppel, böngészőprogrammal, internetes címmel, a látogatott oldalakkal kapcsolatos technikai adatok automatikusan képződnek számítógépes rendszerünkben,
+• másfelől Ön is megadhatja nevét, elérhetőségét vagy más adatait, ha a honlap használata során személyes kapcsolatba kíván lépni velünk. A rendszer működtetése során technikailag rögzítésre kerülő adatok: az érintett bejelentkező számítógépének azon adatai, melyeket a 1x1akdemia.hu és a oktatas.1x1akdemia.hu rendszerei a technikai folyamatok automatikus eredményeként rögzít.
+Az automatikusan rögzítésre kerülő adatot a rendszer az érintett külön nyilatkozata vagy cselekménye nélkül a belépéskor, illetve kilépéskor automatikusan naplózza.
+Ezen adat egyéb személyes felhasználói adatokkal – törvény által kötelezővé tett esetek kivételével – össze nem kapcsolható. Az adathoz kizárólag a 1x1akdemia.hu és a oktatas.1x1akdemia.hu fér hozzá.
+
+6 ADATTOVÁBBÍTÁS, ADATFELDOGOZÁS, AZ ADATOKAT MEGISMERŐK KÖRE
+Adatkezelő vállalkozási tevékenysége keretében az alábbi adatfaldolgozókat veszi igénybe:
+6.1 Tárhelyszolgáltatás(1):
+ELIN.hu Informatikai Szolgáltató és Tanácsadó Kft.
+Székhely: 9024 Győr, Déry T. u. 11.
+Adószám: 14315754-2-08
+Cégjegyzékszám: 08-09-016359
+E-mail cím: info@elin.hu
+Telefonszám: +36 70 297 4811
+Megismert adatok köre: 1x1akdemia.hu weboldal tartalma, ezen domainre alapuló email címekre érkező emailek.
+6.2 Tárhelyszolgáltatás(2):
+Név: Panosys Kft.
+Cím: 7500 Nagyatád, Kiszely L. u. 6.B.
+Email: info@tudaspiac.hu
+Megismert adatok köre: oktatas.1x1akdemia.hu weboldal tartalma, ezen domainen leadott vásárlások száma és értéke, látogatók száma, név, e-mail cím, lacím vagy székhely, cégnév, adószám, megvásárolt oktatások nwvw.
+6.3 Számlázás:
+Cégnév: Billingo Technologies Zrt.
+Cím: 1133 Budapest, Árbóc utca 6. I. emelet
+E-mail: info@billingo.hu
+Telefon: +36-1/500-9491
+A céget bejegyző hatóság: Fővárosi Cégbíróság Cégjegyzékszám: 01-10-140802
+Adószám: 27926309-2-41 Tárhelyszolgáltató adatai: Amazon Web Services EMEA SARL (38 avenue John F. Kennedy, L-1855 Luxembourg)
+Adatfeldolgozás helye: www.billingo.hu
+Adatfeldolgozási technológia: információs rendszerrel
+Megismert adatok köre: kiállított számlák
+6.4 Könyvelés és bérszámfejtés:
+Cégnév: MÉRLEG-ELŐ 2004 Szolgáltató Bt.
+4060 Balmazújváros, Árpád utca 8.
+ADÓSZÁM: 21931501-1-09
+Adatfeldolgozási technológia: információs rendszerrel
+Megismert adatok köre: kiállított számlák
+6.5 Hírlevél:
+MAILERLITE UAB
+Paupio g. 46 11341 Vilnius, Lithuania
+info@mailerlite.com
+Adatkezelési tájékoztató: https://www.mailerlite.com/privacy-policy
+Megismert adatok köre: feliratkozó név és email cím.
+6.6 CRM rendszer:
+Pipedrive
+Cím: 530 Fifth Avenue, 8th floor, Suite 802, New York, NY 10036 ,United States
+Telefonszám: +1-212-448-7300
+E-mail cím: privacy@pipedrive.com
+Adatkezelési szabályzat: https://www.pipedrive.com/en/privacy
+Adatfeldolgozási technológia: információs rendszerrel
+Megismert adatok köre: feliratkozó név, telefonszám, vásárolt termék és email cím.
+6.7 Google Analytics:
+Google Inc., Mountain View, California, USA
+Megismert adatok köre: a 1x1akdemia.hu és a https://app.1x1akdemia.hu weboldal látogatóinak – anonimizált, személyhez nem köthető – IP címe.
+6.8 Meta (Facebook) oldal:
+Facebook Inc.
+Menlo Park, California, USA
+Adatkezelési tájékoztató: https://www.facebook.com/about/privacy/update
+Megismert adatok köre: felhasználónév, hozzászólás.
+6.9 STRIPE
+Stripe, Inc.
+185 Berry Street, Suite 550
+San Francisco, CA 94107 Attention: Stripe Legal
+Megismert adatok köre: kártyaadatok (kódolva) és a tranzakció(k) adatai
+Az adattovábbítás célja: online bankkártyás fizetési lehetőség biztosítása, előfizetési és részletfizetési díjak automatikus levonása a szerződés időtartama alatt
+6.10. ELIN (1x1akademia.hu)
+ELIN.hu Informatikai Szolgáltató és Tanácsadó Kft.
+Székhely: 9024 Győr, Déry T. u. 11.
+Adószám: 14315754-2-08
+Cégjegyzékszám: 08-09-016359
+E-mail cím: info@elin.hu
+Telefonszám: +36 70 297 4811
+Továbbított adatok köre: vezetéknév, keresztnév, email cím, jelszó (kódolva), számlázási név, számlázási cím, IP cím
+Az adattovábbítás célja: szerver és tárhely szolgáltatás biztosítása többek között adattárolás céljából.
+
+6.11. Rackforest Zrt. (oktatas.1x1akademia.hu)
+Név: RackForest Zrt.
+Székhely: 1132 Budapest, Victor Hugo u. 18-22
+Email cím: info@rackforest.com
+Weboldal: rackforest.com
+Továbbított adatok köre: vezetéknév, keresztnév, email cím, jelszó (kódolva), számlázási név, számlázási cím, IP cím
+Az adattovábbítás célja: szerver és tárhely szolgáltatás biztosítása többek között adattárolás céljából.
+
+
+6.1 ADATTOVÁBBÍTÁS HARMADIK ORSZÁGBA
+Adattovábbítás az Amerikai Egyesült Államokba történik, mellyel megfelelőségi határozat született 2016. július 12-én (https://ec.europa.eu/info/law/law-topic/data-protection/data-transfers-outside-eu/eu-us-privacy-shield_en).
+A megfelelőségi határozat a Mailchimp https://mailchimp.com/legal/privacy/, a Google (https://policies.google.com/privacy/frameworks) és a Facebook (https://www.facebook.com/about/privacyshield) adatkezelők esetében is érvényes.
+7 ÉRINTETT JOGAI ÉS JOGÉRVÉNYESÍTÉSI LEHETŐSÉGEI
+Az érintett tájékoztatást kérhet személyes adatai kezeléséről, valamint kérheti személyes adatainak helyesbítését, illetve – a kötelező adatkezelések kivételével – törlését, visszavonását, élhet adathordozási-, és tiltakozási jogával az adat felvételénél jelzett módon, illetve az adatkezelő fenti elérhetőségein.
+7.1 TÁJÉKOZTATÁSHOZ VALÓ JOG
+Adatkezelő megfelelő intézkedéseket hoz annak érdekében, hogy az érintettek részére a személyes adatok kezelésére vonatkozó, a GDPR 13. és a 14. cikkben említett valamennyi információt és a 15–22. és 34. cikk szerinti minden egyes tájékoztatást tömör, átlátható, érthető és könnyen hozzáférhető formában, világosan és közérthetően megfogalmazva nyújtsa.
+7.2 AZ ÉRINTETT HOZZÁFÉRÉSHEZ VALÓ JOGA
+Az érintett jogosult arra, hogy az adatkezelőtől visszajelzést kapjon arra vonatkozóan, hogy személyes adatainak kezelése folyamatban van-e, és ha ilyen adatkezelés folyamatban van, jogosult arra, hogy a személyes adatokhoz és a következő információkhoz hozzáférést kapjon:
+• az adatkezelés céljai;
+• az érintett személyes adatok kategóriái;
+• azon címzettek vagy címzettek kategóriái, akikkel, illetve amelyekkel a személyes adatokat közölték vagy közölni fogják, ideértve különösen a harmadik országbeli címzetteket, illetve a nemzetközi szervezeteket;
+• a személyes adatok tárolásának tervezett időtartama;
+• a helyesbítés, törlés vagy adatkezelés korlátozásának és a tiltakozás joga;
+• a felügyeleti hatósághoz címzett panasz benyújtásának joga;
+• az adatforrásokra vonatkozó információ;
+• az automatizált döntéshozatal ténye, ideértve a profilalkotást is, valamint az alkalmazott logikára és arra vonatkozó érthető információk, hogy az ilyen adatkezelés milyen jelentőséggel bír, és az érintettre nézve milyen várható következményekkel jár.
+Az adatkezelő a kérelem benyújtásától számított legfeljebb egy hónapon belül adja meg a tájékoztatást.
+7.3 HELYESBÍTÉS JOGA
+Az érintett kérheti Adatkezelő által kezelt, rá vonatkozó pontatlan személyes adatok helyesbítését és a hiányos adatok kiegészítését.
+7.4 TÖRLÉSHEZ VALÓ JOG
+Az érintett az alábbi indokok valamelyikének fennállása esetén jogosult arra, hogy kérésére Adatkezelő indokolatlan késedelem nélkül törölje a rá vonatkozó személyes adatokat: személyes adatokra már nincs szükség abból a célból, amelyből azokat gyűjtötték vagy más módon kezelték; az érintett visszavonja az adatkezelés alapját képező hozzájárulását, és az adatkezelésnek nincs más jogalapja; az érintett tiltakozik az adatkezelés ellen, és nincs elsőbbséget élvező jogszerű ok az adatkezelésre; a személyes adatokat jogellenesen kezelték; a személyes adatokat az adatkezelőre alkalmazandó uniós vagy tagállami jogban előírt jogi kötelezettség teljesítéséhez törölni kell; a személyes adatok gyűjtésére információs társadalommal összefüggő szolgáltatások kínálásával kapcsolatosan került sor.
+Az adatok törlése nem kezdeményezhető, ha az adatkezelés szükséges: a véleménynyilvánítás szabadságához és a tájékozódáshoz való jog gyakorlása céljából; a személyes adatok kezelését előíró, az adatkezelőre alkalmazandó uniós vagy tagállami jog szerinti kötelezettség teljesítése, illetve közérdekből vagy az adatkezelőre ruházott közhatalmi jogosítvány gyakorlása keretében végzett feladat végrehajtása céljából; a népegészség-ügy területét érintő, vagy archiválási, tudományos és történelmi kutatási célból vagy statisztikai célból, közérdek alapján; vagy jogi igények előterjesztéséhez, érvényesítéséhez, illetve védelméhez.
+7.5 AZ ADATKEZELÉS KORLÁTOZÁSÁHOZ VALÓ JOG
+Az érintett kérésére Adatkezelő korlátozza az adatkezelést, ha az alábbi feltételek valamelyike teljesül: az érintett vitatja a személyes adatok pontosságát, ez esetben a korlátozás arra az időtartamra vonatkozik, amely lehetővé teszi, a személyes adatok pontosságának ellenőrzését; az adatkezelés jogellenes, és az érintett ellenzi az adatok törlését, és ehelyett kéri azok felhasználásának korlátozását; az adatkezelőnek már nincs szüksége a személyes adatokra adatkezelés céljából, de az érintett igényli azokat jogi igények előterjesztéséhez, érvényesítéséhez vagy védelméhez; vagy az érintett tiltakozott az adatkezelés ellen; ez esetben a korlátozás arra az időtartamra vonatkozik, amíg megállapításra nem kerül, hogy az adatkezelő jogos indokai elsőbbséget élveznek-e az érintett jogos indokaival szemben.
+Ha az adatkezelés korlátozás alá esik, a személyes adatokat a tárolás kivételével csak az érintett hozzájárulásával, vagy jogi igények előterjesztéséhez, érvényesítéséhez vagy védelméhez, vagy más természetes vagy jogi személy jogainak védelme érdekében, vagy az Unió, illetve valamely tagállam fontos közérdekéből lehet kezelni.
+7.6 ADATHORDOZÁSHOZ VALÓ JOG
+Az érintett jogosult arra, hogy a rá vonatkozó, általa az adatkezelő rendelkezésére bocsátott személyes adatokat tagolt, széles körben használt, géppel olvasható formátumban megkapja, és ezeket az adatokat egy másik adatkezelőnek továbbítsa.
+7.7 TILTAKOZÁS JOGA
+Az érintett jogosult arra, hogy a saját helyzetével kapcsolatos okokból bármikor tiltakozzon személyes adatainak közérdekű vagy az adatkezelőre ruházott közhatalmi jogosítvány gyakorlásának keretében végzett feladat végrehajtásához szükséges adatkezelés, vagy az adatkezelő vagy egy harmadik fél jogos érdekeinek érvényesítéséhez szükséges kezelése ellen, ideértve az említett rendelkezéseken alapuló profilalkotást is. Tiltakozás esetén az adatkezelő a személyes adatokat nem kezelheti tovább, kivéve, ha azt olyan kényszerítő erejű jogos okok indokolják, amelyek elsőbbséget élveznek az érintett érdekeivel, jogaival és szabadságaival szemben, vagy amelyek jogi igények előterjesztéséhez, érvényesítéséhez vagy védelméhez kapcsolódnak.
+7.8 AUTOMATIZÁLT DÖNTÉSHOZATAL EGYEDI ÜGYEKBEN, BELEÉRTVE A PROFILALKOTÁST
+Az érintett jogosult arra, hogy ne terjedjen ki rá az olyan, kizárólag automatizált adatkezelésen – ideértve a profilalkotást is – alapuló döntés hatálya, amely rá nézve joghatással járna vagy őt hasonlóképpen jelentős mértékben érintené.
+7.9 VISSZAVONÁS JOGA
+Az érintett jogosult arra, hogy hozzájárulását bármikor visszavonja.
+7.10 BÍRÓSÁGHOZ FORDULÁS JOGA
+Az érintett a jogainak megsértése esetén az adatkezelő ellen bírósághoz fordulhat. A bíróság az ügyben soron kívül jár el. 8.11 Adatvédelmi hatósági eljárás Panasszal a Nemzeti Adatvédelmi és Információszabadság Hatóságnál lehet élni:
+Név: Nemzeti Adatvédelmi és Információszabadság Hatóság Székhely: 1125 Budapest, Szilágyi Erzsébet fasor 22/C. Levelezési cím: 1530 Budapest, Pf.: 5. Telefon: 0613911400 Fax: 0613911410
+E-mail: ugyfelszolgalat@naih.hu Honlap: http://www.naih.hu
+8 EGYÉB RENDELKEZÉSEK
+E tájékoztatóban fel nem sorolt adatkezelésekről az adat felvételekor adunk tájékoztatást. Tájékoztatjuk ügyfeleinket, hogy a bíróság, az ügyész, a nyomozó hatóság, a szabálysértési hatóság, a közigazgatási hatóság, a Nemzeti Adatvédelmi és Információszabadság Hatóság, a Magyar Nemzeti Bank, illetőleg jogszabály felhatalmazása alapján más szervek tájékoztatás adása, adatok közlése, átadása, illetőleg iratok rendelkezésre bocsátása végett megkereshetik az adatkezelőt. Adatkezelő a hatóságok részére – amennyiben a hatóság a pontos célt és az adatok körét megjelölte – személyes adatot csak annyit és olyan mértékben ad ki, amely a megkeresés céljának megvalósításához elengedhetetlenül szükséges.

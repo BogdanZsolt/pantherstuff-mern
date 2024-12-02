@@ -5,6 +5,7 @@ import { Form, Button, Col, Container } from 'react-bootstrap';
 import Banner from '../components/Banner.jsx';
 import FormContainer from '../components/FormContainer.jsx';
 import CheckoutSteps from '../components/CheckoutSteps.jsx';
+import { FaCcStripe } from 'react-icons/fa6';
 import { savePaymentMethod } from '../slices/cartSlice.js';
 import { useTranslation } from 'react-i18next';
 
@@ -35,7 +36,7 @@ const PaymentScreen = () => {
       <Banner title={t('paymentMethod')} />
       <Container>
         <FormContainer>
-          <CheckoutSteps step1 step2 step3 />
+          <CheckoutSteps step1 step2 step3 step4 />
           {/* <h1>Payment Method</h1> */}
           <Form onSubmit={submitHandler}>
             <Form.Group>
@@ -44,7 +45,12 @@ const PaymentScreen = () => {
                 <Form.Check
                   type="radio"
                   className="my-2"
-                  label={t('stripeCreditCard')}
+                  label={
+                    <>
+                      <FaCcStripe className="fs-2 me-1" />
+                      <span>{t('stripeCreditCard')}</span>
+                    </>
+                  }
                   id="Stripe"
                   name="paymentMethod"
                   value={paymentMethod}

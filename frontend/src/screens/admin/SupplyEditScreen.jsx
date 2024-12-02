@@ -25,6 +25,7 @@ const SupplyEditScreen = () => {
   const [beforePrice, setBeforePrice] = useState(0);
   const [currentPrice, setCurrentPrice] = useState(0);
   const [countInStock, setCountInStock] = useState(0);
+  const [toBeDelivered, setToBeDelivered] = useState(false);
   const [active, setActive] = useState('');
   const [transNameHu, setTransNameHu] = useState('');
   const [transDescHu, setTransDescHu] = useState('');
@@ -58,6 +59,7 @@ const SupplyEditScreen = () => {
       setBeforePrice(supply.beforePrice || 0);
       setCurrentPrice(supply.currentPrice || 0);
       setCountInStock(supply.countInStock);
+      setToBeDelivered(supply.toBeDelivered);
       setTransNameHu(supply.translations?.hu?.name || supply.name);
       setTransDescHu(
         supply.translations?.hu?.description || supply.description
@@ -84,6 +86,7 @@ const SupplyEditScreen = () => {
         beforePrice,
         currentPrice,
         countInStock,
+        toBeDelivered,
         translations: {
           hu: {
             name: transNameHu,
@@ -121,11 +124,11 @@ const SupplyEditScreen = () => {
         <Message variant="danger">{error.data.message}</Message>
       ) : (
         <Container className="mt-5">
-          <Link to="/admin/productlist" className="btn btn-primary my-3">
+          <Link to="/admin/supplylist" className="btn btn-primary my-3">
             Go Back
           </Link>
           <Row>
-            <h2 className="text-center fs-1 fw-bold">Edit Product</h2>
+            <h2 className="text-center fs-1 fw-bold">Edit supply</h2>
           </Row>
           <FormContainer>
             <Form onSubmit={submitHandler}>
@@ -145,14 +148,29 @@ const SupplyEditScreen = () => {
                 setActiveImage={setActive}
               />
 
-              <Form.Group controlId="category" className="my-2">
-                <Form.Label>Category</Form.Label>
-                <SelectCategory
-                  categories={categories}
-                  category={category}
-                  setCategory={setCategory}
-                />
-              </Form.Group>
+              <div className="row">
+                <div className="col-md-9">
+                  <Form.Group controlId="category" className="my-2">
+                    <Form.Label>Category</Form.Label>
+                    <SelectCategory
+                      categories={categories}
+                      category={category}
+                      setCategory={setCategory}
+                    />
+                  </Form.Group>
+                </div>
+
+                <div className="col-md-3 d-flex align-items-center">
+                  <Form.Group controlId="tobedelivered" className="my-2">
+                    <Form.Check
+                      type="checkbox"
+                      label="To Be Delivered"
+                      checked={toBeDelivered}
+                      onChange={(e) => setToBeDelivered(e.target.checked)}
+                    />
+                  </Form.Group>
+                </div>
+              </div>
 
               <Form.Group controlId="sizes" className="my-2">
                 <Form.Label>Sizes</Form.Label>

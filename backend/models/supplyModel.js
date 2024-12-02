@@ -48,6 +48,11 @@ const supplySchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'SupplyCategory',
     },
+    toBeDelivered: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
     beforePrice: Number,
     currentPrice: {
       type: Number,

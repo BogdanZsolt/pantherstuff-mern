@@ -10,16 +10,16 @@ const sendContactMessageEmail = async (
   try {
     // 1. Create transporter
     const transporter = nodemailer.createTransport({
-      host: 'smtp.gmail.com',
-      port: 587,
-      secure: false,
+      host: sandbox.smtp.mailtrap.io,
+      port: 25,
       auth: {
-        user: 'developer.teszt@gmail.com',
-        pass: 'ylef ghmy ucmf rlze',
+        user: 'f9e403c777a2f8',
+        pass: 'a2870671117eff',
       },
     });
     // Create the message
     const message = {
+      from,
       to,
       subject: 'Message from PantherStuff contact form',
       text,

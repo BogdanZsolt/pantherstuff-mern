@@ -2,7 +2,7 @@
   "supplyStore": "Kelléktár",
   "supply": "Kellék",
   "supplies": "Kellékek",
-  "showingOfResults": "{{count}} eredményből {{length}} megjelenítése",
+  "showingOfResults": "<strong>{{count}}</strong> eredményből <strong>{{length}}</strong> megjelenítése",
   "defaultSorting": "Alapértelmezett rendezés",
   "popular": "Népszerű",
   "rating": "Értékelés",

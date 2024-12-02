@@ -38,7 +38,7 @@ const FaqListScreen = () => {
     if (window.confirm('Are you sure?')) {
       try {
         await deleteFaq(id);
-        toast.success('Product deleted');
+        toast.success('FAQ deleted');
         refetch();
       } catch (err) {
         toast.error(err?.data?.message || err.error);

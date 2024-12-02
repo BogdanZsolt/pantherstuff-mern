@@ -22,6 +22,12 @@ import {
   ResetPasswordScreen,
   MainScreen,
   MePetraScreen,
+  EventListScreen,
+  EventEditScreen,
+  EventCategoryListScreen,
+  EventCategoryEditScreen,
+  EventsScreen,
+  EventScreen,
   OrderListScreen,
   OrderScreen,
   MessageListScreen,
@@ -54,6 +60,7 @@ import {
   ProtectRoute,
   RegisterScreen,
   ShippingScreen,
+  BillingScreen,
   ShopScreen,
   SupplyStoreScreen,
   MembershipScreen,
@@ -142,7 +149,15 @@ const App = () => {
                   element: <ShopScreen />,
                 },
                 {
+                  path: 'category/:productCategory/collection/:productCollection',
+                  element: <ShopScreen />,
+                },
+                {
                   path: 'collection/:productCollection/page/:pageNumber',
+                  element: <ShopScreen />,
+                },
+                {
+                  path: 'category/:productCategory/collection/:productCollection/page/:pageNumber',
                   element: <ShopScreen />,
                 },
               ],
@@ -196,6 +211,40 @@ const App = () => {
             {
               path: 'membership/:id',
               element: <MembershipScreen />,
+            },
+            {
+              path: 'event',
+              element: <EventsScreen />,
+              children: [
+                {
+                  path: 'search/:keyword',
+                  element: <EventsScreen />,
+                },
+                {
+                  path: 'search/:keyword/page/:pageNumber',
+                  element: <EventsScreen />,
+                },
+                {
+                  path: 'search/:keyword/category/:category',
+                  element: <EventScreen />,
+                },
+                {
+                  path: 'search/:keyword/category/:category/page/:pageNumber',
+                  element: <EventScreen />,
+                },
+                {
+                  path: 'page/:pageNumber',
+                  element: <EventsScreen />,
+                },
+                {
+                  path: 'category/:category',
+                  element: <EventsScreen />,
+                },
+                {
+                  path: 'category/:category/page/:pageNumber',
+                  element: <EventsScreen />,
+                },
+              ],
             },
             {
               path: 'blog',
@@ -263,10 +312,13 @@ const App = () => {
                   path: 'account-verification/:verifyToken',
                   element: <AccountVerification />,
                 },
-
                 {
                   path: 'shipping',
                   element: <ShippingScreen />,
+                },
+                {
+                  path: 'billing',
+                  element: <BillingScreen />,
                 },
                 {
                   path: 'payment',
@@ -297,6 +349,10 @@ const App = () => {
                       element: <OnlineCoursesScreen />,
                     },
                   ],
+                },
+                {
+                  path: 'event/:id',
+                  element: <EventScreen />,
                 },
               ],
             },
@@ -429,6 +485,22 @@ const App = () => {
             {
               path: 'membershipplan/:id/edit',
               element: <MembershipPlanEditScreen />,
+            },
+            {
+              path: 'eventlist',
+              element: <EventListScreen />,
+            },
+            {
+              path: 'eventlist/:id/edit',
+              element: <EventEditScreen />,
+            },
+            {
+              path: 'eventcategorylist',
+              element: <EventCategoryListScreen />,
+            },
+            {
+              path: 'eventcategorylist/:id/edit',
+              element: <EventCategoryEditScreen />,
             },
             {
               path: 'orderlist',

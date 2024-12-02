@@ -1,0 +1,13 @@
+{
+  "courses": "Tanfolyamok",
+  "onlineCourses": "Online Tanfolyamok",
+  "showingOfResults": "{{count}} eredményből {{length}} megjelenítése",
+  "defaultSorting": "Alapértelmezett rendezés",
+  "popular": "Népszerű",
+  "rating": "Értékelés",
+  "latest": "Legújabb",
+  "priceLowToHigh": "Ár alacsonytól magasig",
+  "priceHighToLow": "Ár magastól alacsonyig",
+  "thereAreNoItemsToDisplay": "Nincsenek megjeleníthető elemek",
+  "": ""
+}

@@ -36,7 +36,7 @@ export const suppliesApiSlice = apiSlice.injectEndpoints({
         method: 'PUT',
         body: data,
       }),
-      invalidatesTags: ['Supplies'],
+      invalidatesTags: ['Supply'],
     }),
     uploadSupplyImage: builder.mutation({
       query: (data) => ({

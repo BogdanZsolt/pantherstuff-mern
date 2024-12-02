@@ -32,6 +32,7 @@ const ProductEditScreen = () => {
   const [countInStock, setCountInStock] = useState(0);
   const [colors, setColors] = useState(['']);
   const [sizes, setSizes] = useState([]);
+  const [toBeDelivered, setToBeDelivered] = useState(false);
   const [active, setActive] = useState('');
   const [transNameHu, setTransNameHu] = useState('');
   const [transDescHu, setTransDescHu] = useState('');
@@ -74,6 +75,7 @@ const ProductEditScreen = () => {
       setCountInStock(product.countInStock);
       setColors(product.colors);
       setSizes(product.sizes);
+      setToBeDelivered(product.toBeDelivered);
       setTransNameHu(product.translations?.hu?.name || product.name);
       setTransDescHu(
         product.translations?.hu?.description || product.description
@@ -89,6 +91,7 @@ const ProductEditScreen = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    console.log(toBeDelivered);
     try {
       await updateProduct({
         productId,
@@ -102,6 +105,7 @@ const ProductEditScreen = () => {
         countInStock,
         colors,
         sizes,
+        toBeDelivered,
         translations: {
           hu: {
             name: transNameHu,
@@ -234,15 +238,30 @@ const ProductEditScreen = () => {
                 </div>
               </div>
 
-              <Form.Group controlId="countInStock" className="my-2">
-                <Form.Label>Count In Stock</Form.Label>
-                <Form.Control
-                  type="number"
-                  placeholder="Count in stock"
-                  value={countInStock}
-                  onChange={(e) => setCountInStock(e.target.value)}
-                ></Form.Control>
-              </Form.Group>
+              <div className="row">
+                <div className="col-md-4">
+                  <Form.Group controlId="countInStock" className="my-2">
+                    <Form.Label>Count In Stock</Form.Label>
+                    <Form.Control
+                      type="number"
+                      placeholder="Count in stock"
+                      value={countInStock}
+                      onChange={(e) => setCountInStock(e.target.value)}
+                    ></Form.Control>
+                  </Form.Group>
+                </div>
+
+                <div className="col-md-3 d-flex align-items-center">
+                  <Form.Group controlId="tobedelivered" className="my-2">
+                    <Form.Check
+                      type="checkbox"
+                      label="To Be Delivered"
+                      checked={toBeDelivered}
+                      onChange={(e) => setToBeDelivered(e.target.checked)}
+                    />
+                  </Form.Group>
+                </div>
+              </div>
 
               {/* <Form.Group controlId="body" className="my-2">
                 <Form.Label>Description</Form.Label>

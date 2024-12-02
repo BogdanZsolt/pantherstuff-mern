@@ -27,7 +27,7 @@ import { isAuthenticated } from '../slices/authSlice';
 import { useGetMyOrdersQuery } from '../slices/ordersApiSlice';
 
 const ProfileScreen = () => {
-  const { t } = useTranslation(['profile']);
+  const { t, i18n } = useTranslation(['profile']);
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -86,8 +86,13 @@ const ProfileScreen = () => {
     }
   };
 
-  const handleSendVerificationEmail = async () => {
-    await sendEmailVerificationToken();
+  const handleSendVerificationEmail = async (e) => {
+    e.preventDefault();
+    try {
+      await sendEmailVerificationToken({ language: i18n.language }).unwrap;
+    } catch (err) {
+      toast.error(err?.data?.message || err.message);
+    }
   };
 
   return (

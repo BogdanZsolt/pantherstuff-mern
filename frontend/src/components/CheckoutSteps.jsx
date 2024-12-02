@@ -2,7 +2,7 @@ import { Nav } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { LinkContainer } from 'react-router-bootstrap';
 
-const CheckoutSteps = ({ step1, step2, step3, step4 }) => {
+const CheckoutSteps = ({ step1, step2, step3, step4, step5 }) => {
   const { t } = useTranslation();
   return (
     <Nav className="justify-content-center mb-4 bg-secondary rounded-2">
@@ -26,6 +26,15 @@ const CheckoutSteps = ({ step1, step2, step3, step4 }) => {
       </Nav.Item>
       <Nav.Item>
         {step3 ? (
+          <LinkContainer to="/billing">
+            <Nav.Link>{t('billing')}</Nav.Link>
+          </LinkContainer>
+        ) : (
+          <Nav.Link disabled>{t('billing')}</Nav.Link>
+        )}
+      </Nav.Item>
+      <Nav.Item>
+        {step4 ? (
           <LinkContainer to="/payment">
             <Nav.Link>{t('payment')}</Nav.Link>
           </LinkContainer>
@@ -34,7 +43,7 @@ const CheckoutSteps = ({ step1, step2, step3, step4 }) => {
         )}
       </Nav.Item>
       <Nav.Item>
-        {step4 ? (
+        {step5 ? (
           <LinkContainer to="/placeorder">
             <Nav.Link>{t('placeOrder')}</Nav.Link>
           </LinkContainer>

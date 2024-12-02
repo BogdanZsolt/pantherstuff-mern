@@ -87,6 +87,11 @@ const productSchema = new mongoose.Schema(
         ref: 'ProductSize',
       },
     ],
+    toBeDelivered: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
     translations: {
       hu: {
         name: { type: String },

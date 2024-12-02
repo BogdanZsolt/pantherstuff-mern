@@ -64,6 +64,7 @@ const createOne = (Model) =>
 
 const updateOne = (Model) =>
   asyncHandler(async (req, res) => {
+    console.log(req.params);
     const doc = await Model.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true,

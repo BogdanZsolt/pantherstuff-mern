@@ -30,7 +30,7 @@ import Loader from '../components/Loader';
 import Message from '../components/Message';
 import Meta from '../components/Meta';
 import Banner from '../components/Banner';
-import ThumbsGallery from '../components/ThumbsGallery';
+import ThumbsGallery from '../components/ThumbsGalery/index.jsx';
 import { Trans, useTranslation } from 'react-i18next';
 import SelectColor from '../components/SelectColor';
 import SelectSize from '../components/SelectSize';
@@ -77,7 +77,8 @@ const ProductScreen = () => {
     useCreateReviewMutation();
 
   const addToCartHandler = () => {
-    const { _id, name, currentPrice, thumbnails, countInStock } = product;
+    const { _id, name, currentPrice, thumbnails, countInStock, toBeDelivered } =
+      product;
     const cartId = uuid();
     const name_hu = product.translations?.hu?.name || product.name;
     const currentPrice_hu =
@@ -98,6 +99,7 @@ const ProductScreen = () => {
         size,
         qty,
         countInStock,
+        toBeDelivered,
       })
     );
     navigate('/cart');
@@ -151,7 +153,7 @@ const ProductScreen = () => {
   };
 
   const addToWishListHandler = () => {
-    const { _id, name, currentPrice, thumbnails } = product;
+    const { _id, name, currentPrice, thumbnails, toBeDelivered } = product;
     const name_hu = product.translations?.hu?.name || product.name;
     const currentPrice_hu =
       product.translations?.hu?.currentPrice || product.currentPrice;
@@ -166,6 +168,7 @@ const ProductScreen = () => {
         currentPrice,
         currentPrice_hu,
         thumbnail,
+        toBeDelivered,
       })
     );
   };
@@ -197,7 +200,11 @@ const ProductScreen = () => {
               </Link>
               <Row className="mb-5">
                 <Col md={6}>
-                  <ThumbsGallery images={product.thumbnails} />
+                  <ThumbsGallery
+                    images={product.thumbnails}
+                    direction="vertical"
+                    aspectRatio={2 / 3}
+                  />
                 </Col>
                 <Col md={6}>
                   <ListGroup>

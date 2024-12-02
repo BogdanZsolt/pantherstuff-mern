@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import {
   Container,
   Row,
@@ -110,6 +110,11 @@ const SupplyStoreScreen = () => {
 
   return (
     <>
+      <Banner
+        title={t('supplyStore')}
+        src="/images/ecoprint-04.webp"
+        alt="Supply Store Banner"
+      />
       {isMinMaxLoading && <Loader />}
       {isCatLoading ? (
         <Loader />
@@ -128,11 +133,6 @@ const SupplyStoreScreen = () => {
         </Message>
       ) : (
         <>
-          <Banner
-            title={t('supplyStore')}
-            src="/images/ecoprint-04.webp"
-            alt="Supply Store Banner"
-          />
           <Container className="my-4" fluid>
             <h2 className="text-center">{t('supplies')}</h2>
             <Button
@@ -184,10 +184,14 @@ const SupplyStoreScreen = () => {
               <Col xs={12} lg={9} xxl={10}>
                 <Row className="align-items-center justify-content-between">
                   <Col>
-                    {t('showingOfResults', {
-                      length: supplies?.data?.length,
-                      count: supplies?.count,
-                    })}
+                    <Trans
+                      values={{
+                        length: supplies?.data?.length,
+                        count: supplies?.count,
+                      }}
+                    >
+                      {t('showingOfResults')}
+                    </Trans>
                   </Col>
                   <Col
                     sm={7}
@@ -257,7 +261,7 @@ const SupplyStoreScreen = () => {
                 <Paginate
                   pages={pages}
                   page={page}
-                  pageName="supplylist"
+                  pageName="supplystore"
                   productCategory={supplyCategory}
                   keyword={keyword ? keyword : ''}
                 />
