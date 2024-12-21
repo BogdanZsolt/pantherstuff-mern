@@ -53,6 +53,7 @@
   "thankYouForYourPurchase": "Thank you for your purchase!",
   "theTableBelow": "The table below contains the transaction data",
   "transactionId": "Transaction ID",
+  "time": "time",
   "amount": "Amount",
   "weAlsoSentTheTransactionDetails": "We also sent the transaction details by email so that you can refer to them in case of questions.",
   "": ""

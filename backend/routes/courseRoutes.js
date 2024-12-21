@@ -7,6 +7,7 @@ import {
   courseCreateInit,
   updateCourse,
   deleteCourse,
+  copyCourse,
   createCoursesReview,
   getTopCourses,
   getCourseStats,
@@ -25,7 +26,8 @@ router
   .route('/:id')
   .get(protect, getCourseById)
   .put(protect, admin, updateCourse)
-  .delete(protect, admin, deleteCourse);
+  .delete(protect, admin, deleteCourse)
+  .post(protect, admin, copyCourse);
 router.route('/:id/reviews').post(protect, createCoursesReview);
 
 export default router;

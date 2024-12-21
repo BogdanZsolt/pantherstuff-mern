@@ -17,6 +17,7 @@ import {
   BsPeople,
   BsTable,
   BsEnvelopePlus,
+  BsBook,
 } from 'react-icons/bs';
 import { AiOutlineProduct } from 'react-icons/ai';
 import { RxComponent1 } from 'react-icons/rx';
@@ -53,6 +54,7 @@ const Sidebar = () => {
         </Container>
         <hr className="text-primary d-none d-sm-block" />
         <Nav className="nav nav-pills flex-column">
+          {/* Info */}
           <Nav.Item className="my-1">
             <Link
               className="nav-link d-flex align-items-center text-primary"
@@ -64,6 +66,8 @@ const Sidebar = () => {
               </span>
             </Link>
           </Nav.Item>
+
+          {/* Products */}
           <Nav.Item>
             <Dropdown.Toggle
               className="nav-link d-flex align-items-center text-primary"
@@ -140,6 +144,7 @@ const Sidebar = () => {
             </div>
           </Nav.Item>
 
+          {/* Supplies */}
           <Nav.Item>
             <Dropdown.Toggle
               className="nav-link d-flex align-items-center text-primary"
@@ -203,6 +208,7 @@ const Sidebar = () => {
             </div>
           </Nav.Item>
 
+          {/* Posts */}
           <Nav.Item>
             <Dropdown.Toggle
               className="nav-link d-flex align-items-center text-primary"
@@ -263,6 +269,7 @@ const Sidebar = () => {
             </div>
           </Nav.Item>
 
+          {/* FAQs */}
           <Nav.Item>
             <Dropdown.Toggle
               className="nav-link d-flex align-items-center text-primary"
@@ -308,6 +315,7 @@ const Sidebar = () => {
             </div>
           </Nav.Item>
 
+          {/* Users */}
           <Nav.Item>
             <Dropdown.Toggle
               className="nav-link d-flex align-items-center text-primary"
@@ -363,6 +371,7 @@ const Sidebar = () => {
             </div>
           </Nav.Item>
 
+          {/* Events */}
           <Nav.Item>
             <Dropdown.Toggle
               className="nav-link d-flex align-items-center text-primary"
@@ -389,6 +398,11 @@ const Sidebar = () => {
                       <span>Event Categories</span>
                     </Link>
                   </Nav.Item>
+                  <Nav.Item className="ms-4 p-2">
+                    <Link className="text-primary my-2" to="/admin/bookinglist">
+                      <span>Booking List</span>
+                    </Link>
+                  </Nav.Item>
                 </Nav>
               </Collapse>
             </div>
@@ -404,10 +418,62 @@ const Sidebar = () => {
                     <span>Event Categories</span>
                   </Link>
                 </Dropdown.Item>
+                <Dropdown.Item>
+                  <Link to="/admin/bookinglist">
+                    <span>Booking List</span>
+                  </Link>
+                </Dropdown.Item>
               </Dropdown.Menu>
             </div>
           </Nav.Item>
 
+          {/* Courses */}
+          <Nav.Item>
+            <Dropdown.Toggle
+              className="nav-link d-flex align-items-center text-primary"
+              onClick={() => setOpen(open === 'courses' ? '' : 'courses')}
+              aria-controls="courses-collapse"
+              aria-expanded={open}
+            >
+              <BsBook className="fs-4" />
+              <span className="ms-2 fs-4 d-none d-md-inline-flex">Courses</span>
+            </Dropdown.Toggle>
+            <div className="d-none d-md-block">
+              <Collapse in={open === 'courses'}>
+                <Nav id="courses-collapse" className="flex-nowrap flex-column">
+                  <Nav.Item className="ms-4 p-2">
+                    <Link className="text-primary my-2" to="/admin/courselist">
+                      <span>All courses</span>
+                    </Link>
+                  </Nav.Item>
+                  <Nav.Item className="ms-4 p-2">
+                    <Link
+                      className="text-primary my-2"
+                      to="/admin/coursecategorylist"
+                    >
+                      <span>Course Categories</span>
+                    </Link>
+                  </Nav.Item>
+                </Nav>
+              </Collapse>
+            </div>
+            <div className="d-block d-md-none dropdown-menu__container">
+              <Dropdown.Menu show={open === 'courses'}>
+                <Dropdown.Item>
+                  <Link to="/admin/courselist">
+                    <span>All courses</span>
+                  </Link>
+                </Dropdown.Item>
+                <Dropdown.Item>
+                  <Link to="/admin/coursecategorylist">
+                    <span>Course Categories</span>
+                  </Link>
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </div>
+          </Nav.Item>
+
+          {/* Orders */}
           <Nav.Item>
             <Dropdown.Toggle
               className="nav-link d-flex align-items-center text-primary"
@@ -440,6 +506,7 @@ const Sidebar = () => {
             </div>
           </Nav.Item>
 
+          {/* Messages */}
           <Nav.Item>
             <Dropdown.Toggle
               className="nav-link d-flex align-items-center text-primary"
@@ -474,6 +541,7 @@ const Sidebar = () => {
             </div>
           </Nav.Item>
 
+          {/* Subscribers */}
           <Nav.Item>
             <Dropdown.Toggle
               className="nav-link d-flex align-items-center text-primary"

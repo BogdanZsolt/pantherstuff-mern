@@ -53,6 +53,7 @@
   "thankYouForYourPurchase": "Köszönjük a vásárlást!",
   "theTableBelow": "Az alábbi táblázat tartalmazza a tranzakció adatait",
   "transactionId": "A tranzakció azonosítója",
+  "Time": "Időpont",
   "amount": "Összeg",
   "weAlsoSentTheTransactionDetails": "A tranzakció adatait elküldtük emailben is, hogy kérdés esetén tudjon hivatkozni rájuk.",
   "": ""

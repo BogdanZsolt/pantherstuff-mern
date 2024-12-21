@@ -14,7 +14,8 @@ const coursePopOption = [
 const courseCreateInit = (req, res, next) => {
   req.body.user = req.user._id;
   req.body.title = 'Simple course title';
-  req.body.image = '/images/sample.jpg';
+  req.body.images = ['/images/sample.jpg'];
+  req.body.course = null;
   req.body.description = 'Simple course description';
   req.body.beforePrice = 0;
   req.body.currentPrice = 0;
@@ -123,7 +124,7 @@ const createCourse = createOne(Course);
 const updateCourse = asyncHandler(async (req, res) => {
   const {
     title,
-    image,
+    images,
     description,
     currentPrice,
     beforePrice,
@@ -136,17 +137,44 @@ const updateCourse = asyncHandler(async (req, res) => {
 
   if (course) {
     course.title = title || course.title;
-    course.image = image || course.image;
+    course.images = images || course.images;
     course.description = description || course.description;
     course.currentPrice = currentPrice || course.currentPrice;
     course.beforePrice = beforePrice || course.beforePrice;
     course.duration = duration || course.duration;
-    course.category = category || course.category;
+    course.category = category;
     course.translations = translations || course.translations;
 
     const updatedCourse = await course.save();
 
     res.json(updatedCourse);
+  } else {
+    res.status(404);
+    throw new Error('Resource not found');
+  }
+});
+
+// @desc    copy a course
+// @route   POST /api/courses/:id
+// @access  Private/Admin
+const copyCourse = asyncHandler(async (req, res) => {
+  const course = await Course.findById(req.params.id);
+  if (course) {
+    const newCourse = new Course({
+      user: req.user._id,
+      title: course.title,
+      images: course.images,
+      description: course.description,
+      currentPrice: course.currentPrice,
+      beforePrice: course.beforePrice,
+      duration: course.duration,
+      category: course.category,
+      rating: 0,
+      numReviews: 0,
+      translations: course.translations,
+    });
+    const doc = await newCourse.save();
+    res.status(201).json(doc);
   } else {
     res.status(404);
     throw new Error('Resource not found');
@@ -289,6 +317,7 @@ export {
   createCourse,
   courseCreateInit,
   updateCourse,
+  copyCourse,
   deleteCourse,
   createCoursesReview,
   getTopCourses,

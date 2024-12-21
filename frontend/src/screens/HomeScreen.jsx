@@ -5,9 +5,10 @@ import ProductCarousel from '../components/ProductCarousel.jsx';
 import SupplyCarousel from '../components/SupplyCarousel.jsx';
 import PhotoGallery from '../components/PhotoGallery.jsx';
 import SubscribeForm from '../components/SubscribeForm.jsx';
-import MembershipTable from '../components/MembershipTable.jsx';
-import LatestPosts from '../components/LatestPosts.jsx';
-import { useTranslation } from 'react-i18next';
+import EventCarousel from '../components/EventCarousel.jsx';
+import LatestPostsCarousel from '../components/LatestPostsCarousel.jsx';
+import { Trans, useTranslation } from 'react-i18next';
+import MembershipCarousel from '../components/MembershipCarousel.jsx';
 
 const HomeScreens = () => {
   const { keyword } = useParams();
@@ -36,8 +37,20 @@ const HomeScreens = () => {
         <Link to="/membership">
           <h3 className="text-secondary fs-1 mt-5">{t('membership')}</h3>
         </Link>
-        <MembershipTable />
-        <LatestPosts />
+        <MembershipCarousel />
+        <Link to="/event">
+          <h3 className="text-secondary fs-1 mt-5">
+            {t('retreats&workshops')}
+          </h3>
+        </Link>
+        <EventCarousel />
+        <h3 className="text-secondary fs-1 mt-5">
+          <Trans
+            i18nKey={t('latestPosts')}
+            components={{ 1: <Link to={'blog'} /> }}
+          />
+        </h3>
+        <LatestPostsCarousel />
         <SubscribeForm />
         <PhotoGallery />
       </Container>

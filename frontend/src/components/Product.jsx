@@ -87,20 +87,22 @@ const Product = ({ product }) => {
   };
 
   return (
-    <Card className="my-3 rounded" border="secondary">
+    <Card className="my-3 rounded shadow card-product" border="secondary">
       <Link to={`/product/${product._id}`}>
-        <Card.Img
-          src={product.thumbnails[0]}
-          variant="top"
-          className="product-img"
-        />
-        <Card.Img
-          src={product.thumbnails[1]}
-          variant="top"
-          className="hover-img product-img"
-        />
-        <div className="actions">
-          <ul>
+        <div className="img-container">
+          <Card.Img
+            src={product.thumbnails[0]}
+            variant="top"
+            className="product-img"
+          />
+          {product.thumbnails.length > 1 && (
+            <Card.Img
+              src={product.thumbnails[1]}
+              variant="top"
+              className="hover-img product-img"
+            />
+          )}
+          <ul className="card-data">
             <li>
               <button>
                 <RiStarLine />
@@ -122,7 +124,7 @@ const Product = ({ product }) => {
       <Card.Body>
         <Link to={`/product/${product._id}`}>
           <Card.Title as="div" className="product-title">
-            <strong>
+            <strong className="h4">
               {i18n.language === 'en'
                 ? product.name
                 : product.translations?.hu?.name || product.name}

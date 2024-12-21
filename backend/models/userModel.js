@@ -105,6 +105,12 @@ userSchema.virtual('posts', {
   foreignField: 'user',
 });
 
+userSchema.virtual('bookings', {
+  ref: 'Booking',
+  localField: '_id',
+  foreignField: 'user',
+});
+
 const User = mongoose.model('User', userSchema);
 
 export default User;

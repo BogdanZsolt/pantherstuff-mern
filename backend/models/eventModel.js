@@ -116,5 +116,11 @@ const eventSchema = new mongoose.Schema(
   }
 );
 
+eventSchema.virtual('booking', {
+  ref: 'Booking',
+  localField: '_id',
+  foreignField: 'event',
+});
+
 const Event = mongoose.model('Event', eventSchema);
 export default Event;

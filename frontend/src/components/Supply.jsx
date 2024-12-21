@@ -18,6 +18,8 @@ import { toCurrency, uuid } from '../utils/converter.js';
 const Supply = ({ supply }) => {
   const { t, i18n } = useTranslation(['supply']);
 
+  console.log(supply);
+
   const dispatch = useDispatch();
   const wishList = useSelector((state) => state.wishList);
   const { wishListItems } = wishList;
@@ -79,20 +81,22 @@ const Supply = ({ supply }) => {
   };
 
   return (
-    <Card className="my-3 rounded" border="secondary">
+    <Card className="my-3 rounded shadow card-supply" border="secondary">
       <Link to={`/supply/${supply._id}`}>
-        <Card.Img
-          src={supply.thumbnails[0]}
-          variant="top"
-          className="supply-img"
-        />
-        <Card.Img
-          src={supply.thumbnails[1]}
-          variant="top"
-          className="hover-img supply-img"
-        />
-        <div className="actions">
-          <ul>
+        <div className="img-container">
+          <Card.Img
+            src={supply.thumbnails[0]}
+            variant="top"
+            className="supply-img"
+          />
+          {supply.thumbnails.length > 1 && (
+            <Card.Img
+              src={supply.thumbnails[1]}
+              variant="top"
+              className="hover-img supply-img"
+            />
+          )}
+          <ul className="card-data">
             <li>
               <button>
                 <RiStarLine />
@@ -113,8 +117,8 @@ const Supply = ({ supply }) => {
       </Link>
       <Card.Body>
         <Link to={`/supply/${supply._id}`}>
-          <Card.Title as="div" className="product-title">
-            <strong>
+          <Card.Title as="div" className="supply-title">
+            <strong className="h4 fw-bold">
               {i18n.language === 'en'
                 ? supply.name
                 : supply.translations?.hu?.name || supply.name}
@@ -126,7 +130,7 @@ const Supply = ({ supply }) => {
           <Rating value={supply.rating} text={`${supply.numReviews} reviews`} />
         </Card.Text>
 
-        <Card.Text as="h3">
+        <Card.Text as="h3" className="text-center">
           {i18n.language === 'en'
             ? toCurrency(i18n.language, supply.currentPrice)
             : toCurrency(

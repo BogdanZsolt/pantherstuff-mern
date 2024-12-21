@@ -3,6 +3,8 @@ import Order from '../models/orderModel.js';
 import Plan from '../models/planModel.js';
 import Product from '../models/productModel.js';
 import Supply from '../models/supplyModel.js';
+import Event from '../models/eventModel.js';
+import Booking from '../models/bookingModel.js';
 import User from '../models/userModel.js';
 import { getAll } from './handlerFactory.js';
 import { calcPrices } from '../utils/calcPrices.js';
@@ -13,6 +15,7 @@ import {
   getSubscriber,
   createSubscriber,
 } from '../utils/mailerTools.js';
+import { response } from 'express';
 
 const productsPopOption = [{ path: 'user', select: ['id name'] }];
 
@@ -44,10 +47,14 @@ const addOrderItems = asyncHandler(async (req, res) => {
     const planItemsFromDB = await Plan.find({
       _id: { $in: orderItems.map((x) => x._id) },
     });
+    const eventItemsFromDB = await Event.find({
+      _id: { $in: orderItems.map((x) => x._id) },
+    });
     const itemsFromDB = [
       ...productItemsFromDB,
       ...supplyItemsFromDB,
       ...planItemsFromDB,
+      ...eventItemsFromDB,
     ];
 
     // map over the order items and use the price from our items from database
@@ -55,7 +62,6 @@ const addOrderItems = asyncHandler(async (req, res) => {
       const matchingItemFromDB = itemsFromDB.find(
         (itemFromDB) => itemFromDB._id.toString() === itemFromClient._id
       );
-
       return {
         ...itemFromClient,
         product: itemFromClient._id,
@@ -75,6 +81,8 @@ const addOrderItems = asyncHandler(async (req, res) => {
             ? 'Supply'
             : itemFromClient.type === 'membership'
             ? 'Plan'
+            : itemFromClient.type === 'event'
+            ? 'Event'
             : undefined,
       };
     });
@@ -280,10 +288,30 @@ const stripeVerify = asyncHandler(async (req, res) => {
       await userFound.save();
     }
 
+    // There is an event between the orders
+    const events = order.orderItems.filter(
+      (item) => item.model_type === 'Event'
+    );
+
+    if (events) {
+      events.map(async (event) => {
+        const createBooking = new Booking({
+          user: userId,
+          event: event.product,
+          price: event.fullPrice,
+          amountPaid: event.currentPrice,
+          stillToBePaid: event.fullPrice - event.currentPrice,
+          isPaid: !(event.fullPrice - event.currentPrice > 0),
+          order: order._id,
+        });
+        await createBooking.save();
+      });
+    }
+
     // send the response
+    // res.status(200).json('Payment verified, user updated');
     const updatedOrder = await order.save();
     if (updatedOrder) {
-      // res.status(200).json('Payment verified, user updated');
       res.status(200).json(updatedOrder);
     }
   }

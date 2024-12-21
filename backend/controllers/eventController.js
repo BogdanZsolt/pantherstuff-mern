@@ -5,10 +5,12 @@ import Event from '../models/eventModel.js';
 
 const eventsPopOption = [
   { path: 'user', select: ['name'] },
+  { path: 'booking' },
   { path: 'category', select: ['title', 'translations'] },
 ];
 const eventPopOption = [
   { path: 'user', select: ['name'] },
+  { path: 'booking', populate: [{ path: 'user', select: ['name'] }] },
   { path: 'category', select: ['title', 'translations'] },
 ];
 const eventCreateInit = (req, res, next) => {

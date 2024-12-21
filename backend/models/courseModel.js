@@ -37,8 +37,8 @@ const courseSchema = new mongoose.Schema(
       required: true,
       default: 'Simple course title',
     },
-    image: {
-      type: String,
+    images: {
+      type: [String],
       required: true,
     },
     description: {
@@ -62,7 +62,7 @@ const courseSchema = new mongoose.Schema(
     },
     category: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'courseCategory',
+      ref: 'CourseCategory',
     },
     rating: {
       type: Number,

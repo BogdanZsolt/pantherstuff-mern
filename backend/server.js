@@ -29,6 +29,7 @@ import courseRoutes from './routes/courseRoutes.js';
 import courseCategoryRoutes from './routes/courseCategoryRoutes.js';
 import eventRoutes from './routes/eventRoutes.js';
 import eventCategoryRoutes from './routes/eventCategoryRoutes.js';
+import bookingRoutes from './routes/bookingRoutes.js';
 
 // import { fileURLToPath } from 'url';
 // const __filename = fileURLToPath(import.meta.url);
@@ -72,6 +73,7 @@ app.use('/api/courses', courseRoutes);
 app.use('/api/coursecategories', courseCategoryRoutes);
 app.use('/api/events', eventRoutes);
 app.use('/api/eventcategories', eventCategoryRoutes);
+app.use('/api/bookings', bookingRoutes);
 
 const __dirname = path.resolve();
 // app.use(express.static('public'));

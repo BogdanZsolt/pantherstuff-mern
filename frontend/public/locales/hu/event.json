@@ -6,6 +6,7 @@
   "popular": "Népszerű",
   "rating": "Értékelés",
   "latest": "Legújabb",
+  "pastEvents": "Múltbeli események",
   "priceLowToHigh": "Ár alacsonytól magasig",
   "priceHighToLow": "Ár magastól alacsonyig",
   "inOrderOfStartTime": "Kezdési időpont sorrendjében",
@@ -17,5 +18,10 @@
   "iWillBeThere": "Ott leszek",
   "booking": "Foglalás",
   "filters": "Szűrők",
+  "eventModalHeading": "Modális címsor",
+  "eventModalBody": "Woohoo, ezt a szöveget modálisan olvasod!",
+  "acceptTerms&Conditions": "Elfogadom a foglalás feltételeit.",
+  "eventModalCloseButton": "Bezár",
+  "eventModalContinueButton": "Folytatom",
   "": ""
 }

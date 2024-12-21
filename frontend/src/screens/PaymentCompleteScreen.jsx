@@ -1,11 +1,11 @@
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Button, Container } from 'react-bootstrap';
+import { toCurrency, toLocalDate } from '../utils/converter';
 import Banner from '../components/Banner';
 import Loader from '../components/Loader';
 import { FaTimesCircle, FaCheckCircle } from 'react-icons/fa';
 import { usePaymentVerificationQuery } from '../slices/ordersApiSlice';
-import { toCurrency, toLocalDate } from '../utils/converter';
 
 const PaymentCompleteScreen = () => {
   // Sikeres befizetés!
@@ -76,7 +76,7 @@ const PaymentCompleteScreen = () => {
                 <span className="fw-bold">{data.paymentResult.id}</span>
               </p>
               <p className="lead">
-                Időpont:{' '}
+                {t('time')}:{' '}
                 <span className="fw-bold">
                   {toLocalDate(data.language, data.paidAt)}
                 </span>

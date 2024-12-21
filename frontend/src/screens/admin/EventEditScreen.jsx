@@ -122,8 +122,6 @@ const EventEditScreen = () => {
     }
   };
 
-  console.log(startDate);
-
   return (
     <>
       {isLoadingUpdate ? (

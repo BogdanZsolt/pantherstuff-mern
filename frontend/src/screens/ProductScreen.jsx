@@ -366,7 +366,7 @@ const ProductScreen = () => {
                       <span className="position-relative">
                         {t('reviewsTab')}
                         <Badge
-                          className="position-absolute"
+                          className="position-absolute z-1"
                           bg="secondary"
                           text="primary"
                           pill

@@ -75,38 +75,44 @@ const Course = ({ course }) => {
   };
 
   return (
-    <Card className="my-3 rounded" border="secondary">
-      <Link to={`/onlinecourses/${course._id}`}>
-        <Card.Img src={course.image} variant="top" className="course-img" />
-        <Card.ImgOverlay>
-          <div className="overlay-actions">
-            <ul className="d-flex justify-content-center">
-              <li>
-                <button>
-                  <RiStarLine />
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={addToWishListHandler}
-                  title={t('addToWishList')}
-                >
-                  {isWishListed(course._id) ? <RiHeartFill /> : <RiHeartLine />}
-                </button>
-              </li>
-              <li>
-                <button onClick={addToCartHandler} title={t('addToCart')}>
-                  <RiShoppingBagLine />
-                </button>
-              </li>
-            </ul>
-          </div>
-        </Card.ImgOverlay>
+    <Card className="my-3 rounded shadow card-course" border="secondary">
+      <Link to={`/course/${course._id}`}>
+        <div className="img-container">
+          <Card.Img
+            src={course.images[0]}
+            variant="top"
+            className="course-img"
+          />
+          {course.images.length > 1 && (
+            <Card.Img
+              src={course.images[1]}
+              variant="top"
+              className="hover-img course-img"
+            />
+          )}
+          <ul className="card-data">
+            <li>
+              <button>
+                <RiStarLine />
+              </button>
+            </li>
+            <li>
+              <button onClick={addToWishListHandler} title={t('addToWishList')}>
+                {isWishListed(course._id) ? <RiHeartFill /> : <RiHeartLine />}
+              </button>
+            </li>
+            <li>
+              <button onClick={addToCartHandler} title={t('addToCart')}>
+                <RiShoppingBagLine />
+              </button>
+            </li>
+          </ul>
+        </div>
       </Link>
       <Card.Body>
-        <Link to={`/onlinecourses/${course._id}`}>
-          <Card.Title as="div" className="product-title">
-            <strong>
+        <Link to={`/course/${course._id}`}>
+          <Card.Title as="div" className="course-title">
+            <strong className="h4 fw-bolder">
               {i18n.language === 'en'
                 ? course.title
                 : course.translations?.hu?.title || course.title}
@@ -114,15 +120,19 @@ const Course = ({ course }) => {
           </Card.Title>
         </Link>
 
-        <Card.Text as="div">
+        {/* <Card.Text as="div">
           <p className="lead">{course.description}</p>
-        </Card.Text>
+        </Card.Text> */}
 
         <Card.Text as="div">
-          <Rating value={course.rating} text={`${course.numReviews} reviews`} />
+          <Rating
+            value={course.rating}
+            text={`${course.numReviews} reviews`}
+            className="mb-3"
+          />
         </Card.Text>
 
-        <Card.Text as="h3">
+        <Card.Text as="div" className="h3">
           {i18n.language === 'en'
             ? toCurrency(i18n.language, course.currentPrice)
             : toCurrency(

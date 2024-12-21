@@ -5,6 +5,7 @@ import Message from '../../components/Message';
 import Loader from '../../components/Loader';
 import { toast } from 'react-toastify';
 import Paginate from '../../components/Paginate';
+import { getTimeStamp, toLocalDate } from '../../utils/converter';
 import {
   useGetUsersQuery,
   useDeleteUserMutation,
@@ -48,6 +49,7 @@ const UserListScreen = () => {
                 <th>NAME</th>
                 <th>EMAIL</th>
                 <th>ADMIN</th>
+                <th>PRIME MEMBER</th>
                 <th></th>
               </tr>
             </thead>
@@ -65,6 +67,15 @@ const UserListScreen = () => {
                   <td>
                     {user.isAdmin ? (
                       <FaCheck className="text-success" />
+                    ) : (
+                      <FaTimes className="text-danger" />
+                    )}
+                  </td>
+                  <td>
+                    {user.premiumExpiresAt &&
+                    getTimeStamp(user.premiumExpiresAt) >
+                      getTimeStamp(Date.now()) ? (
+                      toLocalDate('en', user?.premiumExpiresAt, 'short')
                     ) : (
                       <FaTimes className="text-danger" />
                     )}

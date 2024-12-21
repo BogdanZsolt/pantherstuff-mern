@@ -56,11 +56,12 @@ const SupplyCarousel = () => {
               },
             }}
           >
-            {supplies.data.map((supply) => (
-              <SwiperSlide key={supply._id}>
-                <Supply supply={supply} />
-              </SwiperSlide>
-            ))}
+            {supplies &&
+              supplies.data.map((supply) => (
+                <SwiperSlide key={supply._id}>
+                  <Supply supply={supply} />
+                </SwiperSlide>
+              ))}
           </Swiper>
           <div className="carousel-nav">
             <div className="swiper-button-supply-prev">

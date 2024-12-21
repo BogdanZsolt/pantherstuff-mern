@@ -1,16 +1,16 @@
 import { Button, Col, Container, Row, Table } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 import { FaEdit, FaTrash, FaCopy } from 'react-icons/fa';
 import Loader from '../../components/Loader';
 import Message from '../../components/Message';
+import { toast } from 'react-toastify';
+import { getEventDate } from '../../utils/converter';
 import {
   useGetEventsQuery,
   useCreateEventMutation,
   useCopyEventMutation,
   useDeleteEventMutation,
 } from '../../slices/eventsApiSlice';
-import { LinkContainer } from 'react-router-bootstrap';
-import { toast } from 'react-toastify';
-import { getEventDate } from '../../utils/converter';
 
 const EventListScreen = () => {
   const {

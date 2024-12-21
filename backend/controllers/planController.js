@@ -18,7 +18,7 @@ const planCreateInit = (req, res, next) => {
     hu: {
       name: 'Egyszerű csomag',
       features: ['Egyszerű jellemző 1'],
-      price: 0,
+      currentPrice: 0,
     },
   };
   next();

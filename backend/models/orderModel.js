@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import Booking from './bookingModel.js';
 
 const orderSchema = new mongoose.Schema(
   {
@@ -16,12 +17,17 @@ const orderSchema = new mongoose.Schema(
         currentPrice: { type: Number, required: true },
         size: { type: String, required: false },
         color: { type: String, required: false },
+        fullPrice: { type: Number, required: false },
         product: {
           type: mongoose.Schema.Types.ObjectId,
           required: true,
           refPath: 'model_type',
         },
-        model_type: { type: String, enum: ['Product', 'Supply', 'Plan'] },
+        model_type: {
+          type: String,
+          enum: ['Product', 'Supply', 'Plan', 'Event'],
+        },
+        isToBeDelivered: { type: Boolean, required: true, default: true },
       },
     ],
     shippingAddress: {
@@ -88,6 +94,25 @@ const orderSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+
+orderSchema.methods.createBooking = async function () {
+  const events = this.orderItems.filter((item) => item.model_type === 'Event');
+  if (!events) {
+    return;
+  }
+  let createdBookings = [];
+  events.map(async (event) => {
+    const createBookingObj = new Booking({
+      user: this.user._id,
+      event: event.product,
+      price: event.currentPrice,
+      paid: true,
+    });
+    const created = await createBookingObj.save();
+    createdBookings.push(created);
+  });
+  return createdBookings;
+};
 
 const Order = mongoose.model('Order', orderSchema);
 

@@ -47,13 +47,17 @@ const PlaceOrderScreen = () => {
     let newItems = [];
     items.map((item) => {
       let newItem = {};
-      newItem._id = item._id;
-      newItem.type = item.type;
       newItem.name = i18n.language === 'en' ? item.name : item.name_hu;
       newItem.qty = item.qty;
       newItem.thumbnail = item.thumbnail;
       newItem.currentPrice =
         i18n.language === 'en' ? item.currentPrice : item.currentPrice_hu;
+      newItem._id = item._id;
+      newItem.type = item.type;
+      if (item?.fullPrice) {
+        newItem.fullPrice =
+          i18n.language === 'en' ? item.fullPrice : item.fullPrice_hu;
+      }
       newItems = [...newItems, newItem];
     });
     return newItems;

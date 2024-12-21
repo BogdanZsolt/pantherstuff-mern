@@ -1,7 +1,16 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { Trans, useTranslation } from 'react-i18next';
-import { Button, Col, Container, ListGroup, Row } from 'react-bootstrap';
+import {
+  Button,
+  Col,
+  Container,
+  Form,
+  ListGroup,
+  Modal,
+  Row,
+} from 'react-bootstrap';
 import Banner from '../components/Banner.jsx';
 // import ThumbsGallery from '../components/ThumbsGallery';
 import EventThumbsGalery from '../components/ThumbsGalery/index.jsx';
@@ -14,8 +23,10 @@ import {
   getEventDate,
   getTimeStamp,
   toCurrency,
+  uuid,
 } from '../utils/converter.js';
 import { RiCheckboxCircleLine } from 'react-icons/ri';
+import { addToCart } from '../slices/cartSlice';
 import { useGetEventDetailsQuery } from '../slices/eventsApiSlice.js';
 
 const EventScreen = () => {
@@ -27,10 +38,14 @@ const EventScreen = () => {
   const [beforePrice, setBeforePrice] = useState(0);
   const [currentPrice, setCurrentPrice] = useState(0);
   const [category, setCategory] = useState('');
-  // const [ddvance, setAdvance] = useState(0);
+  // const [advance, setAdvance] = useState(0);
   const [startDate, setStartDate] = useState(null);
   const [canBooking, setCanBooking] = useState(false);
   const [canBuy, setCanBuy] = useState(false);
+  const [bookingModalshow, setBookingModalshow] = useState(false);
+  const [activeAcceptButton, setActiveAcceptButton] = useState(false);
+
+  const dispatch = useDispatch();
 
   const {
     data: event,
@@ -76,6 +91,39 @@ const EventScreen = () => {
       setCanBuy(getTimeStamp(event.startDate) > getTimeStamp(new Date()));
     }
   }, [event, i18n.language]);
+
+  const addToCartHandler = (event, isAdvance = false) => {
+    const { _id, title: name, currentPrice, advance, images } = event;
+    const cartId = uuid();
+    const name_hu = event.translations?.hu?.title || name;
+    const currentPrice_hu =
+      event.translations?.hu?.currentPrice || currentPrice;
+    const advance_hu = event.translations?.hu?.advance || event.advance;
+    const qty = 1;
+    const type = 'event';
+
+    dispatch(
+      addToCart({
+        cartId,
+        _id,
+        type,
+        name,
+        name_hu,
+        thumbnail: images[0],
+        currentPrice: isAdvance ? advance : currentPrice,
+        currentPrice_hu: isAdvance ? advance_hu : currentPrice_hu,
+        fullPrice: currentPrice,
+        fullPrice_hu: currentPrice_hu,
+        qty,
+        toBeDelivered: false,
+      })
+    );
+
+    setBookingModalshow(false);
+  };
+
+  const bookingModalHandleClose = () => setBookingModalshow(false);
+  const bookingModalHandleShow = () => setBookingModalshow(true);
 
   return (
     <>
@@ -146,18 +194,31 @@ const EventScreen = () => {
                             : { backgroundColor: '#ff0000' }
                         }
                       />{' '}
-                      <Trans values={{ count: event.maxGroupsize, free: 19 }}>
+                      <Trans
+                        values={{
+                          count: event.maxGroupsize,
+                          free: event.maxGroupsize - event.booking?.length,
+                        }}
+                      >
                         {t('maxGroupSize')}{' '}
                       </Trans>
                     </ListGroup.Item>
                     <ListGroup.Item>
                       {canBuy && (
-                        <Button variant="success" className="btn btn-lasaphire">
+                        <Button
+                          variant="success"
+                          className="btn btn-lasaphire"
+                          onClick={() => addToCartHandler(event)}
+                        >
                           <span className="fw-bold">{t('iWillBeThere')}</span>
                         </Button>
                       )}{' '}
                       {canBooking && (
-                        <Button variant="primary" className="btn">
+                        <Button
+                          variant="primary"
+                          className="btn"
+                          onClick={bookingModalHandleShow}
+                        >
                           <span className="fw-bold">{t('booking')}</span>
                         </Button>
                       )}
@@ -172,6 +233,46 @@ const EventScreen = () => {
           </Container>
         </>
       )}
+      <Modal
+        show={bookingModalshow}
+        backdrop="static"
+        keyboard={false}
+        centered
+        onHide={bookingModalHandleClose}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>{t('eventModalHeading')}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>{t('eventModalBody')}</p>
+          <p>
+            <Form.Check>
+              <Form.Check.Input
+                type="checkbox"
+                id="activeAccept"
+                checked={activeAcceptButton}
+                onChange={(e) => setActiveAcceptButton(e.target.checked)}
+              />
+              <Form.Check.Label for="activeAccept">
+                {t('acceptTerms&Conditions')}
+              </Form.Check.Label>
+            </Form.Check>
+          </p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={bookingModalHandleClose}>
+            {t('eventModalCloseButton')}
+          </Button>
+          <Button
+            variant="success"
+            className="btn-lasaphire"
+            disabled={!activeAcceptButton}
+            onClick={() => addToCartHandler(event, true)}
+          >
+            {t('eventModalContinueButton')}
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 };

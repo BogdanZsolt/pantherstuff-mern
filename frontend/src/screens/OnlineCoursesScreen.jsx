@@ -142,7 +142,7 @@ const OnlineCoursesScreen = () => {
                 <Row>
                   {courses.data.length > 0 ? (
                     courses.data.map((course) => (
-                      <Col sm={6} md={4} xl={3} key={course._id}>
+                      <Col sm={12} md={6} xxl={4} key={course._id}>
                         <Course course={course} />
                       </Col>
                     ))

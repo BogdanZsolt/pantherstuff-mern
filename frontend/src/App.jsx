@@ -26,6 +26,12 @@ import {
   EventEditScreen,
   EventCategoryListScreen,
   EventCategoryEditScreen,
+  BookingListScreen,
+  BookingViewScreen,
+  CourseListScreen,
+  CourseEditScreen,
+  CourseCategoryListScreen,
+  CourseCategoryEditScreen,
   EventsScreen,
   EventScreen,
   OrderListScreen,
@@ -65,6 +71,7 @@ import {
   SupplyStoreScreen,
   MembershipScreen,
   OnlineCoursesScreen,
+  CourseScreen,
   SubscriberListScreen,
   UserEditScreen,
   UserListScreen,
@@ -348,6 +355,10 @@ const App = () => {
                       path: 'onlinecourses',
                       element: <OnlineCoursesScreen />,
                     },
+                    {
+                      path: 'course/:id',
+                      element: <CourseScreen />,
+                    },
                   ],
                 },
                 {
@@ -501,6 +512,30 @@ const App = () => {
             {
               path: 'eventcategorylist/:id/edit',
               element: <EventCategoryEditScreen />,
+            },
+            {
+              path: 'bookinglist',
+              element: <BookingListScreen />,
+            },
+            {
+              path: 'booking/:id/view',
+              element: <BookingViewScreen />,
+            },
+            {
+              path: 'courselist',
+              element: <CourseListScreen />,
+            },
+            {
+              path: 'courselist/:id/edit',
+              element: <CourseEditScreen />,
+            },
+            {
+              path: 'coursecategorylist',
+              element: <CourseCategoryListScreen />,
+            },
+            {
+              path: 'coursecategorylist/:id/edit',
+              element: <CourseCategoryEditScreen />,
             },
             {
               path: 'orderlist',

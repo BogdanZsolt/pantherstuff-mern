@@ -68,7 +68,7 @@ const MembershipPlanEditScreen = () => {
           hu: {
             name: transNameHu,
             features: transFeaturesHu,
-            price: transPriceHu,
+            currentPrice: transPriceHu,
           },
         },
       }).unwrap();

@@ -80,7 +80,9 @@ const EventsScreen = () => {
       i18n.language === 'en' ? undefined : minPrice,
     translations_hu_currentPrice_lte:
       i18n.language === 'en' ? undefined : maxPrice,
-    startDate_gte: dateRange[0] ? new Date(dateRange[0]).toString() : undefined,
+    startDate_gte: dateRange[0]
+      ? new Date(dateRange[0]).toString()
+      : Date(Date.now()),
     startDate_lte: dateRange[1] ? new Date(dateRange[1]).toString() : undefined,
   });
 

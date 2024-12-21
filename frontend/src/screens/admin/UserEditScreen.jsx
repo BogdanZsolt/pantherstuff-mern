@@ -5,6 +5,7 @@ import Message from '../../components/Message';
 import Loader from '../../components/Loader';
 import FormContainer from '../../components/FormContainer';
 import { toast } from 'react-toastify';
+import { getTimeStamp, toLocalDate } from '../../utils/converter';
 import {
   useGetUserDetailsQuery,
   useUpdateUserMutation,
@@ -99,6 +100,18 @@ const UserEditScreen = () => {
                 onChange={(e) => setIsAdmin(e.target.checked)}
               ></Form.Check>
             </Form.Group>
+
+            {user.premiumExpiresAt &&
+              getTimeStamp(user.premiumExpiresAt) >
+                getTimeStamp(Date.now()) && (
+                <Form.Group>
+                  <Form.Control
+                    type="text"
+                    value={toLocalDate('en', user.premiumExpiresAt)}
+                    readOnly
+                  ></Form.Control>
+                </Form.Group>
+              )}
 
             <Button type="submit" variant="primary" className="my-2">
               Update

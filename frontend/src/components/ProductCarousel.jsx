@@ -25,7 +25,7 @@ const ProductCarousel = () => {
           {error?.data?.message || error.error}
         </Message>
       ) : (
-        <Row className="position-relative mx-4 mx-md-0">
+        <Row className="position-relative mx-5 mx-lg-0">
           <Swiper
             modules={[Navigation]}
             navigation={{
@@ -39,7 +39,7 @@ const ProductCarousel = () => {
                 slidesPerGroup: 1,
                 centeredSlides: false,
               },
-              640: {
+              768: {
                 slidesPerView: 2,
                 slidesPerGroup: 1,
                 centeredSlides: false,

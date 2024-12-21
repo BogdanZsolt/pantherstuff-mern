@@ -6,6 +6,7 @@
   "popular": "Popular",
   "rating": "Rating",
   "latest": "Latest",
+  "pastEvents": "Past events",
   "PriceLowToHigh": "Price low to high",
   "priceHighToLow": "Price high to low",
   "inOrderOfStartTime": "In order of start time",
@@ -17,5 +18,10 @@
   "iWillBeThere": "I will be there",
   "booking": "Booking",
   "filters": "Filters",
+  "eventModalHeading": "Modal heading",
+  "eventModalBody": "Woohoo, you are reading this text in a modal!",
+  "acceptTerms&Conditions": "I accept the terms and conditions of the booking.",
+  "eventModalCloseButton": "Close",
+  "eventModalContinueButton": "Continue",
   "": ""
 }

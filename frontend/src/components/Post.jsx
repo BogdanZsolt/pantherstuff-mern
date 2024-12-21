@@ -4,11 +4,21 @@ import { Card, Image } from 'react-bootstrap';
 import { toLocalDate } from '../utils/converter';
 // import { RiArrowRightSLine } from 'react-icons/ri';
 
-const Post = ({ postId, src, category, author, title, description, date }) => {
+const Post = ({
+  postId,
+  src,
+  category,
+  author,
+  title,
+  description,
+  date,
+  className,
+  style,
+}) => {
   const { t, i18n } = useTranslation(['blog']);
 
   return (
-    <Card>
+    <Card className={className} style={style}>
       {/* <Card.Header
         as="strong"
         className="text-primary-emphasis text-start lead d-inline-block"

@@ -45,6 +45,13 @@ export const coursesApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+    copyCourse: builder.mutation({
+      query: (courseId) => ({
+        url: `${COURSES_URL}/${courseId}`,
+        method: 'POST',
+      }),
+      invalidatesTags: ['Course'],
+    }),
     deleteCourse: builder.mutation({
       query: (courseId) => ({
         url: `${COURSES_URL}/${courseId}`,
@@ -69,6 +76,7 @@ export const {
   useCreateCourseMutation,
   useUpdateCourseMutation,
   useUploadCourseImageMutation,
+  useCopyCourseMutation,
   useDeleteCourseMutation,
   useCourseCreateReviewMutation,
 } = coursesApiSlice;
