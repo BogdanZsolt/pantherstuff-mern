@@ -9,5 +9,12 @@
   "priceLowToHigh": "Ár alacsonytól magasig",
   "priceHighToLow": "Ár magastól alacsonyig",
   "thereAreNoItemsToDisplay": "Nincsenek megjeleníthető elemek",
+  "filters": "Szűrők",
+  "category": "Kategória",
+  "categories": "Kategóriák",
+  "price": "Ár",
+  "goBack": "Vissza",
+  "addToCart": "Tedd a kosárba",
+  "addToWishlist": "Add a Kívánságlistához",
   "": ""
 }

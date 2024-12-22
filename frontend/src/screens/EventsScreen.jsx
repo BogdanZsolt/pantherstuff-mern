@@ -21,14 +21,14 @@ import {
   RiListCheck2,
   RiPauseMiniLine,
 } from 'react-icons/ri';
-import FilterSidebar from '../components/EventFilterSidebar.jsx';
+import EventFilterSidebar from '../components/EventFilterSidebar.jsx';
 import { toast } from 'react-toastify';
+import Paginate from '../components/Paginate.jsx';
 import {
   useGetEventsQuery,
   useGetEventsMinMaxPriceQuery,
 } from '../slices/eventsApiSlice.js';
 import { useGetEventCategoriesQuery } from '../slices/eventCategoriesApiSlice.js';
-import Paginate from '../components/Paginate.jsx';
 
 const EventsScreen = () => {
   let { pageNumber, keyword, category } = useParams();
@@ -170,7 +170,7 @@ const EventsScreen = () => {
                   </Offcanvas.Header>
                   <Offcanvas.Body>
                     {events && (
-                      <FilterSidebar
+                      <EventFilterSidebar
                         categories={categories}
                         category={eventCategory}
                         setCategory={setEventCategory}

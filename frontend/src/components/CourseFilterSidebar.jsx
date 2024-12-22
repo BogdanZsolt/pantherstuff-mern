@@ -1,16 +1,12 @@
-import { Accordion, Form, Row } from 'react-bootstrap';
+import { Accordion, Row } from 'react-bootstrap';
 import SelectCategory from './SelectCategory';
 import PriceSlider from './PriceSlider';
 import { useTranslation } from 'react-i18next';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
 
-const EventFilterSidebar = ({
+const FilterSidebar = ({
   categories,
   category,
   setCategory,
-  dateRange,
-  setDateRange,
   min,
   minPrice,
   setMinPrice,
@@ -19,15 +15,14 @@ const EventFilterSidebar = ({
   setMaxPrice,
   className,
 }) => {
-  const { t, i18n } = useTranslation(['event']);
-  const [startDate, endDate] = dateRange;
+  const { t } = useTranslation(['course']);
 
   return (
     <div className={className} style={{ width: '100%' }}>
       <h3>{t('filters')}</h3>
       <Row>
         <Accordion
-          defaultActiveKey={['categories', 'datePicker', 'price']}
+          defaultActiveKey={['categories', 'price']}
           flush
           alwaysOpen
           style={{ '--bs-accordion-bg': 'transparent' }}
@@ -41,30 +36,6 @@ const EventFilterSidebar = ({
                 setCategory={setCategory}
                 multi
               />
-            </Accordion.Body>
-          </Accordion.Item>
-          <Accordion.Item eventKey="datePicker">
-            <Accordion.Header>{t('date')}</Accordion.Header>
-            <Accordion.Body>
-              <Form.Group controlId="dateRange" className="date-panther">
-                <DatePicker
-                  selectsRange={true}
-                  startDate={startDate}
-                  endDate={endDate}
-                  onChange={(update) => {
-                    setDateRange(update);
-                  }}
-                  dateFormat={
-                    i18n.language === 'en' ? 'dd/MM/yyyy' : 'yyyy-MM-dd'
-                  }
-                  isClearable={true}
-                  calendarStartDay={1}
-                  showYearDropdown
-                  showMonthDropdown
-                  dropdownMode="select"
-                  closeOnScroll={true}
-                />
-              </Form.Group>
             </Accordion.Body>
           </Accordion.Item>
           <Accordion.Item eventKey="price">
@@ -86,4 +57,4 @@ const EventFilterSidebar = ({
   );
 };
 
-export default EventFilterSidebar;
+export default FilterSidebar;

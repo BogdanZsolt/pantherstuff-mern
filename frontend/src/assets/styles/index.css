@@ -1101,27 +1101,31 @@ table th {
 
 .product h3,
 .supply h3,
-.event h3 {
+.event h3,
+.course h3 {
   text-transform: capitalize;
   font-size: clamp(1.875rem, 1.7308rem + 0.641vw, var(--fs-max, 2.5rem));
 }
 
 .product .list-group-item,
 .supply .list-group-item,
-.event .list-group-item {
+.event .list-group-item,
+.course .list-group-item {
   border: none;
 }
 
 .product .price,
 .supply .price,
-.event .price {
+.event .price,
+.course .price {
   display: flex;
   align-items: center;
 }
 
 .product .price .current,
 .supply .price .current,
-.event .price .current {
+.event .price .current,
+.course .price .current {
   font-family: var(--bs-font-sans-serif);
   font-size: 1.875rem;
   font-weight: 500;
@@ -1129,7 +1133,8 @@ table th {
 
 .product :where(.price, .review) .wrap,
 .supply :where(.price, .review) .wrap,
-.event :where(.price, .review) .wrap {
+.event :where(.price, .review) .wrap,
+.course :where(.price, .review) .wrap {
   display: flex;
   flex-direction: column;
   position: relative;
@@ -1138,7 +1143,8 @@ table th {
 
 .product :where(.price, .review) .wrap::before,
 .supply :where(.price, .review) .wrap::before,
-.event :where(.price, .review) .wrap::before {
+.event :where(.price, .review) .wrap::before,
+.course :where(.price, .review) .wrap::before {
   content: '';
   position: absolute;
   top: 0;
@@ -2184,6 +2190,10 @@ table th {
   .react-datepicker__triangle {
   fill: var(--bs-primary);
   color: var(--bs-primary);
+}
+
+.date-panther .react-datepicker-popper {
+  z-index: 3;
 }
 
 .date-panther .react-datepicker__input-container input {

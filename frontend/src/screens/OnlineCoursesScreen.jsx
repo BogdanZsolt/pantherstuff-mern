@@ -8,23 +8,31 @@ import {
   Form,
   ButtonGroup,
   Button,
+  Offcanvas,
 } from 'react-bootstrap';
 import Banner from '../components/Banner';
 import Meta from '../components/Meta';
 import Loader from '../components/Loader.jsx';
 import Message from '../components/Message.jsx';
 import {
+  RiFilterLine,
   RiLayoutGridLine,
   RiLayoutMasonryLine,
   RiListCheck2,
   RiPauseMiniLine,
 } from 'react-icons/ri';
 import Course from '../components/Course.jsx';
-import { useGetCoursesQuery } from '../slices/coursesApiSlice.js';
+import CourseFilterSidebar from '../components/CourseFilterSidebar.jsx';
 import Paginate from '../components/Paginate.jsx';
+import { toast } from 'react-toastify';
+import {
+  useGetCoursesQuery,
+  useGetCoursesMinMaxPriceQuery,
+} from '../slices/coursesApiSlice.js';
+import { useGetCourseCategoriesQuery } from '../slices/courseCategoriesApiSlice.js';
 
 const OnlineCoursesScreen = () => {
-  let { pageNumber, keyword, courseCategory } = useParams();
+  let { pageNumber, keyword, category } = useParams();
 
   if (!pageNumber) {
     pageNumber = 1;
@@ -34,14 +42,63 @@ const OnlineCoursesScreen = () => {
   const [sort, setSort] = useState('-rating,-createdAt');
   const [page, setPage] = useState(pageNumber);
   const [pages, setPages] = useState(1);
-  // const [category, setCategory] = useState([]);
+  const [courseCategory, setCourseCategory] = useState([]);
+  const [show, setShow] = useState(false);
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(0);
+
+  const {
+    data: minmax,
+    isLoading: isLoadingMinMax,
+    isError: isErrorMinMax,
+    error: errorMinMax,
+  } = useGetCoursesMinMaxPriceQuery();
 
   const {
     data: courses,
     isLoading,
     isError,
     error,
-  } = useGetCoursesQuery({ sort, page, limit: 8 });
+  } = useGetCoursesQuery({
+    sort,
+    category_in: courseCategory.length > 0 ? courseCategory : undefined,
+    page,
+    limit: 8,
+    currentPrice_gte:
+      i18n.language === 'en'
+        ? minPrice === 0
+          ? undefined
+          : minPrice
+        : undefined,
+    currentPrice_lte:
+      i18n.language === 'en'
+        ? maxPrice === 0
+          ? undefined
+          : maxPrice
+        : undefined,
+    translations_hu_currentPrice_gte:
+      i18n.language === 'en' ? undefined : minPrice,
+    translations_hu_currentPrice_lte:
+      i18n.language === 'en' ? undefined : maxPrice,
+  });
+
+  const {
+    data: categories,
+    isLoading: isLoadingCategories,
+    isError: isErrorCategories,
+    error: errorCategories,
+  } = useGetCourseCategoriesQuery();
+
+  useEffect(() => {
+    if (minmax) {
+      setMinPrice(
+        i18n.language === 'en' ? minmax[0].minPrice : minmax[0].minPrice_hu
+      );
+      setMaxPrice(
+        i18n.language === 'en' ? minmax[0].maxPrice : minmax[0].maxPrice_hu
+      );
+    }
+  }, [minmax, i18n.language]);
 
   useEffect(() => {
     if (courses) {
@@ -50,15 +107,16 @@ const OnlineCoursesScreen = () => {
     }
   }, [courses, pages, page, pageNumber]);
 
-  // useEffect(() => {
-  //   if (courseCategory === undefined) {
-  //     setCategory([]);
-  //   } else {
-  //     setCategory(courseCategory);
-  //   }
-  // }, [courseCategory]);
+  useEffect(() => {
+    if (category === undefined) {
+      setCourseCategory([]);
+    } else {
+      setCourseCategory(category.split(','));
+    }
+  }, [category]);
 
-  console.log(courses);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   return (
     <>
@@ -67,18 +125,72 @@ const OnlineCoursesScreen = () => {
         title={t('onlineCourses')}
       />
       <Meta title={t('onlineCourses')} />
-      <Container className="my-4" fluid>
-        {isLoading ? (
-          <Loader />
-        ) : isError ? (
-          <Message variant="danger">
-            {error?.data?.message || error.error}
-          </Message>
-        ) : (
-          <>
+      {isLoadingMinMax ? (
+        <Loader />
+      ) : (
+        isErrorMinMax &&
+        toast.error(errorMinMax?.data?.message || errorMinMax?.error)
+      )}
+      {isLoadingCategories ? (
+        <Loader />
+      ) : (
+        isErrorCategories &&
+        toast.danger(errorCategories?.data?.message || errorCategories.error)
+      )}
+      {isLoading ? (
+        <Loader />
+      ) : isError ? (
+        <Message variant="danger">
+          {error?.data?.message || error.error}
+        </Message>
+      ) : (
+        <>
+          <Container className="my-4" fluid>
             <h2 className="text-center">{t('courses')}</h2>
+            <Button
+              variant="primary"
+              onClick={handleShow}
+              className="d-lg-none filter-button"
+            >
+              <RiFilterLine />
+            </Button>
             <Row>
-              <Col lg={3} xxl={2}></Col>
+              <Col lg={3} xxl={2}>
+                <Offcanvas
+                  show={show}
+                  onHide={handleClose}
+                  scroll={true}
+                  backdrop={false}
+                  responsive="lg"
+                >
+                  <Offcanvas.Header closeButton>
+                    <Offcanvas.Title></Offcanvas.Title>
+                  </Offcanvas.Header>
+                  <Offcanvas.Body>
+                    {courses && (
+                      <CourseFilterSidebar
+                        categories={categories}
+                        category={courseCategory}
+                        setCategory={setCourseCategory}
+                        min={
+                          i18n.language === 'en'
+                            ? minmax[0].minPrice
+                            : minmax[0].minPrice_hu
+                        }
+                        minPrice={minPrice}
+                        setMinPrice={setMinPrice}
+                        max={
+                          18n.language === 'en'
+                            ? minmax[0].maxPrice
+                            : minmax[0].maxPrice_hu
+                        }
+                        maxPrice={maxPrice}
+                        setMaxPrice={setMaxPrice}
+                      />
+                    )}
+                  </Offcanvas.Body>
+                </Offcanvas>
+              </Col>
               <Col xs={12} lg={9} xxl={10}>
                 <Row className="align-items-center justify-content-between">
                   <Col>
@@ -161,9 +273,9 @@ const OnlineCoursesScreen = () => {
                 />
               </Col>
             </Row>
-          </>
-        )}
-      </Container>
+          </Container>
+        </>
+      )}
     </>
   );
 };

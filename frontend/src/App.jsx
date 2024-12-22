@@ -233,11 +233,11 @@ const App = () => {
                 },
                 {
                   path: 'search/:keyword/category/:category',
-                  element: <EventScreen />,
+                  element: <EventsScreen />,
                 },
                 {
                   path: 'search/:keyword/category/:category/page/:pageNumber',
-                  element: <EventScreen />,
+                  element: <EventsScreen />,
                 },
                 {
                   path: 'page/:pageNumber',
@@ -354,6 +354,40 @@ const App = () => {
                     {
                       path: 'onlinecourses',
                       element: <OnlineCoursesScreen />,
+                    },
+                    {
+                      path: 'onlinecourses',
+                      element: <OnlineCoursesScreen />,
+                      children: [
+                        {
+                          path: 'search/:keyword',
+                          element: <OnlineCoursesScreen />,
+                        },
+                        {
+                          path: 'search/:keyword/page/:pageNumber',
+                          element: <OnlineCoursesScreen />,
+                        },
+                        {
+                          path: 'search/:keyword/category/:category',
+                          element: <OnlineCoursesScreen />,
+                        },
+                        {
+                          path: 'search/:keyword/category/:category/page/:pageNumber',
+                          element: <OnlineCoursesScreen />,
+                        },
+                        {
+                          path: 'page/:pageNumber',
+                          element: <OnlineCoursesScreen />,
+                        },
+                        {
+                          path: 'category/:category',
+                          element: <OnlineCoursesScreen />,
+                        },
+                        {
+                          path: 'category/:category/page/:pageNumber',
+                          element: <OnlineCoursesScreen />,
+                        },
+                      ],
                     },
                     {
                       path: 'course/:id',

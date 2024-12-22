@@ -7,7 +7,6 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-package-lock.json
 node_modules
 temp
 dist
@@ -17,6 +16,8 @@ dist-ssr
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
+frontend/package-lock.json
+package-lock.json
 .idea
 .DS_Store
 *.suo

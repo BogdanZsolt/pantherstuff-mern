@@ -9,5 +9,12 @@
   "PriceLowToHigh": "Price low to high",
   "priceHighToLow": "Price high to low",
   "thereAreNoItemsToDisplay": "There are no items to display",
+  "filters": "Filters",
+  "category": "Category",
+  "categories": "Categories",
+  "price": "Price",
+  "goBack": "Go Back",
+  "addToCart": "Add To Cart",
+  "addToWishlist": "Add To Wishlist",
   "": ""
 }
