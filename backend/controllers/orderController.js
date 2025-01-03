@@ -5,7 +5,9 @@ import Product from '../models/productModel.js';
 import Supply from '../models/supplyModel.js';
 import Event from '../models/eventModel.js';
 import Booking from '../models/bookingModel.js';
+import PurchasedCourse from '../models/purchasedCourse.js';
 import User from '../models/userModel.js';
+import Course from '../models/courseModel.js';
 import { getAll } from './handlerFactory.js';
 import { calcPrices } from '../utils/calcPrices.js';
 import Stripe from 'stripe';
@@ -15,7 +17,6 @@ import {
   getSubscriber,
   createSubscriber,
 } from '../utils/mailerTools.js';
-import { response } from 'express';
 
 const productsPopOption = [{ path: 'user', select: ['id name'] }];
 
@@ -50,11 +51,16 @@ const addOrderItems = asyncHandler(async (req, res) => {
     const eventItemsFromDB = await Event.find({
       _id: { $in: orderItems.map((x) => x._id) },
     });
+    const courseItemsFromDB = await Course.find({
+      _id: { $in: orderItems.map((x) => x._id) },
+    });
+
     const itemsFromDB = [
       ...productItemsFromDB,
       ...supplyItemsFromDB,
       ...planItemsFromDB,
       ...eventItemsFromDB,
+      ...courseItemsFromDB,
     ];
 
     // map over the order items and use the price from our items from database
@@ -83,6 +89,8 @@ const addOrderItems = asyncHandler(async (req, res) => {
             ? 'Plan'
             : itemFromClient.type === 'event'
             ? 'Event'
+            : itemFromClient.type === 'course'
+            ? 'Course'
             : undefined,
       };
     });
@@ -228,7 +236,7 @@ const stripeVerify = asyncHandler(async (req, res) => {
     // Create payment history
     order.paymentResult = {
       id: paymentIntent.id,
-      payingUser: userFound?._id,
+      payingUser: userFound._id,
       paymentMethod: 'stripe',
       status: 'success',
       amount,
@@ -296,7 +304,7 @@ const stripeVerify = asyncHandler(async (req, res) => {
     if (events) {
       events.map(async (event) => {
         const createBooking = new Booking({
-          user: userId,
+          user: userFound._id,
           event: event.product,
           price: event.fullPrice,
           amountPaid: event.currentPrice,
@@ -305,6 +313,23 @@ const stripeVerify = asyncHandler(async (req, res) => {
           order: order._id,
         });
         await createBooking.save();
+      });
+    }
+
+    const courses = order.orderItems.filter(
+      (item) => item.model_type === 'Course'
+    );
+
+    if (courses) {
+      courses.map(async (course) => {
+        const createPurchasedCourse = new PurchasedCourse({
+          user: userFound._id,
+          course: course.product,
+          isPaid: true,
+          order: order._id,
+          purchasedAt: Date.now(),
+        });
+        await createPurchasedCourse.save();
       });
     }
 

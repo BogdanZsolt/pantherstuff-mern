@@ -15,7 +15,7 @@ const MyInfo = ({
   setPassword,
   confirmPassword,
   setConfirmPassword,
-  loadingUpdateProfile,
+  isLoadingUpdateProfile,
   sendVerifyEmailIsLoading,
   sendVerifyEmailIsError,
   sendVerifyEmailError,
@@ -31,8 +31,10 @@ const MyInfo = ({
     return getTimeStamp(date) > Date.now();
   };
 
+  console.log(userAuth);
+
   return (
-    <Row>
+    <Row className="flex-wrap-reverse">
       <Col md={6} className="mb-3 mb-md-0">
         <Form onSubmit={submitHandler}>
           <FormGroup controlId="name" className="my-2">
@@ -78,7 +80,7 @@ const MyInfo = ({
           <Button type="submit" variant="primary" className="my-2">
             {t('update')}
           </Button>
-          {loadingUpdateProfile && <Loader />}
+          {isLoadingUpdateProfile && <Loader />}
         </Form>
       </Col>
       <Col md={6}>

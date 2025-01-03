@@ -18,8 +18,6 @@ import { toCurrency, uuid } from '../utils/converter.js';
 const Supply = ({ supply }) => {
   const { t, i18n } = useTranslation(['supply']);
 
-  console.log(supply);
-
   const dispatch = useDispatch();
   const wishList = useSelector((state) => state.wishList);
   const { wishListItems } = wishList;

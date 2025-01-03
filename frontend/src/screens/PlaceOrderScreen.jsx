@@ -15,10 +15,10 @@ import Banner from '../components/Banner';
 import CheckoutSteps from '../components/CheckoutSteps';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
+import { toCurrency } from '../utils/converter';
+import { useTranslation } from 'react-i18next';
 import { useCreateOrderMutation } from '../slices/ordersApiSlice';
 import { clearCartItems } from '../slices/cartSlice';
-import { useTranslation } from 'react-i18next';
-import { toCurrency } from '../utils/converter';
 
 const PlaceOrderScreen = () => {
   const navigate = useNavigate();

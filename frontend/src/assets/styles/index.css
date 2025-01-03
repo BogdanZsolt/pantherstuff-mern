@@ -515,6 +515,14 @@ main {
   aspect-ratio: 16/10;
 }
 
+.card.card-course .card-body > div {
+  text-align: center;
+  height: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .card.card-course .img-container,
 .card.card-product .img-container,
 .card.card-supply .img-container {
@@ -549,7 +557,7 @@ main {
   transition: bottom 0.5s;
 }
 
-.card-data :where(button) {
+.card-data :where(button, a) {
   font-size: 1.25rem;
   display: flex;
   align-items: center;
@@ -564,7 +572,7 @@ main {
   transition: background-color 0.3s, color 0.3s;
 }
 
-.card-data :where(button:hover) {
+.card-data :where(button:hover, a:hover) {
   background-color: var(--bs-secondary);
   color: var(--bs-primary);
 }
@@ -888,11 +896,13 @@ table th {
 .carousel-nav .swiper-button-supply-next.swiper-button-disabled,
 .carousel-nav .swiper-button-event-next.swiper-button-disabled,
 .carousel-nav .swiper-button-plan-next.swiper-button-disabled,
+.carousel-nav .swiper-button-course-next.swiper-button-disabled,
 .carousel-nav .swiper-button-blog-next.swiper-button-disabled,
 .carousel-nav .swiper-button-prev.swiper-button-disabled,
 .carousel-nav .swiper-button-supply-prev.swiper-button-disabled,
 .carousel-nav .swiper-button-event-prev.swiper-button-disabled,
 .carousel-nav .swiper-button-plan-prev.swiper-button-disabled,
+.carousel-nav .swiper-button-course-prev.swiper-button-disabled,
 .carousel-nav .swiper-button-blog-prev.swiper-button-disabled {
   opacity: 0;
 }
@@ -905,10 +915,12 @@ table th {
 .swiper-button-supply-next,
 .swiper-button-event-next,
 .swiper-button-plan-next,
+.swiper-button-course-next,
 .swiper-button-blog-next,
 .swiper-button-supply-prev,
 .swiper-button-event-prev,
 .swiper-button-plan-prev,
+.swiper-button-course-prev,
 .swiper-button-blog-prev {
   --swiper-navigation-sides-offset: -2.25rem;
 }
@@ -916,10 +928,12 @@ table th {
 .swiper-button-supply-next svg,
 .swiper-button-event-next svg,
 .swiper-button-plan-next svg,
+.swiper-button-course-next svg,
 .swiper-button-blog-next svg,
 .swiper-button-supply-prev svg,
 .swiper-button-event-prev svg,
 .swiper-button-plan-prev svg,
+.swiper-button-course-prev svg,
 .swiper-button-blog-prev svg {
   width: 100%;
   height: 100%;
@@ -930,10 +944,12 @@ table th {
 .swiper-button-supply-next,
 .swiper-button-event-next,
 .swiper-button-plan-next,
+.swiper-button-course-next,
 .swiper-button-blog-next,
 .swiper-button-supply-prev,
 .swiper-button-event-prev,
 .swiper-button-plan-prev,
+.swiper-button-course-prev,
 .swiper-button-blog-prev {
   position: absolute;
   top: var(--swiper-navigation-top-offset, 50%);
@@ -952,6 +968,7 @@ table th {
 .swiper-button-supply-next,
 .swiper-button-event-next,
 .swiper-button-plan-next,
+.swiper-button-course-next,
 .swiper-button-blog-next {
   right: var(--swiper-navigation-sides-offset, -2.25rem);
   left: auto;
@@ -960,6 +977,7 @@ table th {
 .swiper-button-supply-prev,
 .swiper-button-event-prev,
 .swiper-button-plan-prev,
+.swiper-button-course-prev,
 .swiper-button-blog-prev {
   left: var(--swiper-navigation-sides-offset, -2.25rem);
   right: auto;
@@ -1165,7 +1183,8 @@ table th {
 
 .product .action,
 .supply .action,
-.event .action {
+.event .action,
+.course .action {
   list-style: none;
   display: flex;
   justify-content: flex-start;
@@ -1176,21 +1195,24 @@ table th {
 
 .product .action li a,
 .supply .action li a,
-.event .action li a {
+.event .action li a,
+.course .action li a {
   text-decoration: none;
   transition: text-decoration 0.3s, font-weight 0.3s;
 }
 
 .product .action li:hover > a,
 .supply .action li:hover > a,
-.event .action li:hover > a {
+.event .action li:hover > a,
+.course .action li:hover > a {
   text-decoration: underline;
   font-weight: 600;
 }
 
 .product .action li a span,
 .supply .action li a span,
-.event .action li a span {
+.event .action li a span,
+.course .action li a span {
   margin-left: 0.25rem;
 }
 
@@ -1209,13 +1231,15 @@ table th {
 
 .product-tab .nav-link,
 .supply-tab .nav-link,
-.profile-tab .nav-link {
+.profile-tab .nav-link,
+.course-tab .nav-link {
   --bs-nav-link-color: var(--bs-secondary);
 }
 
 .product-tab.nav-tabs .nav-link,
 .supply-tab.nav-tabs .nav-link,
-.profile-tab.nav-tabs .nav-link {
+.profile-tab.nav-tabs .nav-link,
+.course-tab.nav-tabs .nav-link {
   margin-bottom: 0;
   border: none;
   border-bottom: 3px solid transparent;
@@ -1224,7 +1248,8 @@ table th {
 
 .product-tab.nav-tabs .nav-link.active,
 .supply-tab.nav-tabs .nav-link.active,
-.profile-tab.nav-tabs .nav-link.active {
+.profile-tab.nav-tabs .nav-link.active,
+.course-tab.nav-tabs .nav-link.active {
   border-color: var(--bs-secondary);
 }
 
@@ -1234,7 +1259,8 @@ table th {
 }
 
 .product .review h3,
-.supply .review h3 {
+.supply .review h3,
+.course .review h3 {
   font-size: 1.375rem;
 }
 
@@ -1271,7 +1297,8 @@ table th {
 }
 
 .product .review .header .rating,
-.supply .review .header .rating {
+.supply .review .header .rating,
+.course .review .header .rating {
   font-size: 1.875rem;
 }
 
@@ -2675,11 +2702,13 @@ table th {
   .swiper-button-supply-next,
   .swiper-button-event-next,
   .swiper-button-plan-next,
+  .swiper-button-course-next,
   .swiper-button-blog-next,
   .swiper-button-prev,
   .swiper-button-supply-prev,
   .swiper-button-event-prev,
   .swiper-button-plan-prev,
+  .swiper-button-course-prev,
   .swiper-button-blog-prev {
     --swiper-navigation-sides-offset: -3rem;
   }
@@ -2698,11 +2727,13 @@ table th {
   .swiper-button-supply-next,
   .swiper-button-event-next,
   .swiper-button-plan-next,
+  .swiper-button-course-next,
   .swiper-button-blog-next,
   .swiper-button-prev,
   .swiper-button-supply-prev,
   .swiper-button-event-prev,
   .swiper-button-plan-prev,
+  .swiper-button-course-prev,
   .swiper-button-blog-prev {
     --swiper-navigation-sides-offset: -3rem;
   }

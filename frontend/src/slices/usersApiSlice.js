@@ -110,6 +110,12 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+    getCoursesList: builder.query({
+      query: () => ({
+        url: `${USERS_URL}/mycourses`,
+      }),
+      keepUnusedDataFor: 5,
+    }),
   }),
 });
 
@@ -130,4 +136,5 @@ export const {
   useVerifyUserAccountMutation,
   usePasswordResetRequestMutation,
   usePasswordResetMutation,
+  useGetCoursesListQuery,
 } = usersApiSlice;

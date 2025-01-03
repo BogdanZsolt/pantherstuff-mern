@@ -1,9 +1,10 @@
 import asyncHandler from '../middleware/asyncHandler.js';
 import APIFeatures from '../utils/apiFeatures.js';
 
-const getAll = (Model, popOption) =>
+const getAll = (Model, popOption, limitFields = '') =>
   asyncHandler(async (req, res) => {
     const page = Number(req.query.page) || 1;
+    req.query.fields = limitFields;
     if (req.query.page) {
       req.query.limit = req.query.limit || process.env.PAGINATION_LIMIT;
     }
@@ -40,10 +41,10 @@ const getAll = (Model, popOption) =>
     res.json({ data: doc, pages, page, count });
   });
 
-const getOne = (Model, popOption) =>
+const getOne = (Model, popOption, limitFields = '') =>
   asyncHandler(async (req, res) => {
     let query = Model.findById(req.params.id);
-    if (popOption) query = query.populate(popOption);
+    if (popOption) query = query.select(limitFields).populate(popOption);
     const doc = await query;
 
     if (doc) {

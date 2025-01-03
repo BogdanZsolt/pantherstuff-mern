@@ -5,7 +5,7 @@ import Product from '../models/productModel.js';
 
 const productsPopOption = [
   { path: 'user', select: ['name'] },
-  { path: 'category', select: ['title', 'translations'] },
+  // { path: 'category', select: ['title', 'translations'] },
 ];
 const productPopOption = [
   { path: 'user', select: ['name'] },

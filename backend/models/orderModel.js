@@ -25,7 +25,7 @@ const orderSchema = new mongoose.Schema(
         },
         model_type: {
           type: String,
-          enum: ['Product', 'Supply', 'Plan', 'Event'],
+          enum: ['Product', 'Supply', 'Plan', 'Event', 'Course'],
         },
         isToBeDelivered: { type: Boolean, required: true, default: true },
       },

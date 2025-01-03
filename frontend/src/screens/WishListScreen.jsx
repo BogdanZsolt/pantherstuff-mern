@@ -55,9 +55,7 @@ const WishListScreen = () => {
                       </Col>
                       <Col md={3}>
                         <Link to={`/${item.type}/${item._id}`}>
-                          {i18n.language == 'en'
-                            ? item.name
-                            : item.translations?.hu?.name || item.name}
+                          {i18n.language == 'en' ? item.name : item.name_hu}
                         </Link>
                       </Col>
                       <Col md={2}>
@@ -65,8 +63,7 @@ const WishListScreen = () => {
                           i18n.language,
                           i18n.language === 'en'
                             ? item.currentPrice
-                            : item.translations?.hu?.currentPrice ||
-                                item.currentPrice
+                            : item.currentPrice_hu
                         )}
                       </Col>
                       <Col md={2}></Col>

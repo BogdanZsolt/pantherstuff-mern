@@ -36,8 +36,6 @@ const PaymentCompleteScreen = () => {
     navigate('/profile');
   };
 
-  console.log(data);
-
   return (
     <>
       <Banner src="/images/ecoprint-02.webp" title={t('paymentVerification')} />

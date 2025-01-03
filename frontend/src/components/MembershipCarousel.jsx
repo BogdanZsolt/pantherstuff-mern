@@ -54,8 +54,6 @@ const MembershipCarousel = () => {
     // return navigate('/cart');
   };
 
-  console.log(plans);
-
   return (
     <>
       {isLoading ? (

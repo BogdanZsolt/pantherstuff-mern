@@ -6,10 +6,18 @@ import Course from '../models/courseModel.js';
 const coursesPopOption = [
   { path: 'user', select: ['name'] },
   { path: 'category', select: ['title', 'translations'] },
+  {
+    path: 'students',
+    populate: { path: 'user', select: ['_id', 'name', 'email'] },
+  },
 ];
 const coursePopOption = [
   { path: 'user', select: ['name'] },
   { path: 'category', select: ['title', 'translations'] },
+  {
+    path: 'students',
+    populate: { path: 'user', select: ['_id', 'name', 'email'] },
+  },
 ];
 const courseCreateInit = (req, res, next) => {
   req.body.user = req.user._id;

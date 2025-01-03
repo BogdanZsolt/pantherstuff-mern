@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import MyInfo from './MyInfo.jsx';
 import MyOrdersTable from './MyOrdersTable.jsx';
 import MyBookingsTable from './MyBookingsTable.jsx';
+import MyCoursesTable from './MyCoursesTable.jsx';
 import {
   useProfileMutation,
   useSendEmailVerificationTokenMutation,
@@ -29,7 +30,7 @@ const ProfileScreen = () => {
 
   const { userAuth } = useSelector((state) => state.auth);
 
-  const [updateProfile, { isLoading: loadingUpdateProfile }] =
+  const [updateProfile, { isLoading: isLoadingUpdateProfile }] =
     useProfileMutation();
 
   const [
@@ -98,8 +99,8 @@ const ProfileScreen = () => {
       />
       <Container>
         <Tab.Container defaultActiveKey="info">
-          <Row className="profile-tab mt-5">
-            <Col sm={2} className="mb-5 mb-md-0">
+          <Row className="profile-tab mt-5 g-4">
+            <Col xs={12} lg={3} xxl={2} className="mb-5 mb-md-0">
               <Nav variant="pills" className="flex-column">
                 <Nav.Item>
                   <Nav.Link eventKey="info">{t('info')}</Nav.Link>
@@ -110,9 +111,12 @@ const ProfileScreen = () => {
                 <Nav.Item>
                   <Nav.Link eventKey="bookings">{t('myBookings')}</Nav.Link>
                 </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link eventKey="courses">{t('myCourses')}</Nav.Link>
+                </Nav.Item>
               </Nav>
             </Col>
-            <Col sm={10}>
+            <Col xs={12} lg={9} xxl={10}>
               <Tab.Content>
                 <Tab.Pane eventKey="info">
                   <MyInfo
@@ -125,7 +129,7 @@ const ProfileScreen = () => {
                     setPassword={setPassword}
                     confirmPassword={confirmPassword}
                     setConfirmPassword={setConfirmPassword}
-                    loadingUpdateProfile={loadingUpdateProfile}
+                    isLoadingUpdateProfile={isLoadingUpdateProfile}
                     sendVerifyEmailIsLoading={sendVerifyEmailIsLoading}
                     sendVerifyEmailIsError={sendVerifyEmailIsError}
                     sendVerifyEmailError={sendVerifyEmailError}
@@ -151,6 +155,9 @@ const ProfileScreen = () => {
                     isErrorBookings={isErrorBookings}
                     errorBookings={errorBookings}
                   />
+                </Tab.Pane>
+                <Tab.Pane eventKey="courses">
+                  <MyCoursesTable />
                 </Tab.Pane>
               </Tab.Content>
             </Col>

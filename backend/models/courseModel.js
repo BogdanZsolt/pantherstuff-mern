@@ -90,5 +90,17 @@ const courseSchema = new mongoose.Schema(
   }
 );
 
+// courseSchema.virtual('students', {
+//   ref: 'User',
+//   localField: '_id',
+//   foreignField: 'courses.id',
+// });
+
+courseSchema.virtual('students', {
+  ref: 'PurchasedCourse',
+  localField: '_id',
+  foreignField: 'course',
+});
+
 const Course = mongoose.model('Course', courseSchema);
 export default Course;

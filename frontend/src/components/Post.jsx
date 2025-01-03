@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Card, Image } from 'react-bootstrap';
-import { toLocalDate } from '../utils/converter';
+import { toLocalDate } from '../utils/converter.js';
 // import { RiArrowRightSLine } from 'react-icons/ri';
 
 const Post = ({

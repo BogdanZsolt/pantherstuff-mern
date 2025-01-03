@@ -26,6 +26,21 @@ const toLocalDate = (lang, date, option = 'medium') => {
   }
 };
 
+const getDateMMDDYY = (date, lang = 'en', long = false) => {
+  const options = {
+    year: 'numeric',
+    month: long ? 'long' : 'short',
+    day: 'numeric',
+  };
+  let language = '';
+  if (lang === 'hu') {
+    language = 'hu-HU';
+  } else if (lang === 'en') {
+    language = 'en-EN';
+  }
+  return new Date(date).toLocaleDateString(language, options);
+};
+
 const getEventDate = (date, lang = 'en', long = false) => {
   const options = {
     weekday: 'long',
@@ -76,6 +91,7 @@ const getDuration = (seconds) => {
 export {
   toCurrency,
   toLocalDate,
+  getDateMMDDYY,
   getEventDate,
   getTimeStamp,
   addDaysToDate,

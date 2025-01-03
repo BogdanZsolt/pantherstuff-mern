@@ -81,11 +81,6 @@ const EventScreen = () => {
           ? event.currentPrice
           : event.translations?.hu?.currentPrice || event.currentPrice
       );
-      // setAdvance(
-      //   i18n.language === 'en'
-      //     ? event.advance
-      //     : event.translations?.hu?.advance || event.advance
-      // );
       setStartDate(getEventDate(event.startDate, i18n.language, true));
       setCanBooking(getCanBooking(event.startDate, 30));
       setCanBuy(getTimeStamp(event.startDate) > getTimeStamp(new Date()));

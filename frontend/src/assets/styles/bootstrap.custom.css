@@ -4,6 +4,22 @@
  * Copyright 2011-2022 The Bootstrap Authors
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
+@font-face {
+  font-family: 'myFonts';
+  src: url('./fonts/brandon-grotesque/Brandon_Grotesque_thin.otf')
+    format('opentype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'myFonts';
+  src: url('./fonts/brandon-grotesque/Brandon_Grotesque_light.otf')
+    format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
 :root,
 [data-bs-theme='light'] {
   --bs-blue: #3c4c5d;
@@ -77,6 +93,7 @@
   --bs-black-rgb: 0, 0, 0;
   --bs-body-color-rgb: 123, 138, 139;
   --bs-body-bg-rgb: 255, 255, 255;
+  /* --bs-font-sans-serif: 'Poppins', sans-serif; */
   --bs-font-sans-serif: 'Poppins', sans-serif;
   --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
     'Liberation Mono', 'Courier New', monospace;

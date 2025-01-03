@@ -12,9 +12,18 @@ import {
 } from '../../slices/usersApiSlice';
 
 const UserListScreen = () => {
-  const { data: users, refetch, isLoading, error } = useGetUsersQuery();
+  const {
+    data: users,
+    refetch,
+    isLoading,
+    isError,
+    error,
+  } = useGetUsersQuery();
 
-  const [deleteUser, { isLoading: loadingDelete }] = useDeleteUserMutation();
+  const [
+    deleteUser,
+    { isLoading: loadingDelete, isError: isErrorDelete, error: errorDelete },
+  ] = useDeleteUserMutation();
 
   const deleteHandler = async (id) => {
     if (window.confirm('Are you sure?')) {
@@ -28,15 +37,24 @@ const UserListScreen = () => {
     }
   };
 
+  if (users) {
+    console.log(users);
+  }
+
   return (
     <Container className="mt-5">
       <Row className="text-center">
         <h2 className="fs-1 fw-semibold">Users</h2>
       </Row>
-      {loadingDelete && <Loader />}
+      {loadingDelete ? (
+        <Loader />
+      ) : (
+        isErrorDelete &&
+        toast.danger(errorDelete.data?.message || errorDelete.error)
+      )}
       {isLoading ? (
         <Loader />
-      ) : error ? (
+      ) : isError ? (
         <Message variant="danger">
           {error?.data?.Message || error.error}
         </Message>
@@ -45,7 +63,7 @@ const UserListScreen = () => {
           <Table striped hover responsive className="table-sm">
             <thead>
               <tr>
-                <th className="d-none d-lg-block">ID</th>
+                {/* <th className="d-none d-lg-block">ID</th> */}
                 <th>NAME</th>
                 <th>EMAIL</th>
                 <th>ADMIN</th>
@@ -54,10 +72,10 @@ const UserListScreen = () => {
               </tr>
             </thead>
             <tbody>
-              {users.map((user) => (
+              {users.data.map((user) => (
                 <tr key={user._id}>
-                  <td className="d-none d-lg-table-cell">{user._id}</td>
-                  <td className="">
+                  {/* <td className="d-none d-lg-table-cell">{user._id}</td> */}
+                  <td className="" title={`id: ${user._id}`}>
                     <div>{user.name}</div>
                     <div className="d-table-cell d-lg-none">{user._id}</div>
                   </td>

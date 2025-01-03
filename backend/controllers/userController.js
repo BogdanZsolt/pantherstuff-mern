@@ -3,9 +3,17 @@ import asyncHandler from '../middleware/asyncHandler.js';
 import User from '../models/userModel.js';
 import generateToken from '../utils/generateToken.js';
 import jwt from 'jsonwebtoken';
+import { getAll, getOne } from './handlerFactory.js';
 // import sendAccVerificationEmail from '../utils/sendAccVerificationEmail.js';
 // import sendPasswordResetEmail from '../utils/sendPasswordResetEmail.js';
 import Email from '../utils/email.js';
+
+const usersPopOption = [];
+const userPopOption = [
+  { path: 'courses' },
+  { path: 'bookings' },
+  { path: 'posts' },
+];
 
 // @desc    Auth user & get token
 // @route   POST /api/users/auth
@@ -265,24 +273,12 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 // @desc    Get users
 // @route   GET /api/users
 // @access  Private/Admin
-const getUsers = asyncHandler(async (req, res) => {
-  const users = await User.find({}).select('-password');
-  res.status(200).json(users);
-});
+const getUsers = getAll(User, usersPopOption, '-password');
 
 // @desc    Get user by ID
 // @route   GET /api/users/:id
 // @access  Private/Admin
-const getUserByID = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.params.id).select('-password');
-
-  if (user) {
-    res.status(200).json(user);
-  } else {
-    res.status(404);
-    throw new Error('User not found');
-  }
-});
+const getUserByID = getOne(User, userPopOption, '-password');
 
 // @desc    Delete user
 // @route   Delete /api/users/:id
@@ -483,6 +479,28 @@ const resetPassword = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc    get the user's course list by ID
+// @route   GET /api/users/mycourses
+// @access  Private
+const getUserCoursesList = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id).populate({
+    path: 'courses',
+    populate: {
+      path: 'user',
+      select: ['_id', 'name'],
+    },
+    populate: {
+      path: 'course',
+    },
+  });
+  if (user) {
+    res.status(200).json(user.courses);
+  } else {
+    res.status(404);
+    throw new Error('User not found');
+  }
+});
+
 export {
   checkAuthenticated,
   checkIsAdmin,
@@ -503,4 +521,5 @@ export {
   verifyEmailAcc,
   forgotPasswordEmailToken,
   resetPassword,
+  getUserCoursesList,
 };

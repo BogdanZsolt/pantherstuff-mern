@@ -20,6 +20,7 @@ import {
   verifyEmailAcc,
   forgotPasswordEmailToken,
   resetPassword,
+  getUserCoursesList,
 } from '../controllers/userController.js';
 import { protect, admin } from '../middleware/authMiddleware.js';
 
@@ -29,6 +30,7 @@ router.get('/auth/google/callback', googleAuthUserCallback);
 router.get('/checkauthenticated', checkAuthenticated);
 router.get('/checkadmin', checkIsAdmin);
 router.get('/checkpremium', checkIsPremium);
+router.get('/mycourses', protect, getUserCoursesList);
 router.put('/account-verification-email', protect, verifyEmailAccount);
 router.put('/verify-account/:verifyToken', protect, verifyEmailAcc);
 router.post('/forgot-password', forgotPasswordEmailToken);

@@ -111,6 +111,12 @@ userSchema.virtual('bookings', {
   foreignField: 'user',
 });
 
+userSchema.virtual('courses', {
+  ref: 'PurchasedCourse',
+  localField: '_id',
+  foreignField: 'user',
+});
+
 const User = mongoose.model('User', userSchema);
 
 export default User;

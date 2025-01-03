@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import {
   Col,
@@ -25,6 +26,7 @@ import Course from '../components/Course.jsx';
 import CourseFilterSidebar from '../components/CourseFilterSidebar.jsx';
 import Paginate from '../components/Paginate.jsx';
 import { toast } from 'react-toastify';
+import { isLoggedUserOwner } from '../utils/ownnerUser.js';
 import {
   useGetCoursesQuery,
   useGetCoursesMinMaxPriceQuery,
@@ -46,6 +48,8 @@ const OnlineCoursesScreen = () => {
   const [show, setShow] = useState(false);
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(0);
+
+  const { userAuth } = useSelector((state) => state.auth);
 
   const {
     data: minmax,
@@ -117,6 +121,10 @@ const OnlineCoursesScreen = () => {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  if (courses) {
+    console.log(courses);
+  }
 
   return (
     <>
@@ -255,7 +263,12 @@ const OnlineCoursesScreen = () => {
                   {courses.data.length > 0 ? (
                     courses.data.map((course) => (
                       <Col sm={12} md={6} xxl={4} key={course._id}>
-                        <Course course={course} />
+                        <Course
+                          course={course}
+                          purchased={isLoggedUserOwner(userAuth?._id, course)}
+                          date={course.students[0]?.purchasedAt}
+                          orderId={course.students[0]?.order}
+                        />
                       </Col>
                     ))
                   ) : (
@@ -268,7 +281,7 @@ const OnlineCoursesScreen = () => {
                   pages={pages}
                   page={page}
                   pageName="onlinecourses"
-                  productCategory={courseCategory}
+                  category={courseCategory.join(',')}
                   keyword={keyword ? keyword : ''}
                 />
               </Col>

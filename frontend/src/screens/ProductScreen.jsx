@@ -55,16 +55,16 @@ const ProductScreen = () => {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
   const [showReview, setShowReview] = useState(false);
-  const { userAuth } = useSelector((state) => state.auth);
-  const { wishListItems } = useSelector((state) => state.wishList);
   const [productName, setProductName] = useState('');
   const [beforePrice, setBeforePrice] = useState(0);
   const [currentPrice, setCurrentPrice] = useState(0);
   const [shippingPrice, setShippingPrice] = useState(0);
   const [color, setColor] = useState('');
   const [size, setSize] = useState('');
-
   const [activeTab, setActiveTab] = useState('description');
+
+  const { userAuth } = useSelector((state) => state.auth);
+  const { wishListItems } = useSelector((state) => state.wishList);
 
   const {
     data: product,
