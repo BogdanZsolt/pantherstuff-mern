@@ -12,6 +12,9 @@ import {
   getTopCourses,
   getCourseStats,
   getCoursesMinMaxPrice,
+  addNewLesson,
+  removeLesson,
+  updateLesson,
 } from '../controllers/courseController.js';
 import { protect, admin } from '../middleware/authMiddleware.js';
 
@@ -29,5 +32,8 @@ router
   .delete(protect, admin, deleteCourse)
   .post(protect, admin, copyCourse);
 router.route('/:id/reviews').post(protect, createCoursesReview);
+router.route('/:id/lesson').post(protect, admin, addNewLesson);
+router.route('/:id/delete').put(protect, admin, removeLesson);
+router.route('/:id/update').put(protect, admin, updateLesson);
 
 export default router;

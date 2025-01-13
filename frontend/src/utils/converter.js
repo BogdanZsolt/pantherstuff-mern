@@ -88,6 +88,26 @@ const getDuration = (seconds) => {
     .replace(/\b(\d)\b/g, '0$1');
 };
 
+const convertSecondstoTime = (seconds) => {
+  const dateObj = new Date(seconds * 1000);
+  const hours = dateObj.getUTCHours();
+  const minutes = dateObj.getUTCMinutes();
+  const secs = dateObj.getSeconds();
+
+  let timeString = '';
+  if (hours > 0) {
+    timeString = hours.toString().padStart(2, '0') + ':';
+  }
+
+  timeString =
+    timeString +
+    minutes.toString().padStart(2, '0') +
+    ':' +
+    secs.toString().padStart(2, '0');
+
+  return timeString;
+};
+
 export {
   toCurrency,
   toLocalDate,
@@ -98,4 +118,5 @@ export {
   getCanBooking,
   uuid,
   getDuration,
+  convertSecondstoTime,
 };

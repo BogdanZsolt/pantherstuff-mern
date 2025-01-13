@@ -1232,14 +1232,16 @@ table th {
 .product-tab .nav-link,
 .supply-tab .nav-link,
 .profile-tab .nav-link,
-.course-tab .nav-link {
+.course-tab .nav-link,
+.course-edit-tab .nav-link {
   --bs-nav-link-color: var(--bs-secondary);
 }
 
 .product-tab.nav-tabs .nav-link,
 .supply-tab.nav-tabs .nav-link,
 .profile-tab.nav-tabs .nav-link,
-.course-tab.nav-tabs .nav-link {
+.course-tab.nav-tabs .nav-link,
+.course-edit-tab.nav-tabs .nav-link {
   margin-bottom: 0;
   border: none;
   border-bottom: 3px solid transparent;
@@ -1249,7 +1251,8 @@ table th {
 .product-tab.nav-tabs .nav-link.active,
 .supply-tab.nav-tabs .nav-link.active,
 .profile-tab.nav-tabs .nav-link.active,
-.course-tab.nav-tabs .nav-link.active {
+.course-tab.nav-tabs .nav-link.active,
+.course-edit-tab.nav-tabs .nav-link.active {
   border-color: var(--bs-secondary);
 }
 
@@ -2386,6 +2389,13 @@ table th {
 .event-card:hover .info .event-button {
   visibility: visible;
   opacity: 1;
+}
+
+/* DRAG & DROP LESSONS */
+.dragging {
+  pointer-events: none;
+  touch-action: none;
+  box-shadow: var(--bs-shadow-lg);
 }
 
 /* Media Querys */

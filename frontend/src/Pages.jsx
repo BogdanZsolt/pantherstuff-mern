@@ -176,7 +176,7 @@ export const CourseListScreen = lazy(() =>
   import('./screens/admin/CourseListScreen.jsx')
 );
 export const CourseEditScreen = lazy(() =>
-  import('./screens/admin/CourseEditScreen.jsx')
+  import('./screens/admin/CourseEditScreen/index.jsx')
 );
 export const CourseCategoryListScreen = lazy(() =>
   import('./screens/admin/CourseCategoryListScreen.jsx')

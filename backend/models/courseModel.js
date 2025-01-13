@@ -82,6 +82,20 @@ const courseSchema = new mongoose.Schema(
         beforePrice: { type: Number, default: 0 },
       },
     },
+    curriculum: [
+      {
+        _id: false,
+        lesson: {
+          type: mongoose.Schema.Types.ObjectId,
+          required: true,
+          refPath: 'curriculum.lessonType',
+        },
+        lessonType: {
+          type: String,
+          enum: ['Video', 'Textual'],
+        },
+      },
+    ],
   },
   {
     timestamps: true,
@@ -103,4 +117,5 @@ courseSchema.virtual('students', {
 });
 
 const Course = mongoose.model('Course', courseSchema);
+
 export default Course;

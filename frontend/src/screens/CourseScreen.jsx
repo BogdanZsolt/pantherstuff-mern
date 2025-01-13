@@ -27,6 +27,7 @@ import { toCurrency, uuid } from '../utils/converter';
 import Rating from '../components/Rating.jsx';
 import Editor from '../components/Editor.jsx';
 import { toast } from 'react-toastify';
+import { isLoggedUserOwner } from '../utils/ownnerUser.js';
 import {
   RiHeartFill,
   RiHeartLine,
@@ -177,6 +178,10 @@ const CourseScreen = () => {
 
     return isUserReview ? true : false;
   };
+
+  if (course) {
+    console.log(isLoggedUserOwner(userAuth?._id, course));
+  }
 
   return (
     <>

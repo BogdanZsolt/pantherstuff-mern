@@ -21,9 +21,9 @@ const CourseCarousel = () => {
     error,
   } = useGetCoursesQuery({ sort: '-rating,-createdAt' });
 
-  if (courses) {
-    console.log(courses);
-  }
+  // if (courses) {
+  //   console.log(courses);
+  // }
 
   return (
     <>

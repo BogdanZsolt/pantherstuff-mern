@@ -2,6 +2,8 @@ import asyncHandler from '../middleware/asyncHandler.js';
 import { getOne, createOne } from './handlerFactory.js';
 import APIFeatures from '../utils/apiFeatures.js';
 import Course from '../models/courseModel.js';
+import Video from '../models/videoModel.js';
+import Textual from '../models/textualModel.js';
 
 const coursesPopOption = [
   { path: 'user', select: ['name'] },
@@ -17,6 +19,10 @@ const coursePopOption = [
   {
     path: 'students',
     populate: { path: 'user', select: ['_id', 'name', 'email'] },
+  },
+  {
+    path: 'curriculum',
+    populate: { path: 'lesson' },
   },
 ];
 const courseCreateInit = (req, res, next) => {
@@ -36,6 +42,10 @@ const courseCreateInit = (req, res, next) => {
       beforePrice: 0,
       currentPrice: 0,
     },
+  };
+  req.body.curriculum = {
+    totalDuration: 0,
+    lessons: [],
   };
   next();
 };
@@ -138,6 +148,7 @@ const updateCourse = asyncHandler(async (req, res) => {
     beforePrice,
     duration,
     category,
+    curriculum,
     translations,
   } = req.body;
 
@@ -151,6 +162,7 @@ const updateCourse = asyncHandler(async (req, res) => {
     course.beforePrice = beforePrice || course.beforePrice;
     course.duration = duration || course.duration;
     course.category = category;
+    course.curriculum = curriculum || course.curriculum;
     course.translations = translations || course.translations;
 
     const updatedCourse = await course.save();
@@ -319,6 +331,130 @@ const getCoursesMinMaxPrice = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc    Create new lesson to curriculum
+// @route   POST /api/courses/:id/lesson
+// @access  Private/Admin
+const addNewLesson = asyncHandler(async (req, res) => {
+  const { lessonType } = req.body;
+  let course = await Course.findById(req.params.id);
+
+  if (course) {
+    let createLesson;
+    if (lessonType === 'Video') {
+      createLesson = new Video({
+        user: req.user._id,
+        title: 'Simple video lesson title',
+        videoUrl: 'https://vimeo.com/717781102?share=copy',
+        duration: 0,
+        translations: {
+          hu: {
+            title: 'Egyszerű videó lecke cím',
+            videoUrl: 'https://vimeo.com/717781102?share=copy',
+          },
+        },
+      });
+    } else if (lessonType === 'Textual') {
+      createLesson = new Textual({
+        user: req.user._id,
+        title: 'Simple textual lesson title',
+        text: '<p>Some cool text</p>',
+        translations: {
+          hu: {
+            title: 'Egyszerű szöveges lecke cím',
+            text: '<p>Valami menő szöveg</p>',
+          },
+        },
+      });
+    }
+    const newLesson = await createLesson.save();
+    if (newLesson) {
+      course.curriculum.push({
+        lesson: newLesson._id,
+        lessonType,
+      });
+    }
+  }
+  const updatedCourse = await course.save();
+  if (updatedCourse) {
+    res.status(200).json(updatedCourse);
+  } else {
+    res.status(404);
+    throw new Error('Resource not found');
+  }
+});
+
+// @desc    Remove lesson from curriculum
+// @route   PUT /api/courses/:id/dalete
+// @access  Private/Admin
+const removeLesson = asyncHandler(async (req, res) => {
+  let course = await Course.findById(req.params.id);
+  const { lessonId } = req.body;
+
+  if (course) {
+    const lesson = course.curriculum.find(
+      (item) => item.lesson.toString() === lessonId
+    );
+    let model;
+    if (lesson.lessonType === 'Video') {
+      model = Video;
+    } else if (lesson.lessonType === 'Textual') {
+      model = Textual;
+    }
+    course.curriculum = course.curriculum.filter(
+      (item) => item.lesson.toString() !== lessonId
+    );
+    const delLesson = await model.findById(lessonId);
+    // console.log(delLesson);
+    if (delLesson) {
+      await model.deleteOne({ _id: lessonId });
+    }
+    const updatedLesson = await course.save();
+    res.status(200).json(updatedLesson);
+  } else {
+    res.status(404);
+    throw new Error('Resource not found');
+  }
+});
+
+// @desc    Update lesson in curriculum
+// @route   PUT /api/courses/:id/lesson/:id/update
+// @access  Private/Admin
+const updateLesson = asyncHandler(async (req, res) => {
+  let course = await Course.findById(req.params.id);
+  const { lessonId, title } = req.body;
+
+  if (course) {
+    const lesson = course.curriculum.find(
+      (item) => item.lesson.toString() === lessonId
+    );
+    let updatedLesson;
+    if (lesson.lessonType === 'Video') {
+      let video = await Video.findById(lessonId);
+      video.title = title || video.title;
+      video.videoUrl = req.body.videoUrl || video.videoUrl;
+      video.duration = req.body.duration || video.duration;
+      video.translations.hu.title =
+        req.body.translations.hu.title || video.translations.hu.title;
+      video.translations.hu.videoUrl =
+        req.body.translations.hu.videoUrl || video.translations.hu.videoUrl;
+      updatedLesson = await video.save();
+    } else if (lesson.lessonType === 'Textual') {
+      let textual = await Textual.findById(lessonId);
+      textual.title = title || textual.title;
+      textual.text = req.body.text || textual.text;
+      textual.translations.hu.title =
+        req.body.translations.hu.title || textual.translations.hu.title;
+      textual.translations.hu.text =
+        req.body.translations.hu.text || textual.translations.hu.text;
+      updatedLesson = await textual.save();
+    }
+    res.json(updatedLesson);
+  } else {
+    res.status(404);
+    throw new Error('Resource not found');
+  }
+});
+
 export {
   getCourses,
   getCourseById,
@@ -331,4 +467,7 @@ export {
   getTopCourses,
   getCourseStats,
   getCoursesMinMaxPrice,
+  addNewLesson,
+  removeLesson,
+  updateLesson,
 };

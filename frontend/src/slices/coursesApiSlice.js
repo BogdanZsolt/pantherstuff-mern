@@ -66,6 +66,30 @@ export const coursesApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['Course'],
     }),
+    addNewLesson: builder.mutation({
+      query: (data) => ({
+        url: `${COURSES_URL}/${data.courseId}/lesson`,
+        method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: ['Course'],
+    }),
+    updateLesson: builder.mutation({
+      query: (data) => ({
+        url: `${COURSES_URL}/${data.courseId}/update`,
+        method: 'PUT',
+        body: data,
+      }),
+      invalidatesTags: ['Course'],
+    }),
+    removeLesson: builder.mutation({
+      query: (data) => ({
+        url: `${COURSES_URL}/${data.courseId}/delete`,
+        method: 'PUT',
+        body: data,
+      }),
+      invalidatesTags: ['Course'],
+    }),
   }),
 });
 
@@ -79,4 +103,7 @@ export const {
   useCopyCourseMutation,
   useDeleteCourseMutation,
   useCourseCreateReviewMutation,
+  useAddNewLessonMutation,
+  useUpdateLessonMutation,
+  useRemoveLessonMutation,
 } = coursesApiSlice;

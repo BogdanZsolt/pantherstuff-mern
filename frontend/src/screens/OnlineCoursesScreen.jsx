@@ -122,9 +122,9 @@ const OnlineCoursesScreen = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  if (courses) {
-    console.log(courses);
-  }
+  // if (courses) {
+  //   console.log(courses);
+  // }
 
   return (
     <>
