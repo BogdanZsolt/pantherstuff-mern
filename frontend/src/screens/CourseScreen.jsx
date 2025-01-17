@@ -17,13 +17,14 @@ import {
   Tab,
   Tabs,
   Form,
+  ListGroupItem,
 } from 'react-bootstrap';
 import Banner from '../components/Banner.jsx';
 import Meta from '../components/Meta.jsx';
 import Loader from '../components/Loader.jsx';
 import Message from '../components/Message.jsx';
 import ThumbsGalery from '../components/ThumbsGalery/index.jsx';
-import { toCurrency, uuid } from '../utils/converter';
+import { getDateMMDDYY, toCurrency, uuid } from '../utils/converter';
 import Rating from '../components/Rating.jsx';
 import Editor from '../components/Editor.jsx';
 import { toast } from 'react-toastify';
@@ -57,6 +58,7 @@ const CourseScreen = () => {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
   const [showReview, setShowReview] = useState(false);
+  const [purchased, setPurchased] = useState(false);
 
   const { userAuth } = useSelector((state) => state.auth);
   const { wishListItems } = useSelector((state) => state.wishList);
@@ -107,6 +109,12 @@ const CourseScreen = () => {
       );
     }
   }, [course, i18n.language]);
+
+  useEffect(() => {
+    if (course) {
+      setPurchased(isLoggedUserOwner(userAuth?._id, course));
+    }
+  }, [userAuth, course]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -179,9 +187,9 @@ const CourseScreen = () => {
     return isUserReview ? true : false;
   };
 
-  if (course) {
-    console.log(isLoggedUserOwner(userAuth?._id, course));
-  }
+  // if (course) {
+  //   console.log(purchased);
+  // }
 
   return (
     <>
@@ -244,27 +252,53 @@ const CourseScreen = () => {
                           </Col>
                         </Row>
                       </ListGroup.Item>
+                      <ListGroupItem>
+                        <Link to={`/order/${course.students[0]?.order}`}>
+                          <Trans
+                            values={{
+                              date: getDateMMDDYY(
+                                course.students[0]?.purchasedAt,
+                                i18n.language,
+                                true
+                              ),
+                            }}
+                          >
+                            {t('youPurchasedThisCourse')}
+                          </Trans>
+                        </Link>
+                      </ListGroupItem>
                       <ListGroup.Item>
-                        <Button
-                          variant="success"
-                          className="btn btn-lasaphire"
-                          onClick={addToCartHandler}
-                        >
-                          {t('addToCart')}
-                        </Button>
+                        {purchased ? (
+                          <Link
+                            to={`/classroom/${course._id}`}
+                            className="btn btn-primary"
+                          >
+                            {t('toTheClassroom')}
+                          </Link>
+                        ) : (
+                          <Button
+                            variant="success"
+                            className="btn btn-lasaphire"
+                            onClick={addToCartHandler}
+                          >
+                            {t('addToCart')}
+                          </Button>
+                        )}
                       </ListGroup.Item>
                       <ListGroup.Item>
                         <ul className="action">
-                          <li>
-                            <Link onClick={addToWishListHandler}>
-                              {isWishListed() ? (
-                                <RiHeartFill />
-                              ) : (
-                                <RiHeartLine />
-                              )}
-                              <span>{t('addToWishlist')}</span>
-                            </Link>
-                          </li>
+                          {!purchased && (
+                            <li>
+                              <Link onClick={addToWishListHandler}>
+                                {isWishListed() ? (
+                                  <RiHeartFill />
+                                ) : (
+                                  <RiHeartLine />
+                                )}
+                                <span>{t('addToWishlist')}</span>
+                              </Link>
+                            </li>
+                          )}
                           <li>
                             <Link>
                               <RiShareForwardLine />

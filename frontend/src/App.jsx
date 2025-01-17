@@ -84,6 +84,7 @@ import {
   FaqEditScreen,
   FaqCategoryListScreen,
   FaqCategoryEditScreen,
+  ClassroomScreen,
   SupplyScreen,
   PremiumRoute,
 } from './Pages';
@@ -346,6 +347,10 @@ const App = () => {
                 {
                   path: 'wishlist',
                   element: <WishListScreen />,
+                },
+                {
+                  path: 'classroom/:courseId',
+                  element: <ClassroomScreen />,
                 },
                 {
                   path: '',

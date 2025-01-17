@@ -36,5 +36,9 @@
   "submit": "Elküld",
   "reviewSubmitted": "Vélemény elküldve",
   "youPurchasedThisCourse": "A tanfolyam megvásárlásának dátuma <strong>{{date}}</strong>",
+  "toTheClassroom": "Osztályterembe",
+  "share": "Megoszt",
+  "askQuestion": "Kérdezek",
+  "classroom": "Tanterem",
   "": ""
 }

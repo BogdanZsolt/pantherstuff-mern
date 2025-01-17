@@ -4,6 +4,8 @@ import APIFeatures from '../utils/apiFeatures.js';
 import Course from '../models/courseModel.js';
 import Video from '../models/videoModel.js';
 import Textual from '../models/textualModel.js';
+import User from '../models/userModel.js';
+import CourseProgress from '../models/courseProgressModel.js';
 
 const coursesPopOption = [
   { path: 'user', select: ['name'] },
@@ -13,6 +15,7 @@ const coursesPopOption = [
     populate: { path: 'user', select: ['_id', 'name', 'email'] },
   },
 ];
+
 const coursePopOption = [
   { path: 'user', select: ['name'] },
   { path: 'category', select: ['title', 'translations'] },
@@ -25,6 +28,7 @@ const coursePopOption = [
     populate: { path: 'lesson' },
   },
 ];
+
 const courseCreateInit = (req, res, next) => {
   req.body.user = req.user._id;
   req.body.title = 'Simple course title';
@@ -455,6 +459,80 @@ const updateLesson = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc    Mark current lesson viewed
+// @route   PUT /api/courses/:id/lesson/:id/update
+// @access  Private
+const markCurrentLessonAsViewed = asyncHandler(async (req, res) => {});
+
+// @desc    Get current course progress
+// @route   GET /api/courses/:id/getprogress
+// @access  Private
+const getCurrentUserCourseProgress = asyncHandler(async (req, res) => {
+  const { id: courseId } = req.params;
+  const user = await User.findById(req.user._id).populate([
+    {
+      path: 'courses',
+      populate: { path: 'course' },
+    },
+    { path: 'courses', populate: { path: 'user', select: ['_id', 'name'] } },
+  ]);
+  if (!user) {
+    res.status(404);
+    throw new Error('User not found');
+  }
+  const course = await Course.findById(courseId);
+  if (!course) {
+    res.status(404);
+    throw new Error('Course not found');
+  }
+  const isCousePourchasedByCurrentUser =
+    user.courses?.findIndex((item) => item.course._id.toString() === courseId) >
+    -1;
+  if (!isCousePourchasedByCurrentUser) {
+    res.status(404);
+    throw new Error('You need to purchase this course to access it');
+  }
+  let currentUserCourseProgress = await CourseProgress.findOne({
+    user: user._id,
+    course: courseId,
+  }).populate([
+    { path: 'user', select: ['_id', 'name'] },
+    { path: 'course', populate: { path: 'category' } },
+    {
+      path: 'lessonProgress',
+      populate: { path: 'lesson' },
+    },
+  ]);
+  if (!currentUserCourseProgress) {
+    const lessonProgress = course.curriculum.filter((item) => item);
+    const newCourseProgress = new CourseProgress({
+      user: user._id,
+      course: course._id,
+      completed: false,
+      lessonProgress,
+    });
+    const savedProgress = await newCourseProgress.save();
+    if (savedProgress) {
+      currentUserCourseProgress = await CourseProgress.findById(
+        savedProgress._id
+      ).populate([
+        { path: 'user', select: ['_id', 'name'] },
+        { path: 'course', populate: { path: 'category' } },
+        {
+          path: 'lessonProgress',
+          populate: { path: 'lesson' },
+        },
+      ]);
+    }
+  }
+  res.status(200).json(currentUserCourseProgress);
+});
+
+// @desc    Reset course progress
+// @route   PUT /api/courses/:id/lesson/:id/update
+// @access  Private
+const resetCurrentUserCourseProgress = asyncHandler(async (req, res) => {});
+
 export {
   getCourses,
   getCourseById,
@@ -470,4 +548,7 @@ export {
   addNewLesson,
   removeLesson,
   updateLesson,
+  markCurrentLessonAsViewed,
+  getCurrentUserCourseProgress,
+  resetCurrentUserCourseProgress,
 };

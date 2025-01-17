@@ -116,7 +116,10 @@ const Course = ({ course, date, purchased, orderId }) => {
             )}
             {purchased && (
               <li>
-                <Link title="Go to course">
+                <Link
+                  to={`/classroom/${course._id}`}
+                  title={t('toTheClassroom')}
+                >
                   <PiStudent />
                 </Link>
               </li>
@@ -170,7 +173,9 @@ const Course = ({ course, date, purchased, orderId }) => {
         )}
         {purchased && (
           <div>
-            <Link className="btn btn-primary">Go to course</Link>
+            <Link to={`/classroom/${course._id}`} className="btn btn-primary">
+              {t('toTheClassroom')}
+            </Link>
           </div>
         )}
       </Card.Body>

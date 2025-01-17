@@ -36,5 +36,9 @@
   "submit": "Submit",
   "reviewSubmitted": "Review Submitted",
   "youPurchasedThisCourse": "You purchased this course on <strong>{{date}}</strong>",
+  "toTheClassroom": "To the classroom",
+  "share": "Share",
+  "askQuestion": "Ask Question",
+  "classroom": "Classroom",
   "": ""
 }

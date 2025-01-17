@@ -15,6 +15,7 @@ import {
   addNewLesson,
   removeLesson,
   updateLesson,
+  getCurrentUserCourseProgress,
 } from '../controllers/courseController.js';
 import { protect, admin } from '../middleware/authMiddleware.js';
 
@@ -35,5 +36,6 @@ router.route('/:id/reviews').post(protect, createCoursesReview);
 router.route('/:id/lesson').post(protect, admin, addNewLesson);
 router.route('/:id/delete').put(protect, admin, removeLesson);
 router.route('/:id/update').put(protect, admin, updateLesson);
+router.route('/:id/getprogress').get(protect, getCurrentUserCourseProgress);
 
 export default router;

@@ -199,5 +199,9 @@ export const MessageScreen = lazy(() =>
 export const SubscriberListScreen = lazy(() =>
   import('./screens/admin/SubscriberListScreen.jsx')
 );
+export const ClassroomScreen = lazy(() =>
+  import('./screens/ClassroomScreen/index.jsx')
+);
+export const VideoPlayer = lazy(() => import('./components/VideoPlayer.jsx'));
 export const ProtectRoute = lazy(() => import('./components/ProtectRoute.jsx'));
 export const PremiumRoute = lazy(() => import('./components/PremiumRoute.jsx'));

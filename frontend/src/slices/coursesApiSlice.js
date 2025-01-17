@@ -90,6 +90,12 @@ export const coursesApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['Course'],
     }),
+    getUserCourseProgress: builder.query({
+      query: (data) => ({
+        url: `${COURSES_URL}/${data.courseId}/getprogress`,
+        data,
+      }),
+    }),
   }),
 });
 
@@ -106,4 +112,5 @@ export const {
   useAddNewLessonMutation,
   useUpdateLessonMutation,
   useRemoveLessonMutation,
+  useGetUserCourseProgressQuery,
 } = coursesApiSlice;

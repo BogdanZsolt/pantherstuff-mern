@@ -381,7 +381,6 @@ const CurriculumSetup = ({
             (item) => item.lesson._id !== dragLesson.lesson._id
           );
           newData.splice(index, 0, dragLesson);
-          console.log(newData);
         }
       });
     };
@@ -434,20 +433,22 @@ const CurriculumSetup = ({
       <Row className="mb-3">
         <h2 className="text-center fw-bold">Edit Curriculum</h2>
       </Row>
-      <Dropdown className="d-flex justify-content-end mb-3">
-        <Dropdown.Toggle variant="primary" id="dropdown-basic">
-          Add new lesson
-        </Dropdown.Toggle>
+      <div className="mb-3 d-flex justify-content-end align-items-center">
+        <Dropdown>
+          <Dropdown.Toggle variant="primary" id="dropdown-basic">
+            Add new lesson
+          </Dropdown.Toggle>
 
-        <Dropdown.Menu>
-          <Dropdown.Item onClick={() => addNewHandler('Video')}>
-            Video lesson
-          </Dropdown.Item>
-          <Dropdown.Item onClick={() => addNewHandler('Textual')}>
-            Textual lesson
-          </Dropdown.Item>
-        </Dropdown.Menu>
-      </Dropdown>
+          <Dropdown.Menu>
+            <Dropdown.Item onClick={() => addNewHandler('Video')}>
+              Video lesson
+            </Dropdown.Item>
+            <Dropdown.Item onClick={() => addNewHandler('Textual')}>
+              Textual lesson
+            </Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
+      </div>
       <Row>
         <Accordion defaultActiveKey={[0]} alwaysOpen ref={containerRef}>
           {curriculum &&

@@ -89,6 +89,7 @@ const getDuration = (seconds) => {
 };
 
 const convertSecondstoTime = (seconds) => {
+  if (!seconds) return '';
   const dateObj = new Date(seconds * 1000);
   const hours = dateObj.getUTCHours();
   const minutes = dateObj.getUTCMinutes();
