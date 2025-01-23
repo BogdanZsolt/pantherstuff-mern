@@ -182,15 +182,15 @@ const OnlineCoursesScreen = () => {
                         setCategory={setCourseCategory}
                         min={
                           i18n.language === 'en'
-                            ? minmax[0].minPrice
-                            : minmax[0].minPrice_hu
+                            ? minmax[0]?.minPrice
+                            : minmax[0]?.minPrice_hu
                         }
                         minPrice={minPrice}
                         setMinPrice={setMinPrice}
                         max={
                           18n.language === 'en'
-                            ? minmax[0].maxPrice
-                            : minmax[0].maxPrice_hu
+                            ? minmax[0]?.maxPrice
+                            : minmax[0]?.maxPrice_hu
                         }
                         maxPrice={maxPrice}
                         setMaxPrice={setMaxPrice}

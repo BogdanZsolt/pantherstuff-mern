@@ -6,6 +6,7 @@ import Video from '../models/videoModel.js';
 import Textual from '../models/textualModel.js';
 import User from '../models/userModel.js';
 import CourseProgress from '../models/courseProgressModel.js';
+import { populate } from 'dotenv';
 
 const coursesPopOption = [
   { path: 'user', select: ['name'] },
@@ -498,6 +499,7 @@ const getCurrentUserCourseProgress = asyncHandler(async (req, res) => {
   }).populate([
     { path: 'user', select: ['_id', 'name'] },
     { path: 'course', populate: { path: 'category' } },
+    { path: 'course', populate: { path: 'curriculum', populate: 'lesson' } },
     {
       path: 'lessonProgress',
       populate: { path: 'lesson' },

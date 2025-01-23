@@ -2477,6 +2477,63 @@ table th {
   transform: rotate(-43deg);
 }
 
+/* VIDEO PLAYER  */
+.video-player {
+  position: relative;
+  box-shadow: var(--bs-box-shadow);
+  width: 100% !important;
+  height: unset !important;
+  aspect-ratio: 16/9;
+  border: 2px solid var(--bs-primary);
+}
+
+.video-player-container {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+  background-color: var(--bs-primary);
+  border-radius: var(--bs-border-radius);
+  overflow: hidden;
+  box-shadow: var(--bs-box-shadow);
+  transition: all 0.3s ease-in-out;
+}
+
+.video-player-controls {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(var(--bs-secondary-rgb), 0.45);
+  padding: 0.5rem;
+  width: 100%;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.video-player-container.fullscr .video-player {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.curriculum-sidebar {
+  display: block;
+  height: 600px;
+}
+
+.show-lesson-button {
+  padding: 3%;
+  border: none;
+  outline: none;
+  color: var(--bs-secondary);
+  font-size: 2rem;
+  background-color: var(--bs-primary);
+}
+
+.curriculum-lesson__item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 /* Media Querys */
 @media (min-width: 481px) {
   .product .image,
@@ -2594,6 +2651,11 @@ table th {
   .faq-category-title {
     scroll-margin-top: 6rem;
   }
+
+  /* .video-player {
+    width: 100% !important;
+    height: 100% !important;
+  } */
 }
 
 @media (min-width: 992px) {
