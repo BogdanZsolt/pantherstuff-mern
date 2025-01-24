@@ -6,7 +6,6 @@ import Video from '../models/videoModel.js';
 import Textual from '../models/textualModel.js';
 import User from '../models/userModel.js';
 import CourseProgress from '../models/courseProgressModel.js';
-import { populate } from 'dotenv';
 
 const coursesPopOption = [
   { path: 'user', select: ['name'] },
@@ -461,9 +460,25 @@ const updateLesson = asyncHandler(async (req, res) => {
 });
 
 // @desc    Mark current lesson viewed
-// @route   PUT /api/courses/:id/lesson/:id/update
+// @route   PUT /api/courses/:id/lesson/:id/viewed
 // @access  Private
-const markCurrentLessonAsViewed = asyncHandler(async (req, res) => {});
+const markCurrentLessonAsViewed = asyncHandler(async (req, res) => {
+  const { id: courseId } = req.params;
+  const user = await User.findById(req.user._id).populate([
+    {
+      path: 'courses',
+      populate: { path: 'course' },
+    },
+    { path: 'courses', populate: { path: 'user', select: ['_id', 'name'] } },
+  ]);
+
+  if (!user) {
+    res.status(404);
+    throw new Error('User not found');
+  }
+  console.log({ user });
+  res.status(200).json(user);
+});
 
 // @desc    Get current course progress
 // @route   GET /api/courses/:id/getprogress
@@ -499,14 +514,17 @@ const getCurrentUserCourseProgress = asyncHandler(async (req, res) => {
   }).populate([
     { path: 'user', select: ['_id', 'name'] },
     { path: 'course', populate: { path: 'category' } },
-    { path: 'course', populate: { path: 'curriculum', populate: 'lesson' } },
+    {
+      path: 'course',
+      populate: { path: 'curriculum', populate: { path: 'lesson' } },
+    },
     {
       path: 'lessonProgress',
-      populate: { path: 'lesson' },
     },
   ]);
   if (!currentUserCourseProgress) {
-    const lessonProgress = course.curriculum.filter((item) => item);
+    // const lessonProgress = course.curriculum.filter((item) => item);
+    const lessonProgress = course.curriculum;
     const newCourseProgress = new CourseProgress({
       user: user._id,
       course: course._id,
@@ -521,8 +539,11 @@ const getCurrentUserCourseProgress = asyncHandler(async (req, res) => {
         { path: 'user', select: ['_id', 'name'] },
         { path: 'course', populate: { path: 'category' } },
         {
+          path: 'course',
+          populate: { path: 'curriculum', populate: { path: 'lesson' } },
+        },
+        {
           path: 'lessonProgress',
-          populate: { path: 'lesson' },
         },
       ]);
     }
@@ -531,9 +552,11 @@ const getCurrentUserCourseProgress = asyncHandler(async (req, res) => {
 });
 
 // @desc    Reset course progress
-// @route   PUT /api/courses/:id/lesson/:id/update
+// @route   PUT /api/courses/:id/progress-reset
 // @access  Private
-const resetCurrentUserCourseProgress = asyncHandler(async (req, res) => {});
+const resetCurrentUserCourseProgress = asyncHandler(async (req, res) => {
+  res.status(200).json('reset course progress');
+});
 
 export {
   getCourses,

@@ -7,10 +7,10 @@ import Meta from '../../components/Meta.jsx';
 import Loader from '../../components/Loader';
 import Message from '../../components/Message.jsx';
 // import { convertSecondstoTime } from '../../utils/converter.js';
-import { FaPlay } from 'react-icons/fa6';
-import { CiText } from 'react-icons/ci';
+import { MdOutlineOndemandVideo, MdOutlineArticle } from 'react-icons/md';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import VideoPlayer from '../../components/VideoPlayer.jsx';
+import TextViewer from './TextViewer.jsx';
 import { convertSecondstoTime } from '../../utils/converter.js';
 import { useGetUserCourseProgressQuery } from '../../slices/coursesApiSlice.js';
 
@@ -25,50 +25,56 @@ const ClassroomScreen = () => {
   const [currentLesson, setCurrentLesson] = useState(null);
   const [showLessonList, setShowLessonList] = useState(false);
 
-  const {
-    data: course,
-    isLoading,
-    isError,
-    error,
-    isSuccess,
-  } = useGetUserCourseProgressQuery({ courseId });
+  const { data, isLoading, isError, error } = useGetUserCourseProgressQuery({
+    courseId,
+  });
 
   useEffect(() => {
-    if (isSuccess && course) {
-      setCurrentLesson(course.lessonProgress[0]);
+    if (data) {
+      setCurrentLesson(data.course?.curriculum[0]);
     }
-  }, [isSuccess, course]);
+  }, [data]);
 
   const Curriculum = () => {
     return (
-      <Card body className="shadow">
+      <>
         <h3 className="text-center">{t('curriculum')}</h3>
-        {course &&
-          course.lessonProgress.map((item, index) => (
+        {data &&
+          data.course?.curriculum?.map((item, index) => (
             <div
+              role="button"
               key={index}
-              className={`curriculum-lesson__item mb-2 ${
+              className={`curriculum-lesson__item mb-2 p-2 rounded ${
                 item.lesson?._id === currentLesson.lesson?._id
                   ? 'text-primary bg-success'
                   : ''
               }`}
+              onClick={() => setCurrentLesson(item)}
             >
-              {item.lessonType === 'Video' ? (
-                <FaPlay className="me-2" />
-              ) : (
-                <CiText className="me-2" />
-              )}
-              <p className="lead m-0 me-1">
-                {i18n.language === 'en'
-                  ? item.lesson?.title
-                  : item.lesson?.translations?.hu?.title || item.lesson?.title}
-              </p>
-              <p className="lead m-0">
-                {convertSecondstoTime(item.lesson?.duration)}
-              </p>
+              <div className="d-flex flex-column">
+                <div className="d-flex align-items-center">
+                  <input type="checkbox" className="me-2" />
+                  <span className="lead m-0 me-1">
+                    {i18n.language === 'en'
+                      ? item.lesson?.title
+                      : item.lesson?.translations?.hu?.title ||
+                        item.lesson?.title}
+                  </span>
+                </div>
+                <div className="d-flex flex-row align-items-center ms-2">
+                  {item.lessonType === 'Video' ? (
+                    <MdOutlineOndemandVideo className="me-2" />
+                  ) : (
+                    <MdOutlineArticle className="me-2" />
+                  )}
+                  <span className="m-0">
+                    {convertSecondstoTime(item.lesson?.duration)}
+                  </span>
+                </div>
+              </div>
             </div>
           ))}
-      </Card>
+      </>
     );
   };
 
@@ -76,8 +82,8 @@ const ClassroomScreen = () => {
   //   console.log(course);
   // }
 
-  if (course) {
-    console.log(course);
+  if (data) {
+    console.log(data);
   }
 
   return (
@@ -89,7 +95,7 @@ const ClassroomScreen = () => {
           {error?.data?.message || error.error}
         </Message>
       ) : (
-        course &&
+        data &&
         currentLesson && (
           <>
             <Banner
@@ -99,25 +105,22 @@ const ClassroomScreen = () => {
             <Meta
               title={`${t('classroom')} | ${
                 i18n.language === 'en'
-                  ? course.course.title
-                  : course.course.translations?.hu?.title || course.course.title
+                  ? data.course.title
+                  : data.course.translations?.hu?.title || data.course.title
               }`}
             />
             <Container fluid className="px-5 py-3">
               <h2 className="text-center mt-3 mb-0">
                 {18n.language === 'en'
-                  ? course.course.title
-                  : course.course.translations?.hu?.title ||
-                    course.course.title}
+                  ? data.course.title
+                  : data.course.translations?.hu?.title || data.course.title}
               </h2>
-              <Link
-                to={`/onlinecourses/category/${course.course.category?.id}`}
-              >
+              <Link to={`/onlinecourses/category/${data.course.category?.id}`}>
                 <p className="text-center">
                   {i18n.language === 'en'
-                    ? course.course.category.title
-                    : course.course.category.translations?.hu?.title ||
-                      course.course.category.title}
+                    ? data.course.category.title
+                    : data.course.category.translations?.hu?.title ||
+                      data.course.category.title}
                 </p>
               </Link>
               <Row className="flex-lg-nowrap">
@@ -137,20 +140,26 @@ const ClassroomScreen = () => {
                       {showLessonList ? <FaChevronRight /> : <FaChevronLeft />}
                     </button>
                   </div>
-                  <VideoPlayer
-                    url={
-                      i18n.language === 'en'
-                        ? currentLesson.lesson?.videoUrl
-                        : currentLesson.lesson?.translations?.hu?.videoUrl ||
-                          currentLesson.lesson?.videoUrl
-                    }
-                  />
-                  <h3 className="mt-3">
-                    {i18n.language === 'en'
-                      ? currentLesson?.lesson?.title
-                      : currentLesson?.lesson?.translations?.hu?.title ||
-                        currentLesson?.lesson?.title}
-                  </h3>
+                  {currentLesson.lessonType === 'Video' ? (
+                    <>
+                      <VideoPlayer
+                        url={
+                          i18n.language === 'en'
+                            ? currentLesson.lesson?.videoUrl
+                            : currentLesson.lesson?.translations?.hu
+                                ?.videoUrl || currentLesson.lesson?.videoUrl
+                        }
+                      />
+                      <h3 className="mt-3">
+                        {i18n.language === 'en'
+                          ? currentLesson?.lesson?.title
+                          : currentLesson?.lesson?.translations?.hu?.title ||
+                            currentLesson?.lesson?.title}
+                      </h3>
+                    </>
+                  ) : (
+                    <TextViewer content={currentLesson.lesson.text} />
+                  )}
                 </Col>
 
                 <Col
@@ -160,34 +169,8 @@ const ClassroomScreen = () => {
                   style={{ minHeight: '400px' }}
                 >
                   <Collapse in={showLessonList} appear dimension="width">
-                    <Card body className="shadow">
-                      <h3 className="text-center">{t('curriculum')}</h3>
-                      {course &&
-                        course.lessonProgress.map((item, index) => (
-                          <div
-                            key={index}
-                            className={`curriculum-lesson__item mb-2 ${
-                              item.lesson?._id === currentLesson.lesson?._id
-                                ? 'text-primary bg-success'
-                                : ''
-                            }`}
-                          >
-                            {item.lessonType === 'Video' ? (
-                              <FaPlay className="me-2" />
-                            ) : (
-                              <CiText className="me-2" />
-                            )}
-                            <p className="lead m-0 me-1">
-                              {i18n.language === 'en'
-                                ? item.lesson?.title
-                                : item.lesson?.translations?.hu?.title ||
-                                  item.lesson?.title}
-                            </p>
-                            <p className="lead m-0">
-                              {convertSecondstoTime(item.lesson?.duration)}
-                            </p>
-                          </div>
-                        ))}
+                    <Card body className="shadow h-100">
+                      <Curriculum />
                     </Card>
                   </Collapse>
                 </Col>
@@ -197,7 +180,9 @@ const ClassroomScreen = () => {
                   className="px-2 d-block d-lg-none"
                   style={{ minHeight: '400px' }}
                 >
-                  <Curriculum />
+                  <Card body className="shadow">
+                    <Curriculum />
+                  </Card>
                 </Col>
               </Row>
             </Container>
