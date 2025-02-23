@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Row, Button } from 'react-bootstrap';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
 // import { RiDraggable } from 'react-icons/ri';
@@ -18,23 +18,59 @@ import {
   useAddNewLessonMutation,
   useRemoveLessonMutation,
   useUpdateLessonMutation,
+  useCurriculumLessonsSortChangeMutation,
   // useLessonArrayMoveMutation,
 } from '../../../slices/coursesApiSlice.js';
 import LessonCard from './LessonCard.jsx';
 
-const CurriculumSetup = ({
-  sections,
-  setSections,
-  lessons,
-  setLessons,
-  update,
-  courseId,
-  courseRefetch,
-  sortListUpdateHandler,
-  isLoadingSortChange,
-  isErrorSortChange,
-  errorSortChange,
-}) => {
+const CurriculumSetup = ({ curriculum, update, courseId, courseRefetch }) => {
+  const [sections, setSections] = useState([]);
+  const [lessons, setLessons] = useState([]);
+
+  const sections_temp = useMemo(() => {
+    return curriculum.map((item) => item.lesson);
+  }, [curriculum]);
+
+  useEffect(() => {
+    setSections(sections_temp);
+  }, [sections_temp]);
+
+  const sectionsId = useMemo(() => {
+    return sections_temp.map((section) => section._id);
+  }, [sections_temp]);
+
+  useEffect(() => {
+    setLessons((lessons) => {
+      const sections = curriculum.map((item) => item.lesson);
+      lessons = [];
+      sections.map((item) => {
+        let temp = item.lessons.map((itm) => {
+          const tmp = {};
+          tmp.createdAt = itm.lesson.createdAt;
+          tmp.id = itm.lesson.id;
+          tmp.lessonType = itm.lesson.lessonType;
+          tmp.section = itm.lesson.section;
+          tmp.title = itm.lesson.title;
+          tmp.updatedAt = itm.lesson.updatedAt;
+          tmp.user = itm.lesson.user;
+          tmp._id = itm.lesson._id;
+          tmp.translations = itm.lesson.translations;
+
+          if (itm.lesson.lessonType === 'Video') {
+            tmp.duration = itm.lesson.duration;
+            tmp.videoUrl = itm.lesson.videoUrl;
+          } else if (itm.lesson.lessonType === 'Textual') {
+            tmp.text = itm.lesson.text;
+          }
+
+          return tmp;
+        });
+        lessons = [...lessons, ...temp];
+      });
+      return lessons;
+    });
+  }, [curriculum]);
+
   const [activeSection, setActiveSection] = useState(null);
   const [activeLesson, setActiveLesson] = useState(null);
 
@@ -47,10 +83,10 @@ const CurriculumSetup = ({
   const [updateLesson, { isLoadingUpdate, isErrorUpdate, errorUpdate }] =
     useUpdateLessonMutation();
 
-  const sectionsId = useMemo(() => {
-    const sectsId = sections?.map((section) => section?._id);
-    return sectsId;
-  }, [sections]);
+  const [
+    curriculumLessonsSortChange,
+    { isLoadingSortChange, isErrorSortChange, errorSortChange },
+  ] = useCurriculumLessonsSortChangeMutation();
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -60,15 +96,27 @@ const CurriculumSetup = ({
     })
   );
 
+  const sortListUpdateHandler = async () => {
+    try {
+      await curriculumLessonsSortChange({
+        courseId,
+        sections: sections,
+        lessons: lessons,
+      }).unwrap();
+      toast.success('course updated');
+    } catch (err) {
+      toast.error(err?.data?.message || err.error);
+    }
+  };
+
   const addNewHandler = async (lessonType, section) => {
     if (
       window.confirm(
         `Are you sure you want to create a new ${lessonType} lesson?`
       )
     ) {
-      await sortListUpdateHandler(false);
-      courseRefetch();
       try {
+        await sortListUpdateHandler();
         await addNewLesson({
           courseId,
           lessonType,
@@ -82,27 +130,37 @@ const CurriculumSetup = ({
     }
   };
 
-  const deleteLesson = async ({ lessonId }) => {
-    console.log(lessonId);
-
+  const removeHandler = async ({ lessonId }) => {
     if (
       window.confirm(`Are you sure you want to remove the ${lessonId} lesson?`)
     ) {
       try {
         await removeLesson({ courseId, lessonId }).unwrap();
         toast.success(`${lessonId} lesson removed`);
+        courseRefetch();
       } catch (err) {
         toast.error(err?.data?.message || err.error);
       }
     }
   };
 
-  const removeHandler = async ({ lessonId }) => {
-    await sortListUpdateHandler(false);
-    courseRefetch();
-    await deleteLesson({ lessonId });
-    courseRefetch();
-  };
+  // const arrayMoveHandler = async ({
+  //   fromLessonId,
+  //   toSectionId = null,
+  //   toLessonId,
+  // }) => {
+  //   try {
+  //     await lessonArrayMove({
+  //       courseId,
+  //       fromLessonId,
+  //       toSectionId,
+  //       toLessonId,
+  //     });
+  //     courseRefetch();
+  //   } catch (err) {
+  //     toast.error(err?.data?.message || err.error);
+  //   }
+  // };
 
   const onDragStart = (event) => {
     if (event.active.data.current?.type === 'Section') {
@@ -179,6 +237,9 @@ const CurriculumSetup = ({
     }
   };
 
+  console.log('sections: ', sections);
+  console.log('lessons: ', lessons);
+
   return (
     <>
       {isLoading ? (
@@ -204,6 +265,11 @@ const CurriculumSetup = ({
         isErrorSortChange &&
         toast.error(errorSortChange.data?.message || errorSortChange.error)
       )}
+      {/* {isLoadingMove ? (
+        <Loader />
+      ) : (
+        isErrorMove && toast.error(errorMove.data?.message || errorMove.error)
+      )} */}
       <Row className="mb-3">
         <h2 className="text-center fw-bold">Edit Curriculum</h2>
       </Row>
@@ -229,17 +295,16 @@ const CurriculumSetup = ({
             {sections &&
               sections.map((section) => (
                 <SectionContainer
-                  key={section?._id}
+                  key={section._id}
                   item={section}
                   lessons={lessons.filter(
-                    (lesson) => lesson.section === section?._id
+                    (lesson) => lesson.section === section._id
                   )}
                   courseId={courseId}
                   courseRefetch={courseRefetch}
                   addNewHandler={addNewHandler}
                   removeHandler={removeHandler}
                   updateLesson={updateLesson}
-                  sortListUpdateHandler={sortListUpdateHandler}
                 />
               ))}
           </SortableContext>

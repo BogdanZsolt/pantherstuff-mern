@@ -176,7 +176,7 @@ export const CourseListScreen = lazy(() =>
   import('./screens/admin/CourseListScreen.jsx')
 );
 export const CourseEditScreen = lazy(() =>
-  import('./screens/admin/CourseEditScreen/index.jsx')
+  import('./screens/admin/CourseEditScreen/CourseEditScreen.jsx')
 );
 export const CourseCategoryListScreen = lazy(() =>
   import('./screens/admin/CourseCategoryListScreen.jsx')
@@ -200,7 +200,7 @@ export const SubscriberListScreen = lazy(() =>
   import('./screens/admin/SubscriberListScreen.jsx')
 );
 export const ClassroomScreen = lazy(() =>
-  import('./screens/ClassroomScreen/index.jsx')
+  import('./screens/ClassroomScreen/ClassroomScreen.jsx')
 );
 export const VideoPlayer = lazy(() => import('./components/VideoPlayer.jsx'));
 export const ProtectRoute = lazy(() => import('./components/ProtectRoute.jsx'));

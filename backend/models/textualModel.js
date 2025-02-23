@@ -1,5 +1,7 @@
 import mongoose from 'mongoose';
 
+const options = { discriminatorKey: 'lessonType' };
+
 const textualSchema = new mongoose.Schema(
   {
     user: {
@@ -15,9 +17,18 @@ const textualSchema = new mongoose.Schema(
         text: { type: String },
       },
     },
+    section: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Section',
+      },
+    ],
   },
+  options,
   {
     timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
   }
 );
 

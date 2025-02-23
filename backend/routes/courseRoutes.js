@@ -15,6 +15,8 @@ import {
   addNewLesson,
   removeLesson,
   updateLesson,
+  curriculumLessonsSortChange,
+  lessonArrayMove,
   markCurrentLessonAsViewed,
   getCurrentUserCourseProgress,
   resetCurrentUserCourseProgress,
@@ -38,6 +40,10 @@ router.route('/:id/reviews').post(protect, createCoursesReview);
 router.route('/:id/lesson').post(protect, admin, addNewLesson);
 router.route('/:id/delete').put(protect, admin, removeLesson);
 router.route('/:id/update').put(protect, admin, updateLesson);
+router
+  .route('/:id/sortchange')
+  .put(protect, admin, curriculumLessonsSortChange);
+router.route('/:id/arraymove').put(protect, admin, lessonArrayMove);
 router.route('/:id/viewed').put(protect, markCurrentLessonAsViewed);
 router.route('/:id/getprogress').get(protect, getCurrentUserCourseProgress);
 router

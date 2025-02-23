@@ -82,6 +82,22 @@ export const coursesApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['Course'],
     }),
+    curriculumLessonsSortChange: builder.mutation({
+      query: (data) => ({
+        url: `${COURSES_URL}/${data.courseId}/sortchange`,
+        method: 'PUT',
+        body: data,
+      }),
+      invalidatesTags: ['Course'],
+    }),
+    lessonArrayMove: builder.mutation({
+      query: (data) => ({
+        url: `${COURSES_URL}/${data.courseId}/arraymove`,
+        method: 'PUT',
+        body: data,
+      }),
+      invalidatesTags: ['Course'],
+    }),
     removeLesson: builder.mutation({
       query: (data) => ({
         url: `${COURSES_URL}/${data.courseId}/delete`,
@@ -111,6 +127,8 @@ export const {
   useCourseCreateReviewMutation,
   useAddNewLessonMutation,
   useUpdateLessonMutation,
+  useCurriculumLessonsSortChangeMutation,
+  useLessonArrayMoveMutation,
   useRemoveLessonMutation,
   useGetUserCourseProgressQuery,
 } = coursesApiSlice;

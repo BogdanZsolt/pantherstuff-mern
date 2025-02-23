@@ -2,8 +2,10 @@ import asyncHandler from '../middleware/asyncHandler.js';
 import { getOne, createOne } from './handlerFactory.js';
 import APIFeatures from '../utils/apiFeatures.js';
 import Course from '../models/courseModel.js';
-import Video from '../models/videoModel.js';
-import Textual from '../models/textualModel.js';
+import { Lesson, Video, Textual, Section } from '../models/lessonModel.js';
+// import Video from '../models/videoModel.js';
+// import Textual from '../models/textualModel.js';
+// import Section from '../models/sectionModel.js';
 import User from '../models/userModel.js';
 import CourseProgress from '../models/courseProgressModel.js';
 
@@ -13,6 +15,13 @@ const coursesPopOption = [
   {
     path: 'students',
     populate: { path: 'user', select: ['_id', 'name', 'email'] },
+  },
+  {
+    path: 'curriculum',
+    populate: {
+      path: 'lesson',
+      populate: { path: 'lessons', populate: { path: 'lesson' } },
+    },
   },
 ];
 
@@ -25,7 +34,10 @@ const coursePopOption = [
   },
   {
     path: 'curriculum',
-    populate: { path: 'lesson' },
+    populate: {
+      path: 'lesson',
+      populate: { path: 'lessons', populate: { path: 'lesson' } },
+    },
   },
 ];
 
@@ -47,10 +59,7 @@ const courseCreateInit = (req, res, next) => {
       currentPrice: 0,
     },
   };
-  req.body.curriculum = {
-    totalDuration: 0,
-    lessons: [],
-  };
+  req.body.curriculum = [];
   next();
 };
 
@@ -339,42 +348,81 @@ const getCoursesMinMaxPrice = asyncHandler(async (req, res) => {
 // @route   POST /api/courses/:id/lesson
 // @access  Private/Admin
 const addNewLesson = asyncHandler(async (req, res) => {
-  const { lessonType } = req.body;
-  let course = await Course.findById(req.params.id);
+  const { lessonType, section } = req.body;
+  let course = await Course.findById(req.params.id).populate({
+    path: 'curriculum',
+    populate: {
+      path: 'lesson',
+      populate: { path: 'lessons', populate: { path: 'lesson' } },
+    },
+  });
 
-  if (course) {
-    let createLesson;
-    if (lessonType === 'Video') {
-      createLesson = new Video({
-        user: req.user._id,
-        title: 'Simple video lesson title',
-        videoUrl: 'https://vimeo.com/717781102?share=copy',
-        duration: 0,
-        translations: {
-          hu: {
-            title: 'Egyszerű videó lecke cím',
-            videoUrl: 'https://vimeo.com/717781102?share=copy',
-          },
-        },
-      });
-    } else if (lessonType === 'Textual') {
-      createLesson = new Textual({
-        user: req.user._id,
-        title: 'Simple textual lesson title',
-        text: '<p>Some cool text</p>',
-        translations: {
-          hu: {
-            title: 'Egyszerű szöveges lecke cím',
-            text: '<p>Valami menő szöveg</p>',
-          },
-        },
-      });
+  if (!course) {
+    res.status(404);
+    throw new Error('Resource not found');
+  }
+
+  let existingSection;
+
+  if (section) {
+    existingSection = await Lesson.findById(section);
+    if (!existingSection) {
+      res.status(404);
+      throw new Error('Resource not found');
     }
-    const newLesson = await createLesson.save();
-    if (newLesson) {
+  }
+
+  let createLesson;
+  if (lessonType === 'Video') {
+    createLesson = new Video({
+      user: req.user._id,
+      title: 'Simple video lesson title',
+      videoUrl: 'https://vimeo.com/717781102?share=copy',
+      duration: 0,
+      translations: {
+        hu: {
+          title: 'Egyszerű videó lecke cím',
+          videoUrl: 'https://vimeo.com/717781102?share=copy',
+        },
+      },
+      section: existingSection._id,
+    });
+  } else if (lessonType === 'Textual') {
+    createLesson = new Textual({
+      user: req.user._id,
+      title: 'Simple textual lesson title',
+      text: '<p>Some cool text</p>',
+      translations: {
+        hu: {
+          title: 'Egyszerű szöveges lecke cím',
+          text: '<p>Valami menő szöveg</p>',
+        },
+      },
+      section: existingSection._id,
+    });
+  } else if (lessonType === 'Section') {
+    createLesson = new Section({
+      user: req.user._id,
+      title: 'Simple section title',
+      duration: 0,
+      lessons: [],
+      translations: {
+        hu: {
+          title: 'Egyszerű szakaszcím',
+        },
+      },
+    });
+  }
+  const newLesson = await createLesson.save();
+  if (newLesson) {
+    if (existingSection) {
+      existingSection.lessons.push({
+        lesson: newLesson._id,
+      });
+      await existingSection.save();
+    } else {
       course.curriculum.push({
         lesson: newLesson._id,
-        lessonType,
       });
     }
   }
@@ -394,69 +442,188 @@ const removeLesson = asyncHandler(async (req, res) => {
   let course = await Course.findById(req.params.id);
   const { lessonId } = req.body;
 
-  if (course) {
-    const lesson = course.curriculum.find(
-      (item) => item.lesson.toString() === lessonId
-    );
-    let model;
-    if (lesson.lessonType === 'Video') {
-      model = Video;
-    } else if (lesson.lessonType === 'Textual') {
-      model = Textual;
-    }
+  if (!course) {
+    res.status(404);
+    throw new Error('Resource not found (course)');
+  }
+
+  let lesson = await Lesson.findById(lessonId);
+
+  if (!lesson) {
+    res.status(404);
+    throw new Error('Resource not found (lesson)');
+  }
+
+  if (lesson.lessonType === 'Section') {
+    // remove lesson files stored in the Section lessons list
+    const deleteChildren = lesson.lessons.map((item) => item.lesson.toString());
+    await Lesson.deleteMany({ _id: { $in: deleteChildren } });
+
+    // remove section id from course curriculum list
     course.curriculum = course.curriculum.filter(
       (item) => item.lesson.toString() !== lessonId
     );
-    const delLesson = await model.findById(lessonId);
-    // console.log(delLesson);
-    if (delLesson) {
-      await model.deleteOne({ _id: lessonId });
-    }
-    const updatedLesson = await course.save();
-    res.status(200).json(updatedLesson);
   } else {
+    const lessonParentLesson = await Lesson.findById(lesson.section);
+
+    if (lessonParentLesson) {
+      lessonParentLesson.lessons = lessonParentLesson.lessons.filter(
+        (item) => item.lesson.toString() !== lessonId
+      );
+    }
+
+    await lessonParentLesson.save();
+  }
+
+  const deletedLesson = await Lesson.deleteOne({ _id: lesson._id });
+  if (!deletedLesson) {
     res.status(404);
     throw new Error('Resource not found');
   }
+
+  const updatedLesson = await course.save();
+  res.status(200).json(updatedLesson);
 });
 
 // @desc    Update lesson in curriculum
-// @route   PUT /api/courses/:id/lesson/:id/update
+// @route   PUT /api/courses/:id/update
 // @access  Private/Admin
 const updateLesson = asyncHandler(async (req, res) => {
-  let course = await Course.findById(req.params.id);
+  let course = await Course.findById(req.params.id).populate(
+    'curriculum.lesson'
+  );
   const { lessonId, title } = req.body;
 
-  if (course) {
-    const lesson = course.curriculum.find(
-      (item) => item.lesson.toString() === lessonId
-    );
-    let updatedLesson;
-    if (lesson.lessonType === 'Video') {
-      let video = await Video.findById(lessonId);
-      video.title = title || video.title;
-      video.videoUrl = req.body.videoUrl || video.videoUrl;
-      video.duration = req.body.duration || video.duration;
-      video.translations.hu.title =
-        req.body.translations.hu.title || video.translations.hu.title;
-      video.translations.hu.videoUrl =
-        req.body.translations.hu.videoUrl || video.translations.hu.videoUrl;
-      updatedLesson = await video.save();
-    } else if (lesson.lessonType === 'Textual') {
-      let textual = await Textual.findById(lessonId);
-      textual.title = title || textual.title;
-      textual.text = req.body.text || textual.text;
-      textual.translations.hu.title =
-        req.body.translations.hu.title || textual.translations.hu.title;
-      textual.translations.hu.text =
-        req.body.translations.hu.text || textual.translations.hu.text;
-      updatedLesson = await textual.save();
-    }
-    res.json(updatedLesson);
-  } else {
+  if (!course) {
     res.status(404);
-    throw new Error('Resource not found');
+    throw new Error('Resource not found (course)');
   }
+
+  const lesson = await Lesson.findById(lessonId);
+
+  if (!lesson) {
+    res.status(404);
+    throw new Error('Resource not found (lesson)');
+  }
+
+  let lessonInCourse;
+
+  if (lesson.lessonType === 'Section') {
+    lessonInCourse = course.curriculum.find(
+      (item) => item.lesson._id.toString() === lessonId
+    );
+  } else {
+    lessonInCourse = course.curriculum.find(
+      (item) => item.lesson._id.toString() === lesson.section.toString()
+    );
+  }
+
+  if (!lessonInCourse) {
+    res.status(404);
+    throw new Error('The course does not include the lesson.');
+  }
+
+  lesson.title = title || lesson.title;
+  lesson.section = lesson.section;
+  lesson.translations = req.body.translations || lesson.translations;
+  if (lesson.lessonType === 'Video') {
+    lesson.videoUrl = req.body.videoUrl || lesson.videoUrl;
+    lesson.duration = req.body.duration || lesson.duration;
+  }
+  if (lesson.lessonType === 'Textual') {
+    lesson.text = req.body.text || lesson.text;
+  }
+  if (lesson.lessonType === 'Section') {
+    lesson.duration = req.body.duration || lesson.duration;
+    lesson.lessons = lesson.lessons;
+  }
+  console.log(lesson);
+  const updatedLesson = await lesson.save();
+
+  res.status(200).json(updatedLesson);
+});
+
+// @desc    curriculum & lessons sort chamge
+// @route   PUT /api/courses/:id/sortchange
+// @access  Private/Admin
+const curriculumLessonsSortChange = asyncHandler(async (req, res) => {
+  let course = await Course.findById(req.params.id);
+  const { sections, lessons } = req.body;
+
+  if (!course) {
+    res.status(404);
+    throw new Error('Resource not found (course)');
+  }
+  const sectionsIds = sections.map((section) => {
+    return {
+      lesson: section._id,
+    };
+  });
+
+  sectionsIds.map(async (sectionId) => {
+    let selectLessons = lessons.filter(
+      (lesson) => lesson.section === sectionId.lesson
+    );
+    let lessIds = selectLessons.map((item) => {
+      return {
+        lesson: item._id,
+      };
+    });
+    lessIds.map(async (lessId) => {
+      const lessUpdate = await Lesson.findById(lessId.lesson);
+      lessUpdate.section = sectionId.lesson;
+      await lessUpdate.save();
+    });
+    const sectUpdate = await Lesson.findById(sectionId.lesson);
+    sectUpdate.lessons = lessIds;
+    const sectUpdated = await sectUpdate.save();
+  });
+
+  course.curriculum = sectionsIds;
+
+  const updatedCourse = await course.save();
+
+  res.status(200).json(updatedCourse);
+});
+
+// @desc    move lesson in parent array
+// @route   PUT /api/courses/:id/arraymove
+// @access  Private/Admin
+const lessonArrayMove = asyncHandler(async (req, res) => {
+  let course = await Course.findById(req.params.id);
+  const { fromLessonId, toLessonId, toSectionId } = req.body;
+
+  if (fromLessonId === toLessonId) {
+    res.status(200).json(course);
+  }
+
+  if (!course) {
+    res.status(404);
+    throw new Error('Resource not found (course)');
+  }
+
+  const fromLesson = await Lesson.findById(fromLessonId);
+
+  if (!fromLesson) {
+    res.status(404);
+    throw new Error('Resource not found (lesson)');
+  }
+
+  let movedCourse;
+  if (fromLesson.lessonType === 'Section') {
+    const fromIndex = course.curriculum.findIndex(
+      (item) => item.lesson.toString() === fromLessonId
+    );
+    const toIndex = course.curriculum.findIndex(
+      (item) => item.lesson.toString() === toLessonId
+    );
+    const active = course.curriculum[fromIndex];
+    course.curriculum.splice(fromIndex, 1);
+    course.curriculum.splice(toIndex, 0, active);
+    movedCourse = await course.save();
+  }
+
+  res.status(200).json(movedCourse);
 });
 
 // @desc    Mark current lesson viewed
@@ -476,7 +643,6 @@ const markCurrentLessonAsViewed = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error('User not found');
   }
-  console.log({ user });
   res.status(200).json(user);
 });
 
@@ -516,7 +682,16 @@ const getCurrentUserCourseProgress = asyncHandler(async (req, res) => {
     { path: 'course', populate: { path: 'category' } },
     {
       path: 'course',
-      populate: { path: 'curriculum', populate: { path: 'lesson' } },
+      populate: {
+        path: 'curriculum',
+        populate: {
+          path: 'lesson',
+          populate: {
+            path: 'lessons',
+            populate: { path: 'lesson' },
+          },
+        },
+      },
     },
     {
       path: 'lessonProgress',
@@ -573,6 +748,8 @@ export {
   addNewLesson,
   removeLesson,
   updateLesson,
+  curriculumLessonsSortChange,
+  lessonArrayMove,
   markCurrentLessonAsViewed,
   getCurrentUserCourseProgress,
   resetCurrentUserCourseProgress,

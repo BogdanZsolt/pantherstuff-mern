@@ -7,6 +7,7 @@ import { getAll, getOne } from './handlerFactory.js';
 // import sendAccVerificationEmail from '../utils/sendAccVerificationEmail.js';
 // import sendPasswordResetEmail from '../utils/sendPasswordResetEmail.js';
 import Email from '../utils/email.js';
+import { populate } from 'dotenv';
 
 const usersPopOption = [];
 const userPopOption = [
@@ -491,6 +492,7 @@ const getUserCoursesList = asyncHandler(async (req, res) => {
     },
     populate: {
       path: 'course',
+      populate: { path: 'curriculum', populate: { path: 'lesson' } },
     },
   });
   if (user) {

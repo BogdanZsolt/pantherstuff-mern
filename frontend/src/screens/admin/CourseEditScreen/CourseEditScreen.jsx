@@ -14,6 +14,7 @@ import { getDuration } from '../../../utils/converter';
 import {
   useGetCourseDetailsQuery,
   useUpdateCourseMutation,
+  useCurriculumLessonsSortChangeMutation,
 } from '../../../slices/coursesApiSlice';
 import { useGetCourseCategoriesQuery } from '../../../slices/courseCategoriesApiSlice';
 
@@ -34,6 +35,8 @@ const CourseEditScreen = () => {
   const [transCurrentPriceHu, setTransCurrentPriceHu] = useState(0);
   const [duration, setDuration] = useState(0);
   const [curriculum, setCurriculum] = useState([]);
+  const [sections, setSections] = useState([]);
+  const [lessons, setLessons] = useState([]);
 
   const {
     data: course,
@@ -54,6 +57,15 @@ const CourseEditScreen = () => {
     updateCourse,
     { isLoading: isLoadingUpdate, isError: isErrorUpdate, error: errorUpdate },
   ] = useUpdateCourseMutation();
+
+  const [
+    curriculumLessonsSortChange,
+    {
+      isLoading: isLoadingSortChange,
+      isError: isErrorSortChange,
+      error: errorSortChange,
+    },
+  ] = useCurriculumLessonsSortChangeMutation();
 
   const navigate = useNavigate();
 
@@ -76,8 +88,66 @@ const CourseEditScreen = () => {
     }
   }, [course]);
 
-  const submitHandler = async (e) => {
-    e.preventDefault();
+  useEffect(() => {
+    if (course) {
+      const sections_temp = course.curriculum?.map((item) => item.lesson);
+      setSections(sections_temp);
+    }
+  }, [course]);
+
+  useEffect(() => {
+    if (course) {
+      setLessons((lessons) => {
+        const sections = course.curriculum?.map((item) => item.lesson);
+        lessons = [];
+        sections.map((item) => {
+          let temp = item?.lessons?.map((itm) => {
+            const tmp = {};
+            tmp.createdAt = itm.lesson.createdAt;
+            tmp.id = itm.lesson.id;
+            tmp.lessonType = itm.lesson.lessonType;
+            tmp.section = itm.lesson.section;
+            tmp.title = itm.lesson.title;
+            tmp.updatedAt = itm.lesson.updatedAt;
+            tmp.user = itm.lesson.user;
+            tmp._id = itm.lesson._id;
+            tmp.translations = itm.lesson.translations;
+
+            if (itm.lesson.lessonType === 'Video') {
+              tmp.duration = itm.lesson.duration;
+              tmp.videoUrl = itm.lesson.videoUrl;
+            } else if (itm.lesson.lessonType === 'Textual') {
+              tmp.text = itm.lesson.text;
+            }
+
+            return tmp;
+          });
+          if (temp) {
+            lessons = [...lessons, ...temp];
+          }
+        });
+        return lessons;
+      });
+    }
+  }, [course]);
+
+  const sortListUpdateHandler = async (refresh = true) => {
+    try {
+      await curriculumLessonsSortChange({
+        courseId,
+        sections: sections,
+        lessons: lessons,
+      }).unwrap();
+      if (refresh) {
+        refetch();
+        toast.success('course sort lists updated');
+      }
+    } catch (err) {
+      toast.error(err?.data?.message || err.error);
+    }
+  };
+
+  const courseUpdateHandler = async (refresh = true) => {
     try {
       await updateCourse({
         courseId,
@@ -98,12 +168,23 @@ const CourseEditScreen = () => {
           },
         },
       }).unwrap();
-      toast.success('Course updated');
-      refetch();
-      navigate('/admin/courselist');
+      if (refresh) {
+        refetch();
+        toast.success('Course updated');
+        navigate('/admin/courselist');
+      }
     } catch (err) {
       toast.error(err?.data?.message || err.error);
     }
+  };
+
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    await courseUpdateHandler(false);
+    await sortListUpdateHandler(false);
+    refetch();
+    toast.success('Course updated');
+    navigate('/admin/courselist');
   };
 
   const handleDuration = (dur) => {
@@ -114,9 +195,7 @@ const CourseEditScreen = () => {
     setDuration(time);
   };
 
-  // if (course) {
-  //   console.log(curriculum);
-  // }
+  console.log(course);
 
   return (
     <>
@@ -239,11 +318,17 @@ const CourseEditScreen = () => {
             </Tab>
             <Tab eventKey="curriculum" title="Curriculum setup">
               <CurriculumSetup
-                curriculum={curriculum}
-                setCurriculum={setCurriculum}
+                sections={sections}
+                setSections={setSections}
+                lessons={lessons}
+                setLessons={setLessons}
                 update={submitHandler}
                 courseId={courseId}
                 courseRefetch={refetch}
+                sortListUpdateHandler={sortListUpdateHandler}
+                isLoadingSortChange={isLoadingSortChange}
+                isErrorSortChange={isErrorSortChange}
+                errorSortChange={errorSortChange}
               />
             </Tab>
           </Tabs>

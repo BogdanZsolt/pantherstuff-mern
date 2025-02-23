@@ -24,11 +24,7 @@ const courseProgressSchema = new mongoose.Schema(
         lesson: {
           type: mongoose.Schema.Types.ObjectId,
           required: true,
-          refPath: 'lessonProgress.lessonType',
-        },
-        lessonType: {
-          type: String,
-          enum: ['Video', 'Textual'],
+          ref: 'Lesson',
         },
         viwed: { type: Boolean, required: true, default: false },
         viwedAt: { type: Date, default: null },

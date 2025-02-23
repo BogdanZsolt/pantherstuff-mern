@@ -24,7 +24,7 @@ const MyCoursesTable = () => {
           <h4 className="text-center g-3">Online kurzusaim</h4>
           <Row>
             {courses.map((course) => (
-              <Col xs={12} md={6} xxl={4} key={course.course._id}>
+              <Col xs={12} md={6} xxl={4} key={course.course?._id}>
                 <Course
                   course={course.course}
                   purchased={course.purchasedAt ? true : false}

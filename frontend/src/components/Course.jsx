@@ -77,14 +77,14 @@ const Course = ({ course, date, purchased, orderId }) => {
 
   return (
     <Card className="my-3 rounded shadow card-course" border="secondary">
-      <Link to={`/course/${course._id}`}>
+      <Link to={`/course/${course?._id}`}>
         <div className="img-container">
           <Card.Img
-            src={course.images[0]}
+            src={course?.images[0]}
             variant="top"
             className="course-img"
           />
-          {course.images.length > 1 && (
+          {course?.images?.length > 1 && (
             <Card.Img
               src={course.images[1]}
               variant="top"
@@ -117,7 +117,7 @@ const Course = ({ course, date, purchased, orderId }) => {
             {purchased && (
               <li>
                 <Link
-                  to={`/classroom/${course._id}`}
+                  to={`/classroom/${course?._id}`}
                   title={t('toTheClassroom')}
                 >
                   <PiStudent />
@@ -128,12 +128,12 @@ const Course = ({ course, date, purchased, orderId }) => {
         </div>
       </Link>
       <Card.Body>
-        <Link to={`/course/${course._id}`}>
+        <Link to={`/course/${course?._id}`}>
           <Card.Title as="div" className="course-title">
             <strong className="h4 fw-bolder">
               {i18n.language === 'en'
-                ? course.title
-                : course.translations?.hu?.title || course.title}
+                ? course?.title
+                : course?.translations?.hu?.title || course?.title}
             </strong>
           </Card.Title>
         </Link>
@@ -173,7 +173,7 @@ const Course = ({ course, date, purchased, orderId }) => {
         )}
         {purchased && (
           <div>
-            <Link to={`/classroom/${course._id}`} className="btn btn-primary">
+            <Link to={`/classroom/${course?._id}`} className="btn btn-primary">
               {t('toTheClassroom')}
             </Link>
           </div>

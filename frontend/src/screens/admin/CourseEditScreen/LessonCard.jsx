@@ -1,68 +1,57 @@
-import { useContext, useEffect, useState } from 'react';
-import { useAccordionButton } from 'react-bootstrap/AccordionButton';
-import AccordionContext from 'react-bootstrap/AccordionContext';
-import {
-  Accordion,
-  Button,
-  Card,
-  Col,
-  Form,
-  FormGroup,
-  Row,
-} from 'react-bootstrap';
-import { FaMinus, FaPlus, FaTrash } from 'react-icons/fa';
-import LangSelectInput from '../../../components/LangSelectInput';
-import LangSelectEditor from '../../../components/LangSelectEditor';
-import ReactPlayer from 'react-player';
-import { convertSecondstoTime } from '../../../utils/converter';
+import { useEffect, useState } from 'react';
+import { Button, Col, Form, FormGroup, Modal, Row } from 'react-bootstrap';
+import { FaEdit, FaTrash } from 'react-icons/fa';
+import { EditButton, RemoveButton } from './Buttons';
 import { toast } from 'react-toastify';
+import ReactPlayer from 'react-player';
+import LangSelectInput from '../../../components/LangSelectInput';
+import { convertSecondstoTime } from '../../../utils/converter';
+import LangSelectEditor from '../../../components/LangSelectEditor';
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 
-const Lesson = ({
-  index,
+const LessonCard = ({
   lesson,
-  removeHandler,
   courseId,
   updateLesson,
   courseRefetch,
+  removeHandler,
 }) => {
-  const CustomToggle = ({ eventKey, callback }) => {
-    const { activeEventKey, alwaysOpen } = useContext(AccordionContext);
-    const decoratedOnClick = useAccordionButton(
-      eventKey,
-      () => callback && callback(eventKey)
-    );
+  const [show, setShow] = useState(false);
 
-    let isCurrentEventKey = false;
-    if (alwaysOpen) {
-      if (Array.isArray(activeEventKey)) {
-        if (activeEventKey.includes(eventKey)) {
-          isCurrentEventKey = true;
-        }
-      }
-    }
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
-    return (
-      <button
-        type="button"
-        className="border-0 bg-transparent text-secondary"
-        onClick={decoratedOnClick}
-      >
-        {isCurrentEventKey ? <FaMinus /> : <FaPlus />}
-      </button>
-    );
+  const {
+    setNodeRef,
+    attributes,
+    listeners,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({
+    id: lesson._id,
+    data: {
+      type: 'Lesson',
+      lesson,
+    },
+  });
+
+  const style = {
+    height: '52px',
+    transition,
+    transform: CSS.Transform.toString(transform),
   };
 
-  const RemoveButton = ({ children, lessonId, className }) => {
+  if (isDragging) {
     return (
-      <button
-        type="button"
-        className={`border-0 bg-transparent text-secondary ${className}`}
-        onClick={() => removeHandler({ lessonId })}
-      >
-        {children}
-      </button>
+      <div
+        ref={setNodeRef}
+        style={style}
+        className="bg-secondary opacity-50 border-2 border-success my-2 mx-3"
+      />
     );
-  };
+  }
 
   const VideoLesson = ({ item }) => {
     const [title, setTitle] = useState('');
@@ -76,7 +65,7 @@ const Lesson = ({
       try {
         await updateLesson({
           courseId,
-          lessonId: item._id,
+          lessonId: item?._id,
           title,
           videoUrl,
           duration,
@@ -89,6 +78,7 @@ const Lesson = ({
         }).unwrap();
         toast.success('Lesson updated');
         courseRefetch();
+        handleClose();
       } catch (err) {
         toast.error(err?.data?.message || err.error);
       }
@@ -96,11 +86,11 @@ const Lesson = ({
 
     useEffect(() => {
       if (item) {
-        setTitle(item.title);
-        setTransTitleHu(item.translations.hu.title);
-        setVideoUrl(item.videoUrl);
-        setTransVideoUrlHu(item.traslations?.hu?.videoUrl);
-        setDuration(item.duration);
+        setTitle(item?.title);
+        setTransTitleHu(item?.translations.hu.title);
+        setVideoUrl(item?.videoUrl);
+        setTransVideoUrlHu(item.translations?.hu?.videoUrl);
+        setDuration(item?.duration);
       }
     }, [item]);
 
@@ -111,12 +101,12 @@ const Lesson = ({
     };
 
     return (
-      <Card.Body>
+      <Modal.Body className="mb-4">
         <Row>
           <Col xl={4} className="bg-red">
             Video Player
             <ReactPlayer
-              url={item.videoUrl}
+              url={item?.videoUrl}
               width="100%"
               height="100%"
               onDuration={durationHandler}
@@ -149,18 +139,15 @@ const Lesson = ({
                   readOnly
                 />
               </FormGroup>
-
-              <Button
-                type="submit"
-                variant="primary"
-                className="mt-3 text-right"
-              >
-                Update lesson
-              </Button>
+              <div className="d-flex justify-content-end">
+                <Button type="submit" variant="primary" className="mt-3">
+                  Update lesson
+                </Button>
+              </div>
             </Form>
           </Col>
         </Row>
-      </Card.Body>
+      </Modal.Body>
     );
   };
 
@@ -175,7 +162,7 @@ const Lesson = ({
       try {
         await updateLesson({
           courseId,
-          lessonId: item._id,
+          lessonId: item?._id,
           title,
           text,
           translations: {
@@ -187,6 +174,7 @@ const Lesson = ({
         }).unwrap();
         toast.success('Lesson updated');
         courseRefetch();
+        handleClose();
       } catch (err) {
         toast.error(err?.data?.message || err.error);
       }
@@ -194,15 +182,15 @@ const Lesson = ({
 
     useEffect(() => {
       if (item) {
-        setTitle(item.title);
-        setTransTitleHu(item.translations.hu.title || item.title);
-        setText(item.text);
-        setTransTextHu(item.translations.hu.text || item.text);
+        setTitle(item?.title);
+        setTransTitleHu(item?.translations.hu.title || item?.title);
+        setText(item?.text);
+        setTransTextHu(item?.translations.hu.text || item?.text);
       }
     }, [item]);
 
     return (
-      <Card.Body>
+      <Modal.Body className="mb-4">
         <Row>
           <Col>
             <Form onSubmit={textualSubmitHandler}>
@@ -223,47 +211,64 @@ const Lesson = ({
                 setSecLang={setTransTextHu}
                 className="mt-3"
               />
-              <Button
-                type="submit"
-                variant="primary"
-                className="mt-3 text-right"
-              >
-                Update lesson
-              </Button>
+              <div className="d-flex justify-content-end">
+                <Button
+                  type="submit"
+                  variant="primary"
+                  className="mt-3 text-right"
+                >
+                  Update lesson
+                </Button>
+              </div>
             </Form>
           </Col>
         </Row>
-      </Card.Body>
+      </Modal.Body>
     );
   };
 
   return (
-    <Card key={index} className="m-3">
-      <Card.Header className="d-flex justify-content-between align-items-center text-secondary">
-        <h4 className="m-0 fw-bold text-secondary">{`Lesson-${index + 1}`}</h4>
-        <p className="m-0 lead fw-bold text-secondary">{lesson.lessonType}</p>
-        <div>
-          <RemoveButton
-            lessonId={lesson?._id}
-            title="Remove lesson"
-            className="me-3 text-danger"
-          >
-            <FaTrash className="text-color" />
-          </RemoveButton>
-          <CustomToggle eventKey={index}>
-            <FaPlus />
-          </CustomToggle>
+    <>
+      <div
+        ref={setNodeRef}
+        style={style}
+        {...attributes}
+        {...listeners}
+        key={lesson?._id}
+        className="mt-2 mx-3 card"
+      >
+        <div className="d-flex justify-content-between card-header">
+          <h4 className="m-0 fw-bold text-secondary">{lesson?.title}</h4>
+          <p className="m-0 lead fw-bold text-secondary">
+            {lesson?.lessonType}
+          </p>
+          <div>
+            <RemoveButton
+              lessonId={lesson?._id}
+              title="Remove lesson"
+              className="me-3 text-danger"
+              handler={removeHandler}
+            >
+              <FaTrash className="text-color" />
+            </RemoveButton>
+            <EditButton handler={handleShow}>
+              <FaEdit className="text-color" />
+            </EditButton>
+          </div>
         </div>
-      </Card.Header>
-      <Accordion.Collapse eventKey={index}>
-        {lesson.lessonType === 'Video' ? (
+      </div>
+      <Modal show={show} onHide={handleClose} centered size="lg">
+        <Modal.Header closeButton>
+          <Modal.Title>Edit {lesson?.lessonType} lesson</Modal.Title>
+        </Modal.Header>
+        {lesson?.lessonType === 'Video' ? (
           <VideoLesson item={lesson} />
         ) : (
-          lesson.lessonType && <TextualLesson item={lesson} />
+          lesson?.lessonType === 'Textual' && <TextualLesson item={lesson} />
         )}
-      </Accordion.Collapse>
-    </Card>
+      </Modal>
+    </>
   );
 };
 
-export default Lesson;
+export default LessonCard;

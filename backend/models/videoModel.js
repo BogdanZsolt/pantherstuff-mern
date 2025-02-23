@@ -16,9 +16,17 @@ const videoSchema = new mongoose.Schema(
         videoUrl: { type: String },
       },
     },
+    section: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Section',
+      },
+    ],
   },
   {
     timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
   }
 );
 
